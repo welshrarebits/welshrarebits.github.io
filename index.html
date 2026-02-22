@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Steven Welsh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:    #f5f4f0;
+      --ink:   #0d0d0d;
+      --muted: #6b6b6b;
+      --accent:#c8320a;
+      --rule:  #d4d2cc;
+      --max:   1400px;
+      --pad:   clamp(1.25rem, 4vw, 3rem);
+      --mono:  'DM Mono', monospace;
+      --sans:  'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --fs-xs: 0.688rem;
+      --fs-sm: 0.813rem;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: var(--sans); font-size: 1rem; font-weight: 400;
+      line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+    .label { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--rule); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.5rem; }
+    .nav-logo { font-family: var(--mono); font-size: var(--fs-sm); letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: clamp(1.5rem, 3vw, 3rem); }
+    .nav-links a {
+      font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--ink); transition: width 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); transition: transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; inset: 3.5rem 0 0; background: var(--bg); z-index: 99; padding: 2rem var(--pad); border-top: 1px solid var(--rule); flex-direction: column; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--sans); font-size: clamp(2rem, 8vw, 3rem); font-weight: 300; border-bottom: 1px solid var(--rule); padding: 1rem 0; letter-spacing: -0.02em; }
+
+    /* SECTIONS */
+    section { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 3rem; }
+    .section-number { font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); }
+    .section-title { font-family: var(--sans); font-size: clamp(0.7rem, 1.5vw, 0.9rem); font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; }
+
+    /* ABOUT */
+    .about-intro {
+      max-width: 70ch;
+    }
+    .about-intro h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 2rem; }
+    .about-intro p { font-size: 1rem; font-weight: 300; line-height: 1.75; color: var(--muted); }
+    .about-intro p + p { margin-top: 1rem; }
+
+    /* WORK */
+    .work-list { display: flex; flex-direction: column; }
+    .work-item { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(1rem, 2vw, 1.5rem); align-items: start; padding: 2rem 0; border-bottom: 1px solid var(--rule); cursor: pointer; transition: background 0.15s; }
+    .work-item:hover { background: rgba(0,0,0,0.02); }
+    .work-item:hover .work-arrow svg { transform: translate(3px,-3px); }
+    .work-index { grid-column: 1/2; font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); padding-top: 0.3rem; }
+    .work-info { grid-column: 2/7; }
+    .work-title { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    .work-desc { font-size: var(--fs-sm); color: var(--muted); font-weight: 300; max-width: 40ch; }
+    .work-meta { grid-column: 7/10; padding-top: 0.3rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .work-tag { font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); }
+    .work-year { grid-column: 11/12; font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); padding-top: 0.3rem; text-align: right; }
+    .work-arrow { grid-column: 12/13; display: flex; justify-content: flex-end; padding-top: 0.2rem; }
+    .work-arrow svg { transition: transform 0.2s; }
+
+    /* PLAY */
+    .play-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1rem, 2vw, 1.5rem); }
+    .play-card { background: var(--ink); color: var(--bg); aspect-ratio: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; cursor: pointer; transition: opacity 0.2s; position: relative; overflow: hidden; }
+    .play-card:hover { opacity: 0.85; }
+    .play-card:hover .play-card-arrow { transform: translate(3px,-3px); }
+    .play-card-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.3; transition: opacity 0.3s; }
+    .play-card:hover .play-card-bg { opacity: 0.45; }
+    .play-card-content { position: relative; z-index: 1; }
+    .play-card-label { font-family: var(--mono); font-size: var(--fs-xs); color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .play-card-title { font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300; letter-spacing: -0.015em; }
+    .play-card-arrow { position: absolute; top: 1.25rem; right: 1.25rem; transition: transform 0.2s; }
+    .play-card.col-4 { grid-column: span 4; }
+    .play-card.col-5 { grid-column: span 5; }
+    .play-card.col-7 { grid-column: span 7; }
+    .play-card.sand  { background: #c4b99a; color: var(--ink); }
+    .play-card.red   { background: var(--accent); }
+    .play-card.slate { background: #2a2e35; }
+
+    /* BLOG */
+    .blog-list { display: flex; flex-direction: column; }
+    .blog-item { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(1rem, 2vw, 1.5rem); align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); cursor: pointer; }
+    .blog-item:first-child { border-top: 1px solid var(--rule); }
+    .blog-item:hover .blog-title { color: var(--accent); }
+    .blog-date { grid-column: 1/3; font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); }
+    .blog-title-col { grid-column: 3/9; }
+    .blog-title { font-size: clamp(1rem, 1.8vw, 1.35rem); font-weight: 300; letter-spacing: -0.015em; transition: color 0.2s; }
+    .blog-excerpt { font-size: var(--fs-sm); color: var(--muted); font-weight: 300; margin-top: 0.3rem; }
+    .blog-category { grid-column: 9/11; font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); }
+    .blog-read { grid-column: 12/13; font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); text-align: right; }
+
+    /* CONTACT */
+    #contact { background: var(--ink); color: var(--bg); padding: clamp(4rem, 8vw, 7rem) 0; }
+    .contact-inner .section-header { border-color: rgba(255,255,255,0.12); }
+    .contact-inner .section-title  { color: rgba(255,255,255,0.4); }
+    .contact-inner .section-number { color: rgba(255,255,255,0.25); }
+    .contact-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(1rem, 2vw, 1.5rem); align-items: end; }
+    .contact-heading { grid-column: 1/8; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 300; letter-spacing: -0.04em; line-height: 1; margin-bottom: 2rem; }
+    .contact-heading em { font-style: italic; }
+    .contact-links { grid-column: 9/13; display: flex; flex-direction: column; padding-bottom: 0.5rem; }
+    .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.12); font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+    .contact-link:hover { color: #fff; }
+    .contact-email-big { grid-column: 1/13; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.08em; color: rgba(255,255,255,0.35); margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    .contact-email-big a { font-size: clamp(1rem, 2vw, 1.5rem); color: rgba(255,255,255,0.7); display: block; margin-top: 0.5rem; transition: color 0.2s; }
+    .contact-email-big a:hover { color: #fff; }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: rgba(255,255,255,0.3); padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .work-index { display: none; }
+      .work-info { grid-column: 1/8; }
+      .work-meta { display: none; }
+      .work-year { grid-column: 9/12; }
+      .work-arrow { grid-column: 12/13; }
+      .play-card.col-4, .play-card.col-5 { grid-column: span 6; }
+      .play-card.col-7 { grid-column: span 12; }
+      .blog-date { grid-column: 1/4; }
+      .blog-title-col { grid-column: 4/13; }
+      .blog-category, .blog-read { display: none; }
+      .contact-heading { grid-column: 1/13; }
+      .contact-links { grid-column: 1/13; margin-top: 2rem; }
+      .contact-email-big { grid-column: 1/13; }
+    }
+    @media (max-width: 600px) {
+      .play-card.col-4, .play-card.col-5, .play-card.col-7 { grid-column: span 12; }
+      .work-year { display: none; }
+      .work-info { grid-column: 1/12; }
+    }
+
+    /* SKIP LINK */
+    .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--ink); color: var(--bg); padding: 0.5rem 1rem; font-family: var(--mono); font-size: var(--fs-xs); z-index: 999; }
+    .skip-link:focus { top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#about" class="nav-logo" aria-label="Home">SW ° Portfolio</a>
+        <ul class="nav-links" role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#play">Play</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#play">Play</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main id="main">
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">01</span>
+          <span class="section-title" id="about-heading">About</span>
+        </div>
+        <div class="about-intro reveal">
+          <h2>Good design is<br><em>as little design<br>as possible.</em></h2>
+          <p>I'm a multidisciplinary designer with a decade of experience building products and identities that endure. I believe in systems over decoration, function as the premise of form, and the quiet authority of well-considered typography.</p>
+          <p>My work spans digital product design, brand identity, editorial, and creative direction — often at the intersection of all four. Based in Sheffield, working globally.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" aria-labelledby="work-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">02</span>
+          <span class="section-title" id="work-heading">Selected Work</span>
+        </div>
+        <ul class="work-list reveal" role="list">
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">01</span>
+            <div class="work-info"><h3 class="work-title">Meridian OS</h3><p class="work-desc">End-to-end product design for a next-generation operating system interface.</p></div>
+            <div class="work-meta"><span class="work-tag">Product Design</span><span class="work-tag">UX Research</span></div>
+            <span class="work-year">2024</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">02</span>
+            <div class="work-info"><h3 class="work-title">Folio Publishers</h3><p class="work-desc">Brand identity and editorial system for an independent fine art press.</p></div>
+            <div class="work-meta"><span class="work-tag">Brand Identity</span><span class="work-tag">Editorial</span></div>
+            <span class="work-year">2024</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">03</span>
+            <div class="work-info"><h3 class="work-title">Helix Health</h3><p class="work-desc">Design system and patient-facing application for a digital health platform.</p></div>
+            <div class="work-meta"><span class="work-tag">Design System</span><span class="work-tag">Product</span></div>
+            <span class="work-year">2023</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">04</span>
+            <div class="work-info"><h3 class="work-title">Vault Archive</h3><p class="work-desc">Digital archive and exhibition platform for a contemporary art foundation.</p></div>
+            <div class="work-meta"><span class="work-tag">Web Design</span><span class="work-tag">Art Direction</span></div>
+            <span class="work-year">2023</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">05</span>
+            <div class="work-info"><h3 class="work-title">Terroir Wines</h3><p class="work-desc">Brand identity, packaging and digital presence for a natural wine importer.</p></div>
+            <div class="work-meta"><span class="work-tag">Packaging</span><span class="work-tag">Identity</span></div>
+            <span class="work-year">2022</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PLAY -->
+    <section id="play" aria-labelledby="play-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">03</span>
+          <span class="section-title" id="play-heading">Play — Personal Work</span>
+        </div>
+        <div class="play-grid reveal">
+          <article class="play-card col-7" tabindex="0" aria-label="Photography — Urban Studies">
+            <div class="play-card-bg" style="background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=70');"></div>
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Photography</p><h3 class="play-card-title">Urban Studies</h3></div>
+          </article>
+          <article class="play-card col-5 sand" tabindex="0" aria-label="Type Experiments">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content">
+              <p class="play-card-label" style="color:rgba(0,0,0,0.4)">Typography</p>
+              <h3 class="play-card-title" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:300;letter-spacing:-0.04em;line-height:0.95;">Type<br>Exp.</h3>
+            </div>
+          </article>
+          <article class="play-card col-4 red" tabindex="0" aria-label="Print — Risograph Zines">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Print</p><h3 class="play-card-title">Risograph Zines</h3></div>
+          </article>
+          <article class="play-card col-4 slate" tabindex="0" aria-label="Motion — Title Sequences">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Motion</p><h3 class="play-card-title">Title Sequences</h3></div>
+          </article>
+          <article class="play-card col-4" tabindex="0" aria-label="Objects — Collected Things">
+            <div class="play-card-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70');"></div>
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Objects</p><h3 class="play-card-title">Collected Things</h3></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" aria-labelledby="blog-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">04</span>
+          <span class="section-title" id="blog-heading">Writing</span>
+        </div>
+        <ul class="blog-list reveal" role="list">
+          <li class="blog-item" tabindex="0">
+            <time class="blog-date" datetime="2025-01">Jan 2025</time>
+            <div class="blog-title-col"><h3 class="blog-title">On Restraint: Why Less Is a Design Decision</h3><p class="blog-excerpt">The hardest thing in design is not adding — it's knowing what to remove.</p></div>
+            <span class="blog-category">Essay</span><span class="blog-read">6 min</span>
+          </li>
+          <li class="blog-item" tabindex="0">
+            <time class="blog-date" datetime="2024-11">Nov 2024</time>
+            <div class="blog-title-col"><h3 class="blog-title">Grid Systems and the Illusion of Freedom</h3><p class="blog-excerpt">Structure is not the enemy of creativity — it is its precondition.</p></div>
+            <span class="blog-category">Design</span><span class="blog-read">8 min</span>
+          </li>
+          <li class="blog-item" tabindex="0">
+            <time class="blog-date" datetime="2024-09">Sep 2024</time>
+            <div class="blog-title-col"><h3 class="blog-title">Type as Voice: A Field Guide to Choosing Typefaces</h3><p class="blog-excerpt">Every typeface carries a history. Your job is to choose one that earns its place.</p></div>
+            <span class="blog-category">Typography</span><span class="blog-read">10 min</span>
+          </li>
+          <li class="blog-item" tabindex="0">
+            <time class="blog-date" datetime="2024-06">Jun 2024</time>
+            <div class="blog-title-col"><h3 class="blog-title">Working Notes: The Design of Silence</h3><p class="blog-excerpt">What does a page feel like when nothing is competing for attention?</p></div>
+            <span class="blog-category">Notes</span><span class="blog-read">4 min</span>
+          </li>
+          <li class="blog-item" tabindex="0">
+            <time class="blog-date" datetime="2024-03">Mar 2024</time>
+            <div class="blog-title-col"><h3 class="blog-title">Dieter Rams and the Ten Commandments We Keep Breaking</h3><p class="blog-excerpt">Good design has ten principles. The digital industry ignores most of them.</p></div>
+            <span class="blog-category">Essay</span><span class="blog-read">12 min</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container contact-inner">
+      <div class="section-header">
+        <span class="section-number" aria-hidden="true">05</span>
+        <span class="section-title" id="contact-heading">Contact</span>
+      </div>
+      <div class="contact-grid">
+        <h2 class="contact-heading reveal">Let's make<br><em>something</em><br>worth making.</h2>
+        <nav class="contact-links reveal" aria-label="Contact links">
+          <a href="mailto:hello@stevenwelsh.com" class="contact-link">Email <span>↗</span></a>
+          <a href="#" class="contact-link">LinkedIn <span>↗</span></a>
+          <a href="#" class="contact-link">Instagram <span>↗</span></a>
+          <a href="#" class="contact-link">Read.cv <span>↗</span></a>
+          <a href="#" class="contact-link">Are.na <span>↗</span></a>
+        </nav>
+        <div class="contact-email-big reveal">
+          <span class="label" style="color:rgba(255,255,255,0.3)">Direct email</span>
+          <a href="mailto:hello@stevenwelsh.com">hello@stevenwelsh.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>SW ° Portfolio</span>
+        <span>Sheffield — <span id="year"></span></span>
+        <span>All work reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const btn  = document.querySelector('.nav-hamburger');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    }));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (i * 0.07) + 's';
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.style.color = '');
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.style.color = 'var(--ink)';
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('section[id]').forEach(s => io.observe(s));
+  </script>
+</body>
+</html>
