@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — Steven Welsh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#f5f4f0; --ink:#0d0d0d; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc; --max:1400px; --pad:clamp(1.25rem,4vw,3rem); --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --fs-xs:0.688rem; --fs-sm:0.813rem; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
+    .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+    /* HEADER */
+    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
+    .header-inner { display:flex; align-items:flex-start; justify-content:space-between; padding-bottom:1rem; }
+    .header-identity { display:flex; flex-direction:column; gap:0.35rem; flex-shrink:0; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--ink); line-height:1.2; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .header-nav-links { display:flex; gap:clamp(1.5rem,4vw,4rem); align-items:flex-start; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; }
+    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--ink); line-height:1.2; transition:color 0.2s; }
+    .nav-item-label:hover { color:var(--accent); }
+    .nav-item-label.active { color:var(--accent); }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; flex-shrink:0; }
+    .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
+    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--accent); }
+
+    /* PAGE */
+    .page-section { padding:clamp(3rem,6vw,5rem) 0; }
+    .section-header { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:2.5rem; }
+    .section-number { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
+    .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; }
+
+    /* WORK LIST */
+    .work-list { display:flex; flex-direction:column; }
+    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:2rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
+    .work-item:hover { background:rgba(0,0,0,0.02); }
+    .work-item:hover .work-arrow svg { transform:translate(3px,-3px); }
+    .work-index { grid-column:1/2; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); padding-top:0.3rem; }
+    .work-info { grid-column:2/7; }
+    .work-title { font-size:clamp(1.25rem,2.5vw,1.75rem); font-weight:300; letter-spacing:-0.02em; margin-bottom:0.4rem; }
+    .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; max-width:40ch; }
+    .work-meta { grid-column:7/10; padding-top:0.3rem; display:flex; flex-direction:column; gap:0.25rem; }
+    .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
+    .work-year { grid-column:11/12; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); padding-top:0.3rem; text-align:right; }
+    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; padding-top:0.2rem; }
+    .work-arrow svg { transition:transform 0.2s; }
+
+    /* FOOTER */
+    footer { background:var(--ink); color:rgba(255,255,255,0.3); padding:2rem 0; margin-top:clamp(4rem,8vw,7rem); }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.06em; }
+
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:900px) {
+      .header-nav-links { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-inner { align-items:center; }
+      .header-location { display:none; }
+      .work-index { display:none; }
+      .work-info { grid-column:1/8; }
+      .work-meta { display:none; }
+      .work-year { grid-column:9/12; }
+      .work-arrow { grid-column:12/13; }
+    }
+    @media (max-width:600px) { .work-year { display:none; } .work-info { grid-column:1/12; } }
+    .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
+    .skip-link:focus { top:0.5rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-identity">
+          <a href="index.html" class="header-logo">Steven Welsh</a>
+          <div class="header-location">Sheffield<br>Ooop North</div>
+        </div>
+        <nav aria-label="Main navigation">
+          <ul class="header-nav-links" role="list">
+            <li class="nav-item"><a href="index.html" class="nav-item-label">About</a><span class="nav-item-desc">background,<br>approach &amp; values</span></li>
+            <li class="nav-item"><a href="work.html" class="nav-item-label active">Work</a><span class="nav-item-desc">selected client<br>projects</span></li>
+            <li class="nav-item"><a href="play.html" class="nav-item-label">Play</a><span class="nav-item-desc">personal work<br>&amp; experiments</span></li>
+            <li class="nav-item"><a href="blog.html" class="nav-item-label">Blog</a><span class="nav-item-desc">writing on<br>design &amp; craft</span></li>
+          </ul>
+        </nav>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <hr class="header-rule" />
+  </header>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
+    <a href="index.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="play.html">Play</a>
+    <a href="blog.html">Blog</a>
+  </nav>
+
+  <main id="main">
+    <section class="page-section" aria-labelledby="work-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">02</span>
+          <span class="section-title" id="work-heading">Selected Work</span>
+        </div>
+        <ul class="work-list reveal" role="list">
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">01</span>
+            <div class="work-info"><h3 class="work-title">GOV.UK — Service Design</h3><p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p></div>
+            <div class="work-meta"><span class="work-tag">Service Design</span><span class="work-tag">GDS</span></div>
+            <span class="work-year">2024</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">02</span>
+            <div class="work-info"><h3 class="work-title">Disney — Localisation Platform</h3><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p></div>
+            <div class="work-meta"><span class="work-tag">Product Management</span><span class="work-tag">Film &amp; TV</span></div>
+            <span class="work-year">2022</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">03</span>
+            <div class="work-info"><h3 class="work-title">Netflix — Subtitle Workflow</h3><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p></div>
+            <div class="work-meta"><span class="work-tag">Product Management</span><span class="work-tag">Localisation</span></div>
+            <span class="work-year">2021</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">04</span>
+            <div class="work-info"><h3 class="work-title">Sony — Localisation Operations</h3><p class="work-desc">Process and tooling improvements across global localisation workflows.</p></div>
+            <div class="work-meta"><span class="work-tag">Product Management</span><span class="work-tag">Operations</span></div>
+            <span class="work-year">2020</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+          <li class="work-item" tabindex="0">
+            <span class="work-index" aria-hidden="true">05</span>
+            <div class="work-info"><h3 class="work-title">Opencast Software — DWP</h3><p class="work-desc">Service design embedded within a major UK government department.</p></div>
+            <div class="work-meta"><span class="work-tag">Service Design</span><span class="work-tag">Public Sector</span></div>
+            <span class="work-year">2023</span>
+            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>Steven Welsh</span>
+        <span>Sheffield — <span id="year"></span></span>
+        <span>All work reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const btn = document.querySelector('.nav-hamburger');
+    const menu = document.getElementById('mobile-menu');
+    const closeBtn = document.getElementById('mobile-close');
+    btn.addEventListener('click', () => { const open = menu.classList.toggle('open'); btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); menu.setAttribute('aria-hidden', !open); });
+    closeBtn.addEventListener('click', () => { menu.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }));
+    const observer = new IntersectionObserver((entries) => { entries.forEach((e,i) => { if(e.isIntersecting){ e.target.style.transitionDelay=(i*0.07)+'s'; e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
