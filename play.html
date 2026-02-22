@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play — Steven Welsh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#f5f4f0; --ink:#0d0d0d; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc; --max:1400px; --pad:clamp(1.25rem,4vw,3rem); --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --fs-xs:0.688rem; --fs-sm:0.813rem; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
+    .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+    /* HEADER */
+    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
+    .header-inner { display:flex; align-items:flex-start; justify-content:space-between; padding-bottom:1rem; }
+    .header-identity { display:flex; flex-direction:column; gap:0.35rem; flex-shrink:0; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--ink); line-height:1.2; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .header-nav-links { display:flex; gap:clamp(1.5rem,4vw,4rem); align-items:flex-start; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; }
+    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--ink); line-height:1.2; transition:color 0.2s; }
+    .nav-item-label:hover { color:var(--accent); }
+    .nav-item-label.active { color:var(--accent); }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; flex-shrink:0; }
+    .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
+    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--accent); }
+
+    /* PAGE */
+    .page-section { padding:clamp(3rem,6vw,5rem) 0; }
+    .section-header { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:2.5rem; }
+    .section-number { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
+    .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; }
+
+    /* PLAY GRID */
+    .play-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(1rem,2vw,1.5rem); }
+    .play-card { background:var(--ink); color:var(--bg); aspect-ratio:1; display:flex; flex-direction:column; justify-content:flex-end; padding:1.5rem; cursor:pointer; transition:opacity 0.2s; position:relative; overflow:hidden; }
+    .play-card:hover { opacity:0.85; }
+    .play-card:hover .play-card-arrow { transform:translate(3px,-3px); }
+    .play-card-bg { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.3; transition:opacity 0.3s; }
+    .play-card:hover .play-card-bg { opacity:0.45; }
+    .play-card-content { position:relative; z-index:1; }
+    .play-card-label { font-family:var(--mono); font-size:var(--fs-xs); color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem; }
+    .play-card-title { font-size:clamp(1rem,2vw,1.35rem); font-weight:300; letter-spacing:-0.015em; }
+    .play-card-arrow { position:absolute; top:1.25rem; right:1.25rem; transition:transform 0.2s; }
+    .play-card.col-4 { grid-column:span 4; }
+    .play-card.col-5 { grid-column:span 5; }
+    .play-card.col-7 { grid-column:span 7; }
+    .play-card.sand { background:#c4b99a; color:var(--ink); }
+    .play-card.red  { background:var(--accent); }
+    .play-card.slate { background:#2a2e35; }
+
+    /* FOOTER */
+    footer { background:var(--ink); color:rgba(255,255,255,0.3); padding:2rem 0; margin-top:clamp(4rem,8vw,7rem); }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.06em; }
+
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:900px) {
+      .header-nav-links { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-inner { align-items:center; }
+      .header-location { display:none; }
+      .play-card.col-4,.play-card.col-5 { grid-column:span 6; }
+      .play-card.col-7 { grid-column:span 12; }
+    }
+    @media (max-width:600px) { .play-card.col-4,.play-card.col-5,.play-card.col-7 { grid-column:span 12; } }
+    .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
+    .skip-link:focus { top:0.5rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-identity">
+          <a href="index.html" class="header-logo">Steven Welsh</a>
+          <div class="header-location">Sheffield<br>Ooop North</div>
+        </div>
+        <nav aria-label="Main navigation">
+          <ul class="header-nav-links" role="list">
+            <li class="nav-item"><a href="index.html" class="nav-item-label">About</a><span class="nav-item-desc">background,<br>approach &amp; values</span></li>
+            <li class="nav-item"><a href="work.html" class="nav-item-label">Work</a><span class="nav-item-desc">selected client<br>projects</span></li>
+            <li class="nav-item"><a href="play.html" class="nav-item-label active">Play</a><span class="nav-item-desc">personal work<br>&amp; experiments</span></li>
+            <li class="nav-item"><a href="blog.html" class="nav-item-label">Blog</a><span class="nav-item-desc">writing on<br>design &amp; craft</span></li>
+          </ul>
+        </nav>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <hr class="header-rule" />
+  </header>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
+    <a href="index.html">About</a>
+    <a href="work.html">Work</a>
+    <a href="play.html">Play</a>
+    <a href="blog.html">Blog</a>
+  </nav>
+
+  <main id="main">
+    <section class="page-section" aria-labelledby="play-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">03</span>
+          <span class="section-title" id="play-heading">Personal Work &amp; Experiments</span>
+        </div>
+        <div class="play-grid reveal">
+          <article class="play-card col-7" tabindex="0" aria-label="Freelance Illustration">
+            <div class="play-card-bg" style="background-image:url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=70');"></div>
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Illustration</p><h3 class="play-card-title">Freelance Work</h3></div>
+          </article>
+          <article class="play-card col-5 sand" tabindex="0" aria-label="FA Match Day Illustration">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label" style="color:rgba(0,0,0,0.4)">Illustration</p><h3 class="play-card-title" style="color:var(--ink)">FA Match Day</h3></div>
+          </article>
+          <article class="play-card col-4 red" tabindex="0" aria-label="Personal Experiments">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Personal</p><h3 class="play-card-title">Experiments</h3></div>
+          </article>
+          <article class="play-card col-4 slate" tabindex="0" aria-label="Sketchbooks">
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Drawing</p><h3 class="play-card-title">Sketchbooks</h3></div>
+          </article>
+          <article class="play-card col-4" tabindex="0" aria-label="Print Work">
+            <div class="play-card-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70');"></div>
+            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
+            <div class="play-card-content"><p class="play-card-label">Print</p><h3 class="play-card-title">Print Work</h3></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>Steven Welsh</span>
+        <span>Sheffield — <span id="year"></span></span>
+        <span>All work reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const btn = document.querySelector('.nav-hamburger');
+    const menu = document.getElementById('mobile-menu');
+    const closeBtn = document.getElementById('mobile-close');
+    btn.addEventListener('click', () => { const open = menu.classList.toggle('open'); btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); menu.setAttribute('aria-hidden', !open); });
+    closeBtn.addEventListener('click', () => { menu.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }));
+    const observer = new IntersectionObserver((entries) => { entries.forEach((e,i) => { if(e.isIntersecting){ e.target.style.transitionDelay=(i*0.07)+'s'; e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
