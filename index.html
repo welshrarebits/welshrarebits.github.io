@@ -45,25 +45,26 @@
     .page-section { padding:clamp(3rem,6vw,3rem) 0; }
     .page-section + .page-section { border-top:0px solid var(--rule); }
     .section-header { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:2.5rem; }
-    .section-number { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
+    .section-number { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; color:var(--muted); }
     .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; }
     .intro-block { max-width:65ch; }
     .intro-block p { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.1rem); font-style:italic; font-weight:300; line-height:1.75; color:var(--muted); }
     .work-list { display:flex; flex-direction:column; }
-    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:center; padding:1.25rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
+    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:1.25rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
     .work-item:hover { background:rgba(0,0,0,0.02); }
     .work-item:hover .work-arrow svg { transform:translate(3px,-3px); }
-    .work-index { grid-column:1/2; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); align-self:start; padding-top:0.25rem; }
+    .work-index { grid-column:1/2; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); align-self:start; padding-top:0.2rem; }
     .work-thumb { grid-column:2/5; aspect-ratio:16/9; overflow:hidden; background:var(--rule); flex-shrink:0; }
     .work-thumb-img { width:100%; height:100%; object-fit:cover; display:block; opacity:0.75; transition:opacity 0.2s; }
     .work-item:hover .work-thumb-img { opacity:1; }
     .work-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); display:flex; align-items:center; justify-content:center; }
-    .work-info { grid-column:5/10; }    .work-title { font-size:clamp(1.1rem,2vw,1.5rem); font-weight:300; letter-spacing:-0.02em; margin-bottom:0.35rem; }
+    .work-info { grid-column:5/10; padding-top:0.2rem; }
+    .work-title { font-size:clamp(1.1rem,2vw,1.5rem); font-weight:300; letter-spacing:-0.02em; margin-bottom:0.35rem; }
     .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; max-width:40ch; }
-    .work-meta { grid-column:10/12; align-self:start; padding-top:0.25rem; display:flex; flex-direction:column; gap:0.25rem; }
+    .work-meta { grid-column:10/12; align-self:start; padding-top:0.2rem; display:flex; flex-direction:column; gap:0.25rem; }
     .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
     .work-year { display:none; }
-    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; align-self:start; padding-top:0.25rem; }
+    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; align-self:start; padding-top:0.2rem; }
     .work-arrow svg { transition:transform 0.2s; }
     .see-all { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; }
     .see-all:hover { color:var(--accent); border-color:var(--accent); }
@@ -179,21 +180,21 @@
             <span class="work-index" aria-hidden="true">2.1</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">GOV.UK &#8212; Service Design</h3><p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p></div>
-            <div class="work-meta"><span class="work-tag">Service Design</span><span class="work-tag">GDS</span></div>
+            <div class="work-meta"><span class="work-tag">Service Design / GDS</span></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
             <span class="work-index" aria-hidden="true">2.2</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">Disney &#8212; Localisation Platform</h3><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p></div>
-            <div class="work-meta"><span class="work-tag">Product Management</span><span class="work-tag">Film &amp; TV</span></div>
+            <div class="work-meta"><span class="work-tag">Product Management / Film &amp; TV</span></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
             <span class="work-index" aria-hidden="true">2.3</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">Netflix &#8212; Subtitle Workflow</h3><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p></div>
-            <div class="work-meta"><span class="work-tag">Product Management</span><span class="work-tag">Localisation</span></div>
+            <div class="work-meta"><span class="work-tag">Product Management / Localisation</span></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
         </ul>
