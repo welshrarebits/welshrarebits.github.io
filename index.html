@@ -6,12 +6,12 @@
   <title>Steven Welsh &#8212; Service Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg:#f5f4f0; --ink:#0d0d0d; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc;
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
-      --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -45,26 +45,28 @@
     .page-section { padding:clamp(3rem,6vw,3rem) 0; }
     .page-section + .page-section { border-top:0px solid var(--rule); }
     .section-header { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:2.5rem; }
-    .section-number { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; color:var(--muted); }
-    .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; }
+    .section-number { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; color:var(--muted); order:1; }
+    .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; order:2; }
     .intro-block { max-width:65ch; }
     .intro-block p { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.1rem); font-style:italic; font-weight:300; line-height:1.75; color:var(--muted); }
     .work-list { display:flex; flex-direction:column; }
-    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:1.25rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
+    .section-header--flush { margin-bottom:0; }
+    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:1.5rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
     .work-item:hover { background:rgba(0,0,0,0.02); }
     .work-item:hover .work-arrow svg { transform:translate(3px,-3px); }
     .work-index { grid-column:1/2; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); align-self:start; padding-top:0.2rem; }
     .work-thumb { grid-column:2/5; aspect-ratio:16/9; overflow:hidden; background:var(--rule); flex-shrink:0; }
     .work-thumb-img { width:100%; height:100%; object-fit:cover; display:block; opacity:0.75; transition:opacity 0.2s; }
     .work-item:hover .work-thumb-img { opacity:1; }
-    .work-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); display:flex; align-items:center; justify-content:center; }
-    .work-info { grid-column:5/10; padding-top:0.2rem; }
-    .work-title { font-size:clamp(1.1rem,2vw,1.5rem); font-weight:300; letter-spacing:-0.02em; margin-bottom:0.35rem; }
-    .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; max-width:40ch; }
-    .work-meta { grid-column:10/12; align-self:start; padding-top:0.2rem; display:flex; flex-direction:column; gap:0.25rem; }
-    .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); }
+    .work-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); }
+    .work-info { grid-column:5/9; align-self:start; }
+    .work-title { font-family:var(--title); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:700; letter-spacing:-0.01em; text-transform:uppercase; line-height:1.1; margin-bottom:0; color:#1f1f1f; }
+    .work-desc-col { grid-column:9/12; align-self:start; padding-top:0; }
+    .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; line-height:1.8; background-image:repeating-linear-gradient(to bottom, transparent, transparent calc(1.8em - 1px), var(--rule) calc(1.8em - 1px), var(--rule) 1.8em); background-size:100% 1.8em; padding-bottom:1px; }
+    .work-meta { margin-top:0.75rem; display:flex; flex-direction:column; gap:0.2rem; }
+    .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; opacity:0.5; }
     .work-year { display:none; }
-    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; align-self:start; padding-top:0.2rem; }
+    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; align-self:start; padding-top:0.2rem; padding-right:0.25rem; }
     .work-arrow svg { transition:transform 0.2s; }
     .see-all { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; }
     .see-all:hover { color:var(--accent); border-color:var(--accent); }
@@ -111,8 +113,8 @@
       .contact-block { grid-template-columns:1fr; }
       .work-index { display:none; }
       .work-thumb { grid-column:1/4; }
-      .work-info { grid-column:4/10; }
-      .work-meta { display:none; }
+      .work-info { grid-column:4/9; }
+      .work-desc-col { grid-column:9/12; }
       .work-arrow { grid-column:12/13; }
       .logo-matrix { grid-template-columns:repeat(4,1fr); }
     }
@@ -121,6 +123,7 @@
       .logo-matrix { grid-template-columns:repeat(3,1fr); }
       .work-thumb { grid-column:1/4; }
       .work-info { grid-column:4/12; }
+      .work-desc-col { display:none; }
     }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
@@ -171,7 +174,7 @@
     </section>
     <section class="page-section" aria-labelledby="sel-work-heading">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header section-header--flush">
           <span class="section-number" aria-hidden="true">02</span>
           <span class="section-title" id="sel-work-heading">Selected Work</span>
         </div>
@@ -179,22 +182,22 @@
           <li class="work-item" tabindex="0">
             <span class="work-index" aria-hidden="true">2.1</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
-            <div class="work-info"><h3 class="work-title">GOV.UK &#8212; Service Design</h3><p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p></div>
-            <div class="work-meta"><span class="work-tag">Service Design / GDS</span></div>
+            <div class="work-info"><h3 class="work-title">GOV.UK — Service Design</h3></div>
+            <div class="work-desc-col"><p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p><div class="work-meta"><span class="work-tag">Service Design / GDS</span></div></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
             <span class="work-index" aria-hidden="true">2.2</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
-            <div class="work-info"><h3 class="work-title">Disney &#8212; Localisation Platform</h3><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p></div>
-            <div class="work-meta"><span class="work-tag">Product Management / Film &amp; TV</span></div>
+            <div class="work-info"><h3 class="work-title">Disney — Localisation Platform</h3></div>
+            <div class="work-desc-col"><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p><div class="work-meta"><span class="work-tag">Product Management / Film &amp; TV</span></div></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
             <span class="work-index" aria-hidden="true">2.3</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
-            <div class="work-info"><h3 class="work-title">Netflix &#8212; Subtitle Workflow</h3><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p></div>
-            <div class="work-meta"><span class="work-tag">Product Management / Localisation</span></div>
+            <div class="work-info"><h3 class="work-title">Netflix — Subtitle Workflow</h3></div>
+            <div class="work-desc-col"><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p><div class="work-meta"><span class="work-tag">Product Management / Localisation</span></div></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
         </ul>
