@@ -54,14 +54,13 @@
     .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:1.5rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
     .work-item:hover { background:rgba(0,0,0,0.02); }
     .work-item:hover .work-arrow svg { transform:translate(3px,-3px); }
-    .work-index { grid-column:1/2; font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); align-self:start; padding-top:0.2rem; }
-    .work-thumb { grid-column:2/5; aspect-ratio:16/9; overflow:hidden; background:var(--rule); flex-shrink:0; }
+    .work-thumb { grid-column:1/4; aspect-ratio:16/9; overflow:hidden; background:var(--rule); flex-shrink:0; position:relative; align-self:start; }
     .work-thumb-img { width:100%; height:100%; object-fit:cover; display:block; opacity:0.75; transition:opacity 0.2s; }
     .work-item:hover .work-thumb-img { opacity:1; }
     .work-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); }
-    .work-info { grid-column:5/9; align-self:start; }
-    .work-title { font-family:var(--title); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:700; letter-spacing:-0.01em; line-height:1.1; margin-bottom:0; color:var(--strong); }
-    .work-desc-col { grid-column:9/12; align-self:start; padding-top:0; }
+    .work-info { grid-column:4/8; align-self:start; }
+    .work-title { font-family:var(--title); font-size:clamp(1.15rem,3.5vw,2rem); font-weight:700; letter-spacing:-0.01em; line-height:1.1; margin-bottom:0; color:var(--strong); }
+    .work-desc-col { grid-column:8/12; align-self:start; padding-top:0; }
     .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; line-height:1.8; background-image:repeating-linear-gradient(to bottom, transparent, transparent calc(1.8em - 1px), var(--rule) calc(1.8em - 1px), var(--rule) 1.8em); background-size:100% 1.8em; padding-bottom:1px; }
     .work-meta { margin-top:0.75rem; display:flex; flex-direction:column; gap:0.2rem; }
     .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; opacity:0.5; }
@@ -110,7 +109,6 @@
       .testimonials-grid { grid-template-columns:1fr; gap:3rem; }
       .play-grid { grid-template-columns:1fr 1fr; }
       .contact-block { grid-template-columns:1fr; }
-      .work-index { display:none; }
       .work-thumb { grid-column:1/4; }
       .work-info { grid-column:4/9; }
       .work-desc-col { grid-column:9/12; }
@@ -179,21 +177,18 @@
         </div>
         <ul class="work-list" role="list">
           <li class="work-item" tabindex="0">
-            <span class="work-index" aria-hidden="true">2.1</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">GOV.UK — Service Design</h3></div>
             <div class="work-desc-col"><p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p><div class="work-meta"><span class="work-tag">Service Design / GDS</span></div></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
-            <span class="work-index" aria-hidden="true">2.2</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">Disney — Localisation Platform</h3></div>
             <div class="work-desc-col"><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p><div class="work-meta"><span class="work-tag">Product Management / Film &amp; TV</span></div></div>
             <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
           </li>
           <li class="work-item" tabindex="0">
-            <span class="work-index" aria-hidden="true">2.3</span>
             <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
             <div class="work-info"><h3 class="work-title">Netflix — Subtitle Workflow</h3></div>
             <div class="work-desc-col"><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p><div class="work-meta"><span class="work-tag">Product Management / Localisation</span></div></div>
