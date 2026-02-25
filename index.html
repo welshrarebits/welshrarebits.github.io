@@ -21,18 +21,19 @@
     ul { list-style:none; }
     .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
     .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
-    .header-inner { display:flex; align-items:flex-start; justify-content:space-between; padding-bottom:1rem; }
-    .header-identity { display:flex; flex-direction:column; gap:0.35rem; flex-shrink:0; }
+    .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding-bottom:1rem; }
+    .header-identity { grid-column:1/3; display:flex; flex-direction:column; gap:0.35rem; }
     .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; }
     .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
-    .header-nav-links { display:flex; gap:clamp(1.5rem,4vw,4rem); align-items:flex-start; }
+    .header-nav-links { display:grid; grid-template-columns:repeat(4,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; }
+    .header-nav { grid-column:7/13; }
     .nav-item { display:flex; flex-direction:column; gap:0.35rem; }
     .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--strong); line-height:1.2; transition:color 0.2s; }
     .nav-item-label:hover { color:var(--accent); }
     .nav-item-label.active { color:var(--accent); }
     .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
     .header-rule { border:none; border-top:1px solid var(--rule); }
-    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; flex-shrink:0; }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; grid-column:12/13; justify-self:end; }
     .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
     .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity:0; }
@@ -103,9 +104,8 @@
     footer { background:var(--ink); color:rgba(255,255,255,0.3); padding:2rem 0; margin-top:clamp(4rem,8vw,7rem); }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.06em; }
     @media (max-width:900px) {
-      .header-nav-links { display:none; }
+      .header-nav { display:none; }
       .nav-hamburger { display:flex; }
-      .header-inner { align-items:center; }
       .header-location { display:none; }
       .testimonials-grid { grid-template-columns:1fr; gap:3rem; }
       .play-grid { grid-template-columns:1fr 1fr; }
@@ -137,7 +137,7 @@
           <a href="index.html" class="header-logo">STEVEN WELSH</a>
           <div class="header-location">Sheffield<br>Ooop North</div>
         </div>
-        <nav aria-label="Main navigation">
+        <nav class="header-nav" aria-label="Main navigation">
           <ul class="header-nav-links" role="list">
             <li class="nav-item"><a href="index.html" class="nav-item-label active">About</a><span class="nav-item-desc">background,<br>approach &amp; values</span></li>
             <li class="nav-item"><a href="work.html" class="nav-item-label">Work</a><span class="nav-item-desc">selected client<br>projects</span></li>
