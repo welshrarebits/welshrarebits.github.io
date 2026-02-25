@@ -68,17 +68,6 @@
     .see-all { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; }
     .see-all:hover { color:var(--accent); border-color:var(--accent); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
-    .play-card { background:var(--ink); color:var(--bg); aspect-ratio:1; display:flex; flex-direction:column; justify-content:flex-end; padding:1.5rem; cursor:pointer; transition:opacity 0.2s; position:relative; overflow:hidden; }
-    .play-card:hover { opacity:0.85; }
-    .play-card:hover .play-card-arrow { transform:translate(3px,-3px); }
-    .play-card-bg { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.3; transition:opacity 0.3s; }
-    .play-card:hover .play-card-bg { opacity:0.45; }
-    .play-card-content { position:relative; z-index:1; }
-    .play-card-label { font-family:var(--mono); font-size:var(--fs-xs); color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem; }
-    .play-card-title { font-size:clamp(1rem,2vw,1.25rem); font-weight:300; letter-spacing:-0.015em; }
-    .play-card-arrow { position:absolute; top:1.25rem; right:1.25rem; transition:transform 0.2s; }
-    .play-card.sand { background:#c4b99a; color:var(--ink); }
-    .play-card.red { background:var(--accent); }
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
     .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
     .logo-cell img { width:100%; height:100%; object-fit:contain; opacity:0.65; transition:opacity 0.2s; }
@@ -104,19 +93,13 @@
       .header-nav { display:none; }
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
-      .testimonials-grid { grid-template-columns:1fr; gap:3rem; }
-      .play-grid { grid-template-columns:1fr 1fr; }
       .contact-block { grid-template-columns:1fr; }
-      .work-grid { grid-template-columns:repeat(3,1fr); }
-      .work-thumb { grid-column:1/4; }
-      .work-info { grid-column:4/9; }
-      .work-desc-col { grid-column:9/12; }
-      .work-arrow { grid-column:12/13; }
       .logo-matrix { grid-template-columns:repeat(4,1fr); }
     }
     @media (max-width:600px) {
       .work-grid { grid-template-columns:1fr; }
       .play-grid { grid-template-columns:1fr; }
+      .testimonials-grid { grid-template-columns:1fr; }
       .logo-matrix { grid-template-columns:repeat(3,1fr); }
     }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
@@ -213,21 +196,38 @@
           <span class="section-number" aria-hidden="true">03</span>
           <span class="section-title" id="sel-play-heading">Selected Personal Work</span>
         </div>
-        <div class="play-grid">
-          <article class="play-card" tabindex="0" aria-label="Freelance Illustration">
-            <div class="play-card-bg" style="background-image:url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=70');"></div>
-            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
-            <div class="play-card-content"><p class="play-card-label">Illustration</p><h3 class="play-card-title">Freelance Work</h3></div>
-          </article>
-          <article class="play-card sand" tabindex="0" aria-label="FA Match Day Illustration">
-            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" stroke-width="1.2"/></svg></div>
-            <div class="play-card-content"><p class="play-card-label" style="color:rgba(0,0,0,0.4)">Illustration</p><h3 class="play-card-title" style="color:var(--ink)">FA Match Day</h3></div>
-          </article>
-          <article class="play-card red" tabindex="0" aria-label="Personal Experiments">
-            <div class="play-card-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="white" stroke-width="1.2"/></svg></div>
-            <div class="play-card-content"><p class="play-card-label">Personal</p><h3 class="play-card-title">Experiments</h3></div>
-          </article>
-        </div>
+        <ul class="play-grid" role="list">
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder" style="background-image:url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=70'); background-size:cover; background-position:center;"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">Freelance Illustration</h3>
+              <p class="work-desc">Commercial and editorial illustration for clients including the Football Association.</p>
+              <span class="work-tag">Illustration / Freelance</span>
+            </div>
+          </li>
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">FA Match Day</h3>
+              <p class="work-desc">Match day illustrations and visual identity work for FA Cup campaign activity.</p>
+              <span class="work-tag">Illustration / Football Association</span>
+            </div>
+          </li>
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">Personal Experiments</h3>
+              <p class="work-desc">Ongoing personal work exploring design, motion, and generative methods.</p>
+              <span class="work-tag">Personal / Experiments</span>
+            </div>
+          </li>
+        </ul>
         <a href="play.html" class="see-all">See all personal work &#8594;</a>
       </div>
     </section>
