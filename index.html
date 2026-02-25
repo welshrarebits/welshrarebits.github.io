@@ -54,32 +54,17 @@
     .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; order:2; }
     .intro-block { max-width:65ch; }
     .intro-block p { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.1rem); font-style:italic; font-weight:300; line-height:1.75; color:var(--muted); }
-    .work-list { display:flex; flex-direction:column; }
-    .work-item { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding:1.5rem 0; border-bottom:1px solid var(--rule); cursor:pointer; transition:background 0.15s; }
-    @supports (container-type: inline-size) {
-      .work-item { container-type:inline-size; container-name:workrow; }
-    }
-    .work-item:hover { background:rgba(0,0,0,0.02); }
-    .work-item:hover .work-arrow svg { transform:translate(3px,-3px); }
-    .work-thumb { grid-column:1/4; aspect-ratio:16/9; overflow:hidden; background:var(--rule); flex-shrink:0; position:relative; align-self:start; }
-    .work-thumb-img { width:100%; height:100%; object-fit:cover; display:block; opacity:0.75; transition:opacity 0.2s; }
-    .work-item:hover .work-thumb-img { opacity:1; }
+    .work-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
+    .work-card { display:flex; flex-direction:column; cursor:pointer; padding-top:1.25rem; transition:opacity 0.15s; }
+    .work-card:hover { opacity:0.8; }
+    .work-thumb { aspect-ratio:16/9; overflow:hidden; background:var(--rule); position:relative; margin-bottom:1.25rem; }
+    .work-thumb-img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity 0.2s; opacity:0.85; }
+    .work-card:hover .work-thumb-img { opacity:1; }
     .work-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); }
-    .work-info { grid-column:4/8; align-self:start; }
-    .work-title { font-family:var(--title); font-size:clamp(1.15rem,3.5vw,2rem); font-weight:700; letter-spacing:-0.01em; line-height:1.1; margin-bottom:0; color:var(--strong); }
-    @supports (container-type: inline-size) {
-      .work-title { font-size:2rem; }
-    }
-    @container workrow (max-width:1040px) { .work-title { font-size:1.5rem; } }
-    @container workrow (max-width:720px) { .work-title { font-size:1.15rem; } }
-    @container workrow (max-width:480px) { .work-title { font-size:1rem; } }
-    .work-desc-col { grid-column:8/12; align-self:start; padding-top:0; }
-    .work-desc { font-size:var(--fs-sm); color:var(--muted); font-weight:300; line-height:1.8; background-image:repeating-linear-gradient(to bottom, transparent, transparent calc(1.8em - 1px), var(--rule) calc(1.8em - 1px), var(--rule) 1.8em); background-size:100% 1.8em; padding-bottom:1px; }
-    .work-meta { margin-top:0.75rem; display:flex; flex-direction:column; gap:0.2rem; }
-    .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; opacity:0.5; }
-    .work-year { display:none; }
-    .work-arrow { grid-column:12/13; display:flex; justify-content:flex-end; align-self:start; padding-top:0.2rem; padding-right:0.25rem; }
-    .work-arrow svg { transition:transform 0.2s; }
+    .work-card-body { display:flex; flex-direction:column; flex:1; gap:0.5rem; }
+    .work-title { font-family:var(--title); font-size:clamp(1rem,1.5vw,1.25rem); font-weight:700; letter-spacing:-0.01em; line-height:1.15; color:var(--strong); }
+    .work-desc { font-family:var(--sans); font-size:var(--fs-sm); color:var(--muted); font-weight:300; line-height:1.75; }
+    .work-tag { font-family:var(--mono); font-size:var(--fs-xs); color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; opacity:0.5; margin-top:0.25rem; }
     .see-all { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; }
     .see-all:hover { color:var(--accent); border-color:var(--accent); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
@@ -122,6 +107,7 @@
       .testimonials-grid { grid-template-columns:1fr; gap:3rem; }
       .play-grid { grid-template-columns:1fr 1fr; }
       .contact-block { grid-template-columns:1fr; }
+      .work-grid { grid-template-columns:repeat(3,1fr); }
       .work-thumb { grid-column:1/4; }
       .work-info { grid-column:4/9; }
       .work-desc-col { grid-column:9/12; }
@@ -129,11 +115,9 @@
       .logo-matrix { grid-template-columns:repeat(4,1fr); }
     }
     @media (max-width:600px) {
+      .work-grid { grid-template-columns:1fr; }
       .play-grid { grid-template-columns:1fr; }
       .logo-matrix { grid-template-columns:repeat(3,1fr); }
-      .work-thumb { grid-column:1/4; }
-      .work-info { grid-column:4/12; }
-      .work-desc-col { display:none; }
     }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
@@ -188,26 +172,36 @@
           <span class="section-number" aria-hidden="true">02</span>
           <span class="section-title" id="sel-work-heading">Selected Work</span>
         </div>
-        <ul class="work-list" role="list">
-          <li class="work-item" tabindex="0">
-            <div class="work-thumb" aria-hidden="true"><img class="work-thumb-img" src="assets/thumbnails/gpg.png" alt="GPG"></div>
-            <div class="work-info"><h3 class="work-title">Re-imagining the Government Digital Service (GDS) ‘Good Practise Guides’</h3></div>
-            <div class="work-desc-col"><p class="work-desc">In my previous roles as both a Product Manager and later as an Identity & Trust Specialist, 
-              the GPG Guides became critical documents for me to understand, reference, and perhaps most importantly articulate to others.</p>
-              <div class="work-meta"><span class="work-tag">Service Design / GDS</span></div></div>
-            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+        <ul class="work-grid" role="list">
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">GOV.UK — Service Design</h3>
+              <p class="work-desc">Designing end-to-end public services at the Government Digital Service.</p>
+              <span class="work-tag">Service Design / GDS</span>
+            </div>
           </li>
-          <li class="work-item" tabindex="0">
-            <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
-            <div class="work-info"><h3 class="work-title">Disney — Localisation Platform</h3></div>
-            <div class="work-desc-col"><p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p><div class="work-meta"><span class="work-tag">Product Management / Film &amp; TV</span></div></div>
-            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">Disney — Localisation Platform</h3>
+              <p class="work-desc">Award-winning product management for Film &amp; TV localisation at scale.</p>
+              <span class="work-tag">Product Management / Film &amp; TV</span>
+            </div>
           </li>
-          <li class="work-item" tabindex="0">
-            <div class="work-thumb" aria-hidden="true"><div class="work-thumb-placeholder"></div></div>
-            <div class="work-info"><h3 class="work-title">Netflix — Subtitle Workflow</h3></div>
-            <div class="work-desc-col"><p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p><div class="work-meta"><span class="work-tag">Product Management / Localisation</span></div></div>
-            <div class="work-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <li class="work-card" tabindex="0">
+            <div class="work-thumb">
+              <div class="work-thumb-placeholder"></div>
+            </div>
+            <div class="work-card-body">
+              <h3 class="work-title">Netflix — Subtitle Workflow</h3>
+              <p class="work-desc">Streamlining multilingual subtitle delivery for global content pipelines.</p>
+              <span class="work-tag">Product Management / Localisation</span>
+            </div>
           </li>
         </ul>
         <a href="work.html" class="see-all">See all work &#8594;</a>
