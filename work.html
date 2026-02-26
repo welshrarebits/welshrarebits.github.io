@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc;
+      --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be; --hover-tint:rgba(0,0,0,0.02);
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
       --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
@@ -51,7 +51,7 @@
     .mobile-menu a:hover { color:var(--accent); }
 
     /* ── PAGE ── */
-    .page-section { padding:clamp(3rem,6vw,3rem) 0; }
+    .page-section { padding:3rem 0; }
     .section-header { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
     .section-number { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; color:var(--muted); order:1; }
     .section-title { font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:400; letter-spacing:0.14em; text-transform:uppercase; order:2; }
@@ -71,12 +71,11 @@
       transition:background 0.15s;
     }
 
-    .work-entry:hover { background:rgba(0,0,0,0.02); }
+    .work-entry:hover { background:var(--hover-tint); }
 
     /* Thumbnail — cols 1–3 */
     .work-entry-thumb {
       grid-column:1/4;
-      display:block;
       width:100%;
       aspect-ratio:16/9;
       overflow:hidden;
@@ -84,7 +83,7 @@
     }
     .work-entry-thumb-img { display:block; width:100%; height:100%; object-fit:cover; opacity:0.85; transition:opacity 0.3s, transform 0.4s ease; }
     .work-entry:hover .work-entry-thumb-img { opacity:1; transform:scale(1.02); }
-    .work-entry-thumb-placeholder { display:block; width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,#c8c5be 100%); }
+    .work-entry-thumb-placeholder { width:100%; height:100%; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); }
 
     /* Title + subtitle — cols 4–6 */
     .work-entry-identity {
@@ -116,7 +115,7 @@
       display:flex;
       flex-direction:column;
       align-items:flex-start;
-      gap:0.75rem;
+      gap:0.4rem;
     }
     .work-entry-desc > p {
       font-family:var(--sans);
@@ -131,7 +130,6 @@
       grid-column:11/13;
       display:flex;
       flex-direction:column;
-      gap:0.3rem;
     }
     .work-meta-tags {
       display:flex;
@@ -156,7 +154,6 @@
       font-size:var(--fs-xs);
       color:var(--muted);
       font-weight:400;
-      letter-spacing:0;
       line-height:1.4;
     }
     .work-entry-read-more {
@@ -186,7 +183,6 @@
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
       /* Thumb | identity | desc — hide meta col */
-      .work-entry-thumb { grid-column:1/4; }
       .work-entry-identity { grid-column:4/8; }
       .work-entry-desc { grid-column:8/13; }
       .work-entry-meta { grid-column:8/13; }
@@ -250,7 +246,7 @@
 
         <ul class="work-list" role="list">
 
-          <!-- 01 — GOV.UK -->
+          <!-- 01 — GOV.UK: keep aria-label in sync with .work-entry-title if title changes -->
           <li>
             <a href="work-govuk.html" class="work-entry reveal" aria-label="GOV.UK — Service Design. Read case study.">
               <div class="work-entry-thumb" aria-hidden="true">
@@ -270,7 +266,7 @@
             </a>
           </li>
 
-          <!-- 02 — Disney -->
+          <!-- 02 — Disney: keep aria-label in sync with .work-entry-title if title changes -->
           <li>
             <a href="work-disney.html" class="work-entry reveal" aria-label="Disney — Localisation Platform. Read case study.">
               <div class="work-entry-thumb" aria-hidden="true">
@@ -290,7 +286,7 @@
             </a>
           </li>
 
-          <!-- 03 — Netflix -->
+          <!-- 03 — Netflix: keep aria-label in sync with .work-entry-title if title changes -->
           <li>
             <a href="work-netflix.html" class="work-entry reveal" aria-label="Netflix — Subtitle Workflow. Read case study.">
               <div class="work-entry-thumb" aria-hidden="true">
@@ -310,7 +306,7 @@
             </a>
           </li>
 
-          <!-- 04 — Sony -->
+          <!-- 04 — Sony: keep aria-label in sync with .work-entry-title if title changes -->
           <li>
             <a href="work-sony.html" class="work-entry reveal" aria-label="Sony — Localisation Operations. Read case study.">
               <div class="work-entry-thumb" aria-hidden="true">
@@ -330,7 +326,7 @@
             </a>
           </li>
 
-          <!-- 05 — Opencast / DWP -->
+          <!-- 05 — Opencast / DWP: keep aria-label in sync with .work-entry-title if title changes -->
           <li>
             <a href="work-opencast-dwp.html" class="work-entry reveal" aria-label="Opencast — DWP. Read case study.">
               <div class="work-entry-thumb" aria-hidden="true">
@@ -393,7 +389,7 @@
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e, i) {
         if (e.isIntersecting) {
-          e.target.style.transitionDelay = (i * 0.07) + 's';
+          e.target.style.transitionDelay = Math.min(i * 0.07, 0.3) + 's';
           e.target.classList.add('visible');
           observer.unobserve(e.target);
         }
