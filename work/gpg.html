@@ -239,6 +239,17 @@
     }
     .cs-body-text + .cs-body-text { margin-top:1em; }
 
+    /* Lists inside body sections */
+    .cs-section ul {
+      font-family:var(--sans); font-size:var(--fs-sm);
+      font-weight:300; line-height:1.85; color:var(--strong);
+      margin:0.75em 0 0.75em 1.1em;
+      list-style:disc;
+    }
+    .cs-section ul li { padding-left:0.25em; margin-bottom:0.25em; }
+    .cs-section ul a { color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+    .cs-section ul a:hover { opacity:0.7; }
+
     /* Pull quote — remove block if not needed per case study */
     .cs-quote {
       border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
@@ -395,16 +406,12 @@
         <!-- Left: featured image (scrolls) then meta (sticks) -->
         <div class="cs-split-left-col reveal">
 
-          <!-- EDIT: replace placeholder div with real image when ready:
-               <img class="cs-featured-img"
-                    src="assets/thumbnails/your-image.png"
-                    alt="Descriptive alt text" /> -->
-			
-	           <img class="cs-featured-img" 
-				   src="../assets/thumbnails/gpg.png" 
-				   alt="Identity Verification 5" />
-          
-          <div class="cs-split-meta-wrap">
+          <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
+          <img class="cs-featured-img"
+               src="../assets/thumbnails/gpg.png"
+               alt="Good Practice Guide redesign — featured image" />
+
+        <div class="cs-split-meta-wrap">
           <div class="cs-split-meta">
             <div class="cs-meta">
               <div class="cs-meta-item">
@@ -421,7 +428,7 @@
               </div>
               <div class="cs-meta-item">
                 <span class="cs-meta-label">Year</span>
-                <span class="cs-meta-value">2022&#8211;2020</span><!-- EDIT -->
+                <span class="cs-meta-value">2020&#8211;2022</span><!-- EDIT -->
               </div>
             </div>
           </div>
@@ -434,7 +441,7 @@
             </a>
           </div>
           </div><!-- /cs-split-meta-wrap -->
-        </div>
+        </div><!-- /cs-split-left-col -->
 
         <!-- Right: body content -->
         <div class="cs-split-body-col">
@@ -452,10 +459,10 @@
             <p class="cs-body-text">In my role as both a Product Manager and later as an Identity & Trust Specialist in Policy, these became critical documents for me to 
               understand, reference, and perhaps most importantly articulate to others.
 
-            <p class="cs-body-text">However, GPG 45 alone weighs in at 33 pages (8972 words), including a 29 page sub section with 32 individual 
-              ID profiles presented as tabular data. So I think it’s fair to say these were not the most accessible reads. Even by their own admission the Cabinet Office 
-              recognised (via their own website) that “these guides are necessarily quite technical”.
-            <p class="cs-body-text">I had already seen a couple attempts to re-frame this information, for example the digital consultancy 
+            <p class="cs-body-text">However, GPG 45 alone weighs in at 33 pages (8972 words), including a 29 page sub section with 32 individual
+              ID profiles presented as tabular data. So I think it’s fair to say these were not the most accessible reads. Even by their own admission the Cabinet Office
+              recognised (via their own website) that &#8220;these guides are necessarily quite technical&#8221;.</p>
+            <p class="cs-body-text">I had already seen a couple attempts to re-frame this information, for example the digital consultancy
               Hippo, who opted for a Lego bricks analogy (see below).</p><!-- EDIT -->
           </div>
 
@@ -470,11 +477,14 @@
               <p>&#8220;The most important thing was making the invisible visible &#8212; mapping what caseworkers actually did versus what policy intended.&#8221;</p><!-- EDIT -->
             </div>
 
-            <!-- Inline image — replace placeholder with <img> when ready:
-                 <img class="cs-inline-img" src="assets/..." alt="..." /> -->
+            <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <div class="cs-inline-wrap">
-              <div class="cs-inline-placeholder" aria-hidden="true"></div>
-              <p class="cs-caption">Service blueprint mapped across five departments, co-created with frontline caseworkers.</p><!-- EDIT -->
+              <img class="cs-inline-img"
+                   src="../assets/images/cs-01-hippo-lego.jpg"
+                   alt="Hippo digital consultancy Lego bricks analogy for GPG 45"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+              <p class="cs-caption">Hippo's Lego-bricks reframe of GPG 45 — an early attempt to make the identity assurance model accessible.</p><!-- EDIT -->
             </div>
 
             <p class="cs-body-text">Workshop synthesis sessions brought together policy leads, product managers, and frontline staff to pressure-test the emerging recommendations before they were codified into guidance.</p><!-- EDIT -->
