@@ -100,10 +100,55 @@
       padding:clamp(2.5rem,5vw,4rem) 0 clamp(1.25rem,2.5vw,2rem);
       border-bottom:1px solid var(--rule);
     }
-    .cs-eyebrow {
+    /* Breadcrumb — replaces plain eyebrow, all viewports */
+    .cs-breadcrumb {
+      display:flex; align-items:center; gap:0.5rem;
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:0.12em; text-transform:uppercase;
-      color:var(--accent); margin-bottom:0.75rem;
+      margin-bottom:0.75rem;
+    }
+    .cs-breadcrumb-link {
+      color:var(--accent); transition:opacity 0.2s;
+    }
+    .cs-breadcrumb-link:hover { opacity:0.7; }
+    .cs-breadcrumb-sep { color:var(--accent); }
+    .cs-breadcrumb-current { color:var(--accent); }
+
+    /* Mobile sticky breadcrumb — hidden by default, shown via JS on scroll */
+    .cs-breadcrumb-bar {
+      display:none;
+      position:sticky;
+      top:0; /* set by JS */
+      z-index:90;
+      background:var(--bg);
+      border-bottom:1px solid var(--rule);
+      padding:0.6rem var(--pad);
+    }
+    .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
+    .cs-breadcrumb-bar.visible { display:block; }
+
+    /* Back link — shared atom */
+    .cs-back {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.1em; text-transform:uppercase;
+      color:var(--accent); transition:opacity 0.2s;
+    }
+    .cs-back:hover { opacity:0.7; }
+    .cs-back svg { transition:transform 0.2s; }
+    .cs-back:hover svg { transform:translateX(-2px); }
+
+    /* Back link — desktop only, sits beneath meta rule inside sticky left col */
+    .cs-back-meta {
+      display:none;
+      padding-top:clamp(1rem,2vw,1.25rem);
+    }
+
+    /* Back link at foot of body column — mobile only
+       Hidden at wide viewports where sticky back link is present */
+    .cs-back-body {
+      display:none;
+      padding-top:clamp(1.25rem,2.5vw,1.75rem);
     }
     .cs-main-title {
       font-family:var(--title);
@@ -127,7 +172,7 @@
       padding-bottom:clamp(3rem,6vw,5rem);
     }
 
-    /* Left column — image scrolls naturally, meta sticks below it */
+    /* Left column — image scrolls naturally */
     .cs-split-left-col {
       padding-top:clamp(1rem,2vw,1.5rem);
     }
@@ -143,10 +188,13 @@
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
 
-    /* Meta — sticky once image scrolls past, top set precisely by JS */
-    .cs-split-meta {
+    /* Sticky wrapper — contains meta grid and back link, locks below header */
+    .cs-split-meta-wrap {
       position:sticky;
-      top:0; /* overridden by JS — includes breathing room below header */
+      top:0; /* set by JS */
+    }
+
+    .cs-split-meta {
       padding-top:clamp(1.25rem,2.5vw,1.75rem);
       padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       border-bottom:1px solid var(--rule);
@@ -231,6 +279,11 @@
     .reveal.visible { opacity:1; transform:translateY(0); }
 
     /* ── RESPONSIVE ── */
+    @media (min-width:701px) {
+      /* Back link in meta block — wide viewports only */
+      .cs-back-meta { display:block; }
+    }
+
     @media (max-width:900px) {
       .header-nav { display:none; }
       .nav-hamburger { display:flex; }
@@ -240,18 +293,22 @@
     @media (max-width:700px) {
       /* Stack: title > subtitle > image > meta > body — all scroll naturally */
       .cs-zone-split { grid-template-columns:1fr; }
-      .cs-split-left-col { padding-bottom:0; }
+      .cs-split-left-col {
+        padding-bottom:0;
+      }
+      .cs-split-meta-wrap {
+        position:static; /* no sticky on mobile */
+      }
       .cs-split-meta {
-        position:static;
         padding-left:0;
         padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       }
       .cs-split-body-col { padding-top:0; }
-      /* Section 01 on mobile: meta rule acts as its top border,
-         so reinstate top padding but no additional border-top */
-      .cs-section:first-child {
-        padding-top:clamp(1.25rem,2.5vw,1.75rem);
-      }
+      .cs-back-body { display:block; }
+      /* Section 01 on mobile: meta rule acts as its top border */
+      .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
+      /* Mobile sticky breadcrumb bar sits below header */
+      .cs-breadcrumb-bar { padding-left:var(--pad); padding-right:var(--pad); }
     }
   </style>
 </head>
@@ -293,6 +350,15 @@
     <hr class="header-rule" />
   </header>
 
+  <!-- Mobile sticky breadcrumb — appears below header once title zone scrolls out of view -->
+  <div class="cs-breadcrumb-bar" id="breadcrumb-bar" aria-hidden="true">
+    <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+      <a href="../work.html" class="cs-breadcrumb-link">Work</a>
+      <span class="cs-breadcrumb-sep">/</span>
+      <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
+    </nav>
+  </div>
+
   <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
     <a href="../index.html">About</a>
@@ -306,11 +372,17 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 1 — TITLE + SUBTITLE
-           EDIT: <title> in <head>, eyebrow number,
+           EDIT: <title> in <head>, breadcrumb Case Study number,
                  cs-main-title text, cs-subtitle text
            ═══════════════════════════════════════════ -->
       <div class="cs-zone-title reveal">
-        <p class="cs-eyebrow">Case Study &#8212; 01</p><!-- EDIT: number -->
+        <!-- Breadcrumb: "Work" links back, "Case Study — 01" is current page
+             EDIT: update Case Study number per page -->
+        <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+          <a href="../work.html" class="cs-breadcrumb-link">Work</a>
+          <span class="cs-breadcrumb-sep">/</span>
+          <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
+        </nav>
         <h1 class="cs-main-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1><!-- EDIT: title -->
         <p class="cs-subtitle">Designing end-to-end public services at scale, embedded within GDS across policy, technology, and operations.</p><!-- EDIT: subtitle -->
       </div>
@@ -329,6 +401,7 @@
                     alt="Descriptive alt text" /> -->
           <div class="cs-featured-placeholder" aria-hidden="true"></div>
 
+          <div class="cs-split-meta-wrap">
           <div class="cs-split-meta">
             <div class="cs-meta">
               <div class="cs-meta-item">
@@ -349,6 +422,15 @@
               </div>
             </div>
           </div>
+
+          <!-- Back link — desktop only, beneath meta rule -->
+          <div class="cs-back-meta">
+            <a href="../work.html" class="cs-back">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M3 8L8 3M3 8L8 13" stroke="currentColor" stroke-width="1.4"/></svg>
+              Back
+            </a>
+          </div>
+          </div><!-- /cs-split-meta-wrap -->
         </div>
 
         <!-- Right: body content -->
@@ -398,6 +480,14 @@
           </div>
           -->
 
+          <!-- Back link — foot of body column, all viewports -->
+          <div class="cs-back-body">
+            <a href="../work.html" class="cs-back">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M3 8L8 3M3 8L8 13" stroke="currentColor" stroke-width="1.4"/></svg>
+              Back
+            </a>
+          </div>
+
         </div><!-- /cs-split-body-col -->
       </div><!-- /cs-zone-split -->
 
@@ -440,16 +530,41 @@
       });
     });
 
-    // Set sticky top offset to exact header height — desktop only
-    function setStickyOffset() {
-      var header = document.querySelector('.site-header');
-      var meta = document.querySelector('.cs-split-meta');
-      if (header && meta && window.innerWidth > 700) {
-        meta.style.top = header.getBoundingClientRect().height + 'px';
+    // Sticky offsets — meta wrap (desktop), breadcrumb bar (mobile)
+    function setStickyOffsets() {
+      var header   = document.querySelector('.site-header');
+      var metaWrap = document.querySelector('.cs-split-meta-wrap');
+      var bar      = document.getElementById('breadcrumb-bar');
+      var h = header ? header.getBoundingClientRect().height : 0;
+      if (metaWrap && window.innerWidth > 700) {
+        metaWrap.style.top = h + 'px';
+      }
+      if (bar) {
+        bar.style.top = h + 'px';
       }
     }
-    setStickyOffset();
-    window.addEventListener('resize', setStickyOffset);
+    setStickyOffsets();
+    window.addEventListener('resize', setStickyOffsets);
+
+    // Show mobile sticky breadcrumb once title zone scrolls out of view
+    var titleZone = document.querySelector('.cs-zone-title');
+    var breadcrumbBar = document.getElementById('breadcrumb-bar');
+    if (titleZone && breadcrumbBar) {
+      var crumbObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (window.innerWidth <= 700) {
+            if (!e.isIntersecting) {
+              breadcrumbBar.classList.add('visible');
+              breadcrumbBar.setAttribute('aria-hidden', 'false');
+            } else {
+              breadcrumbBar.classList.remove('visible');
+              breadcrumbBar.setAttribute('aria-hidden', 'true');
+            }
+          }
+        });
+      }, { threshold:0 });
+      crumbObserver.observe(titleZone);
+    }
 
     // Reveal on scroll
     var observer = new IntersectionObserver(function(entries) {
