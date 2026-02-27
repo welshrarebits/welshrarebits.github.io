@@ -546,25 +546,31 @@
     setStickyOffsets();
     window.addEventListener('resize', setStickyOffsets);
 
-    // Show mobile sticky breadcrumb once title zone scrolls out of view
+    // Show mobile sticky breadcrumb as soon as title zone bottom edge
+    // scrolls past the sticky header — checked on every scroll tick
     var titleZone = document.querySelector('.cs-zone-title');
     var breadcrumbBar = document.getElementById('breadcrumb-bar');
-    if (titleZone && breadcrumbBar) {
-      var crumbObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (window.innerWidth <= 700) {
-            if (!e.isIntersecting) {
-              breadcrumbBar.classList.add('visible');
-              breadcrumbBar.setAttribute('aria-hidden', 'false');
-            } else {
-              breadcrumbBar.classList.remove('visible');
-              breadcrumbBar.setAttribute('aria-hidden', 'true');
-            }
-          }
-        });
-      }, { threshold:0 });
-      crumbObserver.observe(titleZone);
+    function updateBreadcrumbBar() {
+      if (!titleZone || !breadcrumbBar) return;
+      if (window.innerWidth > 700) {
+        breadcrumbBar.classList.remove('visible');
+        breadcrumbBar.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      var header = document.querySelector('.site-header');
+      var headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+      var titleBottom  = titleZone.getBoundingClientRect().bottom;
+      if (titleBottom <= headerBottom) {
+        breadcrumbBar.classList.add('visible');
+        breadcrumbBar.setAttribute('aria-hidden', 'false');
+      } else {
+        breadcrumbBar.classList.remove('visible');
+        breadcrumbBar.setAttribute('aria-hidden', 'true');
+      }
     }
+    window.addEventListener('scroll', updateBreadcrumbBar, { passive:true });
+    window.addEventListener('resize', updateBreadcrumbBar);
+    updateBreadcrumbBar();
 
     // Reveal on scroll
     var observer = new IntersectionObserver(function(entries) {
