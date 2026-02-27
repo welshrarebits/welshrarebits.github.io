@@ -137,18 +137,17 @@
        <img class="cs-featured-img" src="assets/thumbnails/your-image.png" alt="..." /> */
     .cs-featured-img {
       display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
-      margin-bottom:0.75rem;
     }
     .cs-featured-placeholder {
       width:100%; aspect-ratio:16/9;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
-      margin-bottom:0.75rem;
     }
 
     /* Meta — sticky once image scrolls past, top set precisely by JS */
     .cs-split-meta {
       position:sticky;
       top:0; /* overridden by JS */
+      padding-top:clamp(1.25rem,2.5vw,1.75rem);
       padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       border-bottom:1px solid var(--rule);
     }
@@ -245,9 +244,14 @@
       .cs-split-meta {
         position:static;
         padding-left:0;
-        padding-bottom:1rem;
+        padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       }
       .cs-split-body-col { padding-top:0; }
+      /* Section 01 on mobile: meta rule acts as its top border,
+         so reinstate top padding but no additional border-top */
+      .cs-section:first-child {
+        padding-top:clamp(1.25rem,2.5vw,1.75rem);
+      }
     }
   </style>
 </head>
