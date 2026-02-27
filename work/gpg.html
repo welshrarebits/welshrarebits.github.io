@@ -146,7 +146,7 @@
     /* Meta — sticky once image scrolls past, top set precisely by JS */
     .cs-split-meta {
       position:sticky;
-      top:0; /* overridden by JS */
+      top:0; /* overridden by JS — includes breathing room below header */
       padding-top:clamp(1.25rem,2.5vw,1.75rem);
       padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       border-bottom:1px solid var(--rule);
@@ -445,7 +445,7 @@
       var header = document.querySelector('.site-header');
       var meta = document.querySelector('.cs-split-meta');
       if (header && meta && window.innerWidth > 700) {
-        meta.style.top = (header.getBoundingClientRect().height + 8) + 'px';
+        meta.style.top = header.getBoundingClientRect().height + 'px';
       }
     }
     setStickyOffset();
