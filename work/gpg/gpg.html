@@ -236,7 +236,8 @@
       font-family:var(--sans); font-size:var(--fs-sm);
       font-weight:300; line-height:1.85; color:var(--strong);
     }
-    .cs-body-text + .cs-body-text { margin-top:1em; }
+    .cs-body-text + .cs-body-text,
+    .cs-inline-wrap + .cs-body-text { margin-top:1em; }
 
     /* Inline list — matches body text treatment */
     .cs-body-list {
@@ -272,7 +273,8 @@
 
     /* Inline image + caption
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
-    .cs-inline-wrap { margin:1.5rem 0; }
+    .cs-inline-wrap { margin:1.5rem 0 0; }
+    .cs-inline-wrap:last-child { margin-bottom:0; }
     .cs-inline-img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
     .cs-inline-placeholder {
       width:100%; aspect-ratio:16/9;
@@ -488,8 +490,8 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption">Hippo's Lego-brick analogy of GPG 45.</p>
-              <p class="cs-body-text">some test text to validate horizontal rule assumption</p>
             </div>
+            <p class="cs-body-text">some test text to validate horizontal rule assumption</p>
           </div>
 
           <!-- Section 02 -->
