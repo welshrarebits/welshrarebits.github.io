@@ -19,6 +19,7 @@
       --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
+      --footer-text:rgba(255,255,255,0.3);
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -223,15 +224,13 @@
       border-bottom:1px solid var(--rule);
     }
     .cs-section:first-child { padding-top:0; }
-    .cs-section-num {
-      font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0.1em; color:var(--accent); opacity:0.8;
-      margin-bottom:0.3rem;
-    }
+    .cs-section-num { display:none; }
     .cs-section-heading {
-      font-family:var(--sans); font-size:clamp(0.7rem,1.5vw,0.9rem);
-      font-weight:400; letter-spacing:0.14em; text-transform:uppercase;
+      font-family:var(--sans); font-size:clamp(0.75rem,1.5vw,0.9rem);
+      font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
       color:var(--ink); margin-bottom:0.875rem;
+      padding-left:0.75rem;
+      border-left:2px solid var(--accent);
     }
     .cs-body-text {
       font-family:var(--sans); font-size:var(--fs-sm);
@@ -239,16 +238,23 @@
     }
     .cs-body-text + .cs-body-text { margin-top:1em; }
 
-    /* Lists inside body sections */
-    .cs-section ul {
+    /* Inline list — matches body text treatment */
+    .cs-body-list {
+      margin-top:1em; margin-bottom:1em;
+      padding-left:1em;
+      display:flex; flex-direction:column; gap:0.4em;
+    }
+    .cs-body-list li {
       font-family:var(--sans); font-size:var(--fs-sm);
       font-weight:300; line-height:1.85; color:var(--strong);
-      margin:0.75em 0 0.75em 1.1em;
-      list-style:disc;
+      padding-left:0.5em;
+      border-left:1px solid var(--rule);
     }
-    .cs-section ul li { padding-left:0.25em; margin-bottom:0.25em; }
-    .cs-section ul a { color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
-    .cs-section ul a:hover { opacity:0.7; }
+    .cs-body-list-link {
+      color:var(--accent); font-weight:400;
+      transition:opacity 0.2s;
+    }
+    .cs-body-list-link:hover { opacity:0.7; }
 
     /* Pull quote — remove block if not needed per case study */
     .cs-quote {
@@ -277,7 +283,7 @@
 
     /* ── FOOTER ── */
     footer {
-      background:var(--ink); color:rgba(255,255,255,0.3);
+      background:var(--ink); color:var(--footer-text);
       padding:2rem 0; margin-top:clamp(4rem,8vw,7rem);
     }
     .footer-inner {
@@ -446,76 +452,64 @@
         <!-- Right: body content -->
         <div class="cs-split-body-col">
 
-          <!-- Section 01 — rename heading as needed -->
+          <!-- Section 01 -->
           <div class="cs-section reveal">
             <p class="cs-section-num">01</p>
-            <p class="cs-section-heading">The Problem</p><!-- EDIT: heading -->
+            <p class="cs-section-heading">The Problem</p>
             <p class="cs-body-text">In 2012 GDS published its series of Good Practice Guides (GPGs), their aim was to assist providers of identity assurance 
-              when it came to government services:</p><!-- EDIT -->
-            <ul>
-  <li><a href="https://example.com/documentation">GPG 43:</a> Requirements for Secure Delivery of Online Public Services</li>
-  <li><a href="https://example.com/tutorials">GPG 44:</a> Authentication Credentials in Support of HMG Online Services</li>
-  <li><a href="https://example.com/support">GPG 45:</a> Validating and Verifying the Identity of an Individual</li>
+              when it came to government services:</p>
+            <ul class="cs-body-list">
+              <li><a href="https://example.com/documentation" class="cs-body-list-link">GPG 43:</a> Requirements for Secure Delivery of Online Public Services</li>
+              <li><a href="https://example.com/tutorials" class="cs-body-list-link">GPG 44:</a> Authentication Credentials in Support of HMG Online Services</li>
+              <li><a href="https://example.com/support" class="cs-body-list-link">GPG 45:</a> Validating and Verifying the Identity of an Individual</li>
             </ul>
-            <p class="cs-body-text">In my role as both a Product Manager and later as an Identity & Trust Specialist within Policy, these became critical 
-              documents for me to understand, reference and perhaps most importantly... articulate to others.
-
+            <p class="cs-body-text">In my role as both a Product Manager and later as an Identity &amp; Trust Specialist within Policy, these became critical 
+              documents for me to understand, reference and perhaps most importantly... articulate to others.</p>
             <p class="cs-body-text">However, GPG 45 (for example) weighed in at:</p>
-              <ul>
-                  <li>33 pages (8972 words)</li>
-                  <li>including a 29 page sub section</li>
-                  <li>with 32 individual ID profiles (presented as tabular data).</li> 
-              </ul>
-            
-            <p class="cs-body-text">So I think it’s fair to say these were not the most accessible reads. Even the Cabinet Office (via its own website)
-              recognised that:
-
-              <!-- Pull quote — remove this block if not needed -->
-              <div class="cs-quote">
-              <p>&#8220;...these guides are necessarily quite technical&#8221;</p><!-- EDIT -->
+            <ul class="cs-body-list">
+              <li>33 pages (8972 words)</li>
+              <li>including a 29 page sub section</li>
+              <li>with 32 individual ID profiles (presented as tabular data).</li>
+            </ul>
+            <p class="cs-body-text">So I think it's fair to say these were not the most accessible reads. Even the Cabinet Office (via its own website)
+              recognised that:</p>
+            <div class="cs-quote">
+              <p>&#8220;...these guides are necessarily quite technical&#8221;</p>
             </div>
-            
-            <p class="cs-body-text">I had already seen a couple attempts to re-frame this information, for example the digital consultancy
-              Hippo, who opted for a Lego bricks analogy (see below).</p><!-- EDIT -->
-          </div>
-
-           <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
+            <p class="cs-body-text">I had already seen a couple of attempts to re-frame this information, for example the digital consultancy
+              Hippo, who opted for a Lego bricks analogy (see below).</p>
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
                    src="../assets/images/cs-01-hippo-lego.jpg"
                    alt="Hippo digital consultancy Lego bricks analogy for GPG 45"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption">Hippo's Lego-bricks reframe of GPG 45.</p><!-- EDIT -->
+              <p class="cs-caption">Hippo's Lego-bricks reframe of GPG 45.</p>
             </div>
-
-          <p class="cs-body-text">In my role as both a Product Manager and later as an Identity & Trust Specialist within Policy, these became critical 
-              documents for me to understand, reference and perhaps most importantly... articulate to others.
+          </div>
 
           <!-- Section 02 -->
           <div class="cs-section reveal">
             <p class="cs-section-num">02</p>
-            <p class="cs-section-heading">Approach</p><!-- EDIT: heading -->
-            <p class="cs-body-text">We ran a series of contextual enquiry sessions with caseworkers across three regional offices, shadowing daily workflows and identifying the points at which the designed service diverged from lived reality.</p><!-- EDIT -->
-
+            <p class="cs-section-heading">Approach</p>
+            <p class="cs-body-text">We ran a series of contextual enquiry sessions with caseworkers across three regional offices, shadowing daily workflows and identifying the points at which the designed service diverged from lived reality.</p>
             <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../assets/images/cs-01-hippo-lego.jpg"
-                   alt="Hippo digital consultancy Lego bricks analogy for GPG 45"
+                   src="../assets/images/cs-01-approach.jpg"
+                   alt="Section 02 approach image"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption">Hippo's Lego-bricks reframe of GPG 45 — an early attempt to make the identity assurance model accessible.</p><!-- EDIT -->
+              <p class="cs-caption"><!-- EDIT: caption --></p>
             </div>
-
-            <p class="cs-body-text">Workshop synthesis sessions brought together policy leads, product managers, and frontline staff to pressure-test the emerging recommendations before they were codified into guidance.</p><!-- EDIT -->
+            <p class="cs-body-text">Workshop synthesis sessions brought together policy leads, product managers, and frontline staff to pressure-test the emerging recommendations before they were codified into guidance.</p>
           </div>
 
           <!-- Section 03 -->
           <div class="cs-section reveal">
             <p class="cs-section-num">03</p>
-            <p class="cs-section-heading">Outcome</p><!-- EDIT: heading -->
-            <p class="cs-body-text">The resulting practice guides were adopted across four government departments and informed the GDS updated guidance on end-to-end service design. A framework for measuring service quality at the seams between departments was piloted with two agencies.</p><!-- EDIT -->
+            <p class="cs-section-heading">Outcome</p>
+            <p class="cs-body-text">The resulting practice guides were adopted across four government departments and informed the GDS updated guidance on end-to-end service design. A framework for measuring service quality at the seams between departments was piloted with two agencies.</p>
           </div>
 
           <!-- ADD FURTHER SECTIONS following this pattern:
