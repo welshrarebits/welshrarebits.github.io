@@ -118,17 +118,21 @@
 
     /* Mobile sticky breadcrumb — hidden by default, shown via JS on scroll */
     .cs-breadcrumb-bar {
-      display:none;
+      display:block;
       position:sticky;
       top:var(--header-h);
       z-index:90;
       background:var(--bg);
       border-bottom:1px solid var(--rule);
-      padding:0.6rem var(--pad);
-      will-change:transform;
+      overflow:hidden;
+      max-height:0;
+      padding:0 var(--pad);
     }
     .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
-    .cs-breadcrumb-bar.visible { display:block; }
+    .cs-breadcrumb-bar.visible {
+      max-height:3rem;
+      padding:0.6rem var(--pad);
+    }
 
     /* Back link — shared atom */
     .cs-back {
@@ -793,16 +797,14 @@
       var titleBottom  = titleZone.getBoundingClientRect().bottom;
       var shouldShow = titleBottom <= headerBottom;
       if (shouldShow === barVisible) return;
-      requestAnimationFrame(function() {
-        if (shouldShow) {
-          breadcrumbBar.classList.add('visible');
-          breadcrumbBar.setAttribute('aria-hidden', 'false');
-        } else {
-          breadcrumbBar.classList.remove('visible');
-          breadcrumbBar.setAttribute('aria-hidden', 'true');
-        }
-        barVisible = shouldShow;
-      });
+      if (shouldShow) {
+        breadcrumbBar.classList.add('visible');
+        breadcrumbBar.setAttribute('aria-hidden', 'false');
+      } else {
+        breadcrumbBar.classList.remove('visible');
+        breadcrumbBar.setAttribute('aria-hidden', 'true');
+      }
+      barVisible = shouldShow;
     }
     window.addEventListener('scroll', updateBreadcrumbBar, { passive:true });
     window.addEventListener('resize', updateBreadcrumbBar);
