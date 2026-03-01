@@ -220,6 +220,9 @@
       padding:clamp(1.25rem,2.5vw,1.75rem) 0;
       border-bottom:1px solid var(--rule);
     }
+    .cs-section:last-child,
+    .cs-back-body ~ .cs-section,
+    .cs-section:has(+ .cs-back-body) { border-bottom:none; }
     .cs-section:first-child { padding-top:0; }
     .cs-section-num { display:none; }
     .cs-section-heading {
@@ -495,7 +498,7 @@
                    alt="Lego bricks analogy for GPG 45"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
             </div>
             <p class="cs-body-text">But this interpretation always seemed far too rigid to me, especially when dealing with a concept as fluid as identity. 
               Whilst I could appreciate the bricks were meant to be interchangeable. I couldn’t shake the feeling that this should be more about depth and 
@@ -520,7 +523,7 @@
                    alt="Principles of identity verification"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
             </div>
             
             <p class="cs-body-text">To address these unnecessary distractions, I created a couple of one pagers, which sought to cut through a lot of the noise, 
@@ -534,7 +537,7 @@
                    alt="The 5 elements of identity verification"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
             </div>
           </div>
 
@@ -554,7 +557,8 @@
                    alt="Original hand written notes"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
+            </div>
           </div>
 
           <!-- Section 05 -->
@@ -575,8 +579,8 @@
                    alt="the pentagon"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
-          </div>
+              <p class="cs-caption"></p>
+            </div>
             
                <p class="cs-body-text">However, the 5 GPG components were still just ‘points on my pentagon’ for want of a better phrase. They were linked 
                  but they didn’t illustrate the ‘flex’ that I felt was crucial in telling this story.</p>
@@ -645,7 +649,7 @@
                    alt="The 5 elements of identity verification"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
             </div>
             
             <p class="cs-body-text">But the evidence itself has not become ‘weaker’, after all it is still a valid UK passport. 
@@ -671,7 +675,7 @@
                    alt="The 5 elements of identity verification"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"><!-- EDIT: caption --></p>
+              <p class="cs-caption"></p>
             </div>
             
             <p class="cs-body-text">Please use this cross-section as a benchmark for how the full group would appear. Incidentally, 
@@ -697,10 +701,8 @@
           </div>
 
           <!-- ADD FURTHER SECTIONS following this pattern:
-          <!-- Section X 
-          <!-- EDIT: Numbering and heading 
           <div class="cs-section">
-            <p class="cs-section-num">04</p>
+            <p class="cs-section-num">XX</p>
             <p class="cs-section-heading">Section heading</p>
             <p class="cs-body-text">Body text.</p>
           </div>
