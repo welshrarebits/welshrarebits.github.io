@@ -118,24 +118,17 @@
 
     /* Mobile sticky breadcrumb — hidden by default, shown via JS on scroll */
     .cs-breadcrumb-bar {
-      display:block;
+      display:none;
       position:sticky;
       top:var(--header-h);
       z-index:90;
       background:var(--bg);
       border-bottom:1px solid var(--rule);
       padding:0.6rem var(--pad);
-      visibility:hidden;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.15s ease, visibility 0.15s ease;
+      will-change:transform;
     }
     .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
-    .cs-breadcrumb-bar.visible {
-      visibility:visible;
-      opacity:1;
-      pointer-events:auto;
-    }
+    .cs-breadcrumb-bar.visible { display:block; }
 
     /* Back link — shared atom */
     .cs-back {
@@ -768,16 +761,9 @@
 
     // Sticky offsets — meta wrap (desktop), breadcrumb bar (mobile)
     // Track header height via ResizeObserver — writes to CSS custom property
-    // so sticky offsets update smoothly without scroll-time recalculation
     var headerEl = document.querySelector('.site-header');
-    var barEl    = document.getElementById('breadcrumb-bar');
     function setHeaderHeight() {
       var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
-      // On mobile the breadcrumb bar is always in flow (visible or not),
-      // so meta-wrap top offset must account for both
-      if (window.innerWidth <= 700 && barEl) {
-        h += barEl.getBoundingClientRect().height;
-      }
       document.documentElement.style.setProperty('--header-h', h + 'px');
     }
     setHeaderHeight();
@@ -791,23 +777,32 @@
     // scrolls past the sticky header — checked on every scroll tick
     var titleZone = document.querySelector('.cs-zone-title');
     var breadcrumbBar = document.getElementById('breadcrumb-bar');
+    var barVisible = false;
     function updateBreadcrumbBar() {
       if (!titleZone || !breadcrumbBar) return;
       if (window.innerWidth > 700) {
-        breadcrumbBar.classList.remove('visible');
-        breadcrumbBar.setAttribute('aria-hidden', 'true');
+        if (barVisible) {
+          breadcrumbBar.classList.remove('visible');
+          breadcrumbBar.setAttribute('aria-hidden', 'true');
+          barVisible = false;
+        }
         return;
       }
       var header = document.querySelector('.site-header');
       var headerBottom = header ? header.getBoundingClientRect().bottom : 0;
       var titleBottom  = titleZone.getBoundingClientRect().bottom;
-      if (titleBottom <= headerBottom) {
-        breadcrumbBar.classList.add('visible');
-        breadcrumbBar.setAttribute('aria-hidden', 'false');
-      } else {
-        breadcrumbBar.classList.remove('visible');
-        breadcrumbBar.setAttribute('aria-hidden', 'true');
-      }
+      var shouldShow = titleBottom <= headerBottom;
+      if (shouldShow === barVisible) return;
+      requestAnimationFrame(function() {
+        if (shouldShow) {
+          breadcrumbBar.classList.add('visible');
+          breadcrumbBar.setAttribute('aria-hidden', 'false');
+        } else {
+          breadcrumbBar.classList.remove('visible');
+          breadcrumbBar.setAttribute('aria-hidden', 'true');
+        }
+        barVisible = shouldShow;
+      });
     }
     window.addEventListener('scroll', updateBreadcrumbBar, { passive:true });
     window.addEventListener('resize', updateBreadcrumbBar);
