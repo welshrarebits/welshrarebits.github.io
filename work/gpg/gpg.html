@@ -182,10 +182,10 @@
        Replace placeholder div with:
        <img class="cs-featured-img" src="assets/thumbnails/your-image.png" alt="..." /> */
     .cs-featured-img {
-      display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
+      display:block; width:100%; object-fit:contain;
     }
     .cs-featured-placeholder {
-      width:100%; aspect-ratio:16/9;
+      width:100%; min-height:12rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
 
@@ -275,9 +275,9 @@
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
     .cs-inline-wrap { margin:1.5rem 0 0; }
     .cs-inline-wrap:last-child { margin-bottom:0; }
-    .cs-inline-img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+    .cs-inline-img { display:block; width:100%; object-fit:contain; }
     .cs-inline-placeholder {
-      width:100%; aspect-ratio:16/9;
+      width:100%; min-height:12rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
     .cs-caption {
