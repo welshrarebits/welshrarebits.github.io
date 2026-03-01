@@ -20,6 +20,7 @@
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
       --footer-text:rgba(255,255,255,0.3);
+      --header-h:0px;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -119,7 +120,7 @@
     .cs-breadcrumb-bar {
       display:none;
       position:sticky;
-      top:0; /* set by JS */
+      top:var(--header-h);
       z-index:90;
       background:var(--bg);
       border-bottom:1px solid var(--rule);
@@ -182,17 +183,17 @@
        Replace placeholder div with:
        <img class="cs-featured-img" src="assets/thumbnails/your-image.png" alt="..." /> */
     .cs-featured-img {
-      display:block; width:100%; object-fit:contain;
+      display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
     }
     .cs-featured-placeholder {
-      width:100%; min-height:12rem;
+      width:100%; aspect-ratio:16/9;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
 
     /* Sticky wrapper — contains meta grid and back link, locks below header */
     .cs-split-meta-wrap {
       position:sticky;
-      top:0; /* set by JS */
+      top:var(--header-h);
     }
 
     .cs-split-meta {
@@ -275,9 +276,9 @@
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
     .cs-inline-wrap { margin:1.5rem 0 0; }
     .cs-inline-wrap:last-child { margin-bottom:0; }
-    .cs-inline-img { display:block; width:100%; object-fit:contain; }
+    .cs-inline-img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
     .cs-inline-placeholder {
-      width:100%; min-height:12rem;
+      width:100%; aspect-ratio:16/9;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
     .cs-caption {
@@ -758,20 +759,19 @@
     });
 
     // Sticky offsets — meta wrap (desktop), breadcrumb bar (mobile)
-    function setStickyOffsets() {
-      var header   = document.querySelector('.site-header');
-      var metaWrap = document.querySelector('.cs-split-meta-wrap');
-      var bar      = document.getElementById('breadcrumb-bar');
-      var h = header ? header.getBoundingClientRect().height : 0;
-      if (metaWrap && window.innerWidth > 700) {
-        metaWrap.style.top = h + 'px';
-      }
-      if (bar) {
-        bar.style.top = h + 'px';
-      }
+    // Track header height via ResizeObserver — writes to CSS custom property
+    // so sticky offsets update smoothly without scroll-time recalculation
+    var headerEl = document.querySelector('.site-header');
+    function setHeaderHeight() {
+      var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
     }
-    setStickyOffsets();
-    window.addEventListener('resize', setStickyOffsets);
+    setHeaderHeight();
+    if (window.ResizeObserver && headerEl) {
+      new ResizeObserver(setHeaderHeight).observe(headerEl);
+    } else {
+      window.addEventListener('resize', setHeaderHeight);
+    }
 
     // Show mobile sticky breadcrumb as soon as title zone bottom edge
     // scrolls past the sticky header — checked on every scroll tick
