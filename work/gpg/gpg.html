@@ -20,7 +20,7 @@
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
       --footer-text:rgba(255,255,255,0.3);
-      --header-h:0px;
+      --header-h:120px;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -762,9 +762,11 @@
     var headerEl = document.querySelector('.site-header');
     function setHeaderHeight() {
       var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
-      document.documentElement.style.setProperty('--header-h', h + 'px');
+      if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
     }
+    // Fire immediately, on DOMContentLoaded, and observe for any size changes
     setHeaderHeight();
+    document.addEventListener('DOMContentLoaded', setHeaderHeight);
     if (window.ResizeObserver && headerEl) {
       new ResizeObserver(setHeaderHeight).observe(headerEl);
     } else {
