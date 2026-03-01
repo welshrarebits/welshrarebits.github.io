@@ -118,21 +118,11 @@
 
     /* Mobile sticky breadcrumb — hidden by default, shown via JS on scroll */
     .cs-breadcrumb-bar {
-      display:block;
-      position:sticky;
-      top:var(--header-h);
-      z-index:90;
       background:var(--bg);
-      border-bottom:1px solid var(--rule);
-      overflow:hidden;
-      max-height:0;
-      padding:0 var(--pad);
-    }
-    .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
-    .cs-breadcrumb-bar.visible {
-      max-height:3rem;
+      border-top:1px solid var(--rule);
       padding:0.6rem var(--pad);
     }
+    .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
 
     /* Back link — shared atom */
     .cs-back {
@@ -310,6 +300,8 @@
     @media (min-width:701px) {
       /* Back link in meta block — wide viewports only */
       .cs-back-meta { display:block; }
+      /* Breadcrumb bar only needed on mobile — hide on desktop */
+      .cs-breadcrumb-bar { display:none; }
     }
 
     @media (max-width:900px) {
@@ -335,8 +327,9 @@
       .cs-back-body { display:block; }
       /* Section 01 on mobile: meta rule acts as its top border */
       .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
-      /* Mobile sticky breadcrumb bar sits below header */
-      .cs-breadcrumb-bar { padding-left:var(--pad); padding-right:var(--pad); }
+      .cs-zone-title { padding-top:1.25rem; }
+      /* Title zone breadcrumb replaced by sticky bar on mobile */
+      .cs-zone-title .cs-breadcrumb { display:none; }
     }
   </style>
 </head>
@@ -376,18 +369,17 @@
       </div>
     </div>
     <hr class="header-rule" />
+    <!-- Breadcrumb bar — mobile only, always visible, part of sticky header -->
+    <div class="cs-breadcrumb-bar" id="breadcrumb-bar">
+      <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+        <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
+        <span class="cs-breadcrumb-sep">/</span>
+        <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
+      </nav>
+    </div>
   </header>
 
-  <!-- Mobile sticky breadcrumb — appears below header once title zone scrolls out of view -->
-  <div class="cs-breadcrumb-bar" id="breadcrumb-bar" aria-hidden="true">
-    <nav class="cs-breadcrumb" aria-label="Breadcrumb">
-      <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
-      <span class="cs-breadcrumb-sep">/</span>
-      <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
-    </nav>
-  </div>
-
-  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+  <!-- Mobile menu -->  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
     <a href="../../index.html">About</a>
     <a href="../../work.html">Work</a>
@@ -763,8 +755,7 @@
       });
     });
 
-    // Sticky offsets — meta wrap (desktop), breadcrumb bar (mobile)
-    // Track header height via ResizeObserver — writes to CSS custom property
+    // Header height drives all sticky offsets via CSS custom property
     var headerEl = document.querySelector('.site-header');
     function setHeaderHeight() {
       var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
@@ -776,39 +767,6 @@
     } else {
       window.addEventListener('resize', setHeaderHeight);
     }
-
-    // Show mobile sticky breadcrumb as soon as title zone bottom edge
-    // scrolls past the sticky header — checked on every scroll tick
-    var titleZone = document.querySelector('.cs-zone-title');
-    var breadcrumbBar = document.getElementById('breadcrumb-bar');
-    var barVisible = false;
-    function updateBreadcrumbBar() {
-      if (!titleZone || !breadcrumbBar) return;
-      if (window.innerWidth > 700) {
-        if (barVisible) {
-          breadcrumbBar.classList.remove('visible');
-          breadcrumbBar.setAttribute('aria-hidden', 'true');
-          barVisible = false;
-        }
-        return;
-      }
-      var header = document.querySelector('.site-header');
-      var headerBottom = header ? header.getBoundingClientRect().bottom : 0;
-      var titleBottom  = titleZone.getBoundingClientRect().bottom;
-      var shouldShow = titleBottom <= headerBottom;
-      if (shouldShow === barVisible) return;
-      if (shouldShow) {
-        breadcrumbBar.classList.add('visible');
-        breadcrumbBar.setAttribute('aria-hidden', 'false');
-      } else {
-        breadcrumbBar.classList.remove('visible');
-        breadcrumbBar.setAttribute('aria-hidden', 'true');
-      }
-      barVisible = shouldShow;
-    }
-    window.addEventListener('scroll', updateBreadcrumbBar, { passive:true });
-    window.addEventListener('resize', updateBreadcrumbBar);
-    updateBreadcrumbBar();
 
     // Reveal on scroll
     var observer = new IntersectionObserver(function(entries) {
