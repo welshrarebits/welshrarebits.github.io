@@ -120,7 +120,8 @@
     .cs-breadcrumb-bar {
       background:var(--bg);
       border-top:1px solid var(--rule);
-      padding:0.6rem var(--pad);
+      border-bottom:1px solid var(--rule);
+      padding:clamp(1.25rem,2.5vw,2rem) 0;
     }
     .cs-breadcrumb-bar .cs-breadcrumb { margin-bottom:0; }
 
@@ -327,8 +328,8 @@
       .cs-back-body { display:block; }
       /* Section 01 on mobile: meta rule acts as its top border */
       .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
-      .cs-zone-title { padding-top:1.25rem; }
       /* Title zone breadcrumb replaced by sticky bar on mobile */
+      .cs-zone-title { padding-top:clamp(0.625rem,1.25vw,1rem); }
       .cs-zone-title .cs-breadcrumb { display:none; }
     }
   </style>
@@ -371,11 +372,13 @@
     <hr class="header-rule" />
     <!-- Breadcrumb bar — mobile only, always visible, part of sticky header -->
     <div class="cs-breadcrumb-bar" id="breadcrumb-bar">
-      <nav class="cs-breadcrumb" aria-label="Breadcrumb">
-        <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
-        <span class="cs-breadcrumb-sep">/</span>
-        <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
-      </nav>
+      <div class="container">
+        <nav class="cs-breadcrumb" aria-label="Breadcrumb">
+          <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
+          <span class="cs-breadcrumb-sep">/</span>
+          <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
+        </nav>
+      </div>
     </div>
   </header>
 
