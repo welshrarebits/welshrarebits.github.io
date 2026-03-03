@@ -12,15 +12,16 @@
     :root {
       --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
       --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
+      --hover-tint:rgba(0,0,0,0.02);
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
       --col-gap:clamp(1rem,2vw,1.5rem);
       --mono:'DM Mono',monospace;
       --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
-      --z-header:100; --z-overlay:101; --zone-gap:1rem; --page-top-pad:3rem;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
       --footer-text:rgba(255,255,255,0.3);
       --header-h:clamp(60px,10vw,90px);
+      --z-header:100; --z-overlay:101;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -99,7 +100,7 @@
 
     /* ── ZONE 1: TITLE + SUBTITLE ── */
     .cs-zone-title {
-      padding:var(--page-top-pad) 0 clamp(1.25rem,2.5vw,2rem);
+      padding:3rem 0 clamp(1.25rem,2.5vw,2rem);
       border-bottom:1px solid var(--rule);
     }
     /* Breadcrumb — replaces plain eyebrow, all viewports */
@@ -275,7 +276,7 @@
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
     .cs-inline-wrap { margin:1.5rem 0 0; }
     .cs-inline-wrap:last-child { margin-bottom:0; }
-    .cs-inline-img { display:block; width:100%; object-fit:contain; max-height:70vh; }
+    .cs-inline-img { display:block; width:100%; object-fit:contain; }
     .cs-inline-placeholder {
       width:100%; min-height:12rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
@@ -284,14 +285,6 @@
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:0.06em; color:var(--muted);
       opacity:0.6; margin-top:0.5rem;
-    }
-
-    /* Read-time indicator — desktop only, between meta block and back link */
-    .cs-meta-read {
-      display:none;
-      padding-top:clamp(1rem,2vw,1.25rem);
-      font-family:var(--sans); font-size:var(--fs-sm);
-      color:var(--strong);
     }
 
     /* ── FOOTER ── */
@@ -308,34 +301,10 @@
 
     /* ── RESPONSIVE ── */
     @media (min-width:701px) {
-      /* Back link and read-time in meta block — wide viewports only */
+      /* Back link in meta block — wide viewports only */
       .cs-back-meta { display:block; }
-      .cs-meta-read { display:block; }
       /* Breadcrumb bar only needed on mobile — hide on desktop */
       .cs-breadcrumb-bar { display:none; }
-
-      /* Section numbering — wide viewports only */
-      .cs-section-heading-wrap {
-        display:flex; align-items:baseline;
-        gap:0; margin-bottom:0.875rem;
-      }
-      .cs-section-num {
-        display:inline;
-        font-family:var(--sans); font-size:clamp(0.75rem,1.5vw,0.9rem);
-        font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
-        color:var(--ink);
-        white-space:nowrap; flex-shrink:0;
-      }
-      .cs-section-num::after {
-        content:' \007C\00A0';
-        color:var(--accent);
-        font-weight:300;
-      }
-      .cs-section-heading {
-        margin-bottom:0;
-        padding-left:0;
-        border-left:none;
-      }
     }
 
     @media (max-width:900px) {
@@ -362,7 +331,7 @@
       /* Section 01 on mobile: meta rule acts as its top border */
       .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
       /* Title zone breadcrumb replaced by sticky bar on mobile */
-      .cs-zone-title { padding-top:var(--zone-gap); }
+      .cs-zone-title { padding-top:1rem; }
       .cs-zone-title .cs-breadcrumb { display:none; }
     }
   </style>
@@ -478,12 +447,6 @@
             </div>
           </div>
 
-          <!-- Read-time indicator — desktop only -->
-          <!-- EDIT: update section count and read-time if content changes -->
-          <div class="cs-meta-read">
-            10 sections (7 min read)
-          </div>
-
           <!-- Back link — desktop only, beneath meta rule -->
           <div class="cs-back-meta">
             <a href="../../work.html" class="cs-back">
@@ -499,10 +462,8 @@
 
           <!-- Section 01 -->
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">01</p>
             <p class="cs-section-heading">The Problem</p>
-          </div>
             <p class="cs-body-text">In 2012 GDS published its series of Good Practice Guides (GPGs) for providers of identity assurance to 
               Government Services:</p>
             <!-- EDIT: urls of bullets -->
@@ -525,10 +486,8 @@
 
           <!-- Section 02 -->
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">02</p>
             <p class="cs-section-heading">Reframing the problem</p>
-          </div>
             <p class="cs-body-text">I had already seen a couple of attempts to re-frame this information, for example the digital consultancy
               Hippo, who opted for a Lego bricks analogy (see below).</p>
 
@@ -541,7 +500,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             <p class="cs-body-text">But this interpretation always seemed far too rigid to me, especially when dealing with a concept as fluid as identity. 
               Whilst I could appreciate the bricks were meant to be interchangeable. I couldn’t shake the feeling that this should be more about depth and 
               breadth rather than height.</p>
@@ -549,10 +508,8 @@
 
           <!-- Section 03 -->
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">03</p>
             <p class="cs-section-heading">What did I do about it?</p>
-          </div>
             <p class="cs-body-text">I focussed on creating a framework that could literally ‘flex’. After all, an identity can be challenged in a 
               variety of ways, for a variety of reasons and across a variety of different channels.</p>
             <p class="cs-body-text">My focus was less about 'how' to achieve a certain score and more about 'why' that score was best suited to certain scenarios and factors.</p>
@@ -568,7 +525,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
             <p class="cs-body-text">To address these unnecessary distractions, I created a couple of one pagers, which sought to cut through a lot of the noise, 
               acting as anchors for discussions and stakeholder alignment.</p>
@@ -582,16 +539,14 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
           </div>
 
           <!-- Section 04 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">04</p>
             <p class="cs-section-heading">Research & Collaboration</p>
-          </div>
             <p class="cs-body-text">With these footholds in place, I was then able to return to my initial goal of finding a framework that flexed. In the interests 
               of working in the open, I’ve managed to find some of my original notes and general musings from the numerous meetings I arranged at the time.</p>
 
@@ -604,16 +559,14 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
           </div>
 
           <!-- Section 05 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">05</p>
             <p class="cs-section-heading">Divergent thinking</p>
-          </div>
             <p class="cs-body-text">What started to emerge from those early brain dumps, was a series of triangular patterns which reflected the different 
               phases / stages within the identity verification process.</p>
 
@@ -626,7 +579,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
             <p class="cs-body-text">These patterns needed to be encompassed by all 5 key elements of GPG, which (conveniently for me) lent themselves to 
               a pentagon. The following images were my first attempts to transfer those relatively chaotic meeting notes into a usable framework.</p>
@@ -640,7 +593,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
                <p class="cs-body-text">However, the 5 GPG components were still just ‘points on my pentagon’ for want of a better phrase. They were linked 
                  but they didn’t illustrate the ‘flex’ that I felt was crucial in telling this story.</p>
@@ -651,10 +604,8 @@
           <!-- Section 06 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">06</p>
             <p class="cs-section-heading">Taking a new approach</p>
-          </div>
             <p class="cs-body-text">I shifted my attention back to the scoring system that underpinned the guides. 
               To clarify, each of the 5 GPG elements are scored against a Profile Criteria. Each profile is made up of the same 3 elements:</p>
              <!-- EDIT: bullets -->
@@ -679,17 +630,15 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
           </div>
 
           <!-- Section 07 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">07</p>
             <p class="cs-section-heading">Convergent thinking</p>
-          </div>
             <p class="cs-body-text">Reintroducing the pentagon was the eureka moment for me, as I could now discuss M1A (red) as a pattern rather than a score.
               But to see the true value of this framework, I needed to treat it like a radar diagram and overlay channel specific scenarios (blue).</p>
             <p class="cs-body-text">In the theoretical example shown below, a citizen is using their passport as a singular piece of evidence in a face-to-face scenario. 
@@ -711,10 +660,8 @@
           <!-- Section 08 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">08</p>
             <p class="cs-section-heading">The flex between the channels</p>
-          </div>
             <p class="cs-body-text">The image below compares using that same piece of evidence (passport), as part of a telephony 
               challenge instead of face-to-face. Note the 5 GPG elements have now ‘flexed’ to form a new pattern.</p>
             <p class="cs-body-text">Despite the pattern constricting, most of the elements (blue) are still within the limits (red) M1A sets out for verification, 
@@ -729,7 +676,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
             <p class="cs-body-text">But the evidence itself has not become ‘weaker’, after all it is still a valid UK passport. 
               It's the ways in which that document can be checked via this particular channel that has reduced its score.</p>
@@ -741,10 +688,8 @@
           <!-- Section 09 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">09</p>
             <p class="cs-section-heading">What was the output?</p>
-          </div>
             <p class="cs-body-text">Of the 32 profiles available, the image below shows only a tiny cross section. Since each profile 
               needs to be created through 3 different lenses (Face to Face, Telephony and Digital), it would mean showing 96 radar diagrams in total</p> 
 
@@ -757,7 +702,7 @@
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
               <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
               <p class="cs-caption"></p>
-            </div>
+            </div><!-- /cs-inline-wrap -->
             
             <p class="cs-body-text">Hopefully this cross-section is enough of a benchmark for how the full group would appear. Incidentally, 
               the 4 profiles shown here are M1A, M1B, M1C & M1D.</p>
@@ -766,10 +711,8 @@
           <!-- Section 10 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">10</p>
             <p class="cs-section-heading">What was the impact?</p>
-          </div>
             <p class="cs-body-text">The introduction of this 'flexible framework' allowed stakeholders to consider things in a far more visual way, they were able to 
               worry less about scores and look more closely at best fit.</p>
             <p class="cs-body-text">If a certain pattern looked out of place, it prompted discussions that may have been overlooked if faced with a wall of numbers instead.</p>
@@ -785,10 +728,8 @@
 
           <!-- ADD FURTHER SECTIONS following this pattern:
           <div class="cs-section">
-            <div class="cs-section-heading-wrap">
             <p class="cs-section-num">XX</p>
             <p class="cs-section-heading">Section heading</p>
-          </div>
             <p class="cs-body-text">Body text.</p>
           </div>
           -->
@@ -836,7 +777,7 @@
       btn.setAttribute('aria-expanded', 'false');
       menu.setAttribute('aria-hidden', 'true');
     });
-    menu.querySelectorAll('a').forEach(function(a) {
+    document.querySelectorAll('#mobile-menu a').forEach(function(a) {
       a.addEventListener('click', function() {
         menu.classList.remove('open');
         btn.classList.remove('open');
