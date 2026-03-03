@@ -12,12 +12,12 @@
     :root {
       --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
       --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
-      --hover-tint:rgba(0,0,0,0.02);
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
       --col-gap:clamp(1rem,2vw,1.5rem);
       --mono:'DM Mono',monospace;
       --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --z-header:100; --z-overlay:101; --zone-gap:1rem; --page-top-pad:3rem;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
       --footer-text:rgba(255,255,255,0.3);
       --header-h:clamp(60px,10vw,90px);
@@ -43,7 +43,7 @@
     .skip-link:focus { top:0.5rem; }
 
     /* ── HEADER ── */
-    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
+    .site-header { position:sticky; top:0; z-index:var(--z-header); background:var(--bg); padding-top:1.25rem; }
     .header-inner {
       display:grid; grid-template-columns:repeat(12,1fr);
       gap:0 var(--col-gap); align-items:start; padding-bottom:1rem;
@@ -81,7 +81,7 @@
     .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
     .mobile-menu {
       display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-      background:var(--bg); z-index:101; padding:5rem var(--pad) 3rem; flex-direction:column;
+      background:var(--bg); z-index:var(--z-overlay); padding:5rem var(--pad) 3rem; flex-direction:column;
     }
     .mobile-menu.open { display:flex; }
     .mobile-menu-close {
@@ -99,7 +99,7 @@
 
     /* ── ZONE 1: TITLE + SUBTITLE ── */
     .cs-zone-title {
-      padding:3rem 0 clamp(1.25rem,2.5vw,2rem);
+      padding:var(--page-top-pad) 0 clamp(1.25rem,2.5vw,2rem);
       border-bottom:1px solid var(--rule);
     }
     /* Breadcrumb — replaces plain eyebrow, all viewports */
@@ -275,7 +275,7 @@
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
     .cs-inline-wrap { margin:1.5rem 0 0; }
     .cs-inline-wrap:last-child { margin-bottom:0; }
-    .cs-inline-img { display:block; width:100%; object-fit:contain; }
+    .cs-inline-img { display:block; width:100%; object-fit:contain; max-height:70vh; }
     .cs-inline-placeholder {
       width:100%; min-height:12rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
@@ -330,7 +330,7 @@
       /* Section 01 on mobile: meta rule acts as its top border */
       .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
       /* Title zone breadcrumb replaced by sticky bar on mobile */
-      .cs-zone-title { padding-top:1rem; }
+      .cs-zone-title { padding-top:var(--zone-gap); }
       .cs-zone-title .cs-breadcrumb { display:none; }
     }
   </style>
