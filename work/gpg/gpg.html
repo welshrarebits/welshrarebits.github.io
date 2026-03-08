@@ -451,7 +451,7 @@
           <span class="cs-breadcrumb-sep">/</span>
           <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
         </nav>
-        <h1 class="cs-main-title">RRe-imagining the GDS &#8216;Good Practice Guides&#8217;</h1><!-- EDIT: title -->
+        <h1 class="cs-main-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1><!-- EDIT: title -->
         <p class="cs-subtitle">An investigation into the elasticity of identity verification.</p><!-- EDIT: subtitle -->
       </div>
 
@@ -834,14 +834,15 @@
       });
     });
 
-    // Image enlarge — delegate from main content area
+    // Image enlarge
     var dialog = document.getElementById('img-dialog');
     var dialogImg = document.getElementById('img-dialog-img');
     var dialogClose = document.getElementById('img-dialog-close');
 
-    document.querySelector('.cs-split-body-col').addEventListener('click', function(e) {
-      var img = e.target.closest('.cs-inline-img');
-      if (!img || img.style.display === 'none') return;
+    document.addEventListener('click', function(e) {
+      var img = e.target;
+      if (!img || img.tagName !== 'IMG' || !img.classList.contains('cs-inline-img')) return;
+      if (img.style.display === 'none') return;
       dialogImg.src = img.src;
       dialogImg.alt = img.alt;
       dialog.showModal();
