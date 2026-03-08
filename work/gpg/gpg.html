@@ -298,7 +298,11 @@
       margin:0; padding:2rem;
       background:transparent;
       border:none;
-      display:flex; align-items:center; justify-content:center;
+      display:none;
+      align-items:center; justify-content:center;
+    }
+    .cs-img-dialog[open] {
+      display:flex;
     }
     .cs-img-dialog::backdrop {
       background:rgba(13,13,13,0.9);
@@ -852,13 +856,19 @@
     dialogClose.addEventListener('click', function(e) {
       e.stopPropagation();
       dialog.close();
+      dialogImg.src = '';
     });
 
     dialog.addEventListener('click', function(e) {
       if (e.target === dialog) {
         e.stopPropagation();
         dialog.close();
+        dialogImg.src = '';
       }
+    });
+
+    dialog.addEventListener('close', function() {
+      dialogImg.src = '';
     });
     // Double rAF ensures layout is complete before measuring.
     var headerEl = document.querySelector('.site-header');
