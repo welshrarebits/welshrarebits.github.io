@@ -843,15 +843,22 @@
       var img = e.target;
       if (!img || img.tagName !== 'IMG' || !img.classList.contains('cs-inline-img')) return;
       if (img.style.display === 'none') return;
+      e.stopPropagation();
       dialogImg.src = img.src;
       dialogImg.alt = img.alt;
       dialog.showModal();
     });
 
-    dialogClose.addEventListener('click', function() { dialog.close(); });
+    dialogClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dialog.close();
+    });
 
     dialog.addEventListener('click', function(e) {
-      if (e.target === dialog) dialog.close();
+      if (e.target === dialog) {
+        e.stopPropagation();
+        dialog.close();
+      }
     });
     // Double rAF ensures layout is complete before measuring.
     var headerEl = document.querySelector('.site-header');
