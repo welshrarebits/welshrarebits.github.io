@@ -22,6 +22,14 @@
       --footer-text:rgba(255,255,255,0.3);
       --header-h:clamp(60px,10vw,90px);
       --z-header:100; --z-overlay:101;
+      --section-pad:clamp(1.25rem,2.5vw,1.75rem);
+      --fade:opacity 0.2s;
+      --hover-opacity:0.7;
+      --lh-body:1.85;
+      --placeholder-h:12rem;
+      --color-fade:color 0.2s;
+      --overlay-bg:rgba(13,13,13,0.9);
+      --video-max:1100px;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -305,7 +313,7 @@
       display:flex;
     }
     .cs-img-dialog::backdrop {
-      background:rgba(13,13,13,0.9);
+      background:var(--overlay-bg);
       cursor:zoom-out;
     }
     .cs-img-dialog img {
@@ -358,12 +366,12 @@
     }
     .cs-video-dialog[open] { display:flex; }
     .cs-video-dialog::backdrop {
-      background:rgba(13,13,13,0.9);
+      background:var(--overlay-bg);
       cursor:zoom-out;
     }
     .cs-video-dialog iframe {
-      width:min(90vw,1100px);
-      height:calc(min(90vw,1100px) * 9/16);
+      width:min(90vw,var(--video-max));
+      height:calc(min(90vw,var(--video-max)) * 9/16);
       border:none; display:block;
     }
     .cs-video-dialog-close {
@@ -381,6 +389,7 @@
       grid-template-columns:1fr 1fr;
       gap:var(--col-gap);
     }
+    .cs-inline-pair-item { display:flex; flex-direction:column; }
     @media (max-width:700px) {
       .cs-inline-wrap--pair { grid-template-columns:1fr; }
     }
@@ -520,7 +529,7 @@
 
           <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
           <img class="cs-featured-img"
-               src="../../assets/thumbnails/work/gpg.png"
+               src="../../assets/thumbnails/gpg.png"
                alt="Good Practice Guide redesign — featured image" />
 
         <div class="cs-split-meta-wrap">
@@ -826,7 +835,7 @@
 
               <!--
               <div class="cs-video-wrap" data-video-id="UOOuL2CEcRU">
-                <img class="cs-video-thumb" src="../../work/gpg/steph_shoot.png" alt="Video thumbnail" />
+                <img class="cs-video-thumb" src="" alt="Video thumbnail" />
                 <div class="cs-video-play">
                   <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="30" cy="30" r="29" fill="rgba(0,0,0,0.5)" stroke="white" stroke-width="1.5"/>
@@ -836,9 +845,8 @@
                 <p class="cs-video-caption"></p>
               </div>
 
-           
               <div class="cs-video-wrap" data-video-id="LSoU-ggA_Qo">
-                <img class="cs-video-thumb" src="../../work/gpg/steph_shoot.png" alt="Video thumbnail" />
+                <img class="cs-video-thumb" src="" alt="Video thumbnail" />
                 <div class="cs-video-play">
                   <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="30" cy="30" r="29" fill="rgba(0,0,0,0.5)" stroke="white" stroke-width="1.5"/>
@@ -847,8 +855,7 @@
                 </div>
                 <p class="cs-video-caption"></p>
               </div>
-            -->
-           
+              -->
           </div>
 
           <!-- ADD FURTHER SECTIONS following this pattern:
