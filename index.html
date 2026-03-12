@@ -72,14 +72,15 @@
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
     .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
     .logo-cell img { width:100%; height:100%; object-fit:contain; opacity:0.65; }
-    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(2rem,4vw,4rem); padding-top:1.25rem; }
+    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); padding-top:1.25rem; }
     .testimonial { display:flex; flex-direction:column; gap:1.25rem; }
-    .testimonial-avatar { width:56px; height:56px; border-radius:50%; background:var(--rule); overflow:hidden; flex-shrink:0; }
+    .testimonial-quote { font-family:var(--sans); font-size:var(--fs-sm); font-style:italic; font-weight:300; color:var(--ink); line-height:1.75; flex:1; }
+    .testimonial-attribution { display:flex; align-items:center; gap:0.875rem; padding-top:1rem; border-top:1px solid var(--rule); }
+    .testimonial-avatar { width:40px; height:40px; border-radius:50%; background:var(--rule); overflow:hidden; flex-shrink:0; }
     .testimonial-avatar svg { width:100%; height:100%; }
-    .testimonial-person { display:flex; flex-direction:column; gap:0.15rem; padding-bottom:1rem; border-bottom:1px solid var(--rule); }
-    .testimonial-name { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--ink); }
-    .testimonial-role { font-family:var(--sans); font-size:var(--fs-sm); color:var(--muted); font-weight:400; }
-    .testimonial-quote { font-family:var(--sans); font-size:var(--fs-sm); font-style:italic; font-weight:300; color:var(--ink); line-height:1.75; }
+    .testimonial-person { display:flex; flex-direction:column; gap:0.15rem; }
+    .testimonial-name { font-family:var(--sans); font-size:var(--fs-sm); font-weight:700; color:var(--ink); }
+    .testimonial-role { font-family:var(--sans); font-size:var(--fs-xs); color:var(--muted); font-weight:400; }
     footer { background:var(--ink); padding:2rem 0; }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
     .footer-left { display:flex; align-items:center; gap:1rem; }
@@ -269,28 +270,34 @@
         </div>
         <div class="testimonials-grid">
           <div class="testimonial">
-            <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
-            <div class="testimonial-person">
-              <span class="testimonial-name">Barbara Mertlova</span>
-              <span class="testimonial-role">Service Designer at Opencast Software</span>
-            </div>
             <p class="testimonial-quote">&#8220;I really appreciated how welcoming, helpful and ready to share insight Steve was. I felt I could ask any questions and he would provide helpful explanations without judgement. He actively welcomed me to collaboration, despite the lack of clarity in my own immediate remit. I found his work easy to understand &#8212; and to this day will still reach out with queries if I am working on problems similar to our previous investigations. Steve navigates politics and service complexities well and always tried to do what is right for both the business and the end user.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Barbara Mertlova</span>
+                <span class="testimonial-role">Service Designer at Opencast Software</span>
+              </div>
+            </div>
           </div>
           <div class="testimonial">
-            <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
-            <div class="testimonial-person">
-              <span class="testimonial-name">Ryan Armstrong</span>
-              <span class="testimonial-role">Marketing Lead at the Football Association</span>
-            </div>
             <p class="testimonial-quote">&#8220;I&#8217;d highly recommend Steve for any promotional or match day illustrative content. We approached Steve in regards to some FA Cup activity, having received some great compliments about his illustrative work and reviewing his portfolio &#8212; I&#8217;m pleased to say Steve did not disappoint, not only was he quick to respond to the brief but we were very impressed with his work and interpretation of the brief. I look forward to working with him again in the future.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Ryan Armstrong</span>
+                <span class="testimonial-role">Marketing Lead at the Football Association</span>
+              </div>
+            </div>
           </div>
           <div class="testimonial">
-            <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
-            <div class="testimonial-person">
-              <span class="testimonial-name">Helen Oswald</span>
-              <span class="testimonial-role">Service Designer at Opencast Software</span>
-            </div>
             <p class="testimonial-quote">&#8220;Steve was approachable and realistic about the challenges we faced as service designers and I found it easy to work things through with him. I managed to get up to speed quickly, and worked alongside Steve in support of solving the right problems. He pulled together a vast amount of user research and managed to include it in an easily digestible format. You made my job and the DWP experience much easier, you&#8217;ll be a miss. Thank you.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Helen Oswald</span>
+                <span class="testimonial-role">Service Designer at Opencast Software</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
