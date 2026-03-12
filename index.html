@@ -69,9 +69,9 @@
     .work-read-more svg { transition:transform 0.2s; }
     .work-card-link:hover .work-read-more { color:var(--accent); border-color:var(--accent); }
     .work-card-link:hover .work-read-more svg { transform:translate(2px,-2px); }
-    .see-all { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; }
-    .see-all:hover { color:var(--accent); border-color:var(--accent); }
-    .see-all svg { transition:transform 0.2s; }
+    .see-all { display:inline-flex; align-items:center; color:var(--ink); transition:color 0.2s; }
+    .see-all:hover { color:var(--accent); }
+    .see-all svg { width:1rem; height:1rem; transition:transform 0.2s; }
     .see-all:hover svg { transform:translate(2px,-2px); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
@@ -157,7 +157,7 @@
       <div class="container">
         <div class="section-header section-header--split">
           <span class="section-title" id="sel-work-heading">Selected Work</span>
-          <a href="work.html" class="see-all">See all work <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></a>
+          <a href="work.html" class="see-all" aria-label="See all work"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></a>
         </div>
         <ul class="work-grid" role="list">
           <li class="work-card">
