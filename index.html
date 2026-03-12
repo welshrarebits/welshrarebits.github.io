@@ -50,7 +50,6 @@
     .page-section { padding:3rem 0; }
     .page-section + .page-section { border-top:0px solid var(--rule); }
     .section-header { display:flex; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
-    .section-header--split { justify-content:space-between; align-items:center; }
     .section-number { display:none; }
     .section-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); }
     .intro-block { max-width:65ch; padding-top:2.5rem; }
@@ -69,10 +68,6 @@
     .work-read-more svg { transition:transform 0.2s; }
     .work-card-link:hover .work-read-more { color:var(--accent); border-color:var(--accent); }
     .work-card-link:hover .work-read-more svg { transform:translate(2px,-2px); }
-    .see-all { display:inline-flex; align-items:center; color:var(--ink); transition:color 0.2s; }
-    .see-all:hover { color:var(--accent); }
-    .see-all svg { width:clamp(1.1rem,2vw,1.4rem); height:clamp(1.1rem,2vw,1.4rem); transition:transform 0.2s; }
-    .see-all:hover svg { transform:translate(2px,-2px); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
     .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
@@ -155,9 +150,8 @@
     </section>
     <section class="page-section" aria-labelledby="sel-work-heading">
       <div class="container">
-        <div class="section-header section-header--split">
+        <div class="section-header">
           <span class="section-title" id="sel-work-heading">Selected Work</span>
-          <a href="work.html" class="see-all" aria-label="See all work"><svg width="16" height="16" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></a>
         </div>
         <ul class="work-grid" role="list">
           <li class="work-card">
@@ -167,9 +161,7 @@
               </div>
               <div class="work-card-body">
                 <h3 class="work-title">Re-imagining the GDS Good Practice Guides</h3>
-                <p class="work-desc">In 2012 GDS published its series of Good Practice Guides (GPGs). I think it’s probably fair to say that they are not considered 
-                  the most accessible of reads, even by their own admission (via the Cabinet Office website) it is recognised that “these guides are necessarily quite 
-                  technical”.</p>
+                <p class="work-desc">Designing flexible frameworks for identity verification and exploring the elasticity of identity assurance across channels and scenarios.</p>
                 <span class="work-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
               </div>
             </a>
@@ -239,7 +231,6 @@
             </div>
           </li>
         </ul>
-        <a href="play.html" class="see-all">See all personal work &#8594;</a>
       </div>
     </section>
     <section class="page-section" aria-labelledby="clients-heading">
