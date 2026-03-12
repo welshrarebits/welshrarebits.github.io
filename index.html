@@ -50,7 +50,7 @@
     .page-section { padding:3rem 0; }
     .page-section + .page-section { border-top:0px solid var(--rule); }
     .section-header { display:flex; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
-    .section-header--split { justify-content:space-between; align-items:center; }
+    .section-header--split { justify-content:space-between; }
     .section-number { display:none; }
     .section-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); }
     .intro-block { max-width:65ch; padding-top:2.5rem; }
@@ -71,8 +71,8 @@
     .work-card-link:hover .work-read-more svg { transform:translate(2px,-2px); }
     .see-all { display:inline-flex; align-items:center; color:var(--ink); transition:color 0.2s; }
     .see-all:hover { color:var(--accent); }
-    .see-all svg { width:1rem; height:1rem; transition:transform 0.2s; }
-    .see-all:hover svg { transform:translate(2px,-2px); }
+    .see-all svg { width:clamp(1.1rem,2vw,1.4rem); height:clamp(1.1rem,2vw,1.4rem); transform:translateY(3px); transition:transform 0.2s; }
+    .see-all:hover svg { transform:translate(2px,1px); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); }
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
     .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
