@@ -72,10 +72,10 @@
     .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
     .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
     .logo-cell img { width:100%; height:100%; object-fit:contain; opacity:0.65; }
-    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); padding-top:1.25rem; }
-    .testimonial { display:flex; flex-direction:column; gap:1.25rem; }
-    .testimonial-quote { font-family:var(--sans); font-size:var(--fs-sm); font-style:italic; font-weight:300; color:var(--ink); line-height:1.75; flex:1; }
-    .testimonial-attribution { display:flex; align-items:center; gap:0.875rem; padding-top:1rem; border-top:1px solid var(--rule); }
+    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); padding-top:1.25rem; }
+    .testimonial { display:grid; grid-template-rows:subgrid; grid-row:span 2; }
+    .testimonial-quote { font-family:var(--sans); font-size:var(--fs-sm); font-style:italic; font-weight:300; color:var(--ink); line-height:1.75; align-self:start; }
+    .testimonial-attribution { display:flex; align-items:flex-start; gap:0.875rem; padding-top:1rem; border-top:1px solid var(--rule); align-self:end; }
     .testimonial-avatar { width:40px; height:40px; border-radius:50%; background:var(--rule); overflow:hidden; flex-shrink:0; }
     .testimonial-avatar svg { width:100%; height:100%; }
     .testimonial-person { display:flex; flex-direction:column; gap:0.15rem; }
@@ -102,6 +102,12 @@
       .play-grid { grid-template-columns:1fr; }
       .testimonials-grid { grid-template-columns:1fr; }
       .logo-matrix { grid-template-columns:repeat(3,1fr); }
+      .testimonial { flex-direction:column-reverse; gap:0; }
+      .testimonial-attribution { border-top:none; border-bottom:1px solid var(--rule); padding-top:1.25rem; padding-bottom:1rem; }
+      .testimonial-quote { border-top:none; border-bottom:1px solid var(--rule); padding-top:1rem; padding-bottom:1.25rem; }
+      .testimonial:last-child .testimonial-quote { border-bottom:none; padding-bottom:0; }
+      .footer-inner { flex-direction:column; align-items:flex-start; gap:1.5rem; }
+      .footer-links { flex-wrap:wrap; gap:1rem 1.5rem; }
     }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
