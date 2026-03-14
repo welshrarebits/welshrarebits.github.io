@@ -493,6 +493,14 @@
     var menu = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-close');
 
+    // Set mobile menu padding to match header height
+    function updateMenuPadding() {
+      var headerH = document.querySelector('.site-header').offsetHeight;
+      document.getElementById('mobile-menu').style.paddingTop = headerH + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+
     // Close mobile menu if viewport expands past mobile breakpoint
     var mq = window.matchMedia('(min-width:769px)');
     function handleBreakpoint(e) {
