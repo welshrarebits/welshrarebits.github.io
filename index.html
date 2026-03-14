@@ -487,6 +487,19 @@
     var btn = document.querySelector('.nav-hamburger');
     var menu = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-close');
+
+    // Close mobile menu if viewport expands past mobile breakpoint
+    var mq = window.matchMedia('(min-width:769px)');
+    function handleBreakpoint(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    mq.addEventListener('change', handleBreakpoint);
     btn.addEventListener('click', function() {
       var open = menu.classList.toggle('open');
       btn.classList.toggle('open', open);
