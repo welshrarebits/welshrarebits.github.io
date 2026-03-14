@@ -52,7 +52,7 @@
     .section-header { display:flex; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
     .section-number { display:none; }
     .section-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); }
-    .intro-block { max-width:65ch; padding-top:2.5rem; }
+    .intro-block { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); padding-top:2.5rem; }
     .intro-block p { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.1rem); font-style:italic; font-weight:300; line-height:1.75; color:var(--muted); }
     .work-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); }
     .work-card { display:grid; grid-template-rows:subgrid; grid-row:span 4; padding-top:1.25rem; }
@@ -102,6 +102,7 @@
       .play-grid { grid-template-columns:1fr; }
       .testimonials-grid { grid-template-columns:1fr; }
       .logo-grid { grid-template-columns:1fr; }
+      .intro-block { grid-template-columns:1fr; }
       .testimonial { flex-direction:column-reverse; gap:0; }
       .testimonial-attribution { border-top:none; border-bottom:1px solid var(--rule); padding-top:0; padding-bottom:1rem; }
       .testimonial-quote { border-top:none; border-bottom:none; padding-top:1rem; padding-bottom:1.25rem; }
@@ -175,7 +176,9 @@
           <span class="section-title" id="intro-heading">Introduction</span>
         </div>
         <div class="intro-block">
-          <p>I am a Senior Service Designer at GDS. I untangle complex problems in order to deliver tangible value. I have been a multi-award-winning Product Manager within the private sector, specialising in Film &amp; TV Localisation. Whilst a sporadic if somewhat lapsed sideline in freelance Illustration completes my high-level back story.</p>
+          <p>I am a Senior Service Designer at GDS. I untangle complex problems in order to deliver tangible value.</p>
+          <p>I have been a multi-award-winning Product Manager within the private sector, specialising in Film &amp; TV Localisation.</p>
+          <p>Whilst a sporadic if somewhat lapsed sideline in freelance Illustration completes my high-level back story.</p>
         </div>
       </div>
     </section>
