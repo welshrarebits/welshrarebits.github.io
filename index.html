@@ -84,16 +84,13 @@
     .testimonial-role { font-family:var(--sans); font-size:var(--fs-xs); color:var(--muted); font-weight:400; }
     footer { background:var(--ink); padding:2rem 0; }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
-    .footer-left { display:flex; align-items:center; gap:1rem; }
-    .footer-copy { color:rgba(255,255,255,0.8); }
-    .footer-pipe { color:rgba(255,255,255,0.3); }
-    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
-    .footer-credits-link:hover { color:rgba(255,255,255,1); }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
     .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
     .footer-link:hover { color:rgba(255,255,255,1); }
     .footer-link svg { width:1.1rem; height:1.1rem; fill:currentColor; }
     .footer-link--arena { font-size:1.1rem; letter-spacing:-0.05em; }
+    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:rgba(255,255,255,1); }
     .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
     @media (max-width:900px) {
       .header-nav { display:none; }
@@ -108,9 +105,7 @@
       .testimonial { flex-direction:column-reverse; gap:0; }
       .testimonial-attribution { border-top:none; border-bottom:1px solid var(--rule); padding-top:0; padding-bottom:1rem; }
       .testimonial-quote { border-top:none; border-bottom:none; padding-top:1rem; padding-bottom:1.25rem; }
-      .footer-inner { flex-direction:column; align-items:flex-start; gap:1.25rem; }
       .footer-links { flex-wrap:nowrap; gap:1.25rem; }
-      .footer-rule { display:block; }
     }
     .contact-modal-overlay { display:none; position:fixed; inset:0; background:rgba(13,13,13,0.85); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
     .contact-modal-overlay.open { display:flex; }
@@ -154,6 +149,7 @@
             <li class="nav-item"><a href="work.html" class="nav-item-label">Work</a><span class="nav-item-desc">selected client<br>projects</span></li>
             <li class="nav-item"><a href="play.html" class="nav-item-label">Play</a><span class="nav-item-desc">personal work<br>&amp; experiments</span></li>
             <li class="nav-item"><a href="blog.html" class="nav-item-label">Blog</a><span class="nav-item-desc">writing on<br>design &amp; craft</span></li>
+            <li class="nav-item"><a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a><span class="nav-item-desc">get in<br>touch</span></li>
           </ul>
         </nav>
         <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -169,6 +165,7 @@
     <a href="work.html">Work</a>
     <a href="play.html">Play</a>
     <a href="blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
   </nav>
   <main id="main">
     <section class="page-section" aria-labelledby="intro-heading">
@@ -392,14 +389,7 @@
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
           </a>
         </nav>
-        <hr class="footer-rule">
-        <div class="footer-left">
-          <span class="footer-copy">Steven Welsh <span id="year"></span></span>
-          <span class="footer-pipe">|</span>
-          <a href="#" class="footer-credits-link" id="contact-trigger" aria-haspopup="dialog">Contact</a>
-          <span class="footer-pipe">|</span>
-          <a href="#" class="footer-credits-link" id="credits-trigger">Credits</a>
-        </div>
+        <a href="#" class="footer-credits-link" id="credits-trigger">Credits</a>
       </div>
     </div>
   </footer>
@@ -490,7 +480,6 @@
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    document.getElementById('year').textContent = new Date().getFullYear();
     var btn = document.querySelector('.nav-hamburger');
     var menu = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-close');
@@ -548,6 +537,7 @@
     // Contact modal
     var modal        = document.getElementById('contact-modal');
     var trigger      = document.getElementById('contact-trigger');
+    var mobileTrigger = document.getElementById('mobile-contact-trigger');
     var modalClose   = document.getElementById('contact-modal-close');
     var contactForm  = document.getElementById('contact-form');
     var contactStatus = document.getElementById('contact-status');
@@ -568,6 +558,15 @@
       e.preventDefault();
       openModal();
     });
+
+    if (mobileTrigger) {
+      mobileTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        openModal();
+      });
+    }
 
     modalClose.addEventListener('click', closeModal);
 
