@@ -114,8 +114,8 @@
     }
     .contact-modal-overlay { display:none; position:fixed; inset:0; background:rgba(13,13,13,0.85); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
     .contact-modal-overlay.open { display:flex; }
-    .contact-modal { background:var(--bg); width:100%; max-width:560px; padding:2.5rem; position:relative; }
-    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; }
+    .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
     .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
     .contact-modal-close:hover { color:var(--ink); }
     .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
@@ -128,6 +128,13 @@
     .contact-submit:hover { background:var(--accent); }
     .contact-status { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); display:none; padding-top:0.5rem; }
     .contact-status.visible { display:block; }
+    .credits-list { list-style:none; display:flex; flex-direction:column; gap:0; overflow-y:auto; }
+    .credits-item { display:flex; flex-direction:column; gap:0.25rem; padding:0.875rem 0; border-bottom:1px solid var(--rule); }
+    .credits-item:first-child { border-top:1px solid var(--rule); }
+    .credits-context { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+    .credits-source { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); }
+    .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s, color 0.2s; }
+    .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
   </style>
@@ -391,11 +398,69 @@
           <span class="footer-pipe">|</span>
           <a href="#" class="footer-credits-link" id="contact-trigger" aria-haspopup="dialog">Contact</a>
           <span class="footer-pipe">|</span>
-          <a href="credits.html" class="footer-credits-link">Credits</a>
+          <a href="#" class="footer-credits-link" id="credits-trigger">Credits</a>
         </div>
       </div>
     </div>
   </footer>
+  <!-- Credits Modal -->
+  <div class="contact-modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="credits-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="credits-modal-title">Credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Work, GDS Good Practice Guides</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Work, Disney Localisation Platform</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Work, Netflix Subtitle Workflow</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Personal Work, Freelance Illustration</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Personal Work, FA Match Day</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Selected Personal Work, Personal Experiments</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — DM Mono</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/DM+Mono" target="_blank" rel="noopener">Colophon Foundry via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Tool — Contact Form</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Introduction, Hero</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Testimonials, Avatar Placeholder</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <!-- Contact Modal -->
   <div class="contact-modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <div class="contact-modal">
@@ -446,6 +511,38 @@
         menu.classList.remove('open');
         btn.classList.remove('open');
       });
+    });
+
+    // Credits modal
+    var creditsModal       = document.getElementById('credits-modal');
+    var creditsTrigger     = document.getElementById('credits-trigger');
+    var creditsModalClose  = document.getElementById('credits-modal-close');
+
+    function openCredits() {
+      creditsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      creditsModalClose.focus();
+    }
+
+    function closeCredits() {
+      creditsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      creditsTrigger.focus();
+    }
+
+    creditsTrigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      openCredits();
+    });
+
+    creditsModalClose.addEventListener('click', closeCredits);
+
+    creditsModal.addEventListener('click', function(e) {
+      if (e.target === creditsModal) closeCredits();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && creditsModal.classList.contains('open')) closeCredits();
     });
 
     // Contact modal
