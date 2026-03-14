@@ -105,7 +105,8 @@
       .testimonial { flex-direction:column-reverse; gap:0; }
       .testimonial-attribution { border-top:none; border-bottom:1px solid var(--rule); padding-top:0; padding-bottom:1rem; }
       .testimonial-quote { border-top:none; border-bottom:none; padding-top:1rem; padding-bottom:1.25rem; }
-      .footer-links { flex-wrap:nowrap; gap:1.25rem; }
+      .footer-links { flex-wrap:nowrap; gap:1.25rem; justify-content:center; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
     }
     .contact-modal-overlay { display:none; position:fixed; inset:0; background:rgba(13,13,13,0.85); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
     .contact-modal-overlay.open { display:flex; }
@@ -389,7 +390,7 @@
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
           </a>
         </nav>
-        <a href="#" class="footer-credits-link" id="credits-trigger">Credits</a>
+        <a href="#" class="footer-credits-link" id="credits-trigger">Additional Credits</a>
       </div>
     </div>
   </footer>
@@ -397,7 +398,7 @@
   <div class="contact-modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
     <div class="contact-modal">
       <button class="contact-modal-close" id="credits-modal-close" aria-label="Close">Close ✕</button>
-      <h2 class="contact-modal-title" id="credits-modal-title">Credits</h2>
+      <h2 class="contact-modal-title" id="credits-modal-title">Additional Credits</h2>
       <ul class="credits-list">
         <li class="credits-item">
           <span class="credits-context">Image — Selected Work, GDS Good Practice Guides</span>
