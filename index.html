@@ -69,8 +69,9 @@
     .work-card-link:hover .work-read-more { color:var(--accent); border-color:var(--accent); }
     .work-card-link:hover .work-read-more svg { transform:translate(2px,-2px); }
     .play-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); }
-    .logo-matrix { display:grid; grid-template-columns:repeat(6,1fr); gap:0; border-top:0px solid var(--rule); border-left:0px solid var(--rule); }
-    .logo-cell { background:var(--bg); display:flex; align-items:center; justify-content:center; padding:1.25rem 1rem; aspect-ratio:1; border-right:0px solid var(--rule); border-bottom:0px solid var(--rule); }
+    .logo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2vw,1.5rem); padding-top:1.25rem; }
+    .logo-panel { aspect-ratio:16/9; background:var(--bg); border:1px solid var(--rule); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:0; overflow:hidden; }
+    .logo-cell { display:flex; align-items:center; justify-content:center; padding:1rem; }
     .logo-cell img { width:100%; height:100%; object-fit:contain; opacity:0.65; }
     .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); padding-top:1.25rem; }
     .testimonial { display:grid; grid-template-rows:subgrid; grid-row:span 2; }
@@ -95,13 +96,11 @@
       .header-nav { display:none; }
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
-      .logo-matrix { grid-template-columns:repeat(4,1fr); }
     }
     @media (max-width:600px) {
       .work-grid { grid-template-columns:1fr; }
       .play-grid { grid-template-columns:1fr; }
       .testimonials-grid { grid-template-columns:1fr; }
-      .logo-matrix { grid-template-columns:repeat(3,1fr); }
       .testimonial { flex-direction:column-reverse; gap:0; }
       .testimonial-attribution { border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding-top:1.25rem; padding-bottom:1rem; }
       .testimonial-quote { border-top:none; border-bottom:none; padding-top:1rem; padding-bottom:1.25rem; }
@@ -245,28 +244,6 @@
         </ul>
       </div>
     </section>
-    <section class="page-section" aria-labelledby="clients-heading">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-number" aria-hidden="true">04</span>
-          <span class="section-title" id="clients-heading">Clients &amp; Employers</span>
-        </div>
-        <div class="logo-matrix"> 
-          <div class="logo-cell"><img src="assets/logos/dwp.png" alt="DWP"></div>
-          <div class="logo-cell"><img src="assets/logos/disney.png" alt="Disney"></div>
-          <div class="logo-cell"><img src="assets/logos/tmobile.png" alt="T-Mobile"></div>
-          <div class="logo-cell"><img src="assets/logos/netflix.png" alt="Netflix"></div>
-          <div class="logo-cell"><img src="assets/logos/bbc.png" alt="BBC"></div>
-          <div class="logo-cell"><img src="assets/logos/england.png" alt="England"></div>
-          <div class="logo-cell"><img src="assets/logos/hmrc.png" alt="HMRC"></div>
-          <div class="logo-cell"><img src="assets/logos/bt.png" alt="BT Sport"></div>
-          <div class="logo-cell"><img src="assets/logos/govuk.png" alt="GOV.UK"></div>
-          <div class="logo-cell"><img src="assets/logos/zoo.png" alt="Zoo Digital"></div>
-          <div class="logo-cell"><img src="assets/logos/puma.png" alt="Puma"></div>
-          <div class="logo-cell"><img src="assets/logos/nfm.png" alt="National Football Museum"></div>
-        </div>
-      </div>
-    </section>
     <section class="page-section" aria-labelledby="testimonials-heading">
       <div class="container">
         <div class="section-header">
@@ -303,6 +280,76 @@
                 <span class="testimonial-role">Service Designer at Opencast Software</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!--
+        SECOND ROW — uncomment to add three more testimonials
+        <div class="testimonial">
+            <p class="testimonial-quote">&#8220;Testimonial quote goes here.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Name</span>
+                <span class="testimonial-role">Role at Organisation</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p class="testimonial-quote">&#8220;Testimonial quote goes here.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Name</span>
+                <span class="testimonial-role">Role at Organisation</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p class="testimonial-quote">&#8220;Testimonial quote goes here.&#8221;</p>
+            <div class="testimonial-attribution">
+              <div class="testimonial-avatar" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none"><rect width="56" height="56" fill="#d4d2cc"/><circle cx="28" cy="22" r="10" fill="#a8a49e"/><ellipse cx="28" cy="46" rx="16" ry="10" fill="#a8a49e"/></svg></div>
+              <div class="testimonial-person">
+                <span class="testimonial-name">Name</span>
+                <span class="testimonial-role">Role at Organisation</span>
+              </div>
+            </div>
+          </div>
+        -->
+
+      </div>
+    </section>
+    <section class="page-section" aria-labelledby="clients-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-number" aria-hidden="true">04</span>
+          <span class="section-title" id="clients-heading">Clients &amp; Employers</span>
+        </div>
+        <div class="logo-grid">
+          <div class="logo-panel">
+            <div class="logo-cell"><img src="assets/logos/dwp.png" alt="DWP"></div>
+            <div class="logo-cell"><img src="assets/logos/disney.png" alt="Disney"></div>
+            <div class="logo-cell"><img src="assets/logos/tmobile.png" alt="T-Mobile"></div>
+            <div class="logo-cell"><img src="assets/logos/netflix.png" alt="Netflix"></div>
+            <div class="logo-cell"><img src="assets/logos/bbc.png" alt="BBC"></div>
+            <div class="logo-cell"><img src="assets/logos/england.png" alt="England"></div>
+          </div>
+          <div class="logo-panel">
+            <div class="logo-cell"><img src="assets/logos/hmrc.png" alt="HMRC"></div>
+            <div class="logo-cell"><img src="assets/logos/bt.png" alt="BT Sport"></div>
+            <div class="logo-cell"><img src="assets/logos/govuk.png" alt="GOV.UK"></div>
+            <div class="logo-cell"><img src="assets/logos/zoo.png" alt="Zoo Digital"></div>
+            <div class="logo-cell"><img src="assets/logos/puma.png" alt="Puma"></div>
+            <div class="logo-cell"><img src="assets/logos/nfm.png" alt="National Football Museum"></div>
+          </div>
+          <!-- PANEL 3 — replace placeholders with 6 additional logos -->
+          <div class="logo-panel">
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
+            <div class="logo-cell"><img src="assets/logos/placeholder.png" alt=""></div>
           </div>
         </div>
       </div>
