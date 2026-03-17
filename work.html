@@ -11,8 +11,14 @@
     :root {
       --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b; --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be; --hover-tint:rgba(0,0,0,0.02);
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
+      --col-gap:clamp(1rem,2vw,1.5rem);
       --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
+      --footer-text:rgba(255,255,255,0.8); --footer-text-hover:rgba(255,255,255,1);
+      --logo-size:77px;
+      --lh-tight:1.45; --ls-label:0.1em; --ls-title:-0.02em;
+      --dialog-close-muted:rgba(255,255,255,0.5); --overlay-bg:rgba(13,13,13,0.9);
+      --video-max:1100px; --z-header:100; --z-overlay:101;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -22,22 +28,25 @@
     .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
     /* ── HEADER ── */
-    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
-    .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding-bottom:1rem; }
-    .header-identity { grid-column:1/3; display:flex; flex-direction:column; gap:0.35rem; }
-    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; }
-    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .site-header { position:sticky; top:0; z-index:var(--z-header); background:var(--bg); padding-top:1.25rem; }
+    .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 var(--col-gap); align-items:start; padding-bottom:1rem; }
+    .header-identity { grid-column:1/4; display:flex; flex-direction:row; align-items:flex-start; gap:0.75rem; }
+    .header-logo-placeholder { width:var(--logo-size); height:var(--logo-size); background:var(--rule); flex-shrink:0; }
+    .header-identity-text { display:flex; flex-direction:column; gap:0.35rem; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; text-transform:uppercase; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); }
     .header-nav { grid-column:7/13; display:flex; justify-content:flex-end; }
     .header-nav-links { display:flex; gap:clamp(1.5rem,3vw,3.5rem); align-items:start; }
-    .nav-item { display:flex; flex-direction:column; gap:0.35rem; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; position:relative; }
     @supports (grid-template-columns:subgrid) {
       .header-nav { display:grid; grid-template-columns:subgrid; align-items:start; }
-      .header-nav-links { display:grid; grid-template-columns:repeat(4,auto); gap:0 clamp(1.5rem,3vw,3.5rem); justify-content:end; grid-column:1/7; align-items:start; }
+      .header-nav-links { display:grid; grid-template-columns:repeat(5,auto); gap:0 clamp(1.5rem,3vw,3.5rem); justify-content:end; grid-column:1/7; align-items:start; }
     }
-    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--strong); line-height:1.2; transition:color 0.2s; }
+    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--strong); line-height:1.2; transition:color 0.2s; text-transform:uppercase; letter-spacing:0.05em; }
+    .nav-item-label::after { content:""; position:absolute; inset:0; }
     .nav-item-label:hover { color:var(--accent); }
     .nav-item-label.active { color:var(--accent); }
-    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); pointer-events:none; }
     .header-rule { border:none; border-top:1px solid var(--rule); }
     .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; grid-column:12/13; justify-self:end; }
     .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
@@ -46,8 +55,8 @@
     .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
     .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column; }
     .mobile-menu.open { display:flex; }
-    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.1em; text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
-    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
+    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
+    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:var(--ls-title); color:var(--ink); transition:color 0.2s; }
     .mobile-menu a:hover { color:var(--accent); }
 
     /* ── PAGE ── */
@@ -187,19 +196,21 @@
     .work-entry:hover .work-entry-read-more svg { transform:translate(2px,-2px); }
 
     /* ── FOOTER ── */
-    footer { background:var(--ink); color:rgba(255,255,255,0.3); padding:2rem 0; margin-top:clamp(4rem,8vw,7rem); }
-    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:0.06em; }
+    footer { background:var(--ink); padding:1.25rem 0; margin-top:clamp(4rem,8vw,7rem); }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-links { display:flex; align-items:center; gap:1.5rem; }
+    .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:var(--footer-text-hover); }
+    .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
+    .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
+    .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:var(--footer-text-hover); }
+    .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
 
     /* ── REVEAL ── */
     .reveal { opacity:0; transform:translateY(16px); transition:opacity 0.55s ease, transform 0.55s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width:900px) {
-      .header-nav { display:none; }
-      .nav-hamburger { display:flex; }
-      .header-location { display:none; }
-    }
     @media (max-width:768px) {
       /* Card grid collapses before image/text geometry breaks */
       .work-list { grid-template-columns:1fr; }
@@ -208,9 +219,44 @@
       .work-entry-thumb { grid-column:1; grid-row:2; }
       .work-entry-desc { grid-column:1; grid-row:3; padding-top:0; }
     }
-
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
+
+    /* ── CONTACT MODAL ── */
+    .contact-modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay-bg); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
+    .contact-modal-overlay.open { display:flex; }
+    .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
+    .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
+    .contact-modal-close:hover { color:var(--ink); }
+    .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
+    .contact-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .contact-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .contact-input, .contact-textarea { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); background:var(--bg); border:none; border-bottom:1px solid var(--rule); padding:0.5rem 0; width:100%; outline:none; transition:border-color 0.2s; border-radius:0; -webkit-appearance:none; }
+    .contact-input:focus, .contact-textarea:focus { border-bottom-color:var(--ink); }
+    .contact-textarea { resize:none; height:120px; }
+    .contact-submit { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--bg); background:var(--ink); border:none; padding:0.875rem 2rem; cursor:pointer; align-self:flex-start; transition:background 0.2s; margin-top:0.5rem; }
+    .contact-submit:hover { background:var(--accent); }
+    .contact-status { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); display:none; padding-top:0.5rem; }
+    .contact-status.visible { display:block; }
+    /* ── CREDITS MODAL ── */
+    .credits-list { list-style:none; display:flex; flex-direction:column; gap:0; overflow-y:auto; }
+    .credits-item { display:flex; flex-direction:column; gap:0.25rem; padding:0.875rem 0; border-bottom:1px solid var(--rule); }
+    .credits-item:first-child { border-top:1px solid var(--rule); }
+    .credits-context { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .credits-source { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); }
+    .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s, color 0.2s; }
+    .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
+
+    @media (max-width:900px) {
+      .header-nav { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-location { display:none; }
+    }
+    @media (max-width:600px) {
+      .footer-links { flex-wrap:nowrap; gap:1.25rem; justify-content:center; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
+    }
   </style>
 </head>
 <body>
@@ -220,15 +266,19 @@
     <div class="container">
       <div class="header-inner">
         <div class="header-identity">
-          <a href="index.html" class="header-logo">STEVEN WELSH</a>
-          <div class="header-location">Sheffield<br>Ooop North</div>
+          <div class="header-logo-placeholder" aria-hidden="true"></div>
+          <div class="header-identity-text">
+            <a href="index.html" class="header-logo">Steven Welsh</a>
+            <div class="header-location">Sheffield<br>Ooop North</div>
+          </div>
         </div>
         <nav class="header-nav" aria-label="Main navigation">
           <ul class="header-nav-links" role="list">
-            <li class="nav-item"><a href="index.html" class="nav-item-label">About</a><span class="nav-item-desc">background,<br>approach &amp; values</span></li>
-            <li class="nav-item"><a href="work.html" class="nav-item-label active">Work</a><span class="nav-item-desc">selected client<br>projects</span></li>
-            <li class="nav-item"><a href="play.html" class="nav-item-label">Play</a><span class="nav-item-desc">personal work<br>&amp; experiments</span></li>
-            <li class="nav-item"><a href="blog.html" class="nav-item-label">Blog</a><span class="nav-item-desc">writing on<br>design &amp; craft</span></li>
+            <li class="nav-item"><a href="index.html" class="nav-item-label">About</a><span class="nav-item-desc">high-level<br>overview</span></li>
+            <li class="nav-item"><a href="work.html" class="nav-item-label active">Work</a><span class="nav-item-desc">selected<br>case studies</span></li>
+            <li class="nav-item"><a href="play.html" class="nav-item-label">Play</a><span class="nav-item-desc">freelance<br>side hustles</span></li>
+            <li class="nav-item"><a href="blog.html" class="nav-item-label">Blog</a><span class="nav-item-desc">musings and<br>reflections</span></li>
+            <li class="nav-item"><a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a><span class="nav-item-desc">enquiries and<br>commissions</span></li>
           </ul>
         </nav>
         <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -238,13 +288,13 @@
     </div>
     <hr class="header-rule" />
   </header>
-
   <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
     <a href="index.html">About</a>
     <a href="work.html">Work</a>
     <a href="play.html">Play</a>
     <a href="blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
   </nav>
 
   <main id="main">
@@ -357,19 +407,138 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <span>Steven Welsh</span>
-        <span>Sheffield &#8212; <span id="year"></span></span>
-        <span>All work reserved</span>
+        <nav class="footer-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.are.na/" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://twitter.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://substack.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          </a>
+        </nav>
+        <a href="#" class="footer-credits-link" id="credits-trigger">Additional Credits</a>
       </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- Credits Modal -->
+  <div class="contact-modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="credits-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="credits-modal-title">Additional Credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Image — Work, GDS Good Practice Guides</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Work, Confirm Your Identity</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Work, Benefits Tube Map</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Work, Co-Design Workshops</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Image — Work, Health Assessment Service</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — DM Mono</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/DM+Mono" target="_blank" rel="noopener">Colophon Foundry via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Tool — Contact Form</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Placeholder 10</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Placeholder 11</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Placeholder 12</span>
+          <span class="credits-source"><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash — Lorem Ipsum Photographer</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
 
+  <!-- Contact Modal -->
+  <div class="contact-modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="contact-modal-title">Get in touch</h2>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/myknpryk" method="POST">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" type="text" id="contact-name" name="name" required autocomplete="name">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" type="email" id="contact-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" type="text" id="contact-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send message</button>
+        <p class="contact-status" id="contact-status"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
     var btn = document.querySelector('.nav-hamburger');
     var menu = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-close');
+
+    // Set mobile menu padding to match header height
+    function updateMenuPadding() {
+      var headerH = document.querySelector('.site-header').offsetHeight;
+      document.getElementById('mobile-menu').style.paddingTop = headerH + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+
+    // Close mobile menu if viewport expands past mobile breakpoint
+    var mq = window.matchMedia('(min-width:769px)');
+    function handleBreakpoint(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    mq.addEventListener('change', handleBreakpoint);
+
     btn.addEventListener('click', function() {
       var open = menu.classList.toggle('open');
       btn.classList.toggle('open', open);
@@ -389,6 +558,113 @@
       });
     });
 
+    // Credits modal
+    var creditsModal       = document.getElementById('credits-modal');
+    var creditsTrigger     = document.getElementById('credits-trigger');
+    var creditsModalClose  = document.getElementById('credits-modal-close');
+
+    function openCredits() {
+      creditsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      creditsModalClose.focus();
+    }
+
+    function closeCredits() {
+      creditsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      creditsTrigger.focus();
+    }
+
+    creditsTrigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      openCredits();
+    });
+
+    creditsModalClose.addEventListener('click', closeCredits);
+
+    creditsModal.addEventListener('click', function(e) {
+      if (e.target === creditsModal) closeCredits();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && creditsModal.classList.contains('open')) closeCredits();
+    });
+
+    // Contact modal
+    var modal         = document.getElementById('contact-modal');
+    var trigger       = document.getElementById('contact-trigger');
+    var mobileTrigger = document.getElementById('mobile-contact-trigger');
+    var modalClose    = document.getElementById('contact-modal-close');
+    var contactForm   = document.getElementById('contact-form');
+    var contactStatus = document.getElementById('contact-status');
+
+    function openModal() {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+
+    if (mobileTrigger) {
+      mobileTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        openModal();
+      });
+    }
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var submit = contactForm.querySelector('.contact-submit');
+      submit.textContent = 'Sending…';
+      submit.disabled = true;
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(res) {
+        if (res.ok) {
+          contactStatus.textContent = 'Message sent — thank you.';
+          contactStatus.classList.add('visible');
+          contactForm.reset();
+          submit.textContent = 'Send message';
+          submit.disabled = false;
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(function() {
+        contactStatus.textContent = 'Something went wrong. Please try again.';
+        contactStatus.classList.add('visible');
+        submit.textContent = 'Send message';
+        submit.disabled = false;
+      });
+    });
+
+    // Reveal animation
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(e, i) {
         if (e.isIntersecting) {
