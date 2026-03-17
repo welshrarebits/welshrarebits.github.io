@@ -74,13 +74,13 @@
       grid-auto-rows:auto auto;
     }
     .work-list > li {
-      border-bottom:1px solid var(--rule);
       padding-bottom:clamp(1.5rem,3vw,2.5rem);
       margin-bottom:clamp(1.5rem,3vw,2.5rem);
       display:grid;
       grid-template-rows:subgrid;
       grid-row:span 2;
     }
+    .work-list > li:not(:last-child) { border-bottom:1px solid var(--rule); }
 
     /* Each card: image left | text right */
     .work-entry {
@@ -197,7 +197,7 @@
     .work-entry:hover .work-entry-read-more svg { transform:translate(2px,-2px); }
 
     /* ── FOOTER ── */
-    footer { background:var(--ink); padding:1.25rem 0; margin-top:clamp(4rem,8vw,7rem); }
+    footer { background:var(--ink); padding:1.25rem 0; margin-top:clamp(2rem,4vw,3rem); }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
     .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
