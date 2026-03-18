@@ -1,1 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- EDIT: page title -->
+  <title>Play &#8212; Piece Title</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
+      --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
+      --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
+      --col-gap:clamp(1rem,2vw,1.5rem);
+      --mono:'DM Mono',monospace;
+      --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --fs-xs:0.688rem; --fs-sm:0.813rem;
+      --footer-text:rgba(255,255,255,0.8); --footer-text-hover:rgba(255,255,255,1);
+      --logo-size:77px;
+      --header-h:clamp(60px,10vw,90px);
+      --z-header:100; --z-overlay:101;
+      --lh-tight:1.45;
+      --ls-title:-0.02em;
+      --ls-label:0.1em;
+      --dialog-close-muted:rgba(255,255,255,0.5);
+      --overlay-bg:rgba(13,13,13,0.9);
+      --video-max:1100px;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--ink);
+      font-family:var(--sans); font-size:1rem; font-weight:400;
+      line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
+    .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
+    /* ── SKIP LINK ── */
+    .skip-link {
+      position:absolute; top:-100%; left:1rem;
+      background:var(--ink); color:var(--bg);
+      padding:0.5rem 1rem; font-family:var(--mono);
+      font-size:var(--fs-xs); z-index:999;
+    }
+    .skip-link:focus { top:0.5rem; }
+
+    /* ── HEADER ── */
+    .site-header { position:sticky; top:0; z-index:var(--z-header); background:var(--bg); padding-top:1.25rem; }
+    .header-inner {
+      display:grid; grid-template-columns:repeat(12,1fr);
+      gap:0 var(--col-gap); align-items:start; padding-bottom:1rem;
+    }
+    .header-identity { grid-column:1/4; display:flex; flex-direction:row; align-items:flex-start; gap:0.75rem; }
+    .header-logo-placeholder { width:var(--logo-size); height:var(--logo-size); background:var(--rule); flex-shrink:0; }
+    .header-identity-text { display:flex; flex-direction:column; gap:0.35rem; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; text-transform:uppercase; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); }
+    .header-nav { grid-column:7/13; display:flex; justify-content:flex-end; }
+    .header-nav-links { display:flex; gap:clamp(1.5rem,3vw,3.5rem); align-items:start; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; position:relative; }
+    @supports (grid-template-columns:subgrid) {
+      .header-nav { display:grid; grid-template-columns:subgrid; align-items:start; }
+      .header-nav-links {
+        display:grid; grid-template-columns:repeat(5,auto);
+        gap:0 clamp(1.5rem,3vw,3.5rem); justify-content:end;
+        grid-column:1/7; align-items:start;
+      }
+    }
+    .nav-item-label {
+      font-family:var(--sans); font-size:0.875rem; font-weight:700;
+      color:var(--strong); line-height:1.2; transition:color 0.2s;
+      text-transform:uppercase; letter-spacing:0.05em;
+    }
+    .nav-item-label::after { content:""; position:absolute; inset:0; }
+    .nav-item-label:hover { color:var(--accent); }
+    .nav-item-label.active { color:var(--accent); }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); pointer-events:none; }
+    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .nav-hamburger {
+      display:none; flex-direction:column; gap:5px;
+      background:none; border:none; cursor:pointer; padding:4px;
+      grid-column:12/13; justify-self:end; align-self:center;
+    }
+    .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .mobile-menu {
+      display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+      background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column;
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close {
+      position:absolute; top:1.25rem; right:var(--pad);
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label); text-transform:uppercase;
+      background:none; border:none; cursor:pointer; color:var(--muted);
+    }
+    .mobile-menu a {
+      font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300;
+      border-bottom:1px solid var(--rule); padding:1rem 0;
+      letter-spacing:var(--ls-title); color:var(--ink); transition:color 0.2s;
+    }
+    .mobile-menu a:hover { color:var(--accent); }
+
+    /* ── BREADCRUMB (in header, mobile sticky bar) ── */
+    /* Mirrors work-subpage pattern exactly */
+    .ps-breadcrumb {
+      display:flex; align-items:center; gap:0.5rem;
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.12em; text-transform:uppercase;
+      margin-bottom:0.75rem;
+    }
+    .ps-breadcrumb-link { color:var(--accent); transition:opacity 0.2s; }
+    .ps-breadcrumb-link:hover { opacity:0.7; }
+    .ps-breadcrumb-sep { color:var(--accent); }
+    .ps-breadcrumb-current { color:var(--accent); }
+
+    .ps-breadcrumb-bar {
+      background:var(--bg);
+      border-top:1px solid var(--rule);
+      border-bottom:1px solid var(--rule);
+      padding:clamp(1.25rem,2.5vw,2rem) 0 0.75rem;
+    }
+    .ps-breadcrumb-bar .ps-breadcrumb { margin-bottom:0; }
+
+    /* ── ZONE 1: TITLE BLOCK ── */
+    /* Single-column. No split layout. */
+    .ps-zone-title {
+      padding:3rem 0 clamp(1.25rem,2.5vw,2rem);
+      border-bottom:1px solid var(--rule);
+    }
+    .ps-main-title {
+      font-family:var(--title);
+      font-size:clamp(1.75rem,3.5vw,3rem);
+      font-weight:700; letter-spacing:-0.03em; line-height:1.05;
+      color:var(--ink);
+    }
+    .ps-subtitle {
+      font-family:var(--sans);
+      font-size:clamp(1rem,1.5vw,1.2rem);
+      font-weight:400; font-style:italic;
+      color:var(--muted); line-height:1.65;
+      margin-top:0.75rem;
+    }
+
+    /* ── ZONE 2: META STRIP ── */
+    /* Horizontal. Two fields: Client + Role. */
+    .ps-zone-meta {
+      display:flex;
+      gap:clamp(2rem,5vw,4rem);
+      padding:clamp(1.25rem,2.5vw,1.75rem) 0;
+      border-bottom:1px solid var(--rule);
+      flex-wrap:wrap;
+    }
+    .ps-meta-item { display:flex; flex-direction:column; gap:0.2rem; }
+    .ps-meta-label {
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.08em; text-transform:uppercase;
+      color:var(--muted);
+    }
+    .ps-meta-value {
+      font-family:var(--sans); font-size:var(--fs-sm);
+      font-weight:400; color:var(--strong);
+    }
+
+    /* ── ZONE 3: INTRO COPY ── */
+    /* Short narrative text. Optional — comment out if not needed. */
+    .ps-zone-intro {
+      padding:clamp(1.5rem,3vw,2.5rem) 0;
+      border-bottom:1px solid var(--rule);
+      max-width:72ch; /* keeps prose readable, doesn't stretch full width */
+    }
+    .ps-body-text {
+      font-family:var(--sans); font-size:1rem;
+      font-weight:400; line-height:1.75; color:var(--strong);
+    }
+    .ps-body-text + .ps-body-text { margin-top:1em; }
+
+    /* Pull quote — optional, include per piece as needed */
+    .ps-quote {
+      border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+      padding:1.25rem 0; margin:1.5rem 0;
+    }
+    .ps-quote p {
+      font-family:var(--title);
+      font-size:clamp(1rem,1.8vw,1.35rem);
+      font-weight:700; letter-spacing:var(--ls-title); line-height:1.3; color:var(--ink);
+    }
+    .ps-quote cite {
+      display:block; margin-top:0.5rem;
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.08em; text-transform:uppercase;
+      color:var(--muted); font-style:normal;
+    }
+
+    /* Credits list — commented out in HTML by default, uncomment per piece */
+    .ps-credits {
+      padding:clamp(1.25rem,2.5vw,1.75rem) 0;
+      border-bottom:1px solid var(--rule);
+    }
+    .ps-credits-heading {
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.08em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:0.75rem;
+    }
+    .ps-credits-list {
+      display:flex; flex-direction:column; gap:0.4em;
+      padding-left:1em;
+    }
+    .ps-credits-list li {
+      font-family:var(--sans); font-size:1rem;
+      font-weight:400; line-height:1.75; color:var(--strong);
+      padding-left:1em; position:relative;
+    }
+    .ps-credits-list li::before {
+      content:'–'; position:absolute; left:0;
+      color:var(--muted); font-weight:300;
+    }
+    .ps-credits-link {
+      color:var(--accent); font-weight:400;
+      transition:opacity 0.2s;
+    }
+    .ps-credits-link:hover { opacity:0.7; }
+
+    /* ── ZONE 4: GALLERY ── */
+    /*
+      CSS columns scaffold. Images flow top-to-bottom within each column.
+      Browser handles placement — no JS required.
+      Mixed portrait/landscape aspect ratios are preserved naturally.
+
+      MODIFIER: .ps-gallery--single-col forces full-width sequential stack.
+      Use this modifier on magazine spreads or pieces where image order matters strictly.
+    */
+    .ps-zone-gallery {
+      padding:clamp(1.5rem,3vw,2.5rem) 0 0;
+    }
+    .ps-gallery {
+      columns:2;
+      column-gap:var(--col-gap);
+    }
+    .ps-gallery--single-col {
+      columns:1;
+    }
+    .ps-gallery-item {
+      break-inside:avoid;          /* prevents image splitting across columns */
+      margin-bottom:var(--col-gap);
+      display:flex;
+      flex-direction:column;
+    }
+    .ps-gallery-item:last-child { margin-bottom:0; }
+
+    /* Image — enlarge behaviour set by JS (data-enlargeable attr) */
+    .ps-gallery-img {
+      display:block; width:100%; object-fit:contain;
+    }
+    .ps-gallery-img[data-enlargeable] {
+      cursor:zoom-in;
+    }
+    .ps-gallery-placeholder {
+      width:100%; min-height:12rem;
+      background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
+    }
+    .ps-gallery-caption {
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.06em; color:var(--muted);
+      opacity:0.6; margin-top:0.5rem;
+    }
+
+    /* Video thumbnail within gallery — identical behaviour to work-subpage */
+    .ps-video-wrap {
+      position:relative; cursor:pointer;
+      break-inside:avoid; margin-bottom:var(--col-gap);
+    }
+    .ps-video-wrap:last-child { margin-bottom:0; }
+    .ps-video-thumb {
+      display:block; width:100%;
+      aspect-ratio:16/9; object-fit:cover;
+      background:var(--rule);
+    }
+    .ps-video-play {
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
+    }
+    .ps-video-play svg {
+      width:3rem; height:3rem;
+      opacity:0.85; transition:opacity 0.2s;
+    }
+    .ps-video-wrap:hover .ps-video-play svg { opacity:1; }
+    .ps-video-caption {
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.06em; color:var(--muted);
+      opacity:0.6; margin-top:0.5rem;
+    }
+
+    /* ── IMAGE ENLARGE DIALOG ── */
+    .ps-img-dialog {
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      max-width:100%; max-height:100%;
+      margin:0; padding:2rem;
+      background:transparent; border:none;
+      display:none; align-items:center; justify-content:center;
+    }
+    .ps-img-dialog[open] { display:flex; }
+    .ps-img-dialog::backdrop {
+      background:var(--overlay-bg);
+      cursor:zoom-out;
+    }
+    .ps-img-dialog img {
+      max-width:min(90vw,1200px);
+      max-height:85vh;
+      object-fit:contain;
+      display:block;
+      cursor:zoom-out;
+    }
+    .ps-img-dialog-close {
+      position:fixed; top:1.25rem; right:var(--pad);
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label); text-transform:uppercase;
+      background:none; border:none; cursor:pointer;
+      color:var(--dialog-close-muted); transition:color 0.2s;
+    }
+    .ps-img-dialog-close:hover { color:rgba(255,255,255,1); }
+
+    /* ── VIDEO DIALOG ── */
+    .ps-video-dialog {
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      max-width:100%; max-height:100%;
+      margin:0; padding:2rem;
+      background:transparent; border:none;
+      display:none; align-items:center; justify-content:center;
+    }
+    .ps-video-dialog[open] { display:flex; }
+    .ps-video-dialog::backdrop {
+      background:var(--overlay-bg);
+      cursor:zoom-out;
+    }
+    .ps-video-dialog iframe {
+      width:min(90vw,var(--video-max));
+      height:calc(min(90vw,var(--video-max)) * 9/16);
+      border:none; display:block;
+    }
+    .ps-video-dialog-close {
+      position:fixed; top:1.25rem; right:var(--pad);
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label); text-transform:uppercase;
+      background:none; border:none; cursor:pointer;
+      color:var(--dialog-close-muted); transition:color 0.2s;
+    }
+    .ps-video-dialog-close:hover { color:rgba(255,255,255,1); }
+
+    /* ── BACK LINK ── */
+    .ps-back-wrap {
+      padding:clamp(2rem,4vw,3rem) 0 0;
+    }
+    .ps-back {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label); text-transform:uppercase;
+      color:var(--accent); transition:opacity 0.2s;
+    }
+    .ps-back:hover { opacity:0.7; }
+    .ps-back svg { transition:transform 0.2s; }
+    .ps-back:hover svg { transform:translateX(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--ink); padding:1.25rem 0; margin-top:clamp(4rem,8vw,7rem); }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-links { display:flex; align-items:center; gap:1.5rem; }
+    .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:var(--footer-text-hover); }
+    .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
+    .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
+    .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:var(--footer-text-hover); }
+    .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
+
+    /* ── CONTACT MODAL ── */
+    .contact-modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay-bg); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
+    .contact-modal-overlay.open { display:flex; }
+    .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
+    .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
+    .contact-modal-close:hover { color:var(--ink); }
+    .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
+    .contact-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .contact-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .contact-input, .contact-textarea { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); background:var(--bg); border:none; border-bottom:1px solid var(--rule); padding:0.5rem 0; width:100%; outline:none; transition:border-color 0.2s; border-radius:0; -webkit-appearance:none; }
+    .contact-input:focus, .contact-textarea:focus { border-bottom-color:var(--ink); }
+    .contact-textarea { resize:none; height:120px; }
+    .contact-submit { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--bg); background:var(--ink); border:none; padding:0.875rem 2rem; cursor:pointer; align-self:flex-start; transition:background 0.2s; margin-top:0.5rem; }
+    .contact-submit:hover { background:var(--accent); }
+    .contact-status { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); display:none; padding-top:0.5rem; }
+    .contact-status.visible { display:block; }
+
+    /* ── CREDITS MODAL ── */
+    .credits-list { list-style:none; display:flex; flex-direction:column; gap:0; overflow-y:auto; }
+    .credits-item { display:flex; flex-direction:column; gap:0.25rem; padding:0.875rem 0; border-bottom:1px solid var(--rule); }
+    .credits-item:first-child { border-top:1px solid var(--rule); }
+    .credits-context { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .credits-source { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); }
+    .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s, color 0.2s; }
+    .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
+
+    /* ── INLINE PLACEHOLDER UTILITY ── */
+    .ps-inline-placeholder { display:none; }
+
+    /* ── RESPONSIVE ── */
+    @media (min-width:701px) {
+      /* Breadcrumb bar mobile only */
+      .ps-breadcrumb-bar { display:none; }
+    }
+
+    @media (max-width:900px) {
+      .header-nav { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-location { display:none; }
+    }
+
+    @media (max-width:700px) {
+      /* Title zone breadcrumb replaced by sticky bar on mobile */
+      .ps-zone-title { padding-top:1rem; }
+      .ps-zone-title .ps-breadcrumb { display:none; }
+      /* Gallery: single column on mobile */
+      .ps-gallery { columns:1; }
+    }
+
+    @media (max-width:600px) {
+      .footer-links { flex-wrap:nowrap; gap:1.25rem; justify-content:center; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-identity">
+          <div class="header-logo-placeholder" aria-hidden="true"></div>
+          <div class="header-identity-text">
+            <a href="../../index.html" class="header-logo">Steven Welsh</a>
+            <div class="header-location">Sheffield<br>Ooop North</div>
+          </div>
+        </div>
+        <nav class="header-nav" aria-label="Main navigation">
+          <ul class="header-nav-links" role="list">
+            <li class="nav-item">
+              <a href="../../index.html" class="nav-item-label">About</a>
+              <span class="nav-item-desc">high-level<br>overview</span>
+            </li>
+            <li class="nav-item">
+              <a href="../../work.html" class="nav-item-label">Work</a>
+              <span class="nav-item-desc">selected<br>case studies</span>
+            </li>
+            <li class="nav-item">
+              <a href="../../play.html" class="nav-item-label active">Play</a>
+              <span class="nav-item-desc">freelance<br>side hustles</span>
+            </li>
+            <li class="nav-item">
+              <a href="../../blog.html" class="nav-item-label">Blog</a>
+              <span class="nav-item-desc">musings and<br>reflections</span>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a>
+              <span class="nav-item-desc">enquiries and<br>commissions</span>
+            </li>
+          </ul>
+        </nav>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <hr class="header-rule" />
+    <!-- Breadcrumb bar — mobile only, always visible, part of sticky header -->
+    <div class="ps-breadcrumb-bar" id="breadcrumb-bar">
+      <div class="container">
+        <nav class="ps-breadcrumb" aria-label="Breadcrumb">
+          <a href="../../play.html" class="ps-breadcrumb-link">Play</a>
+          <span class="ps-breadcrumb-sep">/</span>
+          <span class="ps-breadcrumb-current" aria-current="page">Piece Title</span><!-- EDIT: piece title -->
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
+    <a href="../../index.html">About</a>
+    <a href="../../work.html">Work</a>
+    <a href="../../play.html">Play</a>
+    <a href="../../blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
+  </nav>
+
+  <main id="main">
+    <div class="container">
+
+      <!-- ═══════════════════════════════════════════
+           ZONE 1 — TITLE BLOCK
+           EDIT: <title> in <head>, breadcrumb piece title,
+                 ps-main-title text, ps-subtitle text
+           ═══════════════════════════════════════════ -->
+      <div class="ps-zone-title">
+        <!-- Breadcrumb: "Play" links back, piece title is current page
+             Hidden on mobile — replaced by sticky breadcrumb bar above -->
+        <nav class="ps-breadcrumb" aria-label="Breadcrumb">
+          <a href="../../play.html" class="ps-breadcrumb-link">Play</a>
+          <span class="ps-breadcrumb-sep">/</span>
+          <span class="ps-breadcrumb-current" aria-current="page">Piece Title</span><!-- EDIT: piece title -->
+        </nav>
+        <h1 class="ps-main-title">Piece Title</h1><!-- EDIT: title -->
+        <p class="ps-subtitle">A short supporting line — context, medium, or mood.</p><!-- EDIT: subtitle — remove element if not needed -->
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           ZONE 2 — META STRIP
+           Two fields: Client + Role.
+           EDIT: values. Remove a ps-meta-item if not applicable.
+           ═══════════════════════════════════════════ -->
+      <div class="ps-zone-meta" aria-label="Project details">
+        <div class="ps-meta-item">
+          <span class="ps-meta-label">Client</span>
+          <span class="ps-meta-value">Client Name</span><!-- EDIT -->
+        </div>
+        <div class="ps-meta-item">
+          <span class="ps-meta-label">Role</span>
+          <span class="ps-meta-value">Illustrator</span><!-- EDIT: e.g. Illustrator / Exhibitor / Designer -->
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           ZONE 3 — INTRO COPY
+           Short narrative. 1–3 paragraphs max.
+           Remove this entire zone if the work speaks for itself.
+           ═══════════════════════════════════════════ -->
+      <div class="ps-zone-intro">
+        <p class="ps-body-text">Introductory paragraph — context, brief story, or framing for the piece. Keep this tight.</p><!-- EDIT -->
+        <!-- Add further ps-body-text paragraphs as needed -->
+
+        <!-- ── PULL QUOTE — optional ──
+             Include when a client, press, or collaborator quote adds value.
+             Remove this block entirely if not needed.
+        <blockquote class="ps-quote">
+          <p>The quote text goes here — a line or two, no more.</p>
+          <cite>Source — Name or Publication</cite>
+        </blockquote>
+        -->
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           CREDITS LIST — commented out by default
+           Uncomment the entire block when third-party
+           collaborators or photographers need crediting.
+           ═══════════════════════════════════════════ -->
+      <!--
+      <div class="ps-credits">
+        <p class="ps-credits-heading">Credits</p>
+        <ul class="ps-credits-list">
+          <li><a href="https://example.com" class="ps-credits-link">Collaborator Name</a> — role or contribution</li>
+          <li><a href="https://example.com" class="ps-credits-link">Photographer Name</a> — photography</li>
+          <li>Available from <a href="https://example.com" class="ps-credits-link">Stockist Name</a></li>
+        </ul>
+      </div>
+      -->
+
+      <!-- ═══════════════════════════════════════════
+           ZONE 4 — GALLERY
+           Default: 2-column CSS scaffold (columns:2).
+           Modifier: add class ps-gallery--single-col for full-width
+           sequential stack (magazine spreads, strict order pieces).
+
+           IMAGE ITEMS:
+           Replace ps-gallery-placeholder div with a real img tag:
+           <img class="ps-gallery-img"
+                src="../../play/[folder]/[filename].jpg"
+                alt="Descriptive alt text"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+
+           Enlarge: JS checks naturalWidth vs offsetWidth on load.
+           If naturalWidth > offsetWidth × 1.2, data-enlargeable is added
+           automatically — no manual attribute needed.
+
+           CAPTION: add ps-gallery-caption p after the img/placeholder.
+           Leave empty or remove if no caption needed.
+
+           VIDEO ITEMS: use ps-video-wrap structure (see example below).
+           Videos always open in the dialog — they have no naturalWidth
+           to check against, so the enlargeable test does not apply.
+           ═══════════════════════════════════════════ -->
+      <div class="ps-zone-gallery">
+        <div class="ps-gallery"><!-- Add ps-gallery--single-col if needed -->
+
+          <!-- Gallery item — image -->
+          <div class="ps-gallery-item">
+            <!-- EDIT: swap placeholder for real img -->
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-01.jpg"
+                 alt="Descriptive alt text"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p><!-- EDIT: caption or remove -->
+          </div>
+
+          <!-- Gallery item — image -->
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-02.jpg"
+                 alt="Descriptive alt text"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <!-- Gallery item — image -->
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-03.jpg"
+                 alt="Descriptive alt text"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <!-- Gallery item — image -->
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-04.jpg"
+                 alt="Descriptive alt text"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <!-- Gallery item — VIDEO
+               EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
+               EDIT: poster src for thumbnail (or remove poster attr for default YT thumbnail)
+               Videos always trigger the video dialog — no naturalWidth check needed. -->
+          <!--
+          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" role="button" tabindex="0" aria-label="Play video: Video title">
+            <img class="ps-video-thumb"
+                 src="../../play/[folder]/video-thumb.jpg"
+                 alt="Video thumbnail description" />
+            <div class="ps-video-play" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="31" stroke="white" stroke-width="1.5"/>
+                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+              </svg>
+            </div>
+            <p class="ps-video-caption"></p>
+          </div>
+          -->
+
+        </div><!-- /ps-gallery -->
+      </div><!-- /ps-zone-gallery -->
+
+      <!-- Back link — foot of page, all viewports -->
+      <div class="ps-back-wrap">
+        <a href="../../play.html" class="ps-back">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M3 8L8 3M3 8L8 13" stroke="currentColor" stroke-width="1.4"/></svg>
+          Back to Play
+        </a>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <nav class="footer-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/welshsteve/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.are.na/steve-n-welsh/channels" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://x.com/miniboro_dotcom" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://substack.com/@ulysses31" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          </a>
+        </nav>
+        <a href="#" class="footer-credits-link" id="credits-trigger">Additional Credits</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Credits Modal -->
+  <div class="contact-modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="credits-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="credits-modal-title">Additional Credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Typeface — DM Mono</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/DM+Mono" target="_blank" rel="noopener">Colophon Foundry via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Tool — Contact Form</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+        <!-- EDIT: add image/asset credits as needed -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="contact-modal-title">Get in touch</h2>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/myknpryk" method="POST">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" type="text" id="contact-name" name="name" required autocomplete="name">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" type="email" id="contact-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" type="text" id="contact-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send message</button>
+        <p class="contact-status" id="contact-status"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image enlarge dialog -->
+  <dialog class="ps-img-dialog" id="ps-img-dialog">
+    <button class="ps-img-dialog-close" id="ps-img-dialog-close" aria-label="Close enlarged image">Close ✕</button>
+    <img id="ps-img-dialog-img" src="" alt="" />
+  </dialog>
+
+  <!-- Video dialog -->
+  <dialog class="ps-video-dialog" id="ps-video-dialog">
+    <button class="ps-video-dialog-close" id="ps-video-dialog-close" aria-label="Close video">Close ✕</button>
+    <iframe id="ps-video-dialog-iframe" src="" allowfullscreen title="Video player"></iframe>
+  </dialog>
+
+  <script>
+    // ── MOBILE MENU ──
+    var btn = document.querySelector('.nav-hamburger');
+    var menu = document.getElementById('mobile-menu');
+    var closeBtn = document.getElementById('mobile-close');
+
+    function updateMenuPadding() {
+      var headerH = document.querySelector('.site-header').offsetHeight;
+      document.getElementById('mobile-menu').style.paddingTop = headerH + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+
+    var mq = window.matchMedia('(min-width:769px)');
+    function handleBreakpoint(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    mq.addEventListener('change', handleBreakpoint);
+
+    btn.addEventListener('click', function() {
+      var open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+    closeBtn.addEventListener('click', function() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+      });
+    });
+
+    // ── CREDITS MODAL ──
+    var creditsModal      = document.getElementById('credits-modal');
+    var creditsTrigger    = document.getElementById('credits-trigger');
+    var creditsModalClose = document.getElementById('credits-modal-close');
+
+    function openCredits() {
+      creditsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      creditsModalClose.focus();
+    }
+    function closeCredits() {
+      creditsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      creditsTrigger.focus();
+    }
+    creditsTrigger.addEventListener('click', function(e) { e.preventDefault(); openCredits(); });
+    creditsModalClose.addEventListener('click', closeCredits);
+    creditsModal.addEventListener('click', function(e) { if (e.target === creditsModal) closeCredits(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && creditsModal.classList.contains('open')) closeCredits();
+    });
+
+    // ── CONTACT MODAL ──
+    var modal         = document.getElementById('contact-modal');
+    var trigger       = document.getElementById('contact-trigger');
+    var mobileTrigger = document.getElementById('mobile-contact-trigger');
+    var modalClose    = document.getElementById('contact-modal-close');
+    var contactForm   = document.getElementById('contact-form');
+    var contactStatus = document.getElementById('contact-status');
+
+    function openModal() {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      trigger.focus();
+    }
+    trigger.addEventListener('click', function(e) { e.preventDefault(); openModal(); });
+    if (mobileTrigger) {
+      mobileTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        openModal();
+      });
+    }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var submit = contactForm.querySelector('.contact-submit');
+      submit.textContent = 'Sending…';
+      submit.disabled = true;
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(res) {
+        if (res.ok) {
+          contactStatus.textContent = 'Message sent — thank you.';
+          contactStatus.classList.add('visible');
+          contactForm.reset();
+          submit.textContent = 'Send message';
+          submit.disabled = false;
+        } else { throw new Error(); }
+      })
+      .catch(function() {
+        contactStatus.textContent = 'Something went wrong. Please try again.';
+        contactStatus.classList.add('visible');
+        submit.textContent = 'Send message';
+        submit.disabled = false;
+      });
+    });
+
+    // ── GALLERY IMAGE ENLARGE ──
+    // On each gallery image load, compare naturalWidth to rendered offsetWidth.
+    // Only mark as enlargeable if source is meaningfully larger (>20% threshold).
+    // data-enlargeable attr drives cursor and click behaviour — no manual markup needed.
+    var imgDialog     = document.getElementById('ps-img-dialog');
+    var imgDialogImg  = document.getElementById('ps-img-dialog-img');
+    var imgDialogClose = document.getElementById('ps-img-dialog-close');
+
+    function checkEnlargeable(img) {
+      if (!img.complete) {
+        img.addEventListener('load', function() { checkEnlargeable(img); }, { once: true });
+        return;
+      }
+      if (img.naturalWidth > img.offsetWidth * 1.2) {
+        img.setAttribute('data-enlargeable', '');
+      }
+    }
+
+    document.querySelectorAll('.ps-gallery-img').forEach(function(img) {
+      checkEnlargeable(img);
+    });
+
+    // Re-check on resize — rendered size changes, natural size does not
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        document.querySelectorAll('.ps-gallery-img').forEach(function(img) {
+          img.removeAttribute('data-enlargeable');
+          checkEnlargeable(img);
+        });
+      }, 150);
+    });
+
+    document.addEventListener('click', function(e) {
+      var img = e.target;
+      if (!img || img.tagName !== 'IMG' || !img.classList.contains('ps-gallery-img')) return;
+      if (!img.hasAttribute('data-enlargeable')) return;
+      e.stopPropagation();
+      imgDialogImg.src = img.src;
+      imgDialogImg.alt = img.alt;
+      imgDialog.showModal();
+    });
+
+    imgDialogClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      imgDialog.close();
+      imgDialogImg.src = '';
+    });
+    imgDialog.addEventListener('click', function(e) {
+      if (e.target === imgDialog) {
+        e.stopPropagation();
+        imgDialog.close();
+        imgDialogImg.src = '';
+      }
+    });
+    imgDialog.addEventListener('close', function() { imgDialogImg.src = ''; });
+
+    // ── VIDEO DIALOG ──
+    // Videos always open in the dialog (always enlargeable — no naturalWidth check).
+    var videoDialog  = document.getElementById('ps-video-dialog');
+    var videoIframe  = document.getElementById('ps-video-dialog-iframe');
+    var videoClose   = document.getElementById('ps-video-dialog-close');
+    var ytBase = 'https://www.youtube-nocookie.com/embed/';
+
+    document.addEventListener('click', function(e) {
+      var wrap = e.target.closest('.ps-video-wrap');
+      if (!wrap) return;
+      var id = wrap.getAttribute('data-video-id');
+      if (!id) return;
+      e.stopPropagation();
+      videoIframe.src = ytBase + id + '?autoplay=1&rel=0';
+      videoDialog.showModal();
+    });
+
+    function closeVideo() {
+      videoDialog.close();
+      videoIframe.src = '';
+    }
+    videoClose.addEventListener('click', function(e) { e.stopPropagation(); closeVideo(); });
+    videoDialog.addEventListener('click', function(e) {
+      if (e.target === videoDialog) { e.stopPropagation(); closeVideo(); }
+    });
+    videoDialog.addEventListener('close', closeVideo);
+
+    // Keyboard: spacebar/enter on video wrap
+    document.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('ps-video-wrap')) {
+        e.preventDefault();
+        e.target.click();
+      }
+    });
+
+    // ── HEADER HEIGHT TOKEN ──
+    var headerEl = document.querySelector('.site-header');
+    function setHeaderHeight() {
+      var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
+      if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        setHeaderHeight();
+        if (window.ResizeObserver && headerEl) {
+          new ResizeObserver(setHeaderHeight).observe(headerEl);
+        } else {
+          window.addEventListener('resize', setHeaderHeight);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
