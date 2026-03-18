@@ -81,6 +81,10 @@
       grid-row:span 2;
     }
     .work-list > li:not(:last-child) { border-bottom:1px solid var(--rule); }
+    /* Desktop: last item in an even-numbered list sits in a full row — restore its rule */
+    @media (min-width:769px) {
+      .work-list > li:last-child:nth-child(even) { border-bottom:1px solid var(--rule); }
+    }
 
     /* Each card: image left | text right */
     .work-entry {
