@@ -178,10 +178,9 @@
     */
     .ps-zone-intro {
       display:grid;
-      grid-template-columns:2fr 1fr;
-      gap:0 clamp(1.5rem,3vw,2.5rem);
-      padding:clamp(1.5rem,3vw,2.5rem) 0;
-      border-bottom:1px solid var(--rule);
+      grid-template-columns:1fr 1fr;
+      gap:clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,3vw,2.5rem);
+      padding:clamp(1.5rem,3vw,2.5rem) 0 0;
       align-items:start;
     }
     .ps-intro-text { /* left column — prose, no max-width needed: grid constrains it */ }
@@ -545,10 +544,10 @@
         <nav class="ps-breadcrumb" aria-label="Breadcrumb">
           <a href="../../play.html" class="ps-breadcrumb-link">Play</a>
           <span class="ps-breadcrumb-sep">/</span>
-          <span class="ps-breadcrumb-current" aria-current="page">Project 1</span><!-- EDIT: piece title -->
+          <span class="ps-breadcrumb-current" aria-current="page">Piece Title</span><!-- EDIT: piece title -->
         </nav>
-        <h1 class="ps-main-title">Brazil 2014 - FIFA World Cup</h1><!-- EDIT: title -->
-        <p class="ps-subtitle">Pretty much the closest I'll ever get to playing for England</p><!-- EDIT: subtitle — remove element if not needed -->
+        <h1 class="ps-main-title">Piece Title</h1><!-- EDIT: title -->
+        <p class="ps-subtitle">A short supporting line — context, medium, or mood.</p><!-- EDIT: subtitle — remove element if not needed -->
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -569,9 +568,12 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 3 — INTRO + HERO IMAGE
-           Left column (2fr): narrative text + optional pull quote.
-           Right column (1fr): first/hero image.
+           50/50 two-column split at desktop.
+           Left column: narrative text + optional pull quote.
+           Right column: featured image — use the same image as the
+           thumbnail on play.html for this piece (all are landscape).
 
+           Stacks on mobile in source order: text first, image second.
            If a piece needs no intro text, remove this entire zone —
            the gallery will lead directly from the meta strip.
 
@@ -583,13 +585,7 @@
 
         <!-- Left: intro text -->
         <div class="ps-intro-text">
-         <!-- EDIT --> 
-          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 
-            30 man squad for the 2014 Brazil World Cup. Each piece was then hand signed by the players during their final training camp in England. 
-            The images were used throughout the BBC’s coverage, including trailers and interviews for Match of the Day & MOTD Kickabout.</p>
-
-          <p class="ps-body-text">The artwork was seen by over 15 million people in the UK alone (during England vs Italy) and remains my highest 
-            profile job to date. Click the image below to watch the England stars discuss their portraits.</p>
+          <p class="ps-body-text">Introductory paragraph — context, brief story, or framing for the piece. Keep this tight.</p><!-- EDIT -->
           <!-- Add further ps-body-text paragraphs as needed -->
 
           <!-- ── PULL QUOTE — optional ──
@@ -606,7 +602,7 @@
         <div class="ps-intro-hero">
           <!-- EDIT: swap placeholder for real img -->
           <img class="ps-intro-hero-img"
-               src="../../play/worldcup/branding.jpg"
+               src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
           <div class="ps-intro-hero-placeholder ps-inline-placeholder" aria-hidden="true"></div>
@@ -644,7 +640,7 @@
            IMAGE ITEMS:
            Replace ps-gallery-placeholder div with a real img tag:
            <img class="ps-gallery-img"
-                src="../../play/worldcup/gerrard_interview.jpg"
+                src="../../play/[folder]/[filename].jpg"
                 alt="Descriptive alt text"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
 
@@ -666,7 +662,7 @@
           <div class="ps-gallery-item">
             <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/sterling_15.jpg"
+                 src="../../play/[folder]/image-02.jpg"
                  alt="Descriptive alt text"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
             <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
