@@ -279,14 +279,14 @@
 
     /* Image — hidden by default; shown by JS on successful load */
     .ps-gallery-img {
-      display:none; width:100%; object-fit:contain;
+      display:none; width:100%; aspect-ratio:4/3; object-fit:cover;
     }
     .ps-gallery-img.loaded {
       display:block;
     }
     .ps-gallery-img[data-enlargeable] { cursor:zoom-in; }
     .ps-gallery-placeholder {
-      width:100%; min-height:6rem;
+      width:100%; aspect-ratio:4/3;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
     .ps-gallery-caption {
@@ -586,14 +586,7 @@
 
         <!-- Left: intro text -->
         <div class="ps-intro-text">
-          <!-- EDIT -->
-          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 
-            30 man squad for the 2014 Brazil World Cup. Each piece was then hand signed by the players during their final training camp in 
-            England. The images were used throughout the BBC’s coverage, including trailers and interviews for Match of the Day & MOTD Kickabout.</p>
-
-          <p class="ps-body-text">The artwork was seen by over 15 million people in the UK alone (during England vs Italy) and remains my highest 
-            profile job to date. Click the image below to watch the England stars discuss their portraits.</p>
-          
+          <p class="ps-body-text">Introductory paragraph — context, brief story, or framing for the piece. Keep this tight.</p><!-- EDIT -->
           <!-- Add further ps-body-text paragraphs as needed -->
 
           <!-- ── PULL QUOTE — optional ──
@@ -610,7 +603,7 @@
         <div class="ps-intro-hero">
           <!-- EDIT: swap placeholder for real img -->
           <img class="ps-intro-hero-img"
-               src="../../assets/thumbnails/play/worldcup.png"
+               src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                />
           <div class="ps-intro-hero-placeholder" aria-hidden="true"></div>
@@ -671,7 +664,7 @@
           <div class="ps-gallery-item">
             <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/ben_foster.png"
+                 src="../../play/[folder]/image-02.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -681,7 +674,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/ox_art.jpg"
+                 src="../../play/[folder]/image-03.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -691,7 +684,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/wilshere_art.jpg"
+                 src="../../play/[folder]/image-04.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -701,27 +694,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/sterling_15.jpg"
-                 alt="Descriptive alt text"
-                 />
-            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
-            <p class="ps-gallery-caption"></p>
-          </div>
-
-            <!-- Gallery item — image -->
-          <div class="ps-gallery-item">
-            <img class="ps-gallery-img"
-                 src="../../play/worldcup/lampard_15.jpg"
-                 alt="Descriptive alt text"
-                 />
-            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
-            <p class="ps-gallery-caption"></p>
-          </div>
-
-             <!-- Gallery item — image -->
-          <div class="ps-gallery-item">
-            <img class="ps-gallery-img"
-                 src="../../play/worldcup/wellbeck_15.jpg"
+                 src="../../play/[folder]/image-05.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
