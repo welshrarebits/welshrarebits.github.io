@@ -186,11 +186,12 @@
     .ps-intro-text { /* left column — prose, no max-width needed: grid constrains it */ }
     .ps-intro-hero { /* right column — first/hero image */ }
     .ps-intro-hero-img {
-      display:block; width:100%; object-fit:contain;
+      display:none; width:100%; object-fit:contain;
     }
+    .ps-intro-hero-img.loaded { display:block; }
     .ps-intro-hero-img[data-enlargeable] { cursor:zoom-in; }
     .ps-intro-hero-placeholder {
-      width:100%; min-height:10rem;
+      width:100%; min-height:5rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
     .ps-intro-hero-caption {
@@ -252,40 +253,40 @@
 
     /* ── ZONE 4: GALLERY ── */
     /*
-      CSS columns scaffold. Images flow top-to-bottom within each column.
-      Browser handles placement — no JS required.
-      Mixed portrait/landscape aspect ratios are preserved naturally.
+      CSS Grid — 3 columns, images align to top of each cell.
+      Row height is determined by the tallest image in that row.
+      Mixed aspect ratios are preserved — no cropping.
+      Images fill left-to-right, row by row.
 
       MODIFIER: .ps-gallery--single-col forces full-width sequential stack.
-      Use this modifier on magazine spreads or pieces where image order matters strictly.
     */
     .ps-zone-gallery {
       padding:clamp(1.5rem,3vw,2.5rem) 0 0;
     }
     .ps-gallery {
-      columns:3;
-      column-gap:var(--col-gap);
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:var(--col-gap);
+      align-items:start;
     }
     .ps-gallery--single-col {
-      columns:1;
+      grid-template-columns:1fr;
     }
     .ps-gallery-item {
-      break-inside:avoid;          /* prevents image splitting across columns */
-      margin-bottom:var(--col-gap);
       display:flex;
       flex-direction:column;
     }
-    .ps-gallery-item:last-child { margin-bottom:0; }
 
-    /* Image — enlarge behaviour set by JS (data-enlargeable attr) */
+    /* Image — hidden by default; shown by JS on successful load */
     .ps-gallery-img {
-      display:block; width:100%; object-fit:contain;
+      display:none; width:100%; object-fit:contain;
     }
-    .ps-gallery-img[data-enlargeable] {
-      cursor:zoom-in;
+    .ps-gallery-img.loaded {
+      display:block;
     }
+    .ps-gallery-img[data-enlargeable] { cursor:zoom-in; }
     .ps-gallery-placeholder {
-      width:100%; min-height:12rem;
+      width:100%; min-height:6rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
     }
     .ps-gallery-caption {
@@ -297,9 +298,7 @@
     /* Video thumbnail within gallery — identical behaviour to work-subpage */
     .ps-video-wrap {
       position:relative; cursor:pointer;
-      break-inside:avoid; margin-bottom:var(--col-gap);
     }
-    .ps-video-wrap:last-child { margin-bottom:0; }
     .ps-video-thumb {
       display:block; width:100%;
       aspect-ratio:16/9; object-fit:cover;
@@ -432,8 +431,7 @@
     .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s, color 0.2s; }
     .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
 
-    /* ── INLINE PLACEHOLDER UTILITY ── */
-    .ps-inline-placeholder { display:none; }
+
 
     /* ── RESPONSIVE ── */
     @media (min-width:701px) {
@@ -457,14 +455,14 @@
 
     @media (max-width:600px) {
       /* Gallery: 2 columns at narrow viewport */
-      .ps-gallery { columns:2; }
+      .ps-gallery { grid-template-columns:repeat(2,1fr); }
       .footer-links { flex-wrap:nowrap; gap:1.25rem; justify-content:center; }
       .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
     }
 
     @media (max-width:420px) {
       /* Gallery: single column on small phones */
-      .ps-gallery { columns:1; }
+      .ps-gallery { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -607,8 +605,8 @@
           <img class="ps-intro-hero-img"
                src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-          <div class="ps-intro-hero-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+               />
+          <div class="ps-intro-hero-placeholder" aria-hidden="true"></div>
           <p class="ps-intro-hero-caption"></p><!-- EDIT: caption or remove -->
         </div>
 
@@ -632,8 +630,9 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 4 — GALLERY
-           Default: 3-column CSS scaffold (columns:3).
-           Drops to 2 columns at ≤900px, 1 column at ≤700px.
+           CSS Grid — 3 columns, left-to-right row filling.
+           Images align to top of cell, natural height preserved.
+           Drops to 2 columns at ≤600px, 1 column at ≤420px.
            Modifier: add class ps-gallery--single-col for full-width
            sequential stack (magazine spreads, strict order pieces).
 
@@ -645,7 +644,7 @@
            <img class="ps-gallery-img"
                 src="../../play/[folder]/[filename].jpg"
                 alt="Descriptive alt text"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+                />
 
            Enlarge: JS checks naturalWidth vs offsetWidth on load.
            If naturalWidth > offsetWidth × 1.2, data-enlargeable is added
@@ -667,8 +666,8 @@
             <img class="ps-gallery-img"
                  src="../../play/[folder]/image-02.jpg"
                  alt="Descriptive alt text"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
             <p class="ps-gallery-caption"></p><!-- EDIT: caption or remove -->
           </div>
 
@@ -677,8 +676,8 @@
             <img class="ps-gallery-img"
                  src="../../play/[folder]/image-03.jpg"
                  alt="Descriptive alt text"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
             <p class="ps-gallery-caption"></p>
           </div>
 
@@ -687,8 +686,8 @@
             <img class="ps-gallery-img"
                  src="../../play/[folder]/image-04.jpg"
                  alt="Descriptive alt text"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
             <p class="ps-gallery-caption"></p>
           </div>
 
@@ -697,8 +696,8 @@
             <img class="ps-gallery-img"
                  src="../../play/[folder]/image-05.jpg"
                  alt="Descriptive alt text"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-            <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
             <p class="ps-gallery-caption"></p>
           </div>
 
@@ -948,34 +947,57 @@
       });
     });
 
-    // ── GALLERY IMAGE ENLARGE ──
-    // On each gallery image load, compare naturalWidth to rendered offsetWidth.
-    // Only mark as enlargeable if source is meaningfully larger (>20% threshold).
+    // ── GALLERY IMAGE ENLARGE + LOAD/ERROR HANDLING ──
+    // Images are display:none by default (CSS). On successful load:
+    //   - add .loaded class (makes img visible)
+    //   - hide the sibling placeholder
+    //   - check if enlargeable (naturalWidth > offsetWidth × 1.2)
+    // On error: img stays hidden, placeholder remains visible.
     // data-enlargeable attr drives cursor and click behaviour — no manual markup needed.
-    var imgDialog     = document.getElementById('ps-img-dialog');
-    var imgDialogImg  = document.getElementById('ps-img-dialog-img');
+    var imgDialog      = document.getElementById('ps-img-dialog');
+    var imgDialogImg   = document.getElementById('ps-img-dialog-img');
     var imgDialogClose = document.getElementById('ps-img-dialog-close');
 
     function checkEnlargeable(img) {
-      if (!img.complete) {
-        img.addEventListener('load', function() { checkEnlargeable(img); }, { once: true });
-        return;
-      }
       if (img.naturalWidth > img.offsetWidth * 1.2) {
         img.setAttribute('data-enlargeable', '');
       }
     }
 
-    document.querySelectorAll('.ps-gallery-img, .ps-intro-hero-img').forEach(function(img) {
-      checkEnlargeable(img);
-    });
+    function initImg(img) {
+      function onLoad() {
+        img.classList.add('loaded');
+        // Hide the sibling placeholder (next element sibling)
+        var placeholder = img.nextElementSibling;
+        if (placeholder && (
+          placeholder.classList.contains('ps-gallery-placeholder') ||
+          placeholder.classList.contains('ps-intro-hero-placeholder')
+        )) {
+          placeholder.style.display = 'none';
+        }
+        checkEnlargeable(img);
+      }
+      function onError() {
+        // img stays hidden, placeholder stays visible — no action needed
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        onLoad();
+      } else if (img.complete) {
+        onError();
+      } else {
+        img.addEventListener('load', onLoad, { once: true });
+        img.addEventListener('error', onError, { once: true });
+      }
+    }
 
-    // Re-check on resize — rendered size changes, natural size does not
+    document.querySelectorAll('.ps-gallery-img, .ps-intro-hero-img').forEach(initImg);
+
+    // Re-check enlargeable on resize — rendered size changes, natural size does not
     var resizeTimer;
     window.addEventListener('resize', function() {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function() {
-        document.querySelectorAll('.ps-gallery-img, .ps-intro-hero-img').forEach(function(img) {
+        document.querySelectorAll('.ps-gallery-img.loaded, .ps-intro-hero-img.loaded').forEach(function(img) {
           img.removeAttribute('data-enlargeable');
           checkEnlargeable(img);
         });
