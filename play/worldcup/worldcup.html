@@ -169,12 +169,35 @@
       font-weight:400; color:var(--strong);
     }
 
-    /* ── ZONE 3: INTRO COPY ── */
-    /* Short narrative text. Optional — comment out if not needed. */
+    /* ── ZONE 3: INTRO + HERO IMAGE ── */
+    /*
+      Two-column row at desktop: intro text left (2fr), hero image right (1fr).
+      Stacks on mobile in source order: text first, image second.
+      If a piece has no intro text, remove ps-zone-intro entirely —
+      the first gallery image will lead instead.
+    */
     .ps-zone-intro {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:0 clamp(1.5rem,3vw,2.5rem);
       padding:clamp(1.5rem,3vw,2.5rem) 0;
       border-bottom:1px solid var(--rule);
-      max-width:72ch; /* keeps prose readable, doesn't stretch full width */
+      align-items:start;
+    }
+    .ps-intro-text { /* left column — prose, no max-width needed: grid constrains it */ }
+    .ps-intro-hero { /* right column — first/hero image */ }
+    .ps-intro-hero-img {
+      display:block; width:100%; object-fit:contain;
+    }
+    .ps-intro-hero-img[data-enlargeable] { cursor:zoom-in; }
+    .ps-intro-hero-placeholder {
+      width:100%; min-height:10rem;
+      background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
+    }
+    .ps-intro-hero-caption {
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:0.06em; color:var(--muted);
+      opacity:0.6; margin-top:0.5rem;
     }
     .ps-body-text {
       font-family:var(--sans); font-size:1rem;
@@ -241,7 +264,7 @@
       padding:clamp(1.5rem,3vw,2.5rem) 0 0;
     }
     .ps-gallery {
-      columns:2;
+      columns:3;
       column-gap:var(--col-gap);
     }
     .ps-gallery--single-col {
@@ -423,12 +446,16 @@
       .header-nav { display:none; }
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
+      /* Gallery: 2 columns at mid viewport */
+      .ps-gallery { columns:2; }
     }
 
     @media (max-width:700px) {
       /* Title zone breadcrumb replaced by sticky bar on mobile */
       .ps-zone-title { padding-top:1rem; }
       .ps-zone-title .ps-breadcrumb { display:none; }
+      /* Intro zone: stack text then image */
+      .ps-zone-intro { grid-template-columns:1fr; }
       /* Gallery: single column on mobile */
       .ps-gallery { columns:1; }
     }
@@ -520,7 +547,7 @@
           <span class="ps-breadcrumb-sep">/</span>
           <span class="ps-breadcrumb-current" aria-current="page">Project 1</span><!-- EDIT: piece title -->
         </nav>
-        <h1 class="ps-main-title">Brazil 2014 - World Cup</h1><!-- EDIT: title -->
+        <h1 class="ps-main-title">Brazil 2014 - FIFA World Cup</h1><!-- EDIT: title -->
         <p class="ps-subtitle">Pretty much the closest I'll ever get to playing for England</p><!-- EDIT: subtitle — remove element if not needed -->
       </div>
 
@@ -532,7 +559,7 @@
       <div class="ps-zone-meta" aria-label="Project details">
         <div class="ps-meta-item">
           <span class="ps-meta-label">Client</span>
-          <span class="ps-meta-value">BBC</span><!-- EDIT -->
+          <span class="ps-meta-value">Client Name</span><!-- EDIT -->
         </div>
         <div class="ps-meta-item">
           <span class="ps-meta-label">Role</span>
@@ -541,28 +568,51 @@
       </div>
 
       <!-- ═══════════════════════════════════════════
-           ZONE 3 — INTRO COPY
-           Short narrative. 1–3 paragraphs max.
-           Remove this entire zone if the work speaks for itself.
+           ZONE 3 — INTRO + HERO IMAGE
+           Left column (2fr): narrative text + optional pull quote.
+           Right column (1fr): first/hero image.
+
+           If a piece needs no intro text, remove this entire zone —
+           the gallery will lead directly from the meta strip.
+
+           HERO IMAGE: same enlarge logic as gallery images — JS checks
+           naturalWidth vs offsetWidth × 1.2 automatically on load.
+           EDIT: src, alt. Caption optional — remove p if not needed.
            ═══════════════════════════════════════════ -->
       <div class="ps-zone-intro">
-        <!-- EDIT -->
-        <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 
-          30 man squad for the 2014 Brazil World Cup. Each piece was then hand signed by the players during their final training camp in 
-          England. The images were used throughout the BBC’s coverage, including trailers and interviews for Match of the Day & MOTD Kickabout.</p>
-        
-         <p class="ps-body-text">The artwork was seen by over 15 million people in the UK alone (during England vs Italy) and remains my highest 
-           profile job to date. Click the image below to watch the England stars discuss their portraits.</p>
-        <!-- Add further ps-body-text paragraphs as needed -->
 
-        <!-- ── PULL QUOTE — optional ──
-             Include when a client, press, or collaborator quote adds value.
-             Remove this block entirely if not needed.
-        <blockquote class="ps-quote">
-          <p>The quote text goes here — a line or two, no more.</p>
-          <cite>Source — Name or Publication</cite>
-        </blockquote>
-        -->
+        <!-- Left: intro text -->
+        <div class="ps-intro-text">
+         <!-- EDIT --> 
+          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 
+            30 man squad for the 2014 Brazil World Cup. Each piece was then hand signed by the players during their final training camp in England. 
+            The images were used throughout the BBC’s coverage, including trailers and interviews for Match of the Day & MOTD Kickabout.</p>
+
+          <p class="ps-body-text">The artwork was seen by over 15 million people in the UK alone (during England vs Italy) and remains my highest 
+            profile job to date. Click the image below to watch the England stars discuss their portraits.</p>
+          <!-- Add further ps-body-text paragraphs as needed -->
+
+          <!-- ── PULL QUOTE — optional ──
+               Include when a client, press, or collaborator quote adds value.
+               Remove this block entirely if not needed.
+          <blockquote class="ps-quote">
+            <p>The quote text goes here — a line or two, no more.</p>
+            <cite>Source — Name or Publication</cite>
+          </blockquote>
+          -->
+        </div>
+
+        <!-- Right: hero image (first image of the piece) -->
+        <div class="ps-intro-hero">
+          <!-- EDIT: swap placeholder for real img -->
+          <img class="ps-intro-hero-img"
+               src="../../play/worldcup/branding.jpg"
+               alt="Descriptive alt text"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+          <div class="ps-intro-hero-placeholder ps-inline-placeholder" aria-hidden="true"></div>
+          <p class="ps-intro-hero-caption"></p><!-- EDIT: caption or remove -->
+        </div>
+
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -583,14 +633,18 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 4 — GALLERY
-           Default: 2-column CSS scaffold (columns:2).
+           Default: 3-column CSS scaffold (columns:3).
+           Drops to 2 columns at ≤900px, 1 column at ≤700px.
            Modifier: add class ps-gallery--single-col for full-width
            sequential stack (magazine spreads, strict order pieces).
+
+           Note: image-01 lives in the hero slot in Zone 3 above.
+           Gallery items start at image-02.
 
            IMAGE ITEMS:
            Replace ps-gallery-placeholder div with a real img tag:
            <img class="ps-gallery-img"
-                src="../../play/[folder]/[filename].jpg"
+                src="../../play/worldcup/gerrard_interview.jpg"
                 alt="Descriptive alt text"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
 
@@ -608,11 +662,11 @@
       <div class="ps-zone-gallery">
         <div class="ps-gallery"><!-- Add ps-gallery--single-col if needed -->
 
-          <!-- Gallery item — image -->
+          <!-- Gallery item — image (start at 02; 01 is the hero above) -->
           <div class="ps-gallery-item">
             <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/branding.jpg"
+                 src="../../play/worldcup/sterling_15.jpg"
                  alt="Descriptive alt text"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
             <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
@@ -622,7 +676,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/gerrard_interview.jpg"
+                 src="../../play/[folder]/image-03.jpg"
                  alt="Descriptive alt text"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
             <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
@@ -632,7 +686,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/sterling_15.jpg"
+                 src="../../play/[folder]/image-04.jpg"
                  alt="Descriptive alt text"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
             <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
@@ -642,7 +696,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/ben_foster.jpg"
+                 src="../../play/[folder]/image-05.jpg"
                  alt="Descriptive alt text"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
             <div class="ps-gallery-placeholder ps-inline-placeholder" aria-hidden="true"></div>
@@ -913,7 +967,7 @@
       }
     }
 
-    document.querySelectorAll('.ps-gallery-img').forEach(function(img) {
+    document.querySelectorAll('.ps-gallery-img, .ps-intro-hero-img').forEach(function(img) {
       checkEnlargeable(img);
     });
 
@@ -922,7 +976,7 @@
     window.addEventListener('resize', function() {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function() {
-        document.querySelectorAll('.ps-gallery-img').forEach(function(img) {
+        document.querySelectorAll('.ps-gallery-img, .ps-intro-hero-img').forEach(function(img) {
           img.removeAttribute('data-enlargeable');
           checkEnlargeable(img);
         });
@@ -931,7 +985,8 @@
 
     document.addEventListener('click', function(e) {
       var img = e.target;
-      if (!img || img.tagName !== 'IMG' || !img.classList.contains('ps-gallery-img')) return;
+      if (!img || img.tagName !== 'IMG') return;
+      if (!img.classList.contains('ps-gallery-img') && !img.classList.contains('ps-intro-hero-img')) return;
       if (!img.hasAttribute('data-enlargeable')) return;
       e.stopPropagation();
       imgDialogImg.src = img.src;
