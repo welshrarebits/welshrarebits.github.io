@@ -310,10 +310,11 @@
       pointer-events:none;
     }
     .ps-video-play svg {
-      width:3rem; height:3rem;
-      opacity:0.85; transition:opacity 0.2s;
+      width:3.5rem; height:3.5rem;
+      transition:transform 0.2s;
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.3));
     }
-    .ps-video-wrap:hover .ps-video-play svg { opacity:1; }
+    .ps-video-wrap:hover .ps-video-play svg { transform:scale(1.08); }
     .ps-video-caption {
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:0.06em; color:var(--muted);
@@ -606,7 +607,7 @@
           <!-- OPTION A: Hero image (default)
                Use the same image as the thumbnail on play.html.
                Comment out this block if using a video hero instead. -->
-         <!-- <img class="ps-intro-hero-img"
+        <!-- <img class="ps-intro-hero-img"
                src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                />
@@ -618,15 +619,15 @@
                EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
                EDIT: src on img = video thumbnail image path
           -->
-          
+      
           <div class="ps-video-wrap" data-video-id="o2TnxXdZa5U" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
-                 src="../../play/worldcup/gerrard_signs.png"
+                 src="../../play/worldcup/gerrard.png"
                  alt="Video thumbnail description" />
             <div class="ps-video-play" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="31" stroke="white" stroke-width="1.5"/>
-                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <path d="M27 20L47 32L27 44V20Z" fill="white"/>
               </svg>
             </div>
             <p class="ps-video-caption"></p>
@@ -736,8 +737,8 @@
                  alt="Video thumbnail description" />
             <div class="ps-video-play" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="31" stroke="white" stroke-width="1.5"/>
-                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+                <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.5)"/>
+                <path d="M27 20L47 32L27 44V20Z" fill="white"/>
               </svg>
             </div>
             <p class="ps-video-caption"></p>
