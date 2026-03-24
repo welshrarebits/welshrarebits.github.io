@@ -1044,7 +1044,8 @@
     var imgDialogClose = document.getElementById('ps-img-dialog-close');
 
     function checkEnlargeable(img) {
-      if (img.naturalWidth > img.offsetWidth * 1.2) {
+      if (img.naturalWidth > img.offsetWidth * 1.2 ||
+          img.naturalHeight > img.offsetHeight * 1.2) {
         img.setAttribute('data-enlargeable', '');
       }
     }
