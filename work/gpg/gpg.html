@@ -286,7 +286,10 @@
        Replace placeholder with: <img class="cs-inline-img" src="..." alt="..." /> */
     .cs-inline-wrap { margin:1.5rem 0 0; }
     .cs-inline-wrap:last-child { margin-bottom:0; }
-    .cs-inline-img { display:block; width:100%; object-fit:contain; }
+    /* Images hidden by default — shown by JS on successful load */
+    .cs-inline-img { display:none; width:100%; object-fit:contain; }
+    .cs-inline-img.loaded { display:block; }
+    .cs-inline-img[data-enlargeable] { cursor:zoom-in; }
     .cs-inline-placeholder {
       width:100%; min-height:12rem;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
@@ -298,9 +301,6 @@
     }
 
     /* ── IMAGE ENLARGE ── */
-    .cs-inline-img {
-      cursor:zoom-in;
-    }
     .cs-img-dialog {
       position:fixed; inset:0;
       width:100%; height:100%;
@@ -347,10 +347,11 @@
       pointer-events:none;
     }
     .cs-video-play svg {
-      width:3rem; height:3rem;
-      opacity:0.85; transition:opacity 0.2s;
+      width:3.5rem; height:3.5rem;
+      transition:transform 0.2s;
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.3));
     }
-    .cs-video-wrap:hover .cs-video-play svg { opacity:1; }
+    .cs-video-wrap:hover .cs-video-play svg { transform:scale(1.08); }
     .cs-video-caption {
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:0.06em; color:var(--muted);
@@ -648,8 +649,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/hippo_lego.png"
                    alt="Lego bricks analogy for GPG 45"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             <p class="cs-body-text">But this interpretation always seemed far too rigid to me, especially when dealing with a concept as fluid as identity. 
@@ -674,8 +675,8 @@
                 <img class="cs-inline-img"
                      src="../../work/gpg/know_have_are.png"
                      alt="Principles of identity verification"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-                <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                     />
+                <div class="cs-inline-placeholder" aria-hidden="true"></div>
                 <p class="cs-caption"></p>
               </div>
               <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg --> 
@@ -684,8 +685,8 @@
                 <img class="cs-inline-img"
                      src="../../work/gpg/5_elements.png"
                      alt="The 5 elements of identity verification"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-                <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                     />
+                <div class="cs-inline-placeholder" aria-hidden="true"></div>
                 <p class="cs-caption"></p>
               </div>
             </div><!-- /cs-inline-wrap -->
@@ -708,8 +709,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/scribbles.png"
                    alt="Original hand written notes"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
           </div>
@@ -728,8 +729,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/triangles_within_pentagon.png"
                    alt="the pentagon"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             
@@ -742,8 +743,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/pentagon_post_its.png"
                    alt="the pentagon"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             
@@ -779,8 +780,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/m1a.png"
                    alt="Profile M1A"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             
@@ -825,8 +826,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/side_by_side.png"
                    alt="Comparison of two profiles"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             
@@ -851,8 +852,8 @@
               <img class="cs-inline-img"
                    src="../../work/gpg/multiple_profiles.png"
                    alt="multiple profiles"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
             
@@ -882,7 +883,7 @@
                 <img class="cs-video-thumb" src="" alt="Video thumbnail" />
                 <div class="cs-video-play">
                   <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="29" fill="rgba(0,0,0,0.5)" stroke="white" stroke-width="1.5"/>
+                    <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.5)"/>
                     <polygon points="24,18 44,30 24,42" fill="white"/>
                   </svg>
                 </div>
@@ -893,7 +894,7 @@
                 <img class="cs-video-thumb" src="" alt="Video thumbnail" />
                 <div class="cs-video-play">
                   <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="29" fill="rgba(0,0,0,0.5)" stroke="white" stroke-width="1.5"/>
+                    <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.5)"/>
                     <polygon points="24,18 44,30 24,42" fill="white"/>
                   </svg>
                 </div>
@@ -1197,15 +1198,63 @@
       });
     });
 
-    // Image enlarge
+    // ── IMAGE ENLARGE + LOAD/ERROR HANDLING ──
+    // Images are display:none by default (CSS). On successful load:
+    //   - add .loaded class (makes img visible)
+    //   - hide the sibling placeholder
+    //   - check if enlargeable (naturalWidth > offsetWidth × 1.2)
+    // On error: img stays hidden, placeholder remains visible.
+    // data-enlargeable attr drives cursor and click behaviour — no manual markup needed.
     var dialog = document.getElementById('img-dialog');
     var dialogImg = document.getElementById('img-dialog-img');
     var dialogClose = document.getElementById('img-dialog-close');
 
+    function checkEnlargeable(img) {
+      if (img.naturalWidth > img.offsetWidth * 1.2) {
+        img.setAttribute('data-enlargeable', '');
+      }
+    }
+
+    function initImg(img) {
+      function onLoad() {
+        img.classList.add('loaded');
+        var placeholder = img.nextElementSibling;
+        if (placeholder && placeholder.classList.contains('cs-inline-placeholder')) {
+          placeholder.style.display = 'none';
+        }
+        checkEnlargeable(img);
+      }
+      function onError() {
+        // img stays hidden, placeholder stays visible — no action needed
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        onLoad();
+      } else if (img.complete) {
+        onError();
+      } else {
+        img.addEventListener('load', onLoad, { once: true });
+        img.addEventListener('error', onError, { once: true });
+      }
+    }
+
+    document.querySelectorAll('.cs-inline-img').forEach(initImg);
+
+    // Re-check enlargeable on resize — rendered size changes, natural size does not
+    var csResizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(csResizeTimer);
+      csResizeTimer = setTimeout(function() {
+        document.querySelectorAll('.cs-inline-img.loaded').forEach(function(img) {
+          img.removeAttribute('data-enlargeable');
+          checkEnlargeable(img);
+        });
+      }, 150);
+    });
+
     document.addEventListener('click', function(e) {
       var img = e.target;
       if (!img || img.tagName !== 'IMG' || !img.classList.contains('cs-inline-img')) return;
-      if (img.style.display === 'none') return;
+      if (!img.hasAttribute('data-enlargeable')) return;
       e.stopPropagation();
       dialogImg.src = img.src;
       dialogImg.alt = img.alt;
@@ -1219,7 +1268,7 @@
     });
 
     dialog.addEventListener('click', function(e) {
-      if (e.target === dialog) {
+      if (e.target === dialog || e.target === dialogImg) {
         e.stopPropagation();
         dialog.close();
         dialogImg.src = '';
@@ -1242,7 +1291,11 @@
       var id = wrap.getAttribute('data-video-id');
       if (!id) return;
       e.stopPropagation();
-      videoIframe.src = ytBase + id + '?autoplay=1&rel=0';
+      // data-autoplay="false" disables autoplay for restricted videos (e.g. BBC, BT Sport)
+      // Omit this attribute or set data-autoplay="true" for freely embeddable videos
+      var autoplay = wrap.getAttribute('data-autoplay') !== 'false';
+      var params = autoplay ? '?autoplay=1&rel=0&enablejsapi=1' : '?rel=0';
+      videoIframe.src = ytBase + id + params;
       videoDialog.showModal();
     });
 
