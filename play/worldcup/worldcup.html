@@ -546,10 +546,10 @@
         <nav class="ps-breadcrumb" aria-label="Breadcrumb">
           <a href="../../play.html" class="ps-breadcrumb-link">Play</a>
           <span class="ps-breadcrumb-sep">/</span>
-          <span class="ps-breadcrumb-current" aria-current="page">Project 1</span><!-- EDIT: piece title -->
+          <span class="ps-breadcrumb-current" aria-current="page">Piece Title</span><!-- EDIT: piece title -->
         </nav>
-        <h1 class="ps-main-title">Brazil 2014 - FIFA World Cup</h1><!-- EDIT: title -->
-        <p class="ps-subtitle">The closest I will ever get to playing for England</p><!-- EDIT: subtitle — remove element if not needed -->
+        <h1 class="ps-main-title">Piece Title</h1><!-- EDIT: title -->
+        <p class="ps-subtitle">A short supporting line — context, medium, or mood.</p><!-- EDIT: subtitle — remove element if not needed -->
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -607,7 +607,7 @@
           <!-- OPTION A: Hero image (default)
                Use the same image as the thumbnail on play.html.
                Comment out this block if using a video hero instead. -->
-        <!-- <img class="ps-intro-hero-img"
+          <img class="ps-intro-hero-img"
                src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                />
@@ -619,10 +619,10 @@
                EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
                EDIT: src on img = video thumbnail image path
           -->
-      
-          <div class="ps-video-wrap" data-video-id="o2TnxXdZa5U" role="button" tabindex="0" aria-label="Play video: Video title">
+          <!--
+          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
-                 src="../../play/worldcup/gerrard_signs.png"
+                 src="../../play/[folder]/video-thumb.jpg"
                  alt="Video thumbnail description" />
             <div class="ps-video-play" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -632,6 +632,7 @@
             </div>
             <p class="ps-video-caption"></p>
           </div>
+          -->
 
         </div>
 
@@ -843,7 +844,7 @@
   <!-- Video dialog -->
   <dialog class="ps-video-dialog" id="ps-video-dialog">
     <button class="ps-video-dialog-close" id="ps-video-dialog-close" aria-label="Close video">Close ✕</button>
-    <iframe id="ps-video-dialog-iframe" src="" allowfullscreen title="Video player"></iframe>
+    <iframe id="ps-video-dialog-iframe" src="" allowfullscreen allow="autoplay" title="Video player"></iframe>
   </dialog>
 
   <script>
@@ -1067,7 +1068,7 @@
       var id = wrap.getAttribute('data-video-id');
       if (!id) return;
       e.stopPropagation();
-      videoIframe.src = ytBase + id + '?autoplay=1&rel=0';
+      videoIframe.src = ytBase + id + '?autoplay=1&rel=0&enablejsapi=1';
       videoDialog.showModal();
     });
 
