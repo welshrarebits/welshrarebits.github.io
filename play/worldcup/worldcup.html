@@ -547,8 +547,8 @@
           <span class="ps-breadcrumb-sep">/</span>
           <span class="ps-breadcrumb-current" aria-current="page">Project 1</span><!-- EDIT: piece title -->
         </nav>
-        <h1 class="ps-main-title">Brazil 2014 – FIFA World Cup</h1><!-- EDIT: title -->
-        <p class="ps-subtitle">The closest I will ever get to playing for England</p><!-- EDIT: subtitle — remove element if not needed -->
+        <h1 class="ps-main-title">Brzil 2014 - FIFA World Cup</h1><!-- EDIT: title -->
+        <p class="ps-subtitle">The closest I will ever get to playing for England.</p><!-- EDIT: subtitle — remove element if not needed -->
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -585,17 +585,16 @@
       <div class="ps-zone-intro">
 
         <!-- Left: intro text -->
+        <!-- EDIT -->  
         <div class="ps-intro-text">
-         <!-- EDIT --> 
-          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 
-            30 man squad for the 2014 Brazil World Cup.</p>
-            
-          <p class="ps-body-text">Each piece was then hand signed by the players during their final training camp in 
-            England. The images were used throughout the BBC's Match of the Day coverage, including trailers and interviews. I was also 
-            interviewed and featured on their spin-off show MOTD Kickabout.</p>
+          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, where I was tasked with creating a portrait for each of the 30 man squad for the 2014 Brazil World Cup.</p>
 
-          <p class="ps-body-text">The artwork was seen by well over 15 million people alone in the UK (during England vs Italy) and remains my highest 
-            profile job to date.</p>
+        <div class="ps-intro-text">
+          <p class="ps-body-text">Each piece was then hand signed by the players during their final training camp in England. The images were used throughout the BBC's Match of the Day 
+            coverage, including trailers and interviews. I was also interviewed and featured on their spin-off show MOTD Kickabout.</p>
+
+        <div class="ps-intro-text">
+          <p class="ps-body-text">The artwork was seen by well over 15 million people alone in the UK (during England vs Italy) and remains my highest profile job to date.</p>
           <!-- Add further ps-body-text paragraphs as needed -->
 
           <!-- ── PULL QUOTE — optional ──
@@ -608,15 +607,41 @@
           -->
         </div>
 
-        <!-- Right: hero image (first image of the piece) -->
+        <!-- Right: hero — EITHER image OR video, not both.
+             Uncomment the one you need, keep the other commented out. -->
         <div class="ps-intro-hero">
-          <!-- EDIT: swap placeholder for real img -->
-          <img class="ps-intro-hero-img"
-               src="../../assets/thumbnails/play/worldcup.png"
+
+          <!-- OPTION A: Hero image (default)
+               Use the same image as the thumbnail on play.html.
+               Comment out this block if using a video hero instead. -->
+          
+          <!-- <img class="ps-intro-hero-img"
+               src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                />
           <div class="ps-intro-hero-placeholder" aria-hidden="true"></div>
           <p class="ps-intro-hero-caption"></p><!-- EDIT: caption or remove -->
+          -->
+
+          <!-- OPTION B: Hero video (alternative to image above)
+               Comment out Option A and uncomment this block to use a video hero.
+               EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
+               EDIT: src on img = video thumbnail image path
+          -->
+          
+          <div class="ps-video-wrap" data-video-id="o2TnxXdZa5U" role="button" tabindex="0" aria-label="Play video: Video title">
+            <img class="ps-video-thumb"
+                 src="../../play/worldcup/gerrard_signs.png"
+                 alt="Video thumbnail description" />
+            <div class="ps-video-play" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="31" stroke="white" stroke-width="1.5"/>
+                <path d="M26 20L46 32L26 44V20Z" fill="white"/>
+              </svg>
+            </div>
+            <p class="ps-video-caption"></p>
+          </div>
+
         </div>
 
       </div>
@@ -673,7 +698,7 @@
           <div class="ps-gallery-item">
             <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/sterling_15.jpg"
+                 src="../../play/[folder]/image-02.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -683,7 +708,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                  src="../../play/worldcup/ben_foster.png"
+                 src="../../play/[folder]/image-03.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -693,7 +718,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                  src="../../play/worldcup/ox_15.jpg"
+                 src="../../play/[folder]/image-04.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -703,27 +728,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/lampard_signs.png"
-                 alt="Descriptive alt text"
-                 />
-            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
-            <p class="ps-gallery-caption"></p>
-          </div>
-
-              <!-- Gallery item — image -->
-          <div class="ps-gallery-item">
-            <img class="ps-gallery-img"
-                 src="../../play/worldcup/welbeck_15.jpg"
-                 alt="Descriptive alt text"
-                 />
-            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
-            <p class="ps-gallery-caption"></p>
-          </div>
-
-              <!-- Gallery item — image -->
-          <div class="ps-gallery-item">
-            <img class="ps-gallery-img"
-                 src="../../play/worldcup/gerrard_interview.png"
+                 src="../../play/[folder]/image-05.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
