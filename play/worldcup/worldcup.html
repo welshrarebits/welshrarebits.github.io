@@ -546,10 +546,10 @@
         <nav class="ps-breadcrumb" aria-label="Breadcrumb">
           <a href="../../play.html" class="ps-breadcrumb-link">Play</a>
           <span class="ps-breadcrumb-sep">/</span>
-          <span class="ps-breadcrumb-current" aria-current="page">Project 1e</span><!-- EDIT: piece title -->
+          <span class="ps-breadcrumb-current" aria-current="page">Piece Title</span><!-- EDIT: piece title -->
         </nav>
-        <h1 class="ps-main-title">Brazil 2014 - FIFA World Cup</h1><!-- EDIT: title -->
-        <p class="ps-subtitle">The closest I will ever get to playing for my country.</p><!-- EDIT: subtitle — remove element if not needed -->
+        <h1 class="ps-main-title">Piece Title</h1><!-- EDIT: title -->
+        <p class="ps-subtitle">A short supporting line — context, medium, or mood.</p><!-- EDIT: subtitle — remove element if not needed -->
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -560,7 +560,7 @@
       <div class="ps-zone-meta" aria-label="Project details">
         <div class="ps-meta-item">
           <span class="ps-meta-label">Client</span>
-          <span class="ps-meta-value">BBC Sport</span><!-- EDIT -->
+          <span class="ps-meta-value">Client Name</span><!-- EDIT -->
         </div>
         <div class="ps-meta-item">
           <span class="ps-meta-label">Role</span>
@@ -587,15 +587,7 @@
 
         <!-- Left: intro text -->
         <div class="ps-intro-text">
-          <!-- EDIT -->
-          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, that required me to create a portrait for each of the 30 man squad that would represent England 
-            at the 2014 World Cup. </p>
-
-            <p class="ps-body-text">Each illustration was hand signed by its respective player during the final training session at St Georges Park. The images were used throughout 
-              the BBC’s coverage, including trailers, teasers and interviews. I was also featured and interviewed on the CBBC sister show MOTD Kickabout.</p>
-
-            <p class="ps-body-text">
-            The artwork was seen by well over 15 million people in the UK alone (during England vs Italy), it remains my highest profile job to date and one I doubt I will ever top. </p>
+          <p class="ps-body-text">Introductory paragraph — context, brief story, or framing for the piece. Keep this tight.</p><!-- EDIT -->
           <!-- Add further ps-body-text paragraphs as needed -->
 
           <!-- ── PULL QUOTE — optional ──
@@ -615,8 +607,8 @@
           <!-- OPTION A: Hero image (default)
                Use the same image as the thumbnail on play.html.
                Comment out this block if using a video hero instead. -->
-         <!-- <img class="ps-intro-hero-img"
-               src="../../play/worldcup/gerrard_signs.png"
+          <img class="ps-intro-hero-img"
+               src="../../play/[folder]/image-01.jpg"
                alt="Descriptive alt text"
                />
           <div class="ps-intro-hero-placeholder" aria-hidden="true"></div>
@@ -625,12 +617,14 @@
           <!-- OPTION B: Hero video (alternative to image above)
                Comment out Option A and uncomment this block to use a video hero.
                EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
+               EDIT: data-autoplay — set to "false" for restricted videos (BBC, BT Sport etc)
+                     omit or set to "true" for freely embeddable videos
                EDIT: src on img = video thumbnail image path
           -->
-          
-          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" role="button" tabindex="0" aria-label="Play video: Video title">
+          <!--
+          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" data-autoplay="true" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
-                 src="../../play/worldcup/gerrard_signs.png"
+                 src="../../play/[folder]/video-thumb.jpg"
                  alt="Video thumbnail description" />
             <div class="ps-video-play" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -640,7 +634,7 @@
             </div>
             <p class="ps-video-caption"></p>
           </div>
-         
+          -->
 
         </div>
 
@@ -698,7 +692,7 @@
           <div class="ps-gallery-item">
             <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/sterling_15.jpg"
+                 src="../../play/[folder]/image-02.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -708,7 +702,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/ben_foster.png"
+                 src="../../play/[folder]/image-03.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -718,7 +712,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/ox_15.jpg"
+                 src="../../play/[folder]/image-04.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -728,7 +722,7 @@
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
-                 src="../../play/worldcup/lampard_signs.png"
+                 src="../../play/[folder]/image-05.jpg"
                  alt="Descriptive alt text"
                  />
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
@@ -737,10 +731,11 @@
 
           <!-- Gallery item — VIDEO
                EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
-               EDIT: poster src for thumbnail (or remove poster attr for default YT thumbnail)
-               Videos always trigger the video dialog — no naturalWidth check needed. -->
+               EDIT: data-autoplay — set to "false" for restricted videos (BBC, BT Sport etc)
+                     omit or set to "true" for freely embeddable videos
+               EDIT: src on img = video thumbnail image path -->
           <!--
-          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" role="button" tabindex="0" aria-label="Play video: Video title">
+          <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" data-autoplay="true" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
                  src="../../play/[folder]/video-thumb.jpg"
                  alt="Video thumbnail description" />
@@ -1076,7 +1071,11 @@
       var id = wrap.getAttribute('data-video-id');
       if (!id) return;
       e.stopPropagation();
-      videoIframe.src = ytBase + id + '?autoplay=1&rel=0&enablejsapi=1';
+      // data-autoplay="false" disables autoplay for restricted videos (e.g. BBC, BT Sport)
+      // Omit this attribute or set data-autoplay="true" for freely embeddable videos
+      var autoplay = wrap.getAttribute('data-autoplay') !== 'false';
+      var params = autoplay ? '?autoplay=1&rel=0&enablejsapi=1' : '?rel=0';
+      videoIframe.src = ytBase + id + params;
       videoDialog.showModal();
     });
 
