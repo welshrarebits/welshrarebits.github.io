@@ -32,7 +32,6 @@
     .test-header {
       border-bottom:2px solid var(--ink);
       padding:1.5rem 0 1rem;
-      margin-bottom:0;
     }
     .test-header h1 {
       font-family:var(--title); font-size:1.1rem; font-weight:700;
@@ -43,13 +42,12 @@
       letter-spacing:var(--ls-label); color:var(--muted);
       text-transform:uppercase; margin-top:0.35rem;
     }
-
     .test-section {
       padding:clamp(2.5rem,5vw,4rem) 0;
       border-bottom:1px solid var(--rule);
     }
     .test-section-label {
-      display:flex; align-items:baseline; gap:1rem;
+      display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap;
       margin-bottom:clamp(1.5rem,3vw,2.5rem);
     }
     .test-section-label h2 {
@@ -59,20 +57,18 @@
     }
     .test-section-label code {
       font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0; color:var(--accent);
+      color:var(--accent);
       background:rgba(200,50,10,0.07);
       padding:0.15em 0.4em;
     }
-    .test-section-label .test-note {
+    .test-note {
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:0.04em; color:var(--muted);
       margin-left:auto;
     }
 
     /* ── GALLERY — exact copy from play-subpage.html ── */
-    .ps-zone-gallery {
-      padding:0;
-    }
+    .ps-zone-gallery { padding:0; }
     .ps-gallery {
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -81,29 +77,23 @@
     .ps-gallery--single-col {
       grid-template-columns:1fr;
     }
-    .ps-gallery--two-col {
-      grid-template-columns:repeat(2,1fr);
+    .ps-gallery--three-col-portrait {
+      grid-template-columns:repeat(3,1fr);
     }
-    .ps-gallery--two-col-portrait {
-      grid-template-columns:repeat(2,1fr);
-    }
-    .ps-gallery--two-col-portrait .ps-gallery-img,
-    .ps-gallery--two-col-portrait .ps-gallery-placeholder {
-      aspect-ratio:3/4;
+    .ps-gallery--three-col-portrait .ps-gallery-img,
+    .ps-gallery--three-col-portrait .ps-gallery-placeholder {
+      aspect-ratio:3/5;
     }
     .ps-gallery-item {
-      display:flex;
-      flex-direction:column;
+      display:flex; flex-direction:column;
     }
     .ps-gallery-img {
       display:none; width:100%; aspect-ratio:4/3; object-fit:cover;
     }
     .ps-gallery-img.loaded { display:block; }
-    .ps-gallery-img[data-enlargeable] { cursor:zoom-in; }
     .ps-gallery-placeholder {
       width:100%; aspect-ratio:4/3;
       background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
-      position:relative;
       display:flex; align-items:center; justify-content:center;
     }
     .ps-gallery-caption {
@@ -117,24 +107,21 @@
       font-family:var(--mono); font-size:var(--fs-xs);
       letter-spacing:var(--ls-label); text-transform:uppercase;
       color:var(--muted); opacity:0.8; text-align:center;
-      pointer-events:none; user-select:none;
-      padding:0.5rem;
+      pointer-events:none; user-select:none; padding:0.5rem;
     }
 
     @media (max-width:700px) {
       .ps-gallery,
-      .ps-gallery--two-col,
-      .ps-gallery--two-col-portrait { grid-template-columns:1fr; }
+      .ps-gallery--three-col-portrait { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
-
   <div class="container">
 
     <div class="test-header">
       <h1>Gallery Layout Test</h1>
-      <p>play-subpage.html — Session 10 — all four gallery variants</p>
+      <p>play-subpage.html — Session 10 — three gallery variants</p>
     </div>
 
     <!-- ══════════════════════════════════════════
@@ -142,177 +129,81 @@
          ══════════════════════════════════════════ -->
     <div class="test-section">
       <div class="test-section-label">
-        <h2>Default — 3 column</h2>
+        <h2>Default — 3 column landscape</h2>
         <code>.ps-gallery</code>
-        <span class="test-note">4/3 aspect · landscape · 6 items</span>
+        <span class="test-note">4/3 aspect · 6 items</span>
       </div>
       <div class="ps-zone-gallery">
         <div class="ps-gallery">
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 01</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 01</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 02</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 02</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 03</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 03</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 04</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 04</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 05</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 05</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 06</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 06</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════
-         VARIANT 2 — Two column landscape (4/3)
+         VARIANT 2 — Three column portrait (3/5)
          ══════════════════════════════════════════ -->
     <div class="test-section">
       <div class="test-section-label">
-        <h2>Two column — landscape</h2>
-        <code>.ps-gallery--two-col</code>
-        <span class="test-note">4/3 aspect · landscape · 6 items</span>
+        <h2>Three column portrait</h2>
+        <code>.ps-gallery--three-col-portrait</code>
+        <span class="test-note">3/5 aspect · 6 items · consistent portrait sets only</span>
       </div>
       <div class="ps-zone-gallery">
-        <div class="ps-gallery ps-gallery--two-col">
-
+        <div class="ps-gallery ps-gallery--three-col-portrait">
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 01</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 01</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 02</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 02</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 03</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 03</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 04</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 04</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 05</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 05</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 06</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">3/5 · 06</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════
-         VARIANT 3 — Two column portrait (3/4)
-         ══════════════════════════════════════════ -->
-    <div class="test-section">
-      <div class="test-section-label">
-        <h2>Two column — portrait</h2>
-        <code>.ps-gallery--two-col-portrait</code>
-        <span class="test-note">3/4 aspect · portrait · 6 items</span>
-      </div>
-      <div class="ps-zone-gallery">
-        <div class="ps-gallery ps-gallery--two-col-portrait">
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 01</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 02</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 03</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 04</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 05</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-          <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">3/4 · 06</span>
-            </div>
-            <p class="ps-gallery-caption">Optional caption text</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         VARIANT 4 — Single column
+         VARIANT 3 — Single column
          ══════════════════════════════════════════ -->
     <div class="test-section">
       <div class="test-section-label">
@@ -322,40 +213,26 @@
       </div>
       <div class="ps-zone-gallery">
         <div class="ps-gallery ps-gallery--single-col">
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 01 — full width</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 01 — full width</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 02 — full width</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 02 — full width</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 03 — full width</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 03 — full width</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
           <div class="ps-gallery-item">
-            <div class="ps-gallery-placeholder" aria-hidden="true">
-              <span class="placeholder-label">4/3 · 04 — full width</span>
-            </div>
+            <div class="ps-gallery-placeholder" aria-hidden="true"><span class="placeholder-label">4/3 · 04 — full width</span></div>
             <p class="ps-gallery-caption">Optional caption text</p>
           </div>
-
         </div>
       </div>
     </div>
 
   </div><!-- /container -->
-
 </body>
 </html>
