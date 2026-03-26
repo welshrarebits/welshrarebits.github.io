@@ -267,22 +267,18 @@
     /*
       CSS Grid — 3 columns by default, images align to top of each cell.
       Row height is determined by the tallest image in that row.
-      Mixed aspect ratios are preserved — no cropping.
       Images fill left-to-right, row by row.
       All variants collapse to 1 column at ≤700px.
 
       MODIFIERS — add to .ps-gallery div as needed per piece:
 
-      .ps-gallery--single-col   Full-width sequential stack (magazine spreads,
-                                strict image order pieces)
+      .ps-gallery--single-col        Full-width sequential stack (magazine
+                                     spreads, strict image order pieces).
 
-      .ps-gallery--two-col      2 columns, landscape aspect ratio (4/3).
-                                Good for portrait-heavy sets — wider cells
-                                feel more natural than 1/3 width.
-
-      .ps-gallery--two-col-portrait  2 columns, portrait aspect ratio (3/4).
-                                Best for 100% portrait image sets — cells
-                                match the image orientation, minimal cropping.
+      .ps-gallery--three-col-portrait  3 columns, portrait 3/5 cells.
+                                     Use only when every image shares the
+                                     same portrait poster format. Mixed sets
+                                     should use the default instead.
     */
     .ps-zone-gallery {
       padding:clamp(1.5rem,3vw,2.5rem) 0 0;
@@ -295,18 +291,16 @@
     .ps-gallery--single-col {
       grid-template-columns:1fr;
     }
-    .ps-gallery--two-col {
-      grid-template-columns:repeat(2,1fr);
+    .ps-gallery--three-col-portrait {
+      grid-template-columns:repeat(3,1fr);
     }
-    .ps-gallery--two-col-portrait {
-      grid-template-columns:repeat(2,1fr);
+    /* Portrait aspect ratio override — applied via modifier class on gallery.
+       Use only when all images in the gallery share this portrait poster format. */
+    .ps-gallery--three-col-portrait .ps-gallery-img {
+      aspect-ratio:3/5;
     }
-    /* Portrait aspect ratio override — applied via modifier class on gallery */
-    .ps-gallery--two-col-portrait .ps-gallery-img {
-      aspect-ratio:3/4;
-    }
-    .ps-gallery--two-col-portrait .ps-gallery-placeholder {
-      aspect-ratio:3/4;
+    .ps-gallery--three-col-portrait .ps-gallery-placeholder {
+      aspect-ratio:3/5;
     }
     .ps-gallery-item {
       display:flex;
@@ -484,8 +478,7 @@
       .ps-zone-intro { grid-template-columns:1fr; }
       /* Gallery: single column on mobile — all modifier variants collapse to 1 col */
       .ps-gallery,
-      .ps-gallery--two-col,
-      .ps-gallery--two-col-portrait { grid-template-columns:1fr; }
+      .ps-gallery--three-col-portrait { grid-template-columns:1fr; }
     }
 
     @media (max-width:600px) {
@@ -698,10 +691,21 @@
 
            MODIFIER CLASSES — add to the .ps-gallery div:
 
-           (default)                  3-col, landscape 4/3 cells
-           ps-gallery--single-col     Full-width stack, strict order
-           ps-gallery--two-col        2-col, landscape 4/3 cells
-           ps-gallery--two-col-portrait  2-col, portrait 3/4 cells
+           (default)
+             3 columns, landscape 4/3 cells.
+             Use for mixed-orientation sets or landscape-dominant pieces.
+             This is the safe default — when in doubt, use this.
+
+           ps-gallery--three-col-portrait
+             3 columns, portrait 3/5 cells.
+             Use only when every image in the gallery shares the same
+             portrait poster format. Do not mix with landscape or square
+             images in the same gallery — use the default for mixed sets.
+
+           ps-gallery--single-col
+             Full-width sequential stack, 4/3 cells.
+             Use for magazine spreads or pieces where strict image
+             order and maximum size matter more than grid density.
 
            Note: image-01 lives in the hero slot in Zone 3 above.
            Gallery items start at image-02.
@@ -725,7 +729,12 @@
            to check against, so the enlargeable test does not apply.
            ═══════════════════════════════════════════ -->
       <div class="ps-zone-gallery">
-        <div class="ps-gallery"><!-- Add modifier class if needed: ps-gallery--single-col / ps-gallery--two-col / ps-gallery--two-col-portrait -->
+
+        <!-- ── GALLERY OPTION A: Default — 3 column landscape (4/3) ──
+             Use for mixed-orientation sets or landscape-dominant pieces.
+             This is the safe default — when in doubt, use this.
+             Uncomment this block and delete Options B and C. -->
+        <div class="ps-gallery">
 
           <!-- Gallery item — image (start at 02; 01 is the hero above) -->
           <div class="ps-gallery-item">
@@ -807,7 +816,81 @@
           </div>
           -->
 
-        </div><!-- /ps-gallery -->
+        </div><!-- /ps-gallery Option A -->
+
+        <!-- ── GALLERY OPTION B: Three column portrait (3/5) ──
+             Use only when every image in the gallery shares the same
+             portrait poster format. Do not mix with landscape or square
+             images — use Option A for mixed sets.
+             Uncomment this block and delete Options A and C.
+        <div class="ps-gallery ps-gallery--three-col-portrait">
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-02.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-03.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-04.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+        </div>
+        --><!-- /ps-gallery Option B -->
+
+        <!-- ── GALLERY OPTION C: Single column full width (4/3) ──
+             Use for magazine spreads or pieces where strict image
+             order and maximum size matter more than grid density.
+             Uncomment this block and delete Options A and B.
+        <div class="ps-gallery ps-gallery--single-col">
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-02.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-03.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-04.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+        </div>
+        --><!-- /ps-gallery Option C -->
+
       </div><!-- /ps-zone-gallery -->
 
       <!-- Back link — foot of page, all viewports -->
