@@ -172,10 +172,22 @@
 
     /* ── ZONE 3: INTRO + HERO IMAGE ── */
     /*
-      Two-column row at desktop: intro text left (2fr), hero image right (1fr).
-      Stacks on mobile in source order: text first, image second.
+      Two-column row at desktop: intro text left (1fr), hero image/video right (1fr).
+      Stacks on mobile in source order: text first, image/video second.
       If a piece has no intro text, remove ps-zone-intro entirely —
       the first gallery image will lead instead.
+
+      HERO: either an image OR a video wrap — not both.
+      Use Option A (image) or Option B (video) in the HTML below.
+      Comment out the unused option.
+
+      HERO IMAGE: JS checks naturalWidth vs offsetWidth × 1.2 on load.
+      If larger, data-enlargeable is added automatically — no manual attribute needed.
+      EDIT: src, alt. Caption optional — remove p if not needed.
+
+      HERO VIDEO: set data-video-id to the YouTube video ID.
+      Set data-autoplay="false" for restricted videos (BBC, BT Sport etc).
+      Omit or set data-autoplay="true" for freely embeddable videos.
     */
     .ps-zone-intro {
       display:grid;
@@ -253,10 +265,11 @@
 
     /* ── ZONE 4: GALLERY ── */
     /*
-      CSS Grid — 3 columns, images align to top of each cell.
+      CSS Grid — 3 columns by default, images align to top of each cell.
       Row height is determined by the tallest image in that row.
       Mixed aspect ratios are preserved — no cropping.
       Images fill left-to-right, row by row.
+      All variants collapse to 1 column at ≤700px.
 
       MODIFIERS — add to .ps-gallery div as needed per piece:
 
@@ -454,8 +467,6 @@
     .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s, color 0.2s; }
     .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
 
-
-
     /* ── RESPONSIVE ── */
     @media (min-width:701px) {
       /* Breadcrumb bar mobile only */
@@ -578,34 +589,42 @@
       </div>
 
       <!-- ═══════════════════════════════════════════
-           ZONE 3 — INTRO + HERO IMAGE
+           ZONE 3 — INTRO + HERO
            50/50 two-column split at desktop.
            Left column: narrative text + optional pull quote.
-           Right column: featured image — use the same image as the
-           thumbnail on play.html for this piece (all are landscape).
+           Right column: hero image OR hero video — not both.
 
-           Stacks on mobile in source order: text first, image second.
+           Stacks on mobile in source order: text first, hero second.
            If a piece needs no intro text, remove this entire zone —
            the gallery will lead directly from the meta strip.
 
-           HERO IMAGE: same enlarge logic as gallery images — JS checks
-           naturalWidth vs offsetWidth × 1.2 automatically on load.
-           EDIT: src, alt. Caption optional — remove p if not needed.
+           OPTION A — Hero image:
+             Uncomment the img + placeholder + caption block.
+             Use the same image as the thumbnail on play.html.
+             JS adds data-enlargeable automatically if image is larger than rendered size.
+             EDIT: src, alt. Remove caption p if not needed.
+
+           OPTION B — Hero video:
+             Uncomment the ps-video-wrap block.
+             EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
+             EDIT: data-autoplay="false" for restricted videos (BBC, BT Sport etc).
+                   Omit or set data-autoplay="true" for freely embeddable videos.
+             EDIT: src on img = video thumbnail path.
            ═══════════════════════════════════════════ -->
       <div class="ps-zone-intro">
 
         <!-- Left: intro text -->
         <div class="ps-intro-text">
           <!-- EDIT -->
-          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, that required me to create a portrait for each of the 30 man squad that would represent England 
+          <p class="ps-body-text">A once-in-a-lifetime commission for the BBC, that required me to create a portrait for each of the 30 man squad that would represent England
             at the 2014 World Cup.</p>
 
-          <p class="ps-body-text">Each illustration was hand signed by its respective player during the final training session at St Georges Park. The images were used throughout 
-            the BBC’s coverage, including trailers, teasers and interviews. I was also featured and interviewed on the CBBC sister show MOTD Kickabout.</p>
+          <p class="ps-body-text">Each illustration was hand signed by its respective player during the final training session at St Georges Park. The images were used throughout
+            the BBC's coverage, including trailers, teasers and interviews. I was also featured and interviewed on the CBBC sister show MOTD Kickabout.</p>
 
-          <p class="ps-body-text">The artwork was seen by well over 15 million people in the UK alone (during England vs Italy), it remains my highest profile job to date and 
+          <p class="ps-body-text">The artwork was seen by well over 15 million people in the UK alone (during England vs Italy), it remains my highest profile job to date and
             one I doubt I will ever top.</p>
-          
+
           <!-- Add further ps-body-text paragraphs as needed -->
 
           <!-- ── PULL QUOTE — optional ──
@@ -618,28 +637,26 @@
           -->
         </div>
 
-        <!-- Right: hero — EITHER image OR video, not both.
-             Uncomment the one you need, keep the other commented out. -->
+        <!-- Right: hero — EITHER Option A (image) OR Option B (video). Uncomment one. -->
         <div class="ps-intro-hero">
 
-          <!-- OPTION A: Hero image (default)
-               Use the same image as the thumbnail on play.html.
-               Comment out this block if using a video hero instead. -->
-        <!--  <img class="ps-intro-hero-img"
-               src="../../play/[folder]/image-01.jpg"
+          <!-- OPTION A: Hero image
+               Comment out this block if using Option B (video) instead.
+          <img class="ps-intro-hero-img"
+               src="../../play/worldcup/image-01.jpg"
                alt="Descriptive alt text"
                />
           <div class="ps-intro-hero-placeholder" aria-hidden="true"></div>
-          <p class="ps-intro-hero-caption"></p><!-- EDIT: caption or remove -->
+          <p class="ps-intro-hero-caption"></p>
+          -->
 
-          <!-- OPTION B: Hero video (alternative to image above)
+          <!-- OPTION B: Hero video
                Comment out Option A and uncomment this block to use a video hero.
                EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
                EDIT: data-autoplay — set to "false" for restricted videos (BBC, BT Sport etc)
                      omit or set to "true" for freely embeddable videos
                EDIT: src on img = video thumbnail image path
           -->
-         
           <div class="ps-video-wrap" data-video-id="o2TnxXdZa5U" data-autoplay="true" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
                  src="../../play/worldcup/gerrard_signs.png"
@@ -652,7 +669,6 @@
             </div>
             <p class="ps-video-caption"></p>
           </div>
-        
 
         </div>
 
@@ -676,9 +692,9 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 4 — GALLERY
-           CSS Grid — 3 columns, left-to-right row filling.
+           CSS Grid — 3 columns by default, left-to-right row filling.
            Images align to top of cell, natural height preserved.
-           Drops to 2 columns at ≤600px, 1 column at ≤420px.
+           All variants collapse to 1 column at ≤700px.
 
            MODIFIER CLASSES — add to the .ps-gallery div:
 
@@ -709,11 +725,10 @@
            to check against, so the enlargeable test does not apply.
            ═══════════════════════════════════════════ -->
       <div class="ps-zone-gallery">
-        <div class="ps-gallery"><!-- Add ps-gallery--single-col if needed -->
+        <div class="ps-gallery"><!-- Add modifier class if needed: ps-gallery--single-col / ps-gallery--two-col / ps-gallery--two-col-portrait -->
 
-               <!-- Gallery item — image (start at 02; 01 is the hero above) -->
+          <!-- Gallery item — image (start at 02; 01 is the hero above) -->
           <div class="ps-gallery-item">
-            <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
                  src="../../play/worldcup/sterling_15.jpg"
                  alt="Descriptive alt text"
@@ -721,10 +736,9 @@
             <div class="ps-gallery-placeholder" aria-hidden="true"></div>
             <p class="ps-gallery-caption"></p><!-- EDIT: caption or remove -->
           </div>
-          
+
           <!-- Gallery item — image -->
           <div class="ps-gallery-item">
-            <!-- EDIT: swap placeholder for real img -->
             <img class="ps-gallery-img"
                  src="../../play/worldcup/ben_foster.png"
                  alt="Descriptive alt text"
@@ -763,7 +777,7 @@
             <p class="ps-gallery-caption"></p>
           </div>
 
-              <!-- Gallery item — image -->
+          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/gerrard_interview.png"
