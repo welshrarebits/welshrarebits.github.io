@@ -110,7 +110,7 @@
 
     /* ── ZONE 1: TITLE + SUBTITLE ── */
     .cs-zone-title {
-      padding:3rem 0 clamp(1.25rem,2.5vw,2rem);
+      padding:clamp(1.5rem,3vw,2.5rem) 0 clamp(1.25rem,2.5vw,2rem);
       border-bottom:1px solid var(--rule);
     }
     /* Breadcrumb — replaces plain eyebrow, all viewports */
@@ -216,7 +216,7 @@
     .cs-meta-item { display:flex; flex-direction:column; gap:0.2rem; }
     .cs-meta-label {
       font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0.08em; text-transform:uppercase;
+      letter-spacing:var(--ls-meta); text-transform:uppercase;
       color:var(--muted);
     }
     .cs-meta-value {
@@ -285,7 +285,7 @@
     .cs-quote cite {
       display:block; margin-top:0.6rem;
       font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0.08em; text-transform:uppercase;
+      letter-spacing:var(--ls-meta); text-transform:uppercase;
       color:var(--muted); font-style:normal;
     }
 
@@ -303,7 +303,7 @@
     }
     .cs-caption {
       font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0.06em; color:var(--muted);
+      letter-spacing:var(--ls-caption); color:var(--muted);
       opacity:0.6; margin-top:0.5rem;
     }
 
@@ -361,7 +361,7 @@
     .cs-video-wrap:hover .cs-video-play svg { transform:scale(1.08); }
     .cs-video-caption {
       font-family:var(--mono); font-size:var(--fs-xs);
-      letter-spacing:0.06em; color:var(--muted);
+      letter-spacing:var(--ls-caption); color:var(--muted);
       opacity:0.6; margin-top:0.5rem;
     }
 
@@ -406,7 +406,7 @@
 
     /* ── FOOTER ── */
     footer { background:var(--ink); padding:1.25rem 0; margin-top:clamp(4rem,8vw,7rem); }
-    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:var(--ls-caption); text-transform:uppercase; }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
     .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
     .footer-link:hover { color:var(--footer-text-hover); }
@@ -414,13 +414,12 @@
     .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
     .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
     .footer-credits-link:hover { color:var(--footer-text-hover); }
-    .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
 
     /* ── CONTACT MODAL ── */
     .contact-modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay-bg); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
     .contact-modal-overlay.open { display:flex; }
     .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
-    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
     .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
     .contact-modal-close:hover { color:var(--ink); }
     .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
@@ -475,9 +474,6 @@
       .cs-back-body { display:block; }
       /* Section 01 on mobile: meta rule acts as its top border */
       .cs-section:first-child { padding-top:clamp(1.25rem,2.5vw,1.75rem); }
-      /* Title zone breadcrumb replaced by sticky bar on mobile */
-      .cs-zone-title { padding-top:1rem; }
-      .cs-zone-title .cs-breadcrumb { display:none; }
     }
 
     @media (max-width:600px) {
@@ -556,17 +552,10 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 1 — TITLE + SUBTITLE
-           EDIT: <title> in <head>, breadcrumb Case Study number,
+           EDIT: <title> in <head>, breadcrumb Case Study number (sticky bar),
                  cs-main-title text, cs-subtitle text
            ═══════════════════════════════════════════ -->
       <div class="cs-zone-title">
-        <!-- Breadcrumb: "Work" links back, "Case Study — 01" is current page
-             EDIT: update Case Study number per page -->
-        <nav class="cs-breadcrumb" aria-label="Breadcrumb">
-          <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
-          <span class="cs-breadcrumb-sep">/</span>
-          <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
-        </nav>
         <h1 class="cs-main-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1><!-- EDIT: title -->
         <p class="cs-subtitle">An investigation into the elasticity of identity verification.</p><!-- EDIT: subtitle -->
       </div>
