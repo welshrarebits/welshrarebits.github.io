@@ -730,13 +730,24 @@
            ═══════════════════════════════════════════ -->
       <div class="ps-zone-gallery">
 
-        <!-- ═══ OPTION A: Default — 3 col landscape (4/3) ═══════════════════
-             Safe default. Use for mixed-orientation or landscape-dominant sets.
-             TO USE: keep this block. DELETE Options B and C below.
-             ══════════════════════════════════════════════════════════════ -->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             !! GALLERY OPTION A — 3 COL LANDSCAPE (4/3)                      !!
+             !! Safe default. Use for mixed or landscape-dominant image sets.  !!
+             !!                                                                !!
+             !! TO USE THIS OPTION:                                            !!
+             !!   KEEP this block. Edit image src and alt attributes.          !!
+             !!   DELETE the entire Option B block below (from !!!B-START      !!
+             !!   to !!!B-END) and the entire Option C block (!!!C-START       !!
+             !!   to !!!C-END).                                                !!
+             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- !!!A-START -->
         <div class="ps-gallery">
 
-          <!-- Gallery item — image (start at 02; 01 is the hero above) -->
+          <!-- Gallery item — image (start at 02; 01 is the hero above)
+               EDIT: src path and alt text for each image.
+               Add or remove ps-gallery-item blocks to match your image count.
+               Remove the p.ps-gallery-caption if no caption needed. -->
+
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/sterling_15.jpg"
@@ -746,7 +757,6 @@
             <p class="ps-gallery-caption"></p><!-- EDIT: caption or remove -->
           </div>
 
-          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/ben_foster.png"
@@ -756,7 +766,6 @@
             <p class="ps-gallery-caption"></p><!-- EDIT: caption or remove -->
           </div>
 
-          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/ox_15.jpg"
@@ -766,7 +775,6 @@
             <p class="ps-gallery-caption"></p>
           </div>
 
-          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/lampard_signs.png"
@@ -776,7 +784,6 @@
             <p class="ps-gallery-caption"></p>
           </div>
 
-          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/welbeck_15.jpg"
@@ -786,7 +793,6 @@
             <p class="ps-gallery-caption"></p>
           </div>
 
-          <!-- Gallery item — image -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/worldcup/gerrard_interview.png"
@@ -796,11 +802,10 @@
             <p class="ps-gallery-caption"></p>
           </div>
 
-          <!-- Gallery item — VIDEO
-               EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
-               EDIT: data-autoplay — set to "false" for restricted videos (BBC, BT Sport etc)
-                     omit or set to "true" for freely embeddable videos
-               EDIT: src on img = video thumbnail image path -->
+          <!-- VIDEO ITEM — uncomment to use. Delete if not needed.
+               EDIT: data-video-id = YouTube ID only (e.g. "dQw4w9WgXcQ")
+               EDIT: data-autoplay="false" for restricted videos (BBC, BT Sport etc)
+               EDIT: src on img = path to video thumbnail image -->
           <!--
           <div class="ps-video-wrap" data-video-id="YOUTUBE_ID" data-autoplay="true" role="button" tabindex="0" aria-label="Play video: Video title">
             <img class="ps-video-thumb"
@@ -817,17 +822,26 @@
           -->
 
         </div>
+        <!-- !!!A-END -->
 
-        <!-- ═══ END OPTION B ══════════════════════════════════════════════ -->
 
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             !! GALLERY OPTION B — 3 COL PORTRAIT (3/5)                       !!
+             !! Use only when EVERY image is the same portrait poster format.  !!
+             !! Do NOT mix with landscape or square images — use Option A.     !!
+             !!                                                                !!
+             !! TO USE THIS OPTION:                                            !!
+             !!   DELETE the opening line  <!- - !!!B-START  (line below)     !!
+             !!   DELETE the closing line  !!!B-END - ->  (at the bottom)     !!
+             !!   Edit image src, alt, and count inside.                      !!
+             !!   DELETE the entire Option A block above (!!!A-START/END)     !!
+             !!   DELETE the entire Option C block below (!!!C-START/END)     !!
+             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- !!!B-START
+        <div class="ps-gallery ps-gallery--three-col-portrait">
 
-        <!-- ═══ OPTION C: Single col full width (4/3) ═══════════════════
-             Use for magazine spreads or pieces where strict image order
-             and maximum size matter more than grid density.
-             TO USE: remove the opening <!-- and closing - -> on this block.
-                     DELETE Options A and B.
-        <div class="ps-gallery ps-gallery--single-col">
-
+          <!-- EDIT: replace [folder] and filename for each image.
+               Add or remove ps-gallery-item blocks to match your image count. -->
           <div class="ps-gallery-item">
             <img class="ps-gallery-img"
                  src="../../play/[folder]/image-02.jpg"
@@ -856,8 +870,55 @@
           </div>
 
         </div>
-        -->
-        <!-- ═══ END OPTION C ══════════════════════════════════════════════ -->
+        !!!B-END -->
+
+
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             !! GALLERY OPTION C — SINGLE COL FULL WIDTH (4/3)                !!
+             !! Use for magazine spreads or pieces where strict image order    !!
+             !! and maximum size matter more than grid density.                !!
+             !!                                                                !!
+             !! TO USE THIS OPTION:                                            !!
+             !!   DELETE the opening line  <!- - !!!C-START  (line below)     !!
+             !!   DELETE the closing line  !!!C-END - ->  (at the bottom)     !!
+             !!   Edit image src, alt, and count inside.                      !!
+             !!   DELETE the entire Option A block above (!!!A-START/END)     !!
+             !!   DELETE the entire Option B block above (!!!B-START/END)     !!
+             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- !!!C-START
+        <div class="ps-gallery ps-gallery--single-col">
+
+          <!-- EDIT: replace [folder] and filename for each image.
+               Add or remove ps-gallery-item blocks to match your image count. -->
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-02.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-03.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+          <div class="ps-gallery-item">
+            <img class="ps-gallery-img"
+                 src="../../play/[folder]/image-04.jpg"
+                 alt="Descriptive alt text"
+                 />
+            <div class="ps-gallery-placeholder" aria-hidden="true"></div>
+            <p class="ps-gallery-caption"></p>
+          </div>
+
+        </div>
+        !!!C-END -->
 
       </div><!-- /ps-zone-gallery -->
 
