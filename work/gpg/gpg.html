@@ -17,7 +17,7 @@
       --mono:'DM Mono',monospace;
       --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
-      --fs-xs:0.688rem; --fs-sm:0.813rem; --fs-md:0.875rem;
+      --fs-xs:0.688rem; --fs-sm:0.813rem;
       --footer-text:rgba(255,255,255,0.8); --footer-text-hover:rgba(255,255,255,1);
       --logo-size:77px;
       --header-h:clamp(60px,10vw,90px);
@@ -339,7 +339,7 @@
       background:none; border:none; cursor:pointer;
       color:var(--dialog-close-muted); transition:color 0.2s;
     }
-    .cs-img-dialog-close:hover { color:rgba(255,255,255,1); }
+    .cs-img-dialog-close:hover { color:var(--footer-text-hover); }
 
     /* ── VIDEO THUMBNAIL ── */
     .cs-video-wrap { margin:1.5rem 0 0; position:relative; cursor:pointer; }
@@ -391,7 +391,7 @@
       background:none; border:none; cursor:pointer;
       color:var(--dialog-close-muted); transition:color 0.2s;
     }
-    .cs-video-dialog-close:hover { color:rgba(255,255,255,1); }
+    .cs-video-dialog-close:hover { color:var(--footer-text-hover); }
 
     /* Paired inline images — optional modifier on cs-inline-wrap */
     .cs-inline-wrap--pair {
