@@ -13,8 +13,6 @@
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
       --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
-      --footer-text:rgba(255,255,255,0.8); --footer-text-hover:rgba(255,255,255,1);
-      --logo-size:77px;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -25,7 +23,7 @@
     .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
     .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding-bottom:1rem; }
     .header-identity { grid-column:1/4; display:flex; flex-direction:row; align-items:flex-start; gap:0.75rem; }
-    .header-logo-placeholder { width:var(--logo-size); height:var(--logo-size); background:var(--rule); flex-shrink:0; }
+    .header-logo-placeholder { width:77px; height:77px; background:var(--rule); flex-shrink:0; }
     .header-identity-text { display:flex; flex-direction:column; gap:0.35rem; }
     .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; text-transform:uppercase; }
     .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:1.45; }
@@ -53,7 +51,7 @@
     .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
     .mobile-menu a:hover { color:var(--accent); }
     .page-section { padding:3rem 0; }
-    .page-section + .page-section { }
+    .page-section + .page-section { border-top:0px solid var(--rule); }
     .section-header { display:flex; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
     .section-number { display:none; }
     .section-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); }
@@ -83,7 +81,6 @@
     .testimonial-attribution { display:flex; align-items:flex-start; gap:0.875rem; align-self:start; }
     .testimonial-quote { font-family:var(--sans); font-size:1rem; font-style:italic; font-weight:400; color:var(--ink); line-height:1.75; align-self:start; }
     .testimonial-avatar { width:40px; height:40px; border-radius:50%; background:var(--rule); overflow:hidden; flex-shrink:0; }
-    .testimonial-avatar img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
     .testimonial-avatar svg { width:100%; height:100%; }
     .testimonial-person { display:flex; flex-direction:column; gap:0.15rem; }
     .testimonial-name { font-family:var(--sans); font-size:var(--fs-sm); font-weight:700; color:var(--ink); }
@@ -91,12 +88,12 @@
     footer { background:var(--ink); padding:1.25rem 0; }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
-    .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
-    .footer-link:hover { color:var(--footer-text-hover); }
+    .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:rgba(255,255,255,1); }
     .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
     .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
-    .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
-    .footer-credits-link:hover { color:var(--footer-text-hover); }
+    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:rgba(255,255,255,1); }
     .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
     @media (max-width:900px) {
       .header-nav { display:none; }
@@ -412,17 +409,17 @@
     <div class="container">
       <div class="footer-inner">
         <nav class="footer-links" aria-label="Social links">
-          <a href="https://www.linkedin.com/in/welshsteve/" class="footer-link" target="_blank" rel="noopener noreferrer"" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
-          <a href="https://www.instagram.com/miniboro/" class="footer-link" target="_blank" rel="noopener noreferrer"" aria-label="Instagram">
+          <a href="https://www.instagram.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
-          <a href="https://www.are.na/steve-n-welsh/channels" class="footer-link" target="_blank" rel="noopener noreferrer" footer-link--arena" aria-label="Are.na">✶✶</a>
-          <a href="https://x.com/miniboro_dotcom" class="footer-link" target="_blank" rel="noopener noreferrer"" aria-label="Twitter / X">
+          <a href="https://www.are.na/" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://twitter.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="https://substack.com/@ulysses31" class="footer-link" target="_blank" rel="noopener noreferrer"" aria-label="Substack">
+          <a href="https://substack.com/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
           </a>
         </nav>
