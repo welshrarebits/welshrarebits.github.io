@@ -191,7 +191,7 @@
     */
     .ps-zone-intro {
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr));
       gap:clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,3vw,2.5rem);
       padding:clamp(1.5rem,3vw,2.5rem) 0 0;
       align-items:start;
@@ -476,8 +476,6 @@
     }
 
     @media (max-width:700px) {
-      /* Intro zone: stack text then image */
-      .ps-zone-intro { grid-template-columns:1fr; }
       /* Gallery: single column on mobile — all modifier variants collapse to 1 col */
       .ps-gallery,
       .ps-gallery--three-col-portrait { grid-template-columns:1fr; }
