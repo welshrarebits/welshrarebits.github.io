@@ -334,9 +334,8 @@
       aspect-ratio:16/9; object-fit:cover;
       background:var(--rule);
     }
-    .ps-gallery .ps-video-thumb {
-     aspect-ratio:4/3;
-    }
+    /* Gallery context: override to 4/3 to match gallery cell rhythm */
+    .ps-gallery .ps-video-thumb { aspect-ratio:4/3; }
     .ps-video-play {
       position:absolute; inset:0;
       display:flex; align-items:center; justify-content:center;
