@@ -1,0 +1,161 @@
+<footer>
+    <div class="container">
+      <div class="footer-inner">
+        <nav class="footer-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/welshsteve/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.are.na/steve-n-welsh/channels" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://x.com/miniboro_dotcom" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://substack.com/@ulysses31" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          </a>
+        </nav>
+        <a href="#" class="footer-credits-link" id="credits-trigger">Additional Credits</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Credits Modal -->
+  <div class="contact-modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="credits-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="credits-modal-title">Additional Credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Typeface — DM Mono</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/DM+Mono" target="_blank" rel="noopener">Colophon Foundry via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Tool — Contact Form</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="contact-modal">
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">Close ✕</button>
+      <h2 class="contact-modal-title" id="contact-modal-title">Get in touch</h2>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/myknpryk" method="POST">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" type="text" id="contact-name" name="name" required autocomplete="name">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" type="email" id="contact-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" type="text" id="contact-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send message</button>
+        <p class="contact-status" id="contact-status"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ── CREDITS MODAL ──
+    var creditsModal      = document.getElementById('credits-modal');
+    var creditsTrigger    = document.getElementById('credits-trigger');
+    var creditsModalClose = document.getElementById('credits-modal-close');
+
+    function openCredits() {
+      creditsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      creditsModalClose.focus();
+    }
+    function closeCredits() {
+      creditsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      creditsTrigger.focus();
+    }
+    creditsTrigger.addEventListener('click', function(e) { e.preventDefault(); openCredits(); });
+    creditsModalClose.addEventListener('click', closeCredits);
+    creditsModal.addEventListener('click', function(e) { if (e.target === creditsModal) closeCredits(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && creditsModal.classList.contains('open')) closeCredits();
+    });
+
+    // ── CONTACT MODAL ──
+    var contactModal      = document.getElementById('contact-modal');
+    var contactTrigger    = document.getElementById('contact-trigger');
+    var mobileContactTrigger = document.getElementById('mobile-contact-trigger');
+    var contactModalClose = document.getElementById('contact-modal-close');
+    var contactForm       = document.getElementById('contact-form');
+    var contactStatus     = document.getElementById('contact-status');
+
+    function openContactModal() {
+      contactModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      contactModalClose.focus();
+    }
+    function closeContactModal() {
+      contactModal.classList.remove('open');
+      document.body.style.overflow = '';
+      contactTrigger.focus();
+    }
+    contactTrigger.addEventListener('click', function(e) { e.preventDefault(); openContactModal(); });
+    if (mobileContactTrigger) {
+      mobileContactTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close mobile menu if open — query here so no dependency on per-page variables
+        var mobileMenu = document.getElementById('mobile-menu');
+        var hamburger  = document.querySelector('.nav-hamburger');
+        if (mobileMenu) { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden', 'true'); }
+        if (hamburger)  { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+        document.body.style.overflow = '';
+        openContactModal();
+      });
+    }
+    contactModalClose.addEventListener('click', closeContactModal);
+    contactModal.addEventListener('click', function(e) { if (e.target === contactModal) closeContactModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && contactModal.classList.contains('open')) closeContactModal();
+    });
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var submit = contactForm.querySelector('.contact-submit');
+      submit.textContent = 'Sending…';
+      submit.disabled = true;
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(res) {
+        if (res.ok) {
+          contactStatus.textContent = 'Message sent — thank you.';
+          contactStatus.classList.add('visible');
+          contactForm.reset();
+          submit.textContent = 'Send message';
+          submit.disabled = false;
+        } else { throw new Error(); }
+      })
+      .catch(function() {
+        contactStatus.textContent = 'Something went wrong. Please try again.';
+        contactStatus.classList.add('visible');
+        submit.textContent = 'Send message';
+        submit.disabled = false;
+      });
+    });
+  </script>
