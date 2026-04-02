@@ -19,9 +19,17 @@
       --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
       --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
-      --footer-text:rgba(255,255,255,0.3);
+      --footer-text:rgba(255,255,255,0.8); --footer-text-hover:rgba(255,255,255,1);
+      --logo-size:77px;
       --header-h:clamp(60px,10vw,90px);
       --z-header:100; --z-overlay:101;
+      --lh-tight:1.45;
+      --ls-title:-0.02em;
+      --ls-label:0.1em;
+      --dialog-close-muted:rgba(255,255,255,0.5);
+      --overlay-bg:rgba(13,13,13,0.9);
+      --video-max:1100px;
+      --ls-caption:0.06em; --ls-meta:0.08em;
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -343,26 +351,33 @@
     <div class="container">
       <div class="header-inner">
         <div class="header-identity">
-          <a href="../../index.html" class="header-logo">STEVEN WELSH</a>
-          <div class="header-location">Sheffield<br>Ooop North</div>
+          <div class="header-logo-placeholder" aria-hidden="true"></div>
+          <div class="header-identity-text">
+            <a href="../../index.html" class="header-logo">Steven Welsh</a>
+            <div class="header-location">Sheffield<br>Ooop North</div>
+          </div>
         </div>
         <nav class="header-nav" aria-label="Main navigation">
           <ul class="header-nav-links" role="list">
             <li class="nav-item">
               <a href="../../index.html" class="nav-item-label">About</a>
-              <span class="nav-item-desc">background,<br>approach &amp; values</span>
+              <span class="nav-item-desc">high-level<br>overview</span>
             </li>
             <li class="nav-item">
               <a href="../../work.html" class="nav-item-label active">Work</a>
-              <span class="nav-item-desc">selected client<br>projects</span>
+              <span class="nav-item-desc">selected<br>case studies</span>
             </li>
             <li class="nav-item">
               <a href="../../play.html" class="nav-item-label">Play</a>
-              <span class="nav-item-desc">personal work<br>&amp; experiments</span>
+              <span class="nav-item-desc">freelance<br>side hustles</span>
             </li>
             <li class="nav-item">
               <a href="../../blog.html" class="nav-item-label">Blog</a>
-              <span class="nav-item-desc">writing on<br>design &amp; craft</span>
+              <span class="nav-item-desc">musings and<br>reflections</span>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a>
+              <span class="nav-item-desc">enquiries and<br>commissions</span>
             </li>
           </ul>
         </nav>
@@ -378,18 +393,20 @@
         <nav class="cs-breadcrumb" aria-label="Breadcrumb">
           <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
           <span class="cs-breadcrumb-sep">/</span>
-          <span class="cs-breadcrumb-current">Case Study &#8212; 02</span><!-- EDIT: number -->
+          <span class="cs-breadcrumb-current">Confirm Your Identity</span>
         </nav>
       </div>
     </div>
   </header>
 
-  <!-- Mobile menu -->  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
     <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
     <a href="../../index.html">About</a>
     <a href="../../work.html">Work</a>
     <a href="../../play.html">Play</a>
     <a href="../../blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
   </nav>
 
   <main id="main">
@@ -733,23 +750,35 @@
     </div><!-- /container -->
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span>Steven Welsh</span>
-        <span>Sheffield &#8212; <span id="year"></span></span>
-        <span>All work reserved</span>
-      </div>
-    </div>
-  </footer>
+
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
     // Mobile menu
     var btn = document.querySelector('.nav-hamburger');
     var menu = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-close');
+
+    // Set mobile menu padding to match header height
+    function updateMenuPadding() {
+      var headerH = document.querySelector('.site-header').offsetHeight;
+      document.getElementById('mobile-menu').style.paddingTop = headerH + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+
+    // Close mobile menu if viewport expands past mobile breakpoint
+    var mq = window.matchMedia('(min-width:769px)');
+    function handleBreakpoint(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    mq.addEventListener('change', handleBreakpoint);
+
     btn.addEventListener('click', function() {
       var open = menu.classList.toggle('open');
       btn.classList.toggle('open', open);
@@ -769,8 +798,130 @@
       });
     });
 
-    // Header height drives all sticky offsets via CSS custom property.
-    // Double rAF ensures layout is complete before measuring.
+    // Credits modal
+
+    // ── IMAGE ENLARGE + LOAD/ERROR HANDLING ──
+    // Images are display:none by default (CSS). On successful load:
+    //   - add .loaded class (makes img visible)
+    //   - hide the sibling placeholder
+    //   - check if enlargeable (naturalWidth > offsetWidth × 1.2)
+    // On error: img stays hidden, placeholder remains visible.
+    // data-enlargeable attr drives cursor and click behaviour — no manual markup needed.
+    var dialog = document.getElementById('img-dialog');
+    var dialogImg = document.getElementById('img-dialog-img');
+    var dialogClose = document.getElementById('img-dialog-close');
+
+    function checkEnlargeable(img) {
+      if (img.naturalWidth > img.offsetWidth * 1.2 ||
+          img.naturalHeight > img.offsetHeight * 1.2) {
+        img.setAttribute('data-enlargeable', '');
+      }
+    }
+
+    function initImg(img) {
+      function onLoad() {
+        img.classList.add('loaded');
+        var placeholder = img.nextElementSibling;
+        if (placeholder && placeholder.classList.contains('cs-inline-placeholder')) {
+          placeholder.style.display = 'none';
+        }
+        checkEnlargeable(img);
+      }
+      function onError() {
+        // img stays hidden, placeholder stays visible — no action needed
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        onLoad();
+      } else if (img.complete) {
+        onError();
+      } else {
+        img.addEventListener('load', onLoad, { once: true });
+        img.addEventListener('error', onError, { once: true });
+      }
+    }
+
+    document.querySelectorAll('.cs-inline-img').forEach(initImg);
+
+    // Re-check enlargeable on resize — rendered size changes, natural size does not
+    var csResizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(csResizeTimer);
+      csResizeTimer = setTimeout(function() {
+        document.querySelectorAll('.cs-inline-img.loaded').forEach(function(img) {
+          img.removeAttribute('data-enlargeable');
+          checkEnlargeable(img);
+        });
+      }, 150);
+    });
+
+    document.addEventListener('click', function(e) {
+      var img = e.target;
+      if (!img || img.tagName !== 'IMG' || !img.classList.contains('cs-inline-img')) return;
+      if (!img.hasAttribute('data-enlargeable')) return;
+      e.stopPropagation();
+      dialogImg.src = img.src;
+      dialogImg.alt = img.alt;
+      dialog.showModal();
+    });
+
+    dialogClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dialog.close();
+      dialogImg.src = '';
+    });
+
+    dialog.addEventListener('click', function(e) {
+      if (e.target === dialog || e.target === dialogImg) {
+        e.stopPropagation();
+        dialog.close();
+        dialogImg.src = '';
+      }
+    });
+
+    dialog.addEventListener('close', function() {
+      dialogImg.src = '';
+    });
+
+    // Video dialog
+    var videoDialog = document.getElementById('video-dialog');
+    var videoIframe = document.getElementById('video-dialog-iframe');
+    var videoClose = document.getElementById('video-dialog-close');
+    var ytBase = 'https://www.youtube-nocookie.com/embed/';
+
+    document.addEventListener('click', function(e) {
+      var wrap = e.target.closest('.cs-video-wrap');
+      if (!wrap) return;
+      var id = wrap.getAttribute('data-video-id');
+      if (!id) return;
+      e.stopPropagation();
+      // data-autoplay="false" disables autoplay for restricted videos (e.g. BBC, BT Sport)
+      // Omit this attribute or set data-autoplay="true" for freely embeddable videos
+      var autoplay = wrap.getAttribute('data-autoplay') !== 'false';
+      var params = autoplay ? '?autoplay=1&rel=0&enablejsapi=1' : '?rel=0';
+      videoIframe.src = ytBase + id + params;
+      videoDialog.showModal();
+    });
+
+    function closeVideo() {
+      videoDialog.close();
+      videoIframe.src = '';
+    }
+
+    videoClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeVideo();
+    });
+
+    videoDialog.addEventListener('click', function(e) {
+      if (e.target === videoDialog) {
+        e.stopPropagation();
+        closeVideo();
+      }
+    });
+
+    videoDialog.addEventListener('close', closeVideo);
+
+    // Header height token — double rAF ensures layout is complete before measuring
     var headerEl = document.querySelector('.site-header');
     function setHeaderHeight() {
       var h = headerEl ? headerEl.getBoundingClientRect().height : 0;
@@ -786,7 +937,18 @@
         }
       });
     });
+    </script>
+  <div id="site-footer"></div>
+  <script>
+    fetch('/footer.html')
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var el = document.getElementById('site-footer');
+        el.outerHTML = html;
+        var s = document.createElement('script');
+        s.src = '/footer-init.js';
+        document.body.appendChild(s);
+      });
   </script>
-
 </body>
 </html>
