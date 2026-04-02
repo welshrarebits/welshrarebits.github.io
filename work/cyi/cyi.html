@@ -556,13 +556,6 @@
                  cs-main-title text, cs-subtitle text
            ═══════════════════════════════════════════ -->
       <div class="cs-zone-title">
-        <!-- Breadcrumb: "Work" links back, "Case Study — 02" is current page
-             EDIT: update Case Study number per page -->
-        <nav class="cs-breadcrumb" aria-label="Breadcrumb">
-          <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
-          <span class="cs-breadcrumb-sep">/</span>
-          <span class="cs-breadcrumb-current">Case Study &#8212; 02</span><!-- EDIT: number -->
-        </nav>
         <h1 class="cs-main-title">Cross-government delivery at pace</h1><!-- EDIT: title -->
         <p class="cs-subtitle">Providing a statistically significant alternative to GOV.UK Verify</p><!-- EDIT: subtitle -->
       </div>
@@ -1075,6 +1068,18 @@
       });
     });
   </script>
+
+  <dialog class="cs-img-dialog" id="img-dialog" aria-label="Enlarged image">
+    <button class="cs-img-dialog-close" id="img-dialog-close" aria-label="Close enlarged image">Close</button>
+    <img src="" alt="" id="img-dialog-img" />
+  </dialog>
+
+  <!-- Video dialog -->
+  <dialog class="cs-video-dialog" id="video-dialog" aria-label="Video player">
+    <button class="cs-video-dialog-close" id="video-dialog-close" aria-label="Close video">Close</button>
+    <iframe id="video-dialog-iframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </dialog>
+
 
   <div id="site-footer"></div>
   <script>
