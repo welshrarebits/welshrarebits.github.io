@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- EDIT: page title -->
-  <title>Work &#8212; Case Study 02</title>
+  <title>Work &#8212; Case Study 01</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
@@ -201,10 +201,10 @@
     .cs-split-meta-wrap {
       position:sticky;
       top:var(--header-h);
-      padding-top:clamp(1.25rem,2.5vw,1.75rem);
     }
 
     .cs-split-meta {
+      padding-top:clamp(1.25rem,2.5vw,1.75rem);
       padding-bottom:clamp(1.25rem,2.5vw,1.75rem);
       border-bottom:1px solid var(--rule);
     }
@@ -531,7 +531,7 @@
         <nav class="cs-breadcrumb" aria-label="Breadcrumb">
           <a href="../../work.html" class="cs-breadcrumb-link">Work</a>
           <span class="cs-breadcrumb-sep">/</span>
-          <span class="cs-breadcrumb-current">Case Study &#8212; 02</span><!-- EDIT: number -->
+          <span class="cs-breadcrumb-current">Case Study &#8212; 01</span><!-- EDIT: number -->
         </nav>
       </div>
     </div>
@@ -552,12 +552,12 @@
 
       <!-- ═══════════════════════════════════════════
            ZONE 1 — TITLE + SUBTITLE
-           EDIT: <title> in <head>, breadcrumb Case Study number,
+           EDIT: <title> in <head>, breadcrumb Case Study number (sticky bar),
                  cs-main-title text, cs-subtitle text
            ═══════════════════════════════════════════ -->
       <div class="cs-zone-title">
-        <h1 class="cs-main-title">Cross-government delivery at pace</h1><!-- EDIT: title -->
-        <p class="cs-subtitle">Providing a statistically significant alternative to GOV.UK Verify</p><!-- EDIT: subtitle -->
+        <h1 class="cs-main-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1><!-- EDIT: title -->
+        <p class="cs-subtitle">An investigation into the elasticity of identity verification.</p><!-- EDIT: subtitle -->
       </div>
 
       <!-- ═══════════════════════════════════════════
@@ -570,8 +570,8 @@
 
           <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
           <img class="cs-featured-img"
-               src="../../assets/thumbnails/work/cyi_alt3.png"
-               alt="Confirm Your Identity — featured image" />
+               src="../../assets/thumbnails/work/gpg.png"
+               alt="Good Practice Guide redesign — featured image" />
 
         <div class="cs-split-meta-wrap">
           <div class="cs-split-meta">
@@ -582,7 +582,7 @@
               </div>
               <div class="cs-meta-item">
                 <span class="cs-meta-label">Role</span>
-                <span class="cs-meta-value">Product Manager</span><!-- EDIT -->
+                <span class="cs-meta-value">Senior Identity & Trust Specialist</span><!-- EDIT -->
               </div>
               <div class="cs-meta-item">
                 <span class="cs-meta-label">Area</span>
@@ -590,7 +590,7 @@
               </div>
               <div class="cs-meta-item">
                 <span class="cs-meta-label">Year</span>
-                <span class="cs-meta-value">2020</span><!-- EDIT -->
+                <span class="cs-meta-value">2022</span><!-- EDIT -->
               </div>
             </div>
           </div>
@@ -612,78 +612,125 @@
           <div class="cs-section">
             <p class="cs-section-num">01</p>
             <p class="cs-section-heading">The Problem</p>
-            <p class="cs-body-text">GOV.UK Verify had only been achieving success rates of around 38%  (figures from the National Audit Office). 
-              This meant a large proportion of people who had been unsuccessful in applying online, were then having to attend face-to-face identity interviews instead.</p>
-             <p class="cs-body-text">This resulted in:</p>
+            <p class="cs-body-text">In 2012 GDS published its series of Good Practice Guides (GPGs) for providers of identity assurance to 
+              Government Services:</p>
             <!-- EDIT: urls of bullets -->
             <ul class="cs-body-list">
-              <li>An increased cost to DWP to administer these checks</li>
-              <li>Work Coaches having less time to manage their caseloads, meaning they were unable to focus on their most vulnerable claimants</li>
-              <li>An inconvenience to claimants, particularly those moving from Tax Credits to UC, as they would need to take time 
-                off work to attend their job centre appointment.</li>
+              <li><a href="https://example.com/documentation" class="cs-body-list-link">GPG 43:</a> Requirements for Secure Delivery of Online Public Services</li>
+              <li><a href="https://example.com/tutorials" class="cs-body-list-link">GPG 44:</a> Authentication Credentials in Support of HMG Online Services</li>
+              <li><a href="https://example.com/support" class="cs-body-list-link">GPG 45:</a> Validating and Verifying the Identity of an Individual</li>
             </ul>
-            <p class="cs-body-text">A decision was made to provide a complementary alternative to Verify, its aim was to allow claimants to intuitively 
-              and efficiently prove their identity online. Thereby saving time and effort for the claimant, whilst also enabling cost savings for DWP.</p>
+            <p class="cs-body-text">In my previous roles as both a Product Manager and later as an Identity & Trust Specialist, these became critical documents 
+              for me to understand, reference and articulate to others.</p>
+            <p class="cs-body-text">However, GPG 45 (for example) weighed in at:</p>
+            <ul class="cs-body-list">
+              <li>33 pages (8972 words)</li>
+              <li>including a 29 page sub section</li>
+              <li>with 32 individual ID profiles (presented as tabular data).</li>
+            </ul>
+            <p class="cs-body-text">So I think it’s fair to say, these were not considered the most accessible of reads. 
+              Even by their own admission (Cabinet Office website), the documents were recognised as being "necessarily quite technical".</p>
             </div>
 
           <!-- Section 02 -->
           <div class="cs-section">
             <p class="cs-section-num">02</p>
-            <p class="cs-section-heading">Unforseen circumstances</p>
-            <p class="cs-body-text">Originally scheduled for Sept 2020, the outbreak of COVID-19 forced the proposed solution (CYI) to became an accelerated 
-              delivery and a primary focus for the Identity & Trust Directorate.</p>
-             <p class="cs-body-text">With face-to-face meetings unavailable during this time, Universal Credit was experiencing unprecedented demand for 
-               online and agent led processes.</p>
+            <p class="cs-section-heading">Reframing the problem</p>
+            <p class="cs-body-text">I had already seen a couple of attempts to re-frame this information, for example the digital consultancy
+              Hippo, who opted for a Lego bricks analogy (see below).</p>
 
             <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/UC_numbers3.png"
-                   alt="Universal Credit Caseloads & Starts"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   src="../../work/gpg/hippo_lego.png"
+                   alt="Lego bricks analogy for GPG 45"
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
-            
-            <p class="cs-body-text">The ask (at a very high level at least) was simple, help alleviate this pressure by providing a statistically significant alternative to GOV.UK Verify as soon as possible.</p>
+
+            <!-- ── INLINE VIDEO — optional ──
+                 Use in place of or alongside a cs-inline-wrap image block.
+                 EDIT: data-video-id = YouTube video ID only (e.g. "dQw4w9WgXcQ")
+                 EDIT: data-autoplay — set to "false" for restricted videos (BBC, BT Sport etc)
+                       omit or set to "true" for freely embeddable videos
+                 EDIT: src on img = video thumbnail image path
+                 EDIT: aria-label = descriptive title for the video
+                 Caption optional — remove p if not needed.
+            -->
+            <!--
+            <div class="cs-video-wrap" data-video-id="YOUTUBE_ID" data-autoplay="true" role="button" tabindex="0" aria-label="Play video: Video title">
+              <img class="cs-video-thumb"
+                   src="../../assets/thumbnails/work/video-thumb.jpg"
+                   alt="Video thumbnail description" />
+              <div class="cs-video-play" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.5)"/>
+                  <path d="M25 19L45 30L25 41V19Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="cs-video-caption"></p>
+            </div>
+            -->
+            <p class="cs-body-text">But this interpretation always seemed far too rigid to me, especially when dealing with a concept as fluid as identity. 
+              Whilst I could appreciate the bricks were meant to be interchangeable. I couldn’t shake the feeling that this should be more about depth and 
+              breadth rather than height.</p>
           </div>
 
           <!-- Section 03 -->
           <div class="cs-section">
             <p class="cs-section-num">03</p>
-            <p class="cs-section-heading">Methods and techniques used</p>
-            <p class="cs-body-text">I employed ecosystems and landscape mapping to show how Identity Verification cuts across multiple government departments, systems 
-              and operational channels.</p>
-
-              <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
+            <p class="cs-section-heading">What did I do about it?</p>
+            <p class="cs-body-text">I focussed on creating a framework that could literally ‘flex’. After all, an identity can be challenged in a 
+              variety of ways, for a variety of reasons and across a variety of different channels.</p>
+            <p class="cs-body-text">My focus was less about 'how' to achieve a certain score and more about 'why' that score was best suited to certain scenarios and factors.</p>
+            <p class="cs-body-text">I also wanted to pay particular attention to language, since my early research had shown this was the number one reason for stakeholder 
+              assumptions. The difference between verification, validation and authentication, for example, was a recurring and lengthy bone of contention.</p>
+            
+            <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
-            <div class="cs-inline-wrap">
-              <img class="cs-inline-img"
-                   src="../../work/cyi/landscapes_ecosystems.png"
-                   alt="IDV Ecosystem"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"></p>
+            <div class="cs-inline-wrap cs-inline-wrap--pair">
+              <div class="cs-inline-pair-item">
+                <img class="cs-inline-img"
+                     src="../../work/gpg/know_have_are.png"
+                     alt="Principles of identity verification"
+                     />
+                <div class="cs-inline-placeholder" aria-hidden="true"></div>
+                <p class="cs-caption"></p>
+              </div>
+              <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg --> 
+              <!-- EDIT: swap alt tag and inlcude caption if required --> 
+              <div class="cs-inline-pair-item">
+                <img class="cs-inline-img"
+                     src="../../work/gpg/5_elements.png"
+                     alt="The 5 elements of identity verification"
+                     />
+                <div class="cs-inline-placeholder" aria-hidden="true"></div>
+                <p class="cs-caption"></p>
+              </div>
             </div><!-- /cs-inline-wrap -->
+            
+            <p class="cs-body-text">To address these unnecessary distractions, I created a couple of one pagers, which sought to cut through a lot of the noise, 
+              acting as anchors for discussions and stakeholder alignment.</p>
+          </div>
 
           <!-- Section 04 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">04</p>
-            <p class="cs-section-heading">Strategic Maps / Overviews</p>
-            <p class="cs-body-text">Whilst Confirm Your Identity (CYI) was intended to meet a specific need for Universal Credit, 
-              it was also part of the wider Dynamic Trust Hub. So, it was important for me to illustrate the cause and effect of what we were 
-              proposing at each stage of our (and other stakeholders) processes.</p>
+            <p class="cs-section-heading">Research & Collaboration</p>
+            <p class="cs-body-text">With these footholds in place, I was then able to return to my initial goal of finding a framework that flexed. In the interests 
+              of working in the open, I’ve managed to find some of my original notes and general musings from the numerous meetings I arranged at the time.</p>
 
             <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/strategic_level.png"
-                   alt="Strategic Overview"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   src="../../work/gpg/scribbles.png"
+                   alt="Original hand written notes"
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
           </div>
@@ -692,171 +739,189 @@
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">05</p>
-            <p class="cs-section-heading">Epic Level Personas</p>
-            <p class="cs-body-text">In addition to our more traditional personas within the User Research team, I also wanted to introduce 
-              some Epic Level Personas too. This ensured stakeholders didn’t fall into the trap of thinking citizens are one size fits all. 
-              Especially with regards to the data DWP holds about a person, and whether that data can be used as part of an identity challenge.</p>
+            <p class="cs-section-heading">Divergent thinking</p>
+            <p class="cs-body-text">What started to emerge from those early brain dumps, was a series of triangular patterns which reflected the different 
+              phases / stages within the identity verification process.</p>
 
              <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/epic_level_profiles.png"
+                   src="../../work/gpg/triangles_within_pentagon.png"
                    alt="the pentagon"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
+            
+            <p class="cs-body-text">These patterns needed to be encompassed by all 5 key elements of GPG, which (conveniently for me) lent themselves to 
+              a pentagon. The following images were my first attempts to transfer those relatively chaotic meeting notes into a usable framework.</p>
+
+              <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
+            <!-- EDIT: swap alt tag and inlcude caption if required --> 
+            <div class="cs-inline-wrap">
+              <img class="cs-inline-img"
+                   src="../../work/gpg/pentagon_post_its.png"
+                   alt="the pentagon"
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
+              <p class="cs-caption"></p>
+            </div><!-- /cs-inline-wrap -->
+            
+               <p class="cs-body-text">However, the 5 GPG components were still just ‘points on my pentagon’ for want of a better phrase. They were linked 
+                 but they didn’t illustrate the ‘flex’ that I felt was crucial in telling this story.</p>
+            <p class="cs-body-text">As a side note, my diagram had also started to look, at best, like a conspiracy theorists wall. Or, at worst 
+              (as somebody put it to me), like some kind of occult iconography. So, I decided to pare things back once more.</p>
           </div>
 
           <!-- Section 06 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">06</p>
-            <p class="cs-section-heading">Journey Maps & Process Flows</p>
-            <p class="cs-body-text">Before the widespread use of Mural / Miro within DWP, we were restricted to whiteboards, blue-tack and 
-              post-its to articulate our citizens journeys. However, this hands-on approach did seem to bring the team closer together and 
-              prompted many animated discussions at the time.</p>
-             
-            <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
+            <p class="cs-section-heading">Taking a new approach</p>
+            <p class="cs-body-text">I shifted my attention back to the scoring system that underpinned the guides. 
+              To clarify, each of the 5 GPG elements are scored against a Profile Criteria. Each profile is made up of the same 3 elements:</p>
+             <!-- EDIT: bullets -->
+            <ul class="cs-body-list">
+              <li>Level of Confidence required (Low, Med, High)</li>
+              <li>Pieces of evidence presented (1,2,3 etc)</li>
+              <li>Profile ID that matches a specific GPG scoring thresholds (A,B,C etc) </li>
+            </ul>
+            <p class="cs-body-text">So, for an ID challenge that requires a medium level of confidence, with only one piece of evidence but which 
+                also meets the GPG scores as defined by Profile A. You would be permitted to accept ‘M1A’.</p>
+            <p class="cs-body-text">But with 32 profiles to choose from, I needed to not only show how these scores could be achieved but also how they 
+              could be augmented. It was this elusive 'flex' between channels and scenarios (that for me at least), was lost in the detail of the existing documentation.</p>
+            <p class="cs-body-text">So at this point I decided to come full circle and reintroduce 
+                my pentagons to represent the M1A profile in the following way:</p>
+
+             <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/cyi_wall.png"
-                   alt="Large Whiteboard"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   src="../../work/gpg/m1a.png"
+                   alt="Profile M1A"
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
-            </div><!-- /cs-inline-wrap -->   
+            </div><!-- /cs-inline-wrap -->
+            
           </div>
 
           <!-- Section 07 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">07</p>
-            <p class="cs-section-heading">Content & Interaction Design</p>
-            <p class="cs-body-text">Since CYI was essentially piggy backing off existing Government Gateway screens, those screens could 
-              not be changed in any way. As such, we needed to map out all potential drop out points and how these would be handled from a content and IXD perspective. 
-              Our goal was to ensure citizen continued to have a seamless experience even though they were potentially being passed between 5 different services.</p>
-            
-           <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
-            <!-- EDIT: swap alt tag and inlcude caption if required --> 
-            <div class="cs-inline-wrap">
-              <img class="cs-inline-img"
-                   src="../../work/cyi/IXD.png"
-                   alt="Swimlanes"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"></p>
-            </div><!-- /cs-inline-wrap --> 
+            <p class="cs-section-heading">Convergent thinking</p>
+            <p class="cs-body-text">Reintroducing the pentagon was the eureka moment for me, as I could now discuss M1A (red) as a pattern rather than a score.
+              But to see the true value of this framework, I needed to treat it like a radar diagram and overlay channel specific scenarios (blue).</p>
+            <p class="cs-body-text">In the theoretical example shown below, a citizen is using their passport as a singular piece of evidence in a face-to-face scenario. 
+              The relative strength, validity, verification, activity over time and counter fraud checks all score highly (blue), with many exceeding the M1A Profile 
+              thresholds (red).</p>
+            <p class="cs-body-text">However, this is mainly due to the number of ways that evidence can be checked when face-to-face.</p>
+              <ul class="cs-body-list">
+              <li>Photo</li>
+              <li>Watermarks</li>
+              <li>Hologram patches</li>
+              <li>Fluorescent pages</li>
+              <li>Biometric chip</li>
+              <li>Laser perforated numbers</li>
+            </ul>
+              <p class="cs-body-text">It is also worth noting that these checks are carried out by a trained official, who has access to all the relevant capabilities 
+                needed to perform them e.g. a biometric chip reader etc.</p>
           </div>
 
           <!-- Section 08 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">08</p>
-            <p class="cs-section-heading">User Research - Test & Learn</p>
-            <p class="cs-body-text">A series of User Research sessions were arranged with both citizens and case workers at Doncaster Job Centre, 
-              together with 3 further Lab Based sessions carried out at the Simple Usability facitlity in Leeds.</p>
-            <p class="cs-body-text">During these sessions our aim was to:</p>
-
-             <!-- EDIT: urls of bullets -->
-            <ul class="cs-body-list">
-              <li>Build on our existing user research findings</li>
-              <li>Test in the real world with real users (our first opportunity)</li>
-              <li>Test that users can do what they need to do (technically) </li>
-              <li>Learn how we can improve the user experience</li>
-              <li>Test that the back-end connections work</li>
-              <li>Test our support model approach if the service were to break</li>
-            </ul>
+            <p class="cs-section-heading">The flex between the channels</p>
+            <p class="cs-body-text">The image below compares using that same piece of evidence (passport), as part of a telephony 
+              challenge instead of face-to-face. Note the 5 GPG elements have now ‘flexed’ to form a new pattern.</p>
+            <p class="cs-body-text">Despite the pattern constricting, most of the elements (blue) are still within the limits (red) M1A sets out for verification, 
+              validity, activity and counter fraud. However, it now falls short in the ‘Strength’ category moving from a 4 to a 2.</p>
 
             <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg --> 
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/simple_usability.png"
+                   src="../../work/gpg/side_by_side.png"
                    alt="Comparison of two profiles"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
+            
+            <p class="cs-body-text">But the evidence itself has not become ‘weaker’, after all it is still a valid UK passport. 
+              It's the ways in which that document can be checked via this particular channel that has reduced its score.</p>
+            <p class="cs-body-text">The person calling may well be holding that passport in their hands (something you have) but there is no guarantee they are 
+              the person the passport was issued to. A telephony agent will not be able to check their photo or other visual cues either. So  for these reasons, 
+              they might need to augment their challenge with additional knowledge-based verification questions (something you know).</p>
           </div>
 
           <!-- Section 09 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">09</p>
-            <p class="cs-section-heading">Collaboration</p>
-            <p class="cs-body-text">CYI often broke new ground, pioneering new working relationships as part of its digital transformation journey, 
-              a selection of these are highlighted below:</p> 
-
-             <!-- EDIT: urls of bullets -->
-            <ul class="cs-body-list">
-              <li>First provision of HMRC IV (Identity Verification) to non-HMRC users</li>
-              <li>First bespoke ‘Help’ content delivered for users within HMRC IV</li>
-              <li>Integration with DWP Matching (Findr) Service</li>
-              <li>Co-design of Universal Credit ‘To Do’ screens, including regular intelligent challenges</li>
-            </ul>
+            <p class="cs-section-heading">What was the output?</p>
+            <p class="cs-body-text">Of the 32 profiles available, the image below shows only a tiny cross section. Since each profile 
+              needs to be created through 3 different lenses (Face to Face, Telephony and Digital), it would mean showing 96 radar diagrams in total</p> 
 
            <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg --> 
             <!-- EDIT: swap alt tag and inlcude caption if required --> 
             <div class="cs-inline-wrap">
               <img class="cs-inline-img"
-                   src="../../work/cyi/xgov_map.png"
-                   alt="Collaboration Map"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
+                   src="../../work/gpg/multiple_profiles.png"
+                   alt="multiple profiles"
+                   />
+              <div class="cs-inline-placeholder" aria-hidden="true"></div>
               <p class="cs-caption"></p>
             </div><!-- /cs-inline-wrap -->
+            
+            <p class="cs-body-text">Hopefully this cross-section is enough of a benchmark for how the full group would appear. Incidentally, 
+              the 4 profiles shown here are M1A, M1B, M1C & M1D.</p>
           </div>
 
           <!-- Section 10 -->
           <!-- EDIT: Numbering and heading --> 
           <div class="cs-section">
             <p class="cs-section-num">10</p>
-            <p class="cs-section-heading">Reception & Impact</p>
-            <p class="cs-body-text">Five years later (2025 at the time of writing), CYI remains as the identity verification solution for citizens claiming Universal Credit.</p>
-
-             <!-- EDIT: urls of bullets -->
-            <ul class="cs-body-list">
-              <li>8 million, the approx. number of citizens who have used CYI since it launched in 2020.</li>
-              <li>40,000, the number of new journeys estimated each week.</li>
-              <li>48%, the pass rate for those who attempt the CYI journey, compared to 38% for its predecessor GOV.UK Verify.</li>
-            </ul>
-
+            <p class="cs-section-heading">What was the impact?</p>
+            <p class="cs-body-text">The introduction of this 'flexible framework' allowed stakeholders to consider things in a far more visual way, they were able to 
+              worry less about scores and look more closely at best fit.</p>
+            <p class="cs-body-text">If a certain pattern looked out of place, it prompted discussions that may have been overlooked if faced with a wall of numbers instead.</p>
+              <p class="cs-body-text">The final output earned a nomination for reward and recognition, which was approved by the Identity & Trust Deputy Director 
+                (see below).</p>
               <div class="cs-quote">
-              <p>&#8220;I could not be any prouder of the team. A massive challenge but so important, everyone 
-                knew that and reacted to it.&#8221; - Cheryl Stevens MBE (Deputy Director for ID&T)</p>
+                <p>&#8220;Steve joined the Policy Team on an EOI and hit the ground running. Making an immediate positive impact for stakeholders and 
+                  colleagues. Notably, he utilised his design skills to prepare some new GPG educational material for use with colleagues in wider directorates. 
+                  His fresh ideas and approach have been both welcomed and highlighted by the Policy Team. He is a positive role model and his willingness to go the extra 
+                  mile is commendable&#8221;</p>
+                <cite>ID&amp;T Deputy Director</cite>
               </div>
 
-            <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg --> 
-            <!-- EDIT: swap alt tag and inlcude caption if required --> 
-            <div class="cs-inline-wrap">
-              <img class="cs-inline-img"
-                   src="../../work/cyi/cyi_screens.png"
-                   alt="Collaboration Map"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"></p>
-            </div><!-- /cs-inline-wrap -->
+              <!--
+              <div class="cs-video-wrap" data-video-id="UOOuL2CEcRU">
+                <img class="cs-video-thumb" src="" alt="Video thumbnail" />
+                <div class="cs-video-play">
+                  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.5)"/>
+                    <polygon points="24,18 44,30 24,42" fill="white"/>
+                  </svg>
+                </div>
+                <p class="cs-video-caption"></p>
+              </div>
 
-            <div class="cs-quote">
-            <p>&#8220;CYI is a fantastic achievement, what a critical delivery in such difficult circumstances.&#8221; - Fay Cooper (Head of Product & UCD)</p>
-            </div>
-
-            <p class="cs-body-text">This project had many impacts, both on its intended audience and on me persoinally at a crazy time in most people lives. 
-              However, the biggest long-term impact is probably best summed up in the image below:</p>
-            
-           <!-- EDIT: swap src for real image. Path pattern: ../assets/images/cs-01-[name].jpg -->
-            <!-- EDIT: swap alt tag and inlcude caption if required --> 
-            <div class="cs-inline-wrap">
-              <img class="cs-inline-img"
-                   src="../../work/cyi/verify_closure.png"
-                   alt="Closure of Verify"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-              <div class="cs-inline-placeholder" aria-hidden="true" style="display:none"></div>
-              <p class="cs-caption"></p>
-            </div><!-- /cs-inline-wrap --> 
+              <div class="cs-video-wrap" data-video-id="LSoU-ggA_Qo">
+                <img class="cs-video-thumb" src="" alt="Video thumbnail" />
+                <div class="cs-video-play">
+                  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.5)"/>
+                    <polygon points="24,18 44,30 24,42" fill="white"/>
+                  </svg>
+                </div>
+                <p class="cs-video-caption"></p>
+              </div>
+              -->
           </div>
 
           <!-- ADD FURTHER SECTIONS following this pattern:
@@ -879,7 +944,19 @@
       </div><!-- /cs-zone-split -->
 
     </div><!-- /container -->
-  </main>
+  <!-- Image enlarge dialog -->
+  <dialog class="cs-img-dialog" id="img-dialog" aria-label="Enlarged image">
+    <button class="cs-img-dialog-close" id="img-dialog-close" aria-label="Close enlarged image">Close</button>
+    <img src="" alt="" id="img-dialog-img" />
+  </dialog>
+
+  <!-- Video dialog -->
+  <dialog class="cs-video-dialog" id="video-dialog" aria-label="Video player">
+    <button class="cs-video-dialog-close" id="video-dialog-close" aria-label="Close video">Close</button>
+    <iframe id="video-dialog-iframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </dialog>
+
+</main>
 
 
   <script>
@@ -1068,18 +1145,6 @@
       });
     });
   </script>
-
-  <dialog class="cs-img-dialog" id="img-dialog" aria-label="Enlarged image">
-    <button class="cs-img-dialog-close" id="img-dialog-close" aria-label="Close enlarged image">Close</button>
-    <img src="" alt="" id="img-dialog-img" />
-  </dialog>
-
-  <!-- Video dialog -->
-  <dialog class="cs-video-dialog" id="video-dialog" aria-label="Video player">
-    <button class="cs-video-dialog-close" id="video-dialog-close" aria-label="Close video">Close</button>
-    <iframe id="video-dialog-iframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
-  </dialog>
-
 
   <div id="site-footer"></div>
   <script>
