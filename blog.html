@@ -74,10 +74,10 @@
     /* ── BLOG LIST ── */
     .blog-list { display:flex; flex-direction:column; }
 
-    /* Post row: fixed image column, text right */
+    /* Post row: fixed image column matching work/play thumbnail scale */
     .post-row {
       display:grid;
-      grid-template-columns:280px 1fr;
+      grid-template-columns:320px 1fr;
       gap:0;
       border-bottom:1px solid var(--rule);
       color:inherit;
@@ -87,32 +87,25 @@
     .post-row:first-child { border-top:1px solid var(--rule); }
     .post-row.hidden { display:none; }
 
-    /* Image column — preserves landscape aspect ratio, no aggressive crop */
+    /* Image column — matches work.html / play.html thumbnail convention exactly */
     .post-thumb-wrap {
       padding:clamp(1.25rem,2.5vw,1.75rem) 0 clamp(1.25rem,2.5vw,1.75rem) 0;
     }
     .post-thumb-inner {
       width:100%;
-      height:100%;
-      display:flex;
-      align-items:center;
-      background:var(--bg);
-      min-height:120px;
-    }
-    .post-thumb {
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      object-position:center;
-      display:block;
-      opacity:0.85;
-      transition:opacity 0.2s;
-    }
-    /* Placeholder state — no image */
-    .post-thumb-inner:not(:has(img)) {
+      aspect-ratio:16/9;
+      overflow:hidden;
       background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%);
     }
-    .post-row:hover .post-thumb { opacity:1; }
+    .post-thumb {
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0.85;
+      transition:opacity 0.3s, transform 0.4s ease;
+    }
+    .post-row:hover .post-thumb { opacity:1; transform:scale(1.02); }
 
     /* Text column */
     .post-info {
@@ -136,10 +129,9 @@
     @media (max-width:640px) {
       .post-row { grid-template-columns:1fr; }
       .post-thumb-wrap { padding:clamp(1.25rem,2.5vw,1.75rem) clamp(1.25rem,3vw,2.5rem) 0; }
-      .post-thumb-inner { min-height:0; }
     }
     @media (max-width:900px) and (min-width:641px) {
-      .post-row { grid-template-columns:200px 1fr; }
+      .post-row { grid-template-columns:220px 1fr; }
     }
 
     /* ── NO RESULTS ── */
