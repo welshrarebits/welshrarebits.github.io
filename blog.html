@@ -172,6 +172,21 @@
     .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--ink); padding:1.25rem 0; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-links { display:flex; align-items:center; gap:1.5rem; }
+    .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:rgba(255,255,255,1); }
+    .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
+    .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
+    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:rgba(255,255,255,1); }
+    @media (max-width:600px) {
+      .footer-links { flex-wrap:nowrap; gap:1.25rem; justify-content:center; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
+    }
   </style>
 </head>
 <body>
