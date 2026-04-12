@@ -138,11 +138,11 @@
     }
     .post-row:hover .post-thumb { opacity:1; transform:scale(1.02); }
 
-    /* Tablet: collapse meta into content col, keep image right */
+    /* Tablet: collapse meta column only, image stays at full width */
     @media (max-width:900px) and (min-width:641px) {
-      .post-row { grid-template-columns:1fr 220px; align-items:start; }
+      .post-row { grid-template-columns:1fr 320px; }
       .post-meta-col { display:none; }
-      .post-content-col { justify-content:flex-start; padding-left:0; }
+      .post-content-col { padding-left:0; }
     }
 
     /* Mobile: single column, editorial order — title, image, meta, excerpt + read more */
