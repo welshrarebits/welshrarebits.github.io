@@ -546,12 +546,14 @@
       backTopBtn.classList.toggle('hidden', !scrolledPastHeader);
     }
 
-    loadMoreBtn.addEventListener('click', function() {
+    loadMoreBtn.addEventListener('click', function(e) {
+      e.preventDefault();
       visibleCount += BATCH;
       render();
     });
 
-    backTopBtn.addEventListener('click', function() {
+    backTopBtn.addEventListener('click', function(e) {
+      e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
