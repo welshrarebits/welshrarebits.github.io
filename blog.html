@@ -76,9 +76,13 @@
 
     /* ── BLOG GRID — 3-column card style matching work/play ── */
     .blog-list { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); }
-    .post-row { display:grid; grid-template-rows:subgrid; grid-row:span 4; padding-bottom:clamp(1.5rem,3vw,2.5rem); color:inherit; text-decoration:none; }
+    .post-row { display:grid; grid-template-rows:subgrid; grid-row:span 5; padding-bottom:clamp(1.5rem,3vw,2.5rem); color:inherit; text-decoration:none; }
     .post-row.hidden { display:none; }
-    .post-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); align-self:start; padding-bottom:0.625rem; }
+    .post-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); align-self:start; }
+    .post-meta { display:flex; flex-direction:column; gap:0.25rem; align-self:start; padding-bottom:0.625rem; }
+    .post-date { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); }
+    .post-category { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--accent); }
+    .post-category::before { content:'Category: '; color:var(--muted); text-transform:uppercase; letter-spacing:var(--ls-label); }
     .post-thumb-wrap { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); position:relative; }
     .post-thumb { width:100%; height:100%; object-fit:cover; display:block; transition:opacity 0.3s,transform 0.4s ease; opacity:0.85; }
     .post-row:hover .post-thumb { opacity:1; transform:scale(1.02); }
@@ -219,18 +223,25 @@
             POST CARD AUTHORING PATTERN:
             <a class="post-row" href="blog/[slug]/" data-category="[thoughts|experiments|recognition]" role="listitem">
               <h2 class="post-title">[Post Title]</h2>
+              <div class="post-meta">
+                <span class="post-date">[D Month YYYY]</span>
+                <span class="post-category">[Category Label]</span>
+              </div>
               <div class="post-thumb-wrap">
                 <img class="post-thumb" src="[path]" alt="[alt text]" loading="lazy" />
-                (omit img if no image — placeholder gradient shows automatically)
+                (omit img if no image)
               </div>
               <p class="post-excerpt">[Excerpt — 2 to 3 sentences]</p>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </a>
           -->
 
-          <!-- POST 01 -->
           <a class="post-row" href="blog/unspectacular-things/" data-category="thoughts" role="listitem">
             <h2 class="post-title">Unspectacular Things</h2>
+            <div class="post-meta">
+              <span class="post-date">9 April 2024</span>
+              <span class="post-category">Thoughts</span>
+            </div>
             <div class="post-thumb-wrap">
               <img class="post-thumb" src="../../blog/jet2/cinzano.png" alt="Leonard Rossiter and Joan Collins Cinzano Advert" loading="lazy" />
             </div>
@@ -238,9 +249,12 @@
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
           </a>
 
-          <!-- POST 02 -->
           <a class="post-row" href="blog/innovation-or-irritation/" data-category="thoughts" role="listitem">
             <h2 class="post-title">Innovation or Irritation?</h2>
+            <div class="post-meta">
+              <span class="post-date">9 September 2023</span>
+              <span class="post-category">Thoughts</span>
+            </div>
             <div class="post-thumb-wrap">
               <img class="post-thumb" src="../../blog/cola/coke.png" alt="Coca-Cola bottle with attached cap" loading="lazy" />
             </div>
@@ -248,9 +262,12 @@
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
           </a>
 
-          <!-- POST 03 -->
           <a class="post-row" href="blog/sheffield-digital-awards/" data-category="recognition" role="listitem">
             <h2 class="post-title">Sheffield Digital Awards</h2>
+            <div class="post-meta">
+              <span class="post-date">3 May 2019</span>
+              <span class="post-category">Recognition</span>
+            </div>
             <div class="post-thumb-wrap">
               <img class="post-thumb" src="../../blog/sda19/sheff_digital_awards.png" alt="Sheffield Digital Awards" loading="lazy" />
             </div>
@@ -258,9 +275,12 @@
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
           </a>
 
-          <!-- POST 04 -->
           <a class="post-row" href="blog/national-football-museum-partnership/" data-category="recognition" role="listitem">
             <h2 class="post-title">NFM Partnership</h2>
+            <div class="post-meta">
+              <span class="post-date">25 April 2016</span>
+              <span class="post-category">Recognition</span>
+            </div>
             <div class="post-thumb-wrap">
               <img class="post-thumb" src="blog/national-football-museum-partnership/thumb.jpg" alt="National Football Museum" loading="lazy" />
             </div>
@@ -268,19 +288,27 @@
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
           </a>
 
-          <!-- POST 05 -->
           <a class="post-row" href="blog/its-nice-that-featured-artist/" data-category="recognition" role="listitem">
-            <h2 class="post-title">It's Nice That — Featured Artist</h2>
-            <div class="post-thumb-wrap">
-              <img class="post-thumb" src="blog/its-nice-that-featured-artist/thumb.jpg" alt="It's Nice That feature" loading="lazy" />
+            <h2 class="post-title">It’s Nice That — Featured Artist</h2>
+            <div class="post-meta">
+              <span class="post-date">23 October 2012</span>
+              <span class="post-category">Recognition</span>
             </div>
-            <p class="post-excerpt">Being featured by It's Nice That was a moment. Here's the longer story of how it happened and what followed.</p>
+            <div class="post-thumb-wrap">
+              <img class="post-thumb" src="blog/its-nice-that-featured-artist/thumb.jpg" alt="It’s Nice That feature" loading="lazy" />
+            </div>
+            <p class="post-excerpt">Being featured by It’s Nice That was a moment. Here’s the longer story of how it happened and what followed.</p>
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
           </a>
 
-          <!-- POSTS 06–08: replace placeholders with real content -->
+          <!-- PLACEHOLDERS: replace with real content -->
+
           <a class="post-row" href="#" data-category="recognition" role="listitem">
             <h2 class="post-title">Post Title Placeholder</h2>
+            <div class="post-meta">
+              <span class="post-date">— —</span>
+              <span class="post-category">Recognition</span>
+            </div>
             <div class="post-thumb-wrap"></div>
             <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
@@ -288,6 +316,10 @@
 
           <a class="post-row" href="#" data-category="thoughts" role="listitem">
             <h2 class="post-title">Post Title Placeholder</h2>
+            <div class="post-meta">
+              <span class="post-date">— —</span>
+              <span class="post-category">Thoughts</span>
+            </div>
             <div class="post-thumb-wrap"></div>
             <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
@@ -295,6 +327,10 @@
 
           <a class="post-row" href="#" data-category="experiments" role="listitem">
             <h2 class="post-title">Post Title Placeholder</h2>
+            <div class="post-meta">
+              <span class="post-date">— —</span>
+              <span class="post-category">Experiments</span>
+            </div>
             <div class="post-thumb-wrap"></div>
             <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
             <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
