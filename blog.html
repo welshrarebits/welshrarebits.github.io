@@ -77,7 +77,7 @@
     /* Post row: three columns — meta | content | image */
     .post-row {
       display:grid;
-      grid-template-columns:140px 1fr 280px;
+      grid-template-columns:140px 1fr 320px;
       gap:0;
       border-bottom:1px solid var(--rule);
       color:inherit;
@@ -102,11 +102,9 @@
       flex-direction:column;
       gap:0.5rem;
       padding:clamp(1.25rem,2.5vw,1.75rem) clamp(1.25rem,3vw,2rem) clamp(1.25rem,2.5vw,1.75rem);
-      border-left:1px solid var(--rule);
-      border-right:1px solid var(--rule);
     }
-    .post-title { font-family:var(--title); font-size:clamp(1.35rem,2.5vw,1.85rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); }
-    .post-excerpt { font-family:var(--sans); font-size:1rem; color:var(--muted); line-height:1.7; }
+    .post-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); }
+    .post-excerpt { font-family:var(--sans); font-size:1rem; color:var(--strong); font-weight:400; line-height:1.75; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
     .post-read-more { display:inline-flex; align-items:center; gap:0.5rem; align-self:flex-start; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; margin-top:0.25rem; }
     .post-read-more svg { transition:transform 0.2s; }
     .post-row:hover .post-read-more { color:var(--accent); border-color:var(--accent); }
@@ -136,14 +134,14 @@
     @media (max-width:900px) and (min-width:641px) {
       .post-row { grid-template-columns:1fr 220px; }
       .post-meta-col { display:none; }
-      .post-content-col { border-left:none; padding-left:0; }
+      .post-content-col { padding-left:0; }
     }
 
     /* Mobile: single column, editorial order — title, image, meta, excerpt */
     @media (max-width:640px) {
       .post-row { grid-template-columns:1fr; }
       .post-meta-col { order:3; padding:0.35rem 0 0; border-top:none; }
-      .post-content-col { order:1; border:none; padding:clamp(1.25rem,2.5vw,1.75rem) 0 0.5rem; }
+      .post-content-col { order:1; padding:clamp(1.25rem,2.5vw,1.75rem) 0 0.5rem; }
       .post-thumb-wrap { order:2; padding:0.5rem 0; }
       .post-content-col .post-excerpt,
       .post-content-col .post-read-more { display:none; }
