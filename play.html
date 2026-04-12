@@ -67,10 +67,10 @@
 
     /* ── PLAY GRID — 3-column index card style ── */
     .play-list { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); padding-top:clamp(1.5rem,3vw,2.5rem); }
-    .play-card { display:grid; grid-template-rows:subgrid; grid-row:span 4; padding-bottom:clamp(1.5rem,3vw,2.5rem); }
-    .play-card-link { display:grid; grid-template-rows:subgrid; grid-row:span 4; color:inherit; text-decoration:none; }
-    .play-card-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); align-self:start; padding-bottom:0.625rem; }
-    /* .play-card-subtitle commented out — removed from layout for now */
+    .play-card { display:grid; grid-template-rows:subgrid; grid-row:span 5; padding-bottom:clamp(1.5rem,3vw,2.5rem); }
+    .play-card-link { display:grid; grid-template-rows:subgrid; grid-row:span 5; color:inherit; text-decoration:none; }
+    .play-card-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); align-self:start; }
+    .play-card-subtitle { font-family:var(--sans); font-size:1rem; font-weight:400; font-style:italic; color:var(--muted); line-height:1.55; align-self:start; margin-top:calc(-1 * clamp(0.75rem,1.5vw,1rem)); padding-bottom:0.625rem; }
     .play-thumb { aspect-ratio:16/9; overflow:hidden; background:var(--rule); position:relative; }
     .play-thumb-img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity 0.3s,transform 0.4s ease; opacity:0.85; }
     .play-card-link:hover .play-thumb-img { opacity:1; transform:scale(1.02); }
@@ -194,7 +194,7 @@
           <li class="play-card">
             <a href="../../play/worldcup/worldcup.html" class="play-card-link reveal" aria-label="Brazil 2014 - FIFA World Cup. View project.">
               <h2 class="play-card-title">Brazil 2014 - FIFA World Cup</h2>
-              <!-- <p class="play-card-subtitle">Pretty much the closest I'll ever get to playing for England</p> -->
+              <p class="play-card-subtitle">Pretty much the closest I'll ever get to playing for England</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/worldcup.png" alt="Brazil World Cup 2014">
               </div>
@@ -207,7 +207,7 @@
           <li class="play-card">
             <a href="../../play/adidas/adidas.html" class="play-card-link reveal" aria-label="Adidas Finale 13 - Match Ball. View project.">
               <h2 class="play-card-title">Adidas Finale 13 - Match Ball</h2>
-              <!-- <p class="play-card-subtitle">Creating a bespoke set of prints for an iconic global brand</p> -->
+              <p class="play-card-subtitle">Creating a bespoke set of prints for an iconic global brand</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/ucl_adidas.png" alt="Adidas Finale 13">
               </div>
@@ -220,7 +220,7 @@
           <li class="play-card">
             <a href="../../play/steph/steph.html" class="play-card-link reveal" aria-label="Steph - England's World Cup Captain. View project.">
               <h2 class="play-card-title">Steph - England's World Cup Captain</h2>
-              <!-- <p class="play-card-subtitle">The opening sequence visuals for a BBC documentary</p> -->
+              <p class="play-card-subtitle">The opening sequence visuals for a BBC documentary</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/steph.png" alt="Steph Houghton">
               </div>
@@ -233,7 +233,7 @@
           <li class="play-card">
             <a href="../../play/kicking&screening/kicking&screening.html" class="play-card-link reveal" aria-label="Kicking and Screening - New York. View project.">
               <h2 class="play-card-title">Kicking and Screening - New York</h2>
-              <!-- <p class="play-card-subtitle">Producing a limited edition run for a Soccer Film Festival</p> -->
+              <p class="play-card-subtitle">Producing a limited edition run for a Soccer Film Festival</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/kicking&screening2.png" alt="Kicking & Screening Film Festival">
               </div>
@@ -246,7 +246,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="Fantasista Exhibition - London. View project.">
               <h2 class="play-card-title">Fantasista Exhibition - London</h2>
-              <!-- <p class="play-card-subtitle">Seeing my artwork hung alongside the legendary Peter Blake</p> -->
+              <p class="play-card-subtitle">Seeing my artwork hung alongside the legendary Peter Blake</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/fantasista.png" alt="Fantasista Exhibition">
               </div>
@@ -259,7 +259,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="Killa Villa - Another Dimension / Inter-Galacticos. View project.">
               <h2 class="play-card-title">Killa Villa - Another Dimension / Inter-Galacticos</h2>
-              <!-- <p class="play-card-subtitle">Too sweet to be sour, too nice to be mean</p> -->
+              <p class="play-card-subtitle">Too sweet to be sour, too nice to be mean</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/killavilla1.png" alt="Killa Villa">
               </div>
@@ -272,7 +272,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="XI - North American Soccer Quarterly. View project.">
               <h2 class="play-card-title">XI - North American Soccer Quarterly</h2>
-              <!-- <p class="play-card-subtitle">Celtic's Black Arrow: A Portrait of Father and Son</p> -->
+              <p class="play-card-subtitle">Celtic's Black Arrow: A Portrait of Father and Son</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/xi.png" alt="XI">
               </div>
@@ -285,7 +285,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="Champions Draw - BT Sport. View project.">
               <h2 class="play-card-title">Champions Draw - BT Sport</h2>
-              <!-- <p class="play-card-subtitle">Going up against the best in the business</p> -->
+              <p class="play-card-subtitle">Going up against the best in the business</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/btsport.png" alt="BT Sport">
               </div>
@@ -298,7 +298,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="Portrait of Icon - SBRF. View project.">
               <h2 class="play-card-title">Portrait of Icon - SBRF</h2>
-              <!-- <p class="play-card-subtitle">A first print run that sold out in just 15 hours</p> -->
+              <p class="play-card-subtitle">A first print run that sold out in just 15 hours</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/portrait_of_an_icon.png" alt="Portrait of an Icon">
               </div>
@@ -311,7 +311,7 @@
           <li class="play-card">
             <a href="#" class="play-card-link reveal" aria-label="Soccerbible - Mavericks and Disruptors. View project.">
               <h2 class="play-card-title">Soccerbible - Mavericks &amp; Disruptors</h2>
-              <!-- <p class="play-card-subtitle">Illustrating one of football's most callous acts of violence</p> -->
+              <p class="play-card-subtitle">Illustrating one of football's most callous acts of violence</p>
               <div class="play-thumb">
                 <img class="play-thumb-img" src="../../assets/thumbnails/play/soccer_bible.png" alt="Soccer Bible">
               </div>
