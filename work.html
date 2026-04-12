@@ -82,7 +82,7 @@
     }
     .work-list > li:not(:last-child) { border-bottom:1px solid var(--rule); }
     /* Desktop: last item in an even-numbered list sits in a full row — restore its rule */
-    @media (min-width:901px) {
+    @media (min-width:1025px) {
       .work-list > li:last-child:nth-child(even) { border-bottom:1px solid var(--rule); }
     }
 
@@ -214,7 +214,7 @@
     .reveal { opacity:0; transform:translateY(16px); transition:opacity 0.55s ease, transform 0.55s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
-    @media (max-width:900px) {
+    @media (max-width:1024px) {
       /* Card grid collapses to single column */
       .work-list { grid-template-columns:1fr; }
       .work-entry { grid-template-columns:1fr; grid-template-rows:auto auto auto; gap:0.5rem 0; }
