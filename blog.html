@@ -62,20 +62,24 @@
 
     /* ── PAGE ── */
     .page-section { padding:3rem 0; }
-    .section-header { display:flex; align-items:baseline; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
+    .section-header { display:flex; align-items:center; justify-content:space-between; padding-bottom:1rem; border-bottom:1px solid var(--rule); margin-bottom:0; }
     .section-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); }
 
-    /* ── FILTER BAR ── */
-    .filter-bar { display:flex; flex-wrap:wrap; gap:0.5rem; padding-top:clamp(1.5rem,3vw,2.5rem); padding-bottom:0; }
-    .filter-btn { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:transparent; border:1px solid var(--rule); color:var(--muted); padding:0.35rem 0.85rem; cursor:pointer; line-height:1.4; transition:border-color 0.2s, color 0.2s; -webkit-appearance:none; appearance:none; }
-    .filter-btn:hover { border-color:var(--ink); color:var(--ink); }
-    .filter-btn.active { border-color:var(--accent); color:var(--accent); background:transparent; }
-
-    /* ── BLOG LIST ── */
-    .blog-list { display:flex; flex-direction:column; }
+    /* ── CUSTOM FILTER DROPDOWN ── */
+    .filter-dropdown { position:relative; }
+    .filter-trigger { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); background:none; border:none; padding:0; cursor:pointer; transition:color 0.2s; -webkit-appearance:none; appearance:none; }
+    .filter-trigger:hover,
+    .filter-trigger[aria-expanded="true"] { color:var(--ink); }
+    .filter-trigger-chevron { width:10px; height:6px; transition:transform 0.2s; flex-shrink:0; }
+    .filter-trigger[aria-expanded="true"] .filter-trigger-chevron { transform:rotate(180deg); }
+    .filter-listbox { display:none; position:absolute; right:0; top:calc(100% + 0.5rem); min-width:160px; background:var(--bg); border:1px solid var(--rule); z-index:50; list-style:none; padding:0.25rem 0; }
+    .filter-listbox.open { display:block; }
+    .filter-option { display:block; width:100%; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); background:none; border:none; padding:0.5rem 1rem; cursor:pointer; text-align:left; transition:color 0.15s, background 0.15s; white-space:nowrap; }
+    .filter-option:hover { color:var(--ink); background:rgba(0,0,0,0.03); }
+    .filter-option[aria-selected="true"] { color:var(--accent); }
 
     /* ── BLOG GRID — 3-column card style matching work/play ── */
-    .blog-list { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); }
+    .blog-list { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:auto; gap:clamp(1rem,2vw,1.5rem); padding-top:clamp(1.5rem,3vw,2.5rem); }
     .post-row { display:grid; grid-template-rows:subgrid; grid-row:span 5; padding-bottom:clamp(1.5rem,3vw,2.5rem); color:inherit; text-decoration:none; }
     .post-row.hidden { display:none; }
     .post-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); align-self:start; }
@@ -99,7 +103,6 @@
     /* Mobile: single column */
     @media (max-width:640px) {
       .blog-list { grid-template-columns:1fr; }
-      .filter-bar { border-bottom:1px solid var(--rule); padding-bottom:clamp(1.25rem,2.5vw,2rem); }
     }
 
     /* ── NO RESULTS ── */
@@ -203,14 +206,28 @@
 
         <div class="section-header">
           <span class="section-title" id="blog-heading">Blog</span>
-        </div>
-
-        <!-- Filter bar -->
-        <div class="filter-bar" role="group" aria-label="Filter posts by category">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="thoughts">Thoughts</button>
-          <button class="filter-btn" data-filter="experiments">Experiments</button>
-          <button class="filter-btn" data-filter="recognition">Recognition</button>
+          <div class="filter-dropdown" id="filter-dropdown">
+            <button class="filter-trigger"
+                    id="filter-trigger"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-controls="filter-listbox">
+              <span class="filter-trigger-label">Filter by category</span>
+              <svg class="filter-trigger-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <ul class="filter-listbox"
+                id="filter-listbox"
+                role="listbox"
+                aria-label="Filter by category"
+                tabindex="-1">
+              <li role="option" aria-selected="true"  data-filter="all"         class="filter-option">All</li>
+              <li role="option" aria-selected="false" data-filter="thoughts"    class="filter-option">Thoughts</li>
+              <li role="option" aria-selected="false" data-filter="experiments" class="filter-option">Experiments</li>
+              <li role="option" aria-selected="false" data-filter="recognition" class="filter-option">Recognition</li>
+            </ul>
+          </div>
         </div>
 
         <!--
@@ -390,17 +407,106 @@
       });
     });
 
+    /* ── CUSTOM FILTER DROPDOWN ── */
+    var filterTrigger  = document.getElementById('filter-trigger');
+    var filterListbox  = document.getElementById('filter-listbox');
+    var filterOptions  = Array.from(filterListbox.querySelectorAll('.filter-option'));
+    var triggerLabel   = filterTrigger.querySelector('.filter-trigger-label');
+
+    function openDropdown() {
+      filterListbox.classList.add('open');
+      filterTrigger.setAttribute('aria-expanded', 'true');
+      /* Move focus to the currently selected option */
+      var selected = filterListbox.querySelector('[aria-selected="true"]');
+      if (selected) selected.focus();
+    }
+
+    function closeDropdown() {
+      filterListbox.classList.remove('open');
+      filterTrigger.setAttribute('aria-expanded', 'false');
+      filterTrigger.focus();
+    }
+
+    function selectOption(option) {
+      filterOptions.forEach(function(o) {
+        o.setAttribute('aria-selected', 'false');
+        o.removeAttribute('tabindex');
+      });
+      option.setAttribute('aria-selected', 'true');
+      option.setAttribute('tabindex', '0');
+      /* Update trigger label — show category name or placeholder */
+      var val = option.dataset.filter;
+      triggerLabel.textContent = val === 'all' ? 'Filter by category' : option.textContent;
+      activeFilter = val;
+      visibleCount = BATCH;
+      render();
+      closeDropdown();
+    }
+
+    /* Trigger: open/close on click */
+    filterTrigger.addEventListener('click', function() {
+      filterListbox.classList.contains('open') ? closeDropdown() : openDropdown();
+    });
+
+    /* Trigger: keyboard */
+    filterTrigger.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        openDropdown();
+      }
+    });
+
+    /* Options: click */
+    filterOptions.forEach(function(option) {
+      option.addEventListener('click', function() { selectOption(option); });
+
+      /* Options: keyboard navigation */
+      option.addEventListener('keydown', function(e) {
+        var idx = filterOptions.indexOf(option);
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          var next = filterOptions[idx + 1];
+          if (next) next.focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          var prev = filterOptions[idx - 1];
+          if (prev) prev.focus();
+          else filterTrigger.focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectOption(option);
+        } else if (e.key === 'Escape') {
+          closeDropdown();
+        } else if (e.key === 'Tab') {
+          closeDropdown();
+        }
+      });
+    });
+
+    /* Close on outside click */
+    document.addEventListener('click', function(e) {
+      if (!document.getElementById('filter-dropdown').contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    /* Close on Escape from anywhere */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && filterListbox.classList.contains('open')) {
+        closeDropdown();
+      }
+    });
+
     /* ── FILTER + LOAD MORE + BACK TO TOP ── */
     var BATCH             = 10;
     var allRows           = Array.from(document.querySelectorAll('.post-row'));
-    var filterBtns        = document.querySelectorAll('.filter-btn');
     var loadMoreBtn       = document.getElementById('load-more-btn');
     var backTopBtn        = document.getElementById('back-top-btn');
     var noResults         = document.getElementById('no-results');
-    var filterBar         = document.querySelector('.filter-bar');
+    var sectionHeader     = document.querySelector('.section-header');
     var activeFilter      = 'all';
     var visibleCount      = BATCH;
-    var scrolledPastFilter = false;
+    var scrolledPastHeader = false;
 
     function getFiltered() {
       return activeFilter === 'all' ? allRows : allRows.filter(function(r) { return r.dataset.category === activeFilter; });
@@ -414,18 +520,8 @@
 
       var moreAvailable = visibleCount < filtered.length && filtered.length > 0;
       loadMoreBtn.classList.toggle('hidden', !moreAvailable);
-      backTopBtn.classList.toggle('hidden', !scrolledPastFilter);
+      backTopBtn.classList.toggle('hidden', !scrolledPastHeader);
     }
-
-    filterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        filterBtns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
-        visibleCount = BATCH;
-        render();
-      });
-    });
 
     loadMoreBtn.addEventListener('click', function() {
       visibleCount += BATCH;
@@ -436,11 +532,11 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    /* Show back to top once user scrolls past the filter bar */
+    /* Show back to top once user scrolls past the section header */
     window.addEventListener('scroll', function() {
-      var filterBottom = filterBar.getBoundingClientRect().bottom;
-      scrolledPastFilter = filterBottom < 0;
-      backTopBtn.classList.toggle('hidden', !scrolledPastFilter);
+      var headerBottom = sectionHeader.getBoundingClientRect().bottom;
+      scrolledPastHeader = headerBottom < 0;
+      backTopBtn.classList.toggle('hidden', !scrolledPastHeader);
     }, { passive: true });
 
     render();
