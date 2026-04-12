@@ -82,7 +82,7 @@
       border-bottom:1px solid var(--rule);
       color:inherit;
       text-decoration:none;
-      align-items:start;
+      align-items:stretch;
     }
     .post-row.hidden { display:none; }
 
@@ -90,6 +90,8 @@
     .post-meta-col {
       display:flex;
       flex-direction:column;
+      align-items:flex-start;
+      justify-content:flex-start;
       gap:0.4rem;
       padding:clamp(1.25rem,2.5vw,1.75rem) clamp(1rem,2vw,1.5rem) clamp(1.25rem,2.5vw,1.75rem) 0;
     }
@@ -100,12 +102,18 @@
     .post-content-col {
       display:flex;
       flex-direction:column;
-      gap:0.5rem;
+      justify-content:space-between;
       padding:clamp(1.25rem,2.5vw,1.75rem) clamp(1.25rem,3vw,2rem) clamp(1.25rem,2.5vw,1.75rem);
+    }
+    .post-content-top {
+      display:flex;
+      flex-direction:column;
+      gap:0.5rem;
+      flex:1;
     }
     .post-title { font-family:var(--title); font-size:clamp(1.3rem,2.5vw,1.35rem); font-weight:700; letter-spacing:-0.01em; line-height:1.2; color:var(--strong); }
     .post-excerpt { font-family:var(--sans); font-size:1rem; color:var(--strong); font-weight:400; line-height:1.75; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-    .post-read-more { display:inline-flex; align-items:center; gap:0.5rem; align-self:flex-start; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; margin-top:0.25rem; }
+    .post-read-more { display:inline-flex; align-items:center; gap:0.5rem; align-self:flex-start; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:2px; transition:color 0.2s,border-color 0.2s; margin-top:1rem; }
     .post-read-more svg { transition:transform 0.2s; }
     .post-row:hover .post-read-more { color:var(--accent); border-color:var(--accent); }
     .post-row:hover .post-read-more svg { transform:translate(2px,-2px); }
@@ -269,8 +277,10 @@
               <span class="post-category">[Category Label]</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">[Post Title]</h2>
-              <p class="post-excerpt">[Excerpt — 2 to 3 sentences]</p>
+              <div class="post-content-top">
+                <h2 class="post-title">[Post Title]</h2>
+                <p class="post-excerpt">[Excerpt — 2 to 3 sentences]</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -291,9 +301,11 @@
               <span class="post-category">Thoughts</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Unspectacular Things</h2>
-              <p class="post-excerpt">On a recent family holiday, I was so enamoured by the simplicity and efficiency of the cup holders provided by Jet2, that 
+              <div class="post-content-top">
+                <h2 class="post-title">Unspectacular Things</h2>
+                <p class="post-excerpt">On a recent family holiday, I was so enamoured by the simplicity and efficiency of the cup holders provided by Jet2, that 
                 I felt compelled to write a short blog about it</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -310,9 +322,11 @@
               <span class="post-category">Thoughts</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Innovation or Irritation?</h2>
-              <p class="post-excerpt">In Oct last year, Coca-Cola announced its ‘attached cap’ innovation in the UK. Now, I’ll be honest with 
+              <div class="post-content-top">
+                <h2 class="post-title">Innovation or Irritation?</h2>
+                <p class="post-excerpt">In Oct last year, Coca-Cola announced its ‘attached cap’ innovation in the UK. Now, I’ll be honest with 
                 you, this news largely passed me by.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -329,9 +343,11 @@
               <span class="post-category">Recognition</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Sheffield Digital Awards</h2>
-              <p class="post-excerpt">The Sheffield Digital Awards aim to highlight and reward both digital companies and individuals over 10 categories. 
+              <div class="post-content-top">
+                <h2 class="post-title">Sheffield Digital Awards</h2>
+                <p class="post-excerpt">The Sheffield Digital Awards aim to highlight and reward both digital companies and individuals over 10 categories. 
                 The ceremony took place on 2 May at Kollider which is already shaping up to be a new and ambitious digital hub.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -348,8 +364,10 @@
               <span class="post-category">Recognition</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">NFM Partnership</h2>
-              <p class="post-excerpt">My A-Z prints are now available in the National Football Museum shop in Manchester — and there's more to come.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">NFM Partnership</h2>
+                <p class="post-excerpt">My A-Z prints are now available in the National Football Museum shop in Manchester — and there's more to come.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -366,8 +384,10 @@
               <span class="post-category">Recognition</span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">It's Nice That — Featured Artist</h2>
-              <p class="post-excerpt">Being featured by It's Nice That was a moment. Here's the longer story of how it happened and what followed.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">It's Nice That — Featured Artist</h2>
+                <p class="post-excerpt">Being featured by It's Nice That was a moment. Here's the longer story of how it happened and what followed.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap">
@@ -384,8 +404,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -397,8 +419,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -410,8 +434,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -423,8 +449,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -436,8 +464,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -449,8 +479,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
@@ -462,8 +494,10 @@
               <span class="post-category"><!-- category --></span>
             </div>
             <div class="post-content-col">
-              <h2 class="post-title">Post Title Placeholder</h2>
-              <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              <div class="post-content-top">
+                <h2 class="post-title">Post Title Placeholder</h2>
+                <p class="post-excerpt">Excerpt placeholder — replace with a one-line summary of the post, ideally under 160 characters.</p>
+              </div>
               <span class="post-read-more" aria-hidden="true">Read more <svg width="12" height="12" viewBox="2 2 12 12" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4"/></svg></span>
             </div>
             <div class="post-thumb-wrap"><div class="post-thumb-inner"></div></div>
