@@ -140,20 +140,21 @@
 
     /* Tablet: collapse meta into content col, keep image right */
     @media (max-width:900px) and (min-width:641px) {
-      .post-row { grid-template-columns:1fr 220px; }
+      .post-row { grid-template-columns:1fr 220px; align-items:start; }
       .post-meta-col { display:none; }
-      .post-content-col { padding-left:0; }
+      .post-content-col { justify-content:flex-start; padding-left:0; }
     }
 
     /* Mobile: single column, editorial order — title, image, meta, excerpt + read more */
     @media (max-width:640px) {
-      .post-row { grid-template-columns:1fr; }
+      .post-row { grid-template-columns:1fr; align-items:start; }
       .post-content-col { display:contents; }
+      .post-content-top { display:contents; }
       .post-title { order:1; display:block; padding:clamp(1.25rem,2.5vw,1.75rem) 0 0.5rem; font-size:clamp(1.3rem,2.5vw,1.35rem); }
       .post-thumb-wrap { order:2; padding:0.5rem 0; }
       .post-meta-col { order:3; padding:0.35rem 0 0.5rem; }
       .post-excerpt { order:4; display:block; padding-top:0.5rem; }
-      .post-read-more { order:5; display:inline-flex; padding-bottom:clamp(1.25rem,2.5vw,1.75rem); }
+      .post-read-more { order:5; display:inline-flex; margin-top:0.5rem; padding-bottom:clamp(1.25rem,2.5vw,1.75rem); }
       .filter-bar { border-bottom:1px solid var(--rule); padding-bottom:clamp(1.25rem,2.5vw,2rem); }
     }
 
