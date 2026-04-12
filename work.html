@@ -86,10 +86,10 @@
       .work-list > li:last-child:nth-child(even) { border-bottom:1px solid var(--rule); }
     }
 
-    /* Each card: image left | text right */
+    /* Each card: fixed image column | text right */
     .work-entry {
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:220px 1fr;
       grid-template-rows:subgrid;
       grid-row:span 2;
       gap:0 clamp(0.75rem,1.5vw,1.25rem);
@@ -98,8 +98,17 @@
       text-decoration:none;
     }
 
-
-    /* Thumbnail — cols 1–4 */
+    /* Description + read more — stretch to image height, read more anchored bottom */
+    .work-entry-desc {
+      grid-column:2/3;
+      grid-row:2;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:space-between;
+      align-self:stretch;
+      padding-top:0;
+    }
     .work-entry-thumb {
       grid-column:1/2;
       grid-row:2;
@@ -139,16 +148,6 @@
       line-height:1.55;
     }
 
-    /* Description + read more */
-    .work-entry-desc {
-      grid-column:2/3;
-      grid-row:2;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:0.75rem;
-      padding-top:0;
-    }
     .work-entry-desc > p {
       font-family:var(--sans);
       font-size:1rem;
@@ -210,7 +209,6 @@
     .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
     .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
     .footer-credits-link:hover { color:var(--footer-text-hover); }
-    .footer-rule { display:none; width:100%; border:none; border-top:1px solid rgba(255,255,255,0.15); }
 
     /* ── REVEAL ── */
     .reveal { opacity:0; transform:translateY(16px); transition:opacity 0.55s ease, transform 0.55s ease; }
