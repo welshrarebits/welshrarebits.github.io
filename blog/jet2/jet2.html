@@ -184,12 +184,36 @@
     }
     .post-back-btn:hover { color:var(--accent); border-color:var(--accent); }
 
-    /* ── FOOTER ── */
+    /* ── FOOTER & MODALS ── */
+    .contact-modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay-bg); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
+    .contact-modal-overlay.open { display:flex; }
+    .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
+    .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
+    .contact-modal-close:hover { color:var(--ink); }
+    .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
+    .contact-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .contact-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .contact-input, .contact-textarea { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); background:var(--bg); border:none; border-bottom:1px solid var(--rule); padding:0.5rem 0; width:100%; outline:none; transition:border-color 0.2s; border-radius:0; -webkit-appearance:none; }
+    .contact-input:focus, .contact-textarea:focus { border-bottom-color:var(--ink); }
+    .contact-textarea { resize:none; height:120px; }
+    .contact-submit { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--bg); background:var(--ink); border:none; padding:0.875rem 2rem; cursor:pointer; align-self:flex-start; transition:background 0.2s; margin-top:0.5rem; }
+    .contact-submit:hover { background:var(--accent); }
+    .contact-status { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); display:none; padding-top:0.5rem; }
+    .contact-status.visible { display:block; }
+    .credits-list { list-style:none; display:flex; flex-direction:column; gap:0; overflow-y:auto; }
+    .credits-item { display:flex; flex-direction:column; gap:0.25rem; padding:0.875rem 0; border-bottom:1px solid var(--rule); }
+    .credits-context { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .credits-source { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); }
+    .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s,color 0.2s; }
+    .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
     footer { background:var(--ink); padding:1.25rem 0; }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
     .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
     .footer-link:hover { color:#fff; }
+    .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
+    .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
     .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
     .footer-credits-link:hover { color:#fff; }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
@@ -432,6 +456,12 @@
     });
   </script>
 
+  <!-- Image lightbox dialog — not in footer.html, lives here -->
+  <dialog class="ps-img-dialog" id="ps-img-dialog" aria-modal="true" aria-label="Enlarged image">
+    <button class="ps-img-dialog-close" id="ps-img-dialog-close" aria-label="Close">Close ✕</button>
+    <img id="ps-img-dialog-img" src="" alt="" />
+  </dialog>
+
   <div id="site-footer"></div>
   <script>
     fetch('/footer.html')
@@ -442,78 +472,68 @@
         var s = document.createElement('script');
         s.src = '/footer-init.js';
         document.body.appendChild(s);
+      });
+  </script>
 
-        // ── LIGHTBOX — wired after footer fetch so dialog elements exist ──
-        var imgDialog      = document.getElementById('ps-img-dialog');
-        var imgDialogImg   = document.getElementById('ps-img-dialog-img');
-        var imgDialogClose = document.getElementById('ps-img-dialog-close');
+  <!-- Lightbox — wired directly since dialog is in the page, not the footer -->
+  <script>
+    (function() {
+      var imgDialog      = document.getElementById('ps-img-dialog');
+      var imgDialogImg   = document.getElementById('ps-img-dialog-img');
+      var imgDialogClose = document.getElementById('ps-img-dialog-close');
 
-        if (!imgDialog) return; // guard: footer structure may change
-
-        function checkEnlargeable(img) {
-          if (img.naturalWidth  > img.offsetWidth  * 1.2 ||
-              img.naturalHeight > img.offsetHeight * 1.2) {
-            img.setAttribute('data-enlargeable', '');
-          }
+      function checkEnlargeable(img) {
+        if (img.naturalWidth  > img.offsetWidth  * 1.2 ||
+            img.naturalHeight > img.offsetHeight * 1.2) {
+          img.setAttribute('data-enlargeable', '');
+        } else {
+          img.removeAttribute('data-enlargeable');
         }
+      }
 
-        // Run enlargeability check on each gallery image after load
-        document.querySelectorAll('.gallery-img').forEach(function(img) {
-          function onLoad() {
-            checkEnlargeable(img);
-          }
-          if (img.complete && img.naturalWidth > 0) {
-            onLoad();
-          } else {
-            img.addEventListener('load', onLoad, { once:true });
-          }
-        });
+      document.querySelectorAll('.gallery-img').forEach(function(img) {
+        if (img.complete && img.naturalWidth > 0) {
+          checkEnlargeable(img);
+        } else {
+          img.addEventListener('load', function() { checkEnlargeable(img); }, { once:true });
+        }
+      });
 
-        // Re-check on resize — rendered size changes, natural size does not
-        var resizeTimer;
-        window.addEventListener('resize', function() {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function() {
-            document.querySelectorAll('.gallery-img').forEach(function(img) {
-              img.removeAttribute('data-enlargeable');
-              checkEnlargeable(img);
-            });
-          }, 150);
-        });
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          document.querySelectorAll('.gallery-img').forEach(checkEnlargeable);
+        }, 150);
+      });
 
-        // Open dialog on click
-        document.addEventListener('click', function(e) {
-          var img = e.target;
-          if (!img || img.tagName !== 'IMG') return;
-          if (!img.classList.contains('gallery-img')) return;
-          if (!img.hasAttribute('data-enlargeable')) return;
-          e.stopPropagation();
-          imgDialogImg.src = img.src;
-          imgDialogImg.alt = img.alt;
-          imgDialog.showModal();
-        });
+      document.addEventListener('click', function(e) {
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG') return;
+        if (!img.classList.contains('gallery-img')) return;
+        if (!img.hasAttribute('data-enlargeable')) return;
+        e.stopPropagation();
+        imgDialogImg.src = img.src;
+        imgDialogImg.alt = img.alt;
+        imgDialog.showModal();
+      });
 
-        // Close via button
-        imgDialogClose.addEventListener('click', function(e) {
+      imgDialogClose.addEventListener('click', function(e) {
+        e.stopPropagation();
+        imgDialog.close();
+        imgDialogImg.src = '';
+      });
+
+      imgDialog.addEventListener('click', function(e) {
+        if (e.target === imgDialog || e.target === imgDialogImg) {
           e.stopPropagation();
           imgDialog.close();
           imgDialogImg.src = '';
-        });
-
-        // Close via backdrop or image click
-        imgDialog.addEventListener('click', function(e) {
-          if (e.target === imgDialog || e.target === imgDialogImg) {
-            e.stopPropagation();
-            imgDialog.close();
-            imgDialogImg.src = '';
-          }
-        });
-
-        // Clear src on any close (including Escape key)
-        imgDialog.addEventListener('close', function() {
-          imgDialogImg.src = '';
-        });
+        }
       });
+
+      imgDialog.addEventListener('close', function() { imgDialogImg.src = ''; });
+    })();
   </script>
 </body>
 </html>
