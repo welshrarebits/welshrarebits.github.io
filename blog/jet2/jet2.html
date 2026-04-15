@@ -3,451 +3,382 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery Module — Demo</title>
+  <title>Config A — Text-led Post &#8212; Steven Welsh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
   <style>
-    /* ── DESIGN TOKENS (copy of site root) ───────────────────────────── */
     :root {
       --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
       --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
       --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
-      --mono:'DM Mono',monospace;
-      --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
-      --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
       --fs-xs:0.688rem; --fs-sm:0.813rem;
-      --lh-tight:1.45; --ls-label:0.1em; --ls-meta:0.08em;
+      --lh-tight:1.45; --ls-label:0.1em; --ls-title:-0.02em; --ls-meta:0.08em;
       --space-section:clamp(1.5rem,3vw,2.5rem);
       --gap-grid:clamp(1rem,2vw,1.5rem);
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--ink); font-family:var(--sans);
-           font-size:1rem; line-height:1.5; -webkit-font-smoothing:antialiased; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
     .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
-    /* ── DEMO SCAFFOLD (not part of the module) ──────────────────────── */
-    .demo-label {
-      font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label);
-      text-transform:uppercase; color:var(--muted); padding:2.5rem 0 1rem;
-      border-top:1px solid var(--rule); margin-top:3rem;
+    /* ── NAV ── */
+    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
+    .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding-bottom:1rem; }
+    .header-identity { grid-column:1/4; display:flex; flex-direction:row; align-items:flex-start; gap:0.75rem; }
+    .header-logo-placeholder { width:77px; height:77px; background:var(--rule); flex-shrink:0; }
+    .header-identity-text { display:flex; flex-direction:column; gap:0.35rem; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; text-transform:uppercase; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); }
+    .header-nav { grid-column:7/13; display:flex; justify-content:flex-end; }
+    .header-nav-links { display:flex; gap:clamp(1.5rem,3vw,3.5rem); align-items:start; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; position:relative; }
+    @supports (grid-template-columns: subgrid) {
+      .header-nav { display:grid; grid-template-columns:subgrid; align-items:start; }
+      .header-nav-links { display:grid; grid-template-columns:repeat(5,auto); gap:0 clamp(1.5rem,3vw,3.5rem); justify-content:end; grid-column:1/7; align-items:start; }
     }
-    .demo-label:first-child { margin-top:2rem; border-top:none; }
-    .prose-col {
-      max-width:680px; margin:0 auto;
-      font-family:var(--sans); font-size:1.05rem; line-height:1.8;
-      color:var(--strong); padding:1.5rem 0;
-    }
+    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--strong); line-height:1.2; transition:color 0.2s; text-transform:uppercase; letter-spacing:0.05em; }
+    .nav-item-label::after { content:""; position:absolute; inset:0; }
+    .nav-item-label:hover { color:var(--accent); }
+    .nav-item-label.active { color:var(--accent); }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); pointer-events:none; }
+    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; grid-column:12/13; justify-self:end; }
+    .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
+    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--accent); }
 
-    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       GALLERY MODULE CSS
-       Drop this block into the post page <style> alongside existing rules.
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    /* ── SHARED POST STRUCTURE ── */
+    main { flex:1; }
+    .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
+
+    .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
+    .post-back { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); margin-bottom:1.75rem; transition:color 0.2s; }
+    .post-back svg { transition:transform 0.2s; }
+    .post-back:hover { color:var(--accent); }
+    .post-back:hover svg { transform:translate(-2px,0); }
+    .post-meta-header { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:1rem; }
+    .post-date-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); }
+    .post-category-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--accent); }
+    .post-category-label::before { content:'Category: '; color:var(--muted); }
+    .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); max-width:22ch; }
 
     /*
-      .gallery-module
-      ─────────────────────────────────────────────────────────────────
-      Full-width breakout from the 680px prose column.
-      Sits directly inside .post-body-wrap (sibling of .post-body),
-      or inside .post-body as a full-bleed child — see HTML notes below.
-
-      Variants (add class to .gallery-module):
-        .gallery-module--2up   → 2 columns (default for image-heavy posts)
-        .gallery-module--3up   → 3 columns (default, compact)
-        No modifier needed — 3-up is the base.
+      OPTIONAL HERO — 16:9, full container width.
+      Present in both Config A and Config B.
+      In Config B: exclude the hero image from the gallery grid.
+      Remove this block entirely if no hero for this post.
     */
-    .gallery-module {
-      width:100%;
-      margin:var(--space-section) 0;
-    }
+    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
+    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
 
-    /* Optional section label above the grid */
-    .gallery-label {
+    /* ── CONFIG A — PROSE BODY ── */
+    /*
+      680px column — comfortable reading width for sustained prose.
+      Use for text-led posts: opinion, essay, reflection.
+      Remove .post-body-wrap and .post-body for Config B.
+    */
+    .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,680px) 1fr; }
+    .post-body { grid-column:2; }
+    .post-body p { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
+    .post-body p:last-child { margin-bottom:0; }
+    .post-body h2 { font-family:var(--title); font-size:clamp(1.2rem,2vw,1.5rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
+    .post-body h3 { font-family:var(--sans); font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:var(--ls-label); color:var(--strong); margin-top:2em; margin-bottom:0.5em; }
+    .post-body ul, .post-body ol { padding-left:1.25em; margin-bottom:1.5em; }
+    .post-body ul { list-style:disc; }
+    .post-body ol { list-style:decimal; }
+    .post-body li { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
+    .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.5em 0 0.5em 1.5em; }
+    .post-body blockquote p { font-style:italic; color:var(--muted); margin-bottom:0; }
+    .post-body hr { border:none; border-top:1px solid var(--rule); margin:2.5em 0; }
+    .post-body a { border-bottom:1px solid var(--rule); transition:color 0.2s,border-color 0.2s; }
+    .post-body a:hover { color:var(--accent); border-color:var(--accent); }
+
+    /* Inline gallery inside prose column — inherits 680px naturally */
+    .post-body .gallery-module { margin:var(--space-section) 0; }
+
+    /* ── GALLERY MODULE ── */
+    .gallery-module { width:100%; margin:var(--space-section) 0; }
+    .gallery-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); padding-bottom:0.875rem; border-bottom:1px solid var(--rule); margin-bottom:var(--gap-grid); }
+    .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap-grid); align-items:start; }
+    .gallery-module--2up .gallery-grid { grid-template-columns:repeat(2,1fr); }
+    .gallery-item { display:flex; flex-direction:column; gap:0.5rem; }
+    .gallery-grid .gallery-item--wide { grid-column:span 2; }
+    .gallery-img-wrap { width:100%; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); }
+    .gallery-img { width:100%; height:auto; display:block; opacity:0.9; transition:opacity 0.25s ease; }
+    .gallery-img:hover { opacity:1; }
+    .gallery-caption { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); line-height:1.5; }
+    .gallery-group-caption { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); margin-top:0.875rem; padding-top:0.875rem; border-top:1px solid var(--rule); }
+
+    /* ── BACK TO BLOG BUTTON ── */
+    /*
+      Replaces prev/next navigation.
+      Matches load-more / back-to-top pattern from blog.html.
+      Sits at the foot of the post, left-aligned.
+    */
+    .post-footer { padding-top:var(--space-section); border-top:1px solid var(--rule); margin-top:clamp(3rem,5vw,4.5rem); }
+    .post-back-btn {
       font-family:var(--mono);
       font-size:var(--fs-xs);
       letter-spacing:var(--ls-label);
       text-transform:uppercase;
-      color:var(--muted);
-      padding-bottom:0.875rem;
-      border-bottom:1px solid var(--rule);
-      margin-bottom:var(--gap-grid);
+      background:none;
+      border:1px solid var(--ink);
+      color:var(--ink);
+      padding:0.65rem 1.5rem;
+      cursor:pointer;
+      transition:color 0.2s, border-color 0.2s;
+      -webkit-appearance:none;
+      appearance:none;
+      display:inline-block;
+      text-decoration:none;
     }
+    .post-back-btn:hover { color:var(--accent); border-color:var(--accent); }
 
-    /* The grid itself */
-    .gallery-grid {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:var(--gap-grid);
-      align-items:start;   /* key: lets native-ratio images create irregular rows */
+    /* ── FOOTER ── */
+    footer { background:var(--ink); padding:1.25rem 0; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-links { display:flex; align-items:center; gap:1.5rem; }
+    .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:#fff; }
+    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:#fff; }
+    .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
+    .skip-link:focus { top:0.5rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .header-nav { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-location { display:none; }
     }
-
-    /* 2-up variant */
-    .gallery-module--2up .gallery-grid {
-      grid-template-columns:repeat(2,1fr);
-    }
-
-    /* Each cell: image + optional caption */
-    .gallery-item {
-      display:flex;
-      flex-direction:column;
-      gap:0.5rem;
-    }
-
-    /*
-      .gallery-item--wide
-      ─────────────────────────────────────────────────────────────────
-      Spans 2 columns in a 3-up grid (or full width in 2-up).
-      Use for a single image that deserves more space — e.g. a key
-      event photo, a landscape shot that would be too small at 1/3.
-
-      In 3-up: add to any .gallery-item to make it 2 columns wide.
-      In 2-up: add to any .gallery-item to make it full width.
-    */
-    .gallery-grid .gallery-item--wide {
-      grid-column:span 2;
-    }
-
-    /* Image wrapper — no forced ratio, preserves native aspect */
-    .gallery-img-wrap {
-      width:100%;
-      overflow:hidden;
-      background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
-      position:relative;
-    }
-
-    .gallery-img {
-      width:100%;
-      height:auto;       /* native ratio preserved */
-      display:block;
-      opacity:0.9;
-      transition:opacity 0.25s ease;
-    }
-
-    .gallery-img:hover {
-      opacity:1;
-    }
-
-    /* Optional caption */
-    .gallery-caption {
-      font-family:var(--mono);
-      font-size:var(--fs-xs);
-      letter-spacing:var(--ls-meta);
-      color:var(--muted);
-      line-height:1.5;
-    }
-
-    /*
-      Optional: group caption beneath the whole gallery
-      Use .gallery-group-caption on a <p> after .gallery-grid
-    */
-    .gallery-group-caption {
-      font-family:var(--mono);
-      font-size:var(--fs-xs);
-      letter-spacing:var(--ls-meta);
-      color:var(--muted);
-      margin-top:0.875rem;
-      padding-top:0.875rem;
-      border-top:1px solid var(--rule);
-    }
-
-    /* ── RESPONSIVE ─────────────────────────────────────────────────── */
     @media (max-width:860px) {
-      /* 3-up → 2-up at tablet */
-      .gallery-grid {
-        grid-template-columns:repeat(2,1fr);
-      }
-      /* wide items still span 2 at tablet */
+      .post-body-wrap { grid-template-columns:1fr; }
+      .post-body { grid-column:1; }
+      .gallery-grid { grid-template-columns:repeat(2,1fr); }
     }
-
     @media (max-width:540px) {
-      /* 2-up → 1-up at mobile */
       .gallery-grid,
-      .gallery-module--2up .gallery-grid {
-        grid-template-columns:1fr;
-      }
-      /* wide modifier has no effect at 1-up */
-      .gallery-grid .gallery-item--wide {
-        grid-column:span 1;
-      }
+      .gallery-module--2up .gallery-grid { grid-template-columns:1fr; }
+      .gallery-grid .gallery-item--wide { grid-column:span 1; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
     }
-    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       END GALLERY MODULE CSS
-    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
   </style>
 </head>
 <body>
-<div class="container">
+  <a href="#main" class="skip-link">Skip to content</a>
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       DEMO 1: 3-UP, MIXED RATIOS, INDIVIDUAL CAPTIONS
-       Approximates NFM Partnership / Sheffield Digital Awards type posts.
-       All images are placeholder <div>s — replace with <img> tags.
-  ═══════════════════════════════════════════════════════════════════ -->
-
-  <p class="demo-label">Demo 1 — 3-up, mixed ratios, individual captions</p>
-
-  <!--
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  MODULE: IMAGE GALLERY
-  ─────────────────────────────────────────────────────────────────────
-  Placement: inside .post-body > after a <p> block, or as a sibling
-             of .post-body inside .post-body-wrap for full container width.
-
-  To use:
-    • Default (3-up):  <div class="gallery-module"> … </div>
-    • 2-up variant:    <div class="gallery-module gallery-module--2up"> … </div>
-
-  Optional elements (remove if not needed):
-    • .gallery-label          — section label above grid
-    • .gallery-caption        — per-image caption (omit <p> if none)
-    • .gallery-group-caption  — single note below entire grid
-    • .gallery-item--wide     — makes one item span 2 columns
-
-  Authoring rules:
-    • Replace .gallery-img-placeholder with a real <img> tag
-    • Always include alt text on <img>
-    • loading="lazy" on all images except the first visible one
-  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  -->
-  <div class="gallery-module">
-
-    <!-- OPTIONAL: remove <p class="gallery-label"> if no section label needed -->
-    <p class="gallery-label">Images</p>
-
-    <div class="gallery-grid">
-
-      <!-- ITEM 1 — landscape 3:2, with caption -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <!-- Replace with: <img class="gallery-img" src="path/to/image.jpg" alt="Description" loading="lazy" /> -->
-          <svg class="gallery-img" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape image placeholder">
-            <rect width="300" height="200" fill="#d4d2cc"/>
-            <text x="150" y="105" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:2 landscape</text>
-          </svg>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-identity">
+          <div class="header-logo-placeholder" aria-hidden="true"></div>
+          <div class="header-identity-text">
+            <a href="/index.html" class="header-logo">Steven Welsh</a>
+            <div class="header-location">Sheffield<br>Ooop North</div>
+          </div>
         </div>
-        <!-- OPTIONAL: remove <p class="gallery-caption"> if no caption needed -->
-        <p class="gallery-caption">Accepting the award at Kollider, Sheffield — May 2019</p>
+        <nav class="header-nav" aria-label="Main navigation">
+          <ul class="header-nav-links" role="list">
+            <li class="nav-item"><a href="/index.html" class="nav-item-label">About</a><span class="nav-item-desc">high-level<br>overview</span></li>
+            <li class="nav-item"><a href="/work.html" class="nav-item-label">Work</a><span class="nav-item-desc">selected<br>case studies</span></li>
+            <li class="nav-item"><a href="/play.html" class="nav-item-label">Play</a><span class="nav-item-desc">freelance<br>side hustles</span></li>
+            <li class="nav-item"><a href="/blog.html" class="nav-item-label active">Blog</a><span class="nav-item-desc">musings and<br>reflections</span></li>
+            <li class="nav-item"><a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a><span class="nav-item-desc">enquiries and<br>commissions</span></li>
+          </ul>
+        </nav>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-
-      <!-- ITEM 2 — portrait 3:4, with caption -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait image placeholder">
-            <rect width="300" height="400" fill="#c8c5be"/>
-            <text x="150" y="205" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:4 portrait</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">ZOO Digital team on stage</p>
-      </div>
-
-      <!-- ITEM 3 — square 1:1, no caption (omit the <p>) -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="Square image placeholder">
-            <rect width="300" height="300" fill="#bfbcb5"/>
-            <text x="150" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">1:1 square</text>
-          </svg>
-        </div>
-        <!-- No caption on this item — <p> omitted -->
-      </div>
-
-      <!-- ITEM 4 — landscape 16:9, with caption -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape image placeholder">
-            <rect width="320" height="180" fill="#d4d2cc"/>
-            <text x="160" y="95" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">16:9 landscape</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">A-Z prints in the NFM shop, Manchester</p>
-      </div>
-
-      <!-- ITEM 5 — portrait 2:3, with caption -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait image placeholder">
-            <rect width="300" height="450" fill="#c8c5be"/>
-            <text x="150" y="230" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">2:3 portrait</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">Baggio print, on display</p>
-      </div>
-
-      <!-- ITEM 6 — landscape 4:3, no caption -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape image placeholder">
-            <rect width="400" height="300" fill="#bfbcb5"/>
-            <text x="200" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">4:3 landscape</text>
-          </svg>
-        </div>
-      </div>
-
-    </div><!-- /gallery-grid -->
-
-    <!-- OPTIONAL: remove <p class="gallery-group-caption"> if no group note needed -->
-    <!-- <p class="gallery-group-caption">All images: National Football Museum, Manchester, 2016</p> -->
-
-  </div><!-- /gallery-module -->
-  <!-- END MODULE: IMAGE GALLERY -->
-
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       DEMO 2: 3-UP WITH A --WIDE ITEM
-       Use when one image is significantly more important than others
-       (e.g. a key event photo, or a wide editorial shot).
-  ═══════════════════════════════════════════════════════════════════ -->
-
-  <p class="demo-label">Demo 2 — 3-up with a wide item (spans 2 columns)</p>
-
-  <div class="gallery-module">
-    <div class="gallery-grid">
-
-      <!-- WIDE ITEM — add class gallery-item--wide to span 2 columns -->
-      <div class="gallery-item gallery-item--wide">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg" aria-label="Wide landscape placeholder">
-            <rect width="600" height="338" fill="#d4d2cc"/>
-            <text x="300" y="174" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">16:9 landscape — wide item (spans 2 cols)</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">Sheffield Digital Awards ceremony — Kollider</p>
-      </div>
-
-      <!-- Standard item alongside wide -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait placeholder">
-            <rect width="300" height="400" fill="#c8c5be"/>
-            <text x="150" y="205" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:4 portrait</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">Best International Success</p>
-      </div>
-
-      <!-- Standard items continue below -->
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape placeholder">
-            <rect width="300" height="200" fill="#bfbcb5"/>
-            <text x="150" y="105" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:2 landscape</text>
-          </svg>
-        </div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="Square placeholder">
-            <rect width="300" height="300" fill="#d4d2cc"/>
-            <text x="150" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">1:1 square</text>
-          </svg>
-        </div>
-      </div>
-
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait placeholder">
-            <rect width="300" height="450" fill="#c8c5be"/>
-            <text x="150" y="230" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">2:3 portrait</text>
-          </svg>
-        </div>
-      </div>
-
     </div>
-  </div>
+    <hr class="header-rule" />
+  </header>
 
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
+    <a href="/index.html">About</a>
+    <a href="/work.html">Work</a>
+    <a href="/play.html">Play</a>
+    <a href="/blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
+  </nav>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       DEMO 3: 2-UP VARIANT
-       Better for posts with fewer images, or when images need
-       more breathing room (e.g. detailed illustration work).
-  ═══════════════════════════════════════════════════════════════════ -->
+  <main id="main">
+    <div class="post-wrap">
+      <div class="container">
 
-  <p class="demo-label">Demo 3 — 2-up variant (add gallery-module--2up class)</p>
+        <!-- ── POST HEADER — same in both configs ── -->
+        <div class="post-header">
+          <a href="/blog.html" class="post-back" aria-label="Back to blog index">
+            <svg width="12" height="12" viewBox="2 2 12 12" fill="none" aria-hidden="true"><path d="M13 3L3 13M3 13H11M3 13V5" stroke="currentColor" stroke-width="1.4"/></svg>
+            Blog
+          </a>
+          <div class="post-meta-header">
+            <span class="post-date-label">9 September 2023</span>
+            <span class="post-category-label">Service Design</span>
+          </div>
+          <h1 class="post-title">Innovation or Irritation?</h1>
+        </div>
 
-  <div class="gallery-module gallery-module--2up">
-    <div class="gallery-grid">
-
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape placeholder">
-            <rect width="400" height="300" fill="#d4d2cc"/>
-            <text x="200" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">4:3 landscape</text>
+        <!--
+        OPTIONAL HERO IMAGE
+        ───────────────────────────────────────────────────────────────
+        Include for posts where a strong single image sets the tone.
+        In Config B: if hero is included, exclude this image from
+        the gallery grid below to avoid repetition.
+        Remove this entire block if no hero for this post.
+        ───────────────────────────────────────────────────────────────
+        -->
+        <div class="post-hero">
+          <!-- <img src="/assets/blog/innovation/hero.png" alt="Coca-Cola attached cap bottle" loading="eager" /> -->
+          <svg style="width:100%;height:100%;display:block;" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" aria-label="Hero image placeholder">
+            <rect width="1200" height="675" fill="#d4d2cc"/>
+            <text x="600" y="342" font-family="monospace" font-size="14" fill="#9a9590" text-anchor="middle">Hero image — 16:9 — optional, remove block if not needed</text>
           </svg>
         </div>
-        <p class="gallery-caption">Jet2 cup holder — elegance in economy</p>
-      </div>
+        <!-- END OPTIONAL HERO IMAGE -->
 
-      <div class="gallery-item">
-        <div class="gallery-img-wrap">
-          <svg class="gallery-img" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape placeholder">
-            <rect width="400" height="300" fill="#c8c5be"/>
-            <text x="200" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">4:3 landscape</text>
-          </svg>
-        </div>
-        <p class="gallery-caption">Standard UK rail tray table — an accident in waiting</p>
-      </div>
+        <!--
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        CONFIG A — TEXT-LED POST
+        ─────────────────────────────────────────────────────────────
+        Use for: opinion, essay, reflection — posts where argument
+        or narrative carries the piece and images are illustrative.
 
-    </div>
-    <!-- Group caption example -->
-    <p class="gallery-group-caption">Photographs taken June 2022. No cups were harmed.</p>
-  </div>
+        Prose column: ~680px for comfortable reading line length.
+        Images sit inline within the column, or as a gallery module
+        below the prose at full container width.
 
+        Remove .post-body-wrap / .post-body for Config B.
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        -->
+        <div class="post-body-wrap">
+          <div class="post-body">
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       DEMO 4: GALLERY WITHIN PROSE (inline, not full-width breakout)
-       Use when the gallery is one moment within a longer text post
-       rather than the primary content. Sits inside .post-body,
-       respects the 680px column.
-  ═══════════════════════════════════════════════════════════════════ -->
+            <p>In Oct last year, Coca-Cola announced its &#8216;attached cap&#8217; innovation in the UK. Now, I&#8217;ll be honest with you, this news largely passed me by. It wasn&#8217;t until this modification was expanded to 500ml bottles that it even appeared on my radar &#8212; or to be more accurate, passed silently beneath it.</p>
 
-  <p class="demo-label">Demo 4 — gallery sitting within the prose column (680px)</p>
+            <p>The &#8216;innovation&#8217; in question is attempting to solve a debatable problem: how to keep waste bottles and caps together to promote recycling. While a noble cause, I&#8217;d always been brought up to squeeze the air out of a bottle, then reattach the lid to create a vacuum, solving both the lid and cap problem and reducing space in the recycling bin.</p>
 
-  <div style="max-width:680px; margin:0 auto;">
-    <p class="prose-col">This is a paragraph of body text before the gallery. The gallery here sits inside the prose column rather than breaking out to full width — appropriate when images are illustrative rather than the main event. After this block, body text continues normally.</p>
+            <!-- OPTIONAL: inline image within prose column -->
+            <div class="gallery-module gallery-module--2up">
+              <div class="gallery-grid">
+                <div class="gallery-item">
+                  <div class="gallery-img-wrap">
+                    <svg class="gallery-img" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder">
+                      <rect width="400" height="300" fill="#d4d2cc"/>
+                      <text x="200" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">4:3 — bottle cap image</text>
+                    </svg>
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <div class="gallery-img-wrap">
+                    <svg class="gallery-img" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder">
+                      <rect width="400" height="300" fill="#c8c5be"/>
+                      <text x="200" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">4:3 — bottle label close-up</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    <!--
-    INLINE VARIANT: gallery-module used inside .post-body
-    No additional class needed — it inherits column width naturally.
-    -->
-    <div class="gallery-module">
-      <div class="gallery-grid">
+            <h2>What is the problem you are trying to solve?</h2>
 
-        <div class="gallery-item">
-          <div class="gallery-img-wrap">
-            <svg class="gallery-img" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" aria-label="Landscape placeholder">
-              <rect width="300" height="200" fill="#d4d2cc"/>
-              <text x="150" y="105" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:2 landscape</text>
-            </svg>
+            <p>Is this &#8216;solution&#8217; truly solving a problem that needs addressing? With Coke already voted worst plastic polluter four years running by the nonprofit coalition Break Free From Plastic, wouldn&#8217;t research into plastic alternatives be a better use of time, resources, and money?</p>
+
+            <h2>User Experience / User Needs</h2>
+
+            <p>I&#8217;m happy to be proven wrong but I can&#8217;t believe for a second that user feedback indicated this was an improvement on the previously unattached caps. In fact, I&#8217;d love to read the user research behind it.</p>
+
+            <h2>Form (should) follow function</h2>
+
+            <p>Whilst attaching the cap to the bottle does indeed keep the two items together, it also becomes an annoying appendage that makes drinking from the bottle unnecessarily fussy. Most of the people I spoke to said they ended up ripping the cap from the bottle regardless &#8212; leaving a serrated edge that&#8217;s uncomfortable to drink from.</p>
+
+            <h2>Good design should be silent</h2>
+
+            <p>When ring pulls moved from &#8216;pull tabs&#8217; to &#8216;stay-ons&#8217; in 1989, I don&#8217;t recall a marketing campaign or explanations printed on the top of cans. They just worked &#8212; they did not impact the drinking experience but still managed to hit the business objective of reducing litter.</p>
+
+            <blockquote>
+              <p>It does give me a certain degree of schadenfreude when I see companies the size of Coke getting design decisions this wrong.</p>
+            </blockquote>
+
+            <p>I&#8217;d definitely be interested in others&#8217; thoughts on this, particularly from a product design or comms perspective, but also from a &#8216;business vs user needs&#8217; standpoint too.</p>
+
           </div>
         </div>
+        <!-- END CONFIG A -->
 
-        <div class="gallery-item">
-          <div class="gallery-img-wrap">
-            <svg class="gallery-img" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait placeholder">
-              <rect width="300" height="400" fill="#c8c5be"/>
-              <text x="150" y="205" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">3:4 portrait</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div class="gallery-img-wrap">
-            <svg class="gallery-img" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="Square placeholder">
-              <rect width="300" height="300" fill="#bfbcb5"/>
-              <text x="150" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">1:1 square</text>
-            </svg>
-          </div>
+        <!-- ── POST FOOTER — BACK TO BLOG ── -->
+        <!--
+        Replaces prev/next navigation.
+        Matches load-more / back-to-top button style from blog.html.
+        Always present. Links back to /blog.html.
+        -->
+        <div class="post-footer">
+          <a href="/blog.html" class="post-back-btn">&#8592; Back to blog</a>
         </div>
 
       </div>
     </div>
+  </main>
 
-    <p class="prose-col">Text continues after the inline gallery. Because the gallery is inside the prose column it doesn't break the reading flow — it reads as an aside rather than a statement. For posts where images are the primary content, use the full-width placement (Demos 1–3) instead.</p>
-  </div>
+  <script>
+    var btn = document.querySelector('.nav-hamburger');
+    var menu = document.getElementById('mobile-menu');
+    var closeBtn = document.getElementById('mobile-close');
+    function updateMenuPadding() {
+      document.getElementById('mobile-menu').style.paddingTop = document.querySelector('.site-header').offsetHeight + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+    var mq = window.matchMedia('(min-width:769px)');
+    mq.addEventListener('change', function(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open'); btn.classList.remove('open');
+        btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+    });
+    btn.addEventListener('click', function() {
+      var open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    closeBtn.addEventListener('click', function() {
+      menu.classList.remove('open'); btn.classList.remove('open');
+      btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('open'); btn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
 
-
-</div><!-- /container -->
+  <div id="site-footer"></div>
+  <script>
+    fetch('/footer.html')
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var el = document.getElementById('site-footer');
+        el.outerHTML = html;
+        var s = document.createElement('script');
+        s.src = '/footer-init.js';
+        document.body.appendChild(s);
+      });
+  </script>
 </body>
 </html>
