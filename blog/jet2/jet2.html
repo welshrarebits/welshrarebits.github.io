@@ -1,1 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery Module — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── DESIGN TOKENS (copy of site root) ───────────────────────────── */
+    :root {
+      --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
+      --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
+      --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
+      --mono:'DM Mono',monospace;
+      --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --fs-xs:0.688rem; --fs-sm:0.813rem;
+      --lh-tight:1.45; --ls-label:0.1em; --ls-meta:0.08em;
+      --space-section:clamp(1.5rem,3vw,2.5rem);
+      --gap-grid:clamp(1rem,2vw,1.5rem);
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans);
+           font-size:1rem; line-height:1.5; -webkit-font-smoothing:antialiased; }
+    .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
+    /* ── DEMO SCAFFOLD (not part of the module) ──────────────────────── */
+    .demo-label {
+      font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label);
+      text-transform:uppercase; color:var(--muted); padding:2.5rem 0 1rem;
+      border-top:1px solid var(--rule); margin-top:3rem;
+    }
+    .demo-label:first-child { margin-top:2rem; border-top:none; }
+    .prose-col {
+      max-width:680px; margin:0 auto;
+      font-family:var(--sans); font-size:1.05rem; line-height:1.8;
+      color:var(--strong); padding:1.5rem 0;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       GALLERY MODULE CSS
+       Drop this block into the post page <style> alongside existing rules.
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+    /*
+      .gallery-module
+      ─────────────────────────────────────────────────────────────────
+      Full-width breakout from the 680px prose column.
+      Sits directly inside .post-body-wrap (sibling of .post-body),
+      or inside .post-body as a full-bleed child — see HTML notes below.
+
+      Variants (add class to .gallery-module):
+        .gallery-module--2up   → 2 columns (default for image-heavy posts)
+        .gallery-module--3up   → 3 columns (default, compact)
+        No modifier needed — 3-up is the base.
+    */
+    .gallery-module {
+      width:100%;
+      margin:var(--space-section) 0;
+    }
+
+    /* Optional section label above the grid */
+    .gallery-label {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label);
+      text-transform:uppercase;
+      color:var(--muted);
+      padding-bottom:0.875rem;
+      border-bottom:1px solid var(--rule);
+      margin-bottom:var(--gap-grid);
+    }
+
+    /* The grid itself */
+    .gallery-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:var(--gap-grid);
+      align-items:start;   /* key: lets native-ratio images create irregular rows */
+    }
+
+    /* 2-up variant */
+    .gallery-module--2up .gallery-grid {
+      grid-template-columns:repeat(2,1fr);
+    }
+
+    /* Each cell: image + optional caption */
+    .gallery-item {
+      display:flex;
+      flex-direction:column;
+      gap:0.5rem;
+    }
+
+    /*
+      .gallery-item--wide
+      ─────────────────────────────────────────────────────────────────
+      Spans 2 columns in a 3-up grid (or full width in 2-up).
+      Use for a single image that deserves more space — e.g. a key
+      event photo, a landscape shot that would be too small at 1/3.
+
+      In 3-up: add to any .gallery-item to make it 2 columns wide.
+      In 2-up: add to any .gallery-item to make it full width.
+    */
+    .gallery-grid .gallery-item--wide {
+      grid-column:span 2;
+    }
+
+    /* Image wrapper — no forced ratio, preserves native aspect */
+    .gallery-img-wrap {
+      width:100%;
+      overflow:hidden;
+      background:linear-gradient(135deg, var(--rule) 0%, var(--placeholder) 100%);
+      position:relative;
+    }
+
+    .gallery-img {
+      width:100%;
+      height:auto;       /* native ratio preserved */
+      display:block;
+      opacity:0.9;
+      transition:opacity 0.25s ease;
+    }
+
+    .gallery-img:hover {
+      opacity:1;
+    }
+
+    /* Optional caption */
+    .gallery-caption {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-meta);
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    /*
+      Optional: group caption beneath the whole gallery
+      Use .gallery-group-caption on a <p> after .gallery-grid
+    */
+    .gallery-group-caption {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-meta);
+      color:var(--muted);
+      margin-top:0.875rem;
+      padding-top:0.875rem;
+      border-top:1px solid var(--rule);
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────────────── */
+    @media (max-width:860px) {
+      /* 3-up → 2-up at tablet */
+      .gallery-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
+      /* wide items still span 2 at tablet */
+    }
+
+    @media (max-width:540px) {
+      /* 2-up → 1-up at mobile */
+      .gallery-grid,
+      .gallery-module--2up .gallery-grid {
+        grid-template-columns:1fr;
+      }
+      /* wide modifier has no effect at 1-up */
+      .gallery-grid .gallery-item--wide {
+        grid-column:span 1;
+      }
+    }
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       END GALLERY MODULE CSS
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  </style>
+</head>
+<body>
+<div class="container">
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DEMO 1: 3-UP, MIXED RATIOS, INDIVIDUAL CAPTIONS
+       Approximates NFM Partnership / Sheffield Digital Awards type posts.
+       All images are placeholder <div>s — replace with <img> tags.
+  ═══════════════════════════════════════════════════════════════════ -->
+
+  <p class="demo-label">Demo 1 — 3-up, mixed ratios, individual captions</p>
+
+  <!--
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MODULE: IMAGE GALLERY
+  ─────────────────────────────────────────────────────────────────────
+  Placement: inside .post-body > after a <p> block, or as a sibling
+             of .post-body inside .post-body-wrap for full container width.
+
+  To use:
+    • Default (3-up):  <div class="gallery-module"> … </div>
+    • 2-up variant:    <div class="gallery-module gallery-module--2up"> … </div>
+
+  Optional elements (remove if not needed):
+    • .gallery-label          — section label above grid
+    • .gallery-caption        — per-image caption (omit <p> if none)
+    • .gallery-group-caption  — single note below entire grid
+    • .gallery-item--wide     — makes one item span 2 columns
+
+  Authoring rules:
+    • Replace .gallery-img-placeholder with a real <img> tag
+    • Always include alt text on <img>
+    • loading="lazy" on all images except the first visible one
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  -->
+  <div class="gallery-module">
+
+    <!-- OPTIONAL: remove <p class="gallery-label"> if no section label needed -->
+    <p class="gallery-label">Images</p>
+
+    <div class="gallery-grid">
+
+      <!-- ITEM 1 — landscape, with caption -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <!-- Replace with: <img class="gallery-img" src="path/to/image.jpg" alt="Description" loading="lazy" /> -->
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=70" alt="Football stadium crowd" loading="lazy" />
+        </div>
+        <!-- OPTIONAL: remove <p class="gallery-caption"> if no caption needed -->
+        <p class="gallery-caption">Accepting the award at Kollider, Sheffield — May 2019</p>
+      </div>
+
+      <!-- ITEM 2 — portrait, with caption -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=70" alt="Award ceremony" loading="lazy" />
+        </div>
+        <p class="gallery-caption">ZOO Digital team on stage</p>
+      </div>
+
+      <!-- ITEM 3 — square-ish, no caption (omit the <p>) -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1551854838-212c9a5af951?w=800&q=70" alt="Digital award trophy" loading="lazy" />
+        </div>
+        <!-- No caption on this item — <p> omitted -->
+      </div>
+
+      <!-- ITEM 4 — landscape, with caption -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=70" alt="Football prints on display" loading="lazy" />
+        </div>
+        <p class="gallery-caption">A-Z prints in the NFM shop, Manchester</p>
+      </div>
+
+      <!-- ITEM 5 — portrait, with caption -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=70" alt="Print detail close-up" loading="lazy" />
+        </div>
+        <p class="gallery-caption">Baggio print, on display</p>
+      </div>
+
+      <!-- ITEM 6 — landscape, no caption -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=70" alt="Museum interior" loading="lazy" />
+        </div>
+      </div>
+
+    </div><!-- /gallery-grid -->
+
+    <!-- OPTIONAL: remove <p class="gallery-group-caption"> if no group note needed -->
+    <!-- <p class="gallery-group-caption">All images: National Football Museum, Manchester, 2016</p> -->
+
+  </div><!-- /gallery-module -->
+  <!-- END MODULE: IMAGE GALLERY -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DEMO 2: 3-UP WITH A --WIDE ITEM
+       Use when one image is significantly more important than others
+       (e.g. a key event photo, or a wide editorial shot).
+  ═══════════════════════════════════════════════════════════════════ -->
+
+  <p class="demo-label">Demo 2 — 3-up with a wide item (spans 2 columns)</p>
+
+  <div class="gallery-module">
+    <div class="gallery-grid">
+
+      <!-- WIDE ITEM — add class gallery-item--wide to span 2 columns -->
+      <div class="gallery-item gallery-item--wide">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&q=70" alt="Wide event photo" loading="lazy" />
+        </div>
+        <p class="gallery-caption">Sheffield Digital Awards ceremony — Kollider</p>
+      </div>
+
+      <!-- Standard item alongside wide -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=70" alt="Award close-up" loading="lazy" />
+        </div>
+        <p class="gallery-caption">Best International Success</p>
+      </div>
+
+      <!-- Standard items continue below -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=70" alt="Football print" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=70" alt="Stadium" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=70" alt="Print detail" loading="lazy" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DEMO 3: 2-UP VARIANT
+       Better for posts with fewer images, or when images need
+       more breathing room (e.g. detailed illustration work).
+  ═══════════════════════════════════════════════════════════════════ -->
+
+  <p class="demo-label">Demo 3 — 2-up variant (add gallery-module--2up class)</p>
+
+  <div class="gallery-module gallery-module--2up">
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=70" alt="Stadium wide" loading="lazy" />
+        </div>
+        <p class="gallery-caption">Jet2 cup holder — elegance in economy</p>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=70" alt="Train cup holder comparison" loading="lazy" />
+        </div>
+        <p class="gallery-caption">Standard UK rail tray table — an accident in waiting</p>
+      </div>
+
+    </div>
+    <!-- Group caption example -->
+    <p class="gallery-group-caption">Photographs taken June 2022. No cups were harmed.</p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       DEMO 4: GALLERY WITHIN PROSE (inline, not full-width breakout)
+       Use when the gallery is one moment within a longer text post
+       rather than the primary content. Sits inside .post-body,
+       respects the 680px column.
+  ═══════════════════════════════════════════════════════════════════ -->
+
+  <p class="demo-label">Demo 4 — gallery sitting within the prose column (680px)</p>
+
+  <div style="max-width:680px; margin:0 auto;">
+    <p class="prose-col">This is a paragraph of body text before the gallery. The gallery here sits inside the prose column rather than breaking out to full width — appropriate when images are illustrative rather than the main event. After this block, body text continues normally.</p>
+
+    <!--
+    INLINE VARIANT: gallery-module used inside .post-body
+    No additional class needed — it inherits column width naturally.
+    -->
+    <div class="gallery-module">
+      <div class="gallery-grid">
+
+        <div class="gallery-item">
+          <div class="gallery-img-wrap">
+            <img class="gallery-img" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=70" alt="Inline image one" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-img-wrap">
+            <img class="gallery-img" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=70" alt="Inline image two" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-img-wrap">
+            <img class="gallery-img" src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&q=70" alt="Inline image three" loading="lazy" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="prose-col">Text continues after the inline gallery. Because the gallery is inside the prose column it doesn't break the reading flow — it reads as an aside rather than a statement. For posts where images are the primary content, use the full-width placement (Demos 1–3) instead.</p>
+  </div>
+
+
+</div><!-- /container -->
+</body>
+</html>
