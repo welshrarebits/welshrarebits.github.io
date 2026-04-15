@@ -91,14 +91,36 @@
       margin-bottom:var(--space-section);
     }
 
-    /* ── GALLERY MODULE ── */
+    /* ── GALLERY MODULE — CSS COLUMNS MASONRY ── */
     .gallery-module { width:100%; margin:var(--space-section) 0; }
     .gallery-module:first-of-type { margin-top:0; }
     .gallery-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); padding-bottom:0.875rem; border-bottom:1px solid var(--rule); margin-bottom:var(--gap-grid); }
-    .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap-grid); align-items:start; }
-    .gallery-module--2up .gallery-grid { grid-template-columns:repeat(2,1fr); }
-    .gallery-item { display:flex; flex-direction:column; gap:0.5rem; }
-    .gallery-grid .gallery-item--wide { grid-column:span 2; }
+
+    /*
+      CSS columns masonry — 3 columns by default.
+      Items flow top-to-bottom within each column.
+      No orphaned slots, no row alignment gaps.
+      .gallery-module--2up overrides to 2 columns.
+    */
+    .gallery-grid {
+      column-count:3;
+      column-gap:var(--gap-grid);
+    }
+    .gallery-module--2up .gallery-grid {
+      column-count:2;
+    }
+
+    .gallery-item {
+      break-inside:avoid;          /* prevents item splitting across columns */
+      -webkit-column-break-inside:avoid;
+      display:flex;
+      flex-direction:column;
+      gap:0.5rem;
+      margin-bottom:var(--gap-grid); /* vertical gap between items */
+    }
+
+    /* No wide modifier in masonry — column flow handles weighting naturally */
+
     .gallery-img-wrap { width:100%; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); }
     .gallery-img { width:100%; height:auto; display:block; opacity:0.9; transition:opacity 0.25s ease; }
     .gallery-img:hover { opacity:1; }
@@ -143,12 +165,11 @@
       .header-location { display:none; }
     }
     @media (max-width:860px) {
-      .gallery-grid { grid-template-columns:repeat(2,1fr); }
+      .gallery-grid { column-count:2; }
     }
     @media (max-width:540px) {
       .gallery-grid,
-      .gallery-module--2up .gallery-grid { grid-template-columns:1fr; }
-      .gallery-grid .gallery-item--wide { grid-column:span 1; }
+      .gallery-module--2up .gallery-grid { column-count:1; }
       .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
     }
   </style>
@@ -244,13 +265,12 @@
 
         <p class="post-intro">I&#8217;m very excited to say that my work can now be obtained directly from the National Football Museum in Manchester. A selection of my A&#8211;Z prints are already available in their shop and online, and I have plans to increase the range over the next few months.</p>
 
-        <!-- MODULE: IMAGE GALLERY -->
-        <!--
-        Hero image (shop_atoz.jpeg) excluded from this grid.
-        Remaining 5 images from the original post.
-        -->
         <div class="gallery-module">
           <div class="gallery-grid">
+
+            <!-- Item order here determines column flow (top-to-bottom per column).
+                 Tallest images will naturally anchor their column.
+                 Reorder items to balance column heights if needed. -->
 
             <!-- ITEM 1 — portrait 3:4 -->
             <div class="gallery-item">
@@ -311,10 +331,19 @@
               <p class="gallery-caption">Baggio print on display</p>
             </div>
 
-            <!-- SLOT 6 EMPTY — 5 images after hero exclusion.
-                 3-up grid: row 1 fills (3), row 2 has 2 items + gap.
-                 Add a 6th image here if available, or switch to
-                 gallery-module--2up for a cleaner 2-row result. -->
+            <!-- ITEM 6 — square 1:1
+                 Added to give all 3 columns meaningful content.
+                 Replace with a real image, or remove if only 5 available —
+                 masonry handles odd counts without an orphaned slot. -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/prints-detail.jpg" alt="Print detail" loading="lazy" /> -->
+                <svg class="gallery-img" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="Placeholder">
+                  <rect width="300" height="300" fill="#d4d2cc"/>
+                  <text x="150" y="155" font-family="monospace" font-size="11" fill="#9a9590" text-anchor="middle">1:1 — prints-detail.jpg</text>
+                </svg>
+              </div>
+            </div>
 
           </div>
         </div>
