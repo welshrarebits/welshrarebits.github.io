@@ -81,7 +81,7 @@
       Use for text-led posts: opinion, essay, reflection.
       Remove for Config B.
     */
-    .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,680px) 1fr; }
+    .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,960px) 1fr; }
     .post-body { grid-column:2; }
     .post-body p { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
     .post-body p:last-child { margin-bottom:0; }
@@ -169,6 +169,9 @@
       outline:none;
     }
     .ps-img-dialog-close:hover { color:var(--footer-text-hover); }
+
+    /* Single image at full module width — use gallery-module--full */
+    .gallery-module--full .gallery-grid { column-count:1; }
 
     /* ── BACK BUTTON ── */
     .post-footer { padding-top:var(--space-section); border-top:1px solid var(--rule); margin-top:clamp(3rem,5vw,4.5rem); }
@@ -355,8 +358,8 @@
 
             <p>Whilst attaching the cap to the bottle does indeed keep the two items together, it also becomes an annoying appendage that makes drinking from the bottle unnecessarily fussy. Most of the people I spoke to said they ended up ripping the cap from the bottle regardless &#8212; leaving a serrated edge that&#8217;s uncomfortable to drink from.</p>
 
-            <!-- OPTIONAL: single inline image within prose column -->
-            <div class="gallery-module gallery-module--2up">
+            <!-- OPTIONAL: single full-width image within prose column -->
+            <div class="gallery-module gallery-module--full">
               <div class="gallery-grid">
                 <div class="gallery-item">
                   <div class="gallery-img-wrap">
