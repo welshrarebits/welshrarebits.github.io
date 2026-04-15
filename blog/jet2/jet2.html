@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Config B — Image-led Post &#8212; Steven Welsh</title>
+  <title>Config A — Text-led Post &#8212; Steven Welsh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
@@ -76,19 +76,26 @@
     .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
 
     /*
-      CONFIG B — INTRO TEXT
-      Full container width — no column constraint.
-      Short by nature (1–3 sentences). Line length is comfortable
-      at this length without a reading-width cap.
+      CONFIG A — PROSE BODY
+      680px column for comfortable reading line length.
+      Use for text-led posts: opinion, essay, reflection.
+      Remove for Config B.
     */
-    .post-intro {
-      font-family:var(--sans);
-      font-size:clamp(1rem,1.2vw,1.1rem);
-      font-weight:400;
-      line-height:1.8;
-      color:var(--strong);
-      margin-bottom:var(--space-section);
-    }
+    .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,680px) 1fr; }
+    .post-body { grid-column:2; }
+    .post-body p { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
+    .post-body p:last-child { margin-bottom:0; }
+    .post-body h2 { font-family:var(--title); font-size:clamp(1.2rem,2vw,1.5rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
+    .post-body h3 { font-family:var(--sans); font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:var(--ls-label); color:var(--strong); margin-top:2em; margin-bottom:0.5em; }
+    .post-body ul, .post-body ol { padding-left:1.25em; margin-bottom:1.5em; }
+    .post-body ul { list-style:disc; }
+    .post-body ol { list-style:decimal; }
+    .post-body li { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
+    .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.5em 0 0.5em 1.5em; }
+    .post-body blockquote p { font-style:italic; color:var(--muted); margin-bottom:0; }
+    .post-body hr { border:none; border-top:1px solid var(--rule); margin:2.5em 0; }
+    .post-body a { border-bottom:1px solid var(--rule); transition:color 0.2s,border-color 0.2s; }
+    .post-body a:hover { color:var(--accent); border-color:var(--accent); }
 
     /* ── GALLERY MODULE — CSS COLUMNS MASONRY ── */
     .gallery-module { width:100%; margin:var(--space-section) 0; }
@@ -225,6 +232,8 @@
       .header-location { display:none; }
     }
     @media (max-width:860px) {
+      .post-body-wrap { grid-template-columns:1fr; }
+      .post-body { grid-column:1; }
       .gallery-grid { column-count:2; }
     }
     @media (max-width:540px) {
@@ -280,109 +289,97 @@
         <!-- ── POST HEADER — same in both configs ── -->
         <div class="post-header">
           <div class="post-meta-header">
-            <span class="post-date-label">25 April 2016</span>
-            <span class="post-category-label">Recognition</span>
+            <span class="post-date-label">9 September 2023</span>
+            <span class="post-category-label">Service Design</span>
           </div>
-          <h1 class="post-title">NFM Partnership</h1>
+          <h1 class="post-title">Innovation or Irritation?</h1>
         </div>
 
         <!--
         OPTIONAL HERO IMAGE
         ───────────────────────────────────────────────────────────────
-        Include when a single image deserves full-width lead treatment.
-        CONFIG B RULE: if this hero is included, do NOT repeat this
-        image in the gallery grid below. Use the remaining images only.
+        Include when a strong single image sets the tone before prose.
         Remove this entire block if no hero for this post.
         ───────────────────────────────────────────────────────────────
         -->
         <div class="post-hero">
-          <!-- <img src="/assets/blog/nfm/shop_atoz.jpeg" alt="A-Z prints in the NFM shop" loading="eager" /> -->
-          <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyDigJQgc2hvcF9hdG96LmpwZWcgKGV4Y2x1ZGVkIGZyb20gZ2FsbGVyeSBiZWxvdyk8L3RleHQ+PC9zdmc+" alt="Hero — shop_atoz.jpeg (excluded from gallery below)" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <!-- <img src="/assets/blog/innovation/hero.png" alt="Coca-Cola attached cap bottle" loading="eager" /> -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyBpbWFnZSDigJQgMTY6OSDigJQgb3B0aW9uYWwsIHJlbW92ZSBibG9jayBpZiBub3QgbmVlZGVkPC90ZXh0Pjwvc3ZnPg==" alt="Hero image placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <!-- END OPTIONAL HERO IMAGE -->
 
         <!--
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        CONFIG B — IMAGE-LED POST
+        CONFIG A — TEXT-LED POST
         ─────────────────────────────────────────────────────────────
-        Use for: recognition, announcement, image portfolio posts
-        where images carry the piece and text is brief context.
+        Use for: opinion, essay, reflection — posts where argument
+        or narrative carries the piece and images are illustrative.
 
-        Structure:
-          1. .post-intro  — 1–3 sentences, full container width
-          2. .gallery-module — remaining images (hero excluded if used)
-
-        Do NOT use .post-body-wrap / .post-body (that is Config A).
+        Prose column: ~680px for comfortable reading line length.
+        Images sit inline within the column as a gallery module.
+        Remove .post-body-wrap / .post-body for Config B.
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         -->
+        <div class="post-body-wrap">
+          <div class="post-body">
 
-        <p class="post-intro">I&#8217;m very excited to say that my work can now be obtained directly from the National Football Museum in Manchester. A selection of my A&#8211;Z prints are already available in their shop and online, and I have plans to increase the range over the next few months.</p>
+            <p>In Oct last year, Coca-Cola announced its &#8216;attached cap&#8217; innovation in the UK. Now, I&#8217;ll be honest with you, this news largely passed me by. It wasn&#8217;t until this modification was expanded to 500ml bottles that it even appeared on my radar &#8212; or to be more accurate, passed silently beneath it.</p>
 
-        <div class="gallery-module">
-          <div class="gallery-grid">
+            <p>The &#8216;innovation&#8217; in question is attempting to solve a debatable problem: how to keep waste bottles and caps together to promote recycling. While a noble cause, I&#8217;d always been brought up to squeeze the air out of a bottle, then reattach the lid to create a vacuum, solving both the lid and cap problem and reducing space in the recycling bin.</p>
 
-            <!-- Item order here determines column flow (top-to-bottom per column).
-                 Tallest images will naturally anchor their column.
-                 Reorder items to balance column heights if needed. -->
-
-            <!-- ITEM 1 — portrait 3:4 -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/nfm1.png" alt="NFM shop interior" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgMzAwIDQwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNjOGM1YmUiLz48dGV4dCB4PSIxNTAiIHk9IjIwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Mzo0IOKAlCBuZm0xLnBuZzwvdGV4dD48L3N2Zz4=" alt="3:4 — nfm1.png" loading="eager" />
+            <!-- OPTIONAL: inline 2-up image pair within prose column -->
+            <div class="gallery-module gallery-module--2up">
+              <div class="gallery-grid">
+                <div class="gallery-item">
+                  <div class="gallery-img-wrap">
+                    <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBib3R0bGUtY2FwLmpwZzwvdGV4dD48L3N2Zz4=" alt="4:3 — bottle cap" loading="lazy" />
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <div class="gallery-img-wrap">
+                    <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNjOGM1YmUiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBib3R0bGUtbGFiZWwuanBnPC90ZXh0Pjwvc3ZnPg==" alt="4:3 — bottle label" loading="lazy" />
+                  </div>
+                </div>
               </div>
             </div>
 
-            <!-- ITEM 2 — landscape 16:9 -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/screenshot-2024-04-01-13.53.49.png" alt="NFM online listing" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNiZmJjYjUiLz48dGV4dCB4PSI0MDAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTY6OSDigJQgc2NyZWVuc2hvdDwvdGV4dD48L3N2Zz4=" alt="16:9 — screenshot" loading="lazy" />
+            <h2>What is the problem you are trying to solve?</h2>
+
+            <p>Is this &#8216;solution&#8217; truly solving a problem that needs addressing? With Coke already voted worst plastic polluter four years running by the nonprofit coalition Break Free From Plastic, wouldn&#8217;t research into plastic alternatives be a better use of time, resources, and money?</p>
+
+            <h2>User Experience / User Needs</h2>
+
+            <p>I&#8217;m happy to be proven wrong but I can&#8217;t believe for a second that user feedback indicated this was an improvement on the previously unattached caps. In fact, I&#8217;d love to read the user research behind it.</p>
+
+            <h2>Form (should) follow function</h2>
+
+            <p>Whilst attaching the cap to the bottle does indeed keep the two items together, it also becomes an annoying appendage that makes drinking from the bottle unnecessarily fussy. Most of the people I spoke to said they ended up ripping the cap from the bottle regardless &#8212; leaving a serrated edge that&#8217;s uncomfortable to drink from.</p>
+
+            <!-- OPTIONAL: single inline image within prose column -->
+            <div class="gallery-module gallery-module--2up">
+              <div class="gallery-grid">
+                <div class="gallery-item">
+                  <div class="gallery-img-wrap">
+                    <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNiZmJjYjUiLz48dGV4dCB4PSI0MDAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTY6OSDigJQgb2xkLW1hbi1jbG91ZC5wbmc8L3RleHQ+PC9zdmc+" alt="16:9 — old man cloud" loading="lazy" />
+                  </div>
+                  <p class="gallery-caption">Sailing dangerously close to &#8216;old man yells at cloud&#8217; territory</p>
+                </div>
               </div>
-              <p class="gallery-caption">Online shop listing</p>
             </div>
 
-            <!-- ITEM 3 — landscape 4:3 -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/nat-foot-museum.png" alt="National Football Museum" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBuYXQtZm9vdC1tdXNldW0ucG5nPC90ZXh0Pjwvc3ZnPg==" alt="4:3 — nat-foot-museum.png" loading="lazy" />
-              </div>
-              <p class="gallery-caption">National Football Museum, Manchester</p>
-            </div>
+            <h2>Good design should be silent</h2>
 
-            <!-- ITEM 4 — landscape 4:3 -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/nfm-shop-2023.jpg" alt="NFM shop 2023" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNjOGM1YmUiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBuZm0tc2hvcC0yMDIzLmpwZzwvdGV4dD48L3N2Zz4=" alt="4:3 — nfm-shop-2023.jpg" loading="lazy" />
-              </div>
-              <p class="gallery-caption">NFM shop, 2023</p>
-            </div>
+            <p>When ring pulls moved from &#8216;pull tabs&#8217; to &#8216;stay-ons&#8217; in 1989, I don&#8217;t recall a marketing campaign or explanations printed on the top of cans. They just worked &#8212; they did not impact the drinking experience but still managed to hit the business objective of reducing litter.</p>
 
-            <!-- ITEM 5 — portrait 2:3 -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/baggio-museum.png" alt="Baggio print on display" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgMzAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNiZmJjYjUiLz48dGV4dCB4PSIxNTAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MjozIOKAlCBiYWdnaW8tbXVzZXVtLnBuZzwvdGV4dD48L3N2Zz4=" alt="2:3 — baggio-museum.png" loading="lazy" />
-              </div>
-              <p class="gallery-caption">Baggio print on display</p>
-            </div>
+            <blockquote>
+              <p>It does give me a certain degree of schadenfreude when I see companies the size of Coke getting design decisions this wrong.</p>
+            </blockquote>
 
-            <!-- ITEM 6 — square 1:1
-                 Added to give all 3 columns meaningful content.
-                 Replace with a real image, or remove if only 5 available —
-                 masonry handles odd counts without an orphaned slot. -->
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <!-- <img class="gallery-img" src="/assets/blog/nfm/prints-detail.jpg" alt="Print detail" loading="lazy" /> -->
-                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNjAwIDYwMCI+PHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSIzMDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MToxIOKAlCBwcmludHMtZGV0YWlsLmpwZzwvdGV4dD48L3N2Zz4=" alt="1:1 — prints-detail.jpg" loading="lazy" />
-              </div>
-            </div>
+            <p>I&#8217;d definitely be interested in others&#8217; thoughts on this, particularly from a product design or comms perspective, but also from a &#8216;business vs user needs&#8217; standpoint too.</p>
 
           </div>
         </div>
-        <!-- END MODULE: IMAGE GALLERY -->
+        <!-- END CONFIG A -->
 
         <!-- ── POST FOOTER — BACK TO BLOG ── -->
         <div class="post-footer">
