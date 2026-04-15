@@ -65,11 +65,7 @@
     .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
 
     .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
-    .post-back { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); margin-bottom:1.75rem; transition:color 0.2s; }
-    .post-back svg { transition:transform 0.2s; }
-    .post-back:hover { color:var(--accent); }
-    .post-back:hover svg { transform:translate(-2px,0); }
-    .post-meta-header { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:1rem; }
+    .post-meta-header { display:flex; flex-direction:column; gap:0.25rem; margin-bottom:1rem; }
     .post-date-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); }
     .post-category-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--accent); }
     .post-category-label::before { content:'Category: '; color:var(--muted); }
@@ -283,10 +279,6 @@
 
         <!-- ── POST HEADER — same in both configs ── -->
         <div class="post-header">
-          <a href="/blog.html" class="post-back" aria-label="Back to blog index">
-            <svg width="12" height="12" viewBox="2 2 12 12" fill="none" aria-hidden="true"><path d="M13 3L3 13M3 13H11M3 13V5" stroke="currentColor" stroke-width="1.4"/></svg>
-            Blog
-          </a>
           <div class="post-meta-header">
             <span class="post-date-label">25 April 2016</span>
             <span class="post-category-label">Recognition</span>
