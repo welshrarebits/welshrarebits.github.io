@@ -19,6 +19,7 @@
       --gap-grid:clamp(1rem,2vw,1.5rem);
       --overlay-bg:rgba(13,13,13,0.9);
       --dialog-close-muted:rgba(255,255,255,0.5);
+      --footer-text:rgba(255,255,255,0.8);
       --footer-text-hover:rgba(255,255,255,1);
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -71,18 +72,24 @@
     .post-category-label::before { content:'Category: '; color:var(--muted); }
     .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
 
-    /* OPTIONAL HERO */
-    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
+    /* OPTIONAL HERO
+       Full-width featured image — echoes the index card thumbnail at larger scale.
+       Tight margin-bottom pulls the prose close, reinforcing continuity from index.
+       Remove this block entirely if no featured image for this post. */
+    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:clamp(1rem,2vw,1.5rem); }
     .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
 
     /*
-      CONFIG A — PROSE BODY
-      680px column for comfortable reading line length.
-      Use for text-led posts: opinion, essay, reflection.
-      Remove for Config B.
+      CONFIG A — INTRO + PROSE BODY
+      First paragraph inside .post-body acts as the intro — same text
+      the reader saw as the excerpt on the index card, now leading into
+      the full article. No separate .post-intro element needed.
+      960px column — comfortable at full desktop width.
     */
     .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,960px) 1fr; }
     .post-body { grid-column:2; }
+    /* First paragraph — intro, echoes index excerpt, slightly larger to bridge hero and body */
+    .post-body p:first-child { font-size:clamp(1rem,1.3vw,1.15rem); color:var(--ink); margin-bottom:1.75em; }
     .post-body p { font-family:var(--sans); font-size:clamp(1rem,1.2vw,1.1rem); font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
     .post-body p:last-child { margin-bottom:0; }
     .post-body h2 { font-family:var(--title); font-size:clamp(1.2rem,2vw,1.5rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
@@ -219,11 +226,11 @@
     footer { background:var(--ink); padding:1.25rem 0; }
     .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
     .footer-links { display:flex; align-items:center; gap:1.5rem; }
-    .footer-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
     .footer-link:hover { color:#fff; }
     .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
     .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
-    .footer-credits-link { color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
     .footer-credits-link:hover { color:#fff; }
     .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
     .skip-link:focus { top:0.5rem; }
@@ -307,7 +314,7 @@
         -->
         <div class="post-hero">
           <!-- <img src="/assets/blog/innovation/hero.png" alt="Coca-Cola attached cap bottle" loading="eager" /> -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyBpbWFnZSDigJQgMTY6OSDigJQgb3B0aW9uYWwsIHJlbW92ZSBibG9jayBpZiBub3QgbmVlZGVkPC90ZXh0Pjwvc3ZnPg==" alt="Hero image placeholder" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyBpbWFnZSDigJQgMTY6OSDigJQgb3B0aW9uYWwsIHJlbW92ZSBibG9jayBpZiBub3QgbmVlZGVkPC90ZXh0Pjwvc3ZnPg==" alt="Hero image placeholder" />
         </div>
         <!-- END OPTIONAL HERO IMAGE -->
 
