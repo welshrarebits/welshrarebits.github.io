@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Re-imagining the GDS &#8216;Good Practice Guides&#8217; &#8212; Steven Welsh</title>
+  <title>Config C — Work Case Study &#8212; Steven Welsh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
@@ -61,92 +61,201 @@
     .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
     .mobile-menu a:hover { color:var(--accent); }
 
-    /* ── SHARED POST STRUCTURE ── */
+    /* ── PAGE STRUCTURE ── */
     main { flex:1; }
     .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
 
-    /* ── POST HEADER ── */
-    .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
-    .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
-    .post-subtitle { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.15rem); font-weight:400; font-style:italic; color:var(--muted); line-height:1.65; margin-top:0.6rem; }
+    /*
+      CONFIG C — SINGLE PROSE COLUMN
+      ─────────────────────────────────────────────────────────────
+      Everything — headings, body text, images — lives inside one
+      centred column. Images may be full column width or side by side
+      within it, but nothing breaks out beyond the column boundary.
+      This matches the nikin.design structural model.
+      ─────────────────────────────────────────────────────────────
+    */
+    .cs-col {
+      max-width:740px;
+      margin:0 auto;
+    }
+
+    /* ── HEADER BLOCK ── */
+    /* Small label + large title + standfirst — no rule below */
+    .cs-label {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label);
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:0.75rem;
+    }
+    .cs-title {
+      font-family:var(--title);
+      font-size:clamp(1.75rem,4vw,2.75rem);
+      font-weight:700;
+      letter-spacing:var(--ls-title);
+      line-height:1.1;
+      color:var(--ink);
+      margin-bottom:0.75rem;
+    }
+    .cs-standfirst {
+      font-family:var(--sans);
+      font-size:clamp(1rem,1.5vw,1.2rem);
+      font-weight:400;
+      line-height:1.7;
+      color:var(--muted);
+      margin-bottom:clamp(1.5rem,3vw,2.5rem);
+    }
 
     /* ── META STRIP ── */
-    .post-meta-strip {
+    /* Sits between header block and opening body text */
+    .cs-meta {
       display:flex;
       flex-wrap:wrap;
-      gap:clamp(1.5rem,4vw,3.5rem);
-      padding:clamp(1.25rem,2.5vw,1.75rem) 0;
+      gap:clamp(1.5rem,4vw,3rem);
+      padding:clamp(1rem,2vw,1.5rem) 0;
+      border-top:1px solid var(--rule);
       border-bottom:1px solid var(--rule);
-      margin-bottom:var(--space-section);
+      margin-bottom:clamp(1.5rem,3vw,2.5rem);
     }
-    .post-meta-item { display:flex; flex-direction:column; gap:0.2rem; }
-    .post-meta-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--muted); }
-    .post-meta-value { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--strong); }
-
-    /* ── HERO ── */
-    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
-    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
-
-    /*
-      CONFIG C — LAYOUT MODEL
-      ─────────────────────────────────────────────────────────────
-      Prose: centred 680px column via .post-body-wrap grid.
-      Galleries: sit outside .post-body-wrap at container level,
-      rendering full container width between prose blocks.
-      ─────────────────────────────────────────────────────────────
-    */
-    .post-body-wrap {
-      display:grid;
-      grid-template-columns:1fr minmax(0,680px) 1fr;
-      margin-bottom:var(--space-section);
+    .cs-meta-item { display:flex; flex-direction:column; gap:0.2rem; }
+    .cs-meta-label {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-meta);
+      text-transform:uppercase;
+      color:var(--muted);
     }
-    .post-body { grid-column:2; }
+    .cs-meta-value {
+      font-family:var(--sans);
+      font-size:var(--fs-sm);
+      font-weight:400;
+      color:var(--strong);
+    }
 
-    /* Lead paragraph — standfirst */
-    .post-body p:first-child { font-size:1.15rem; color:var(--ink); line-height:1.75; margin-bottom:1.75em; }
+    /* ── BODY TEXT ── */
+    .cs-col p {
+      font-family:var(--sans);
+      font-size:1rem;
+      font-weight:400;
+      line-height:1.8;
+      color:var(--strong);
+      margin-bottom:1.5em;
+    }
+    .cs-col p:last-child { margin-bottom:0; }
 
-    .post-body p { font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
-    .post-body p:last-child { margin-bottom:0; }
-
+    /* ── HEADINGS ── */
     /* h2 — section chapter marker */
-    .post-body h2 { font-family:var(--title); font-size:clamp(1.25rem,2vw,1.6rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
+    .cs-col h2 {
+      font-family:var(--title);
+      font-size:clamp(1.2rem,2vw,1.5rem);
+      font-weight:700;
+      letter-spacing:var(--ls-title);
+      line-height:1.2;
+      color:var(--ink);
+      margin-top:2.5em;
+      margin-bottom:0.75em;
+    }
+    /* h3 — decision / sub-section label */
+    .cs-col h3 {
+      font-family:var(--sans);
+      font-size:1.1rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:var(--ls-label);
+      color:var(--strong);
+      margin-top:2em;
+      margin-bottom:0.5em;
+    }
 
-    /* h3 — decision or sub-section label */
-    .post-body h3 { font-family:var(--sans); font-size:1.1rem; font-weight:700; text-transform:uppercase; letter-spacing:var(--ls-label); color:var(--strong); margin-top:2em; margin-bottom:0.5em; }
+    /* ── LISTS ── */
+    .cs-col ul, .cs-col ol { padding-left:1.25em; margin-bottom:1.5em; }
+    .cs-col ul { list-style:disc; }
+    .cs-col ol { list-style:decimal; }
+    .cs-col li { font-family:var(--sans); font-size:1rem; line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
 
-    .post-body ul, .post-body ol { padding-left:1.25em; margin-bottom:1.5em; }
-    .post-body ul { list-style:disc; }
-    .post-body ol { list-style:decimal; }
-    .post-body li { font-family:var(--sans); font-size:1rem; line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
+    /* ── BLOCKQUOTE ── */
+    .cs-col blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.75em 0 0.75em 1.5em; }
+    .cs-col blockquote p { font-style:italic; color:var(--muted); margin-bottom:0; }
+    .cs-col blockquote cite { display:block; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--muted); margin-top:0.75em; font-style:normal; }
 
-    .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.75em 0 0.75em 1.5em; }
-    .post-body blockquote p { font-size:1rem; font-style:italic; color:var(--muted); margin-bottom:0; }
-    .post-body blockquote cite { display:block; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--muted); margin-top:0.75em; font-style:normal; }
+    /* ── LINKS ── */
+    .cs-col a { border-bottom:1px solid var(--rule); transition:color 0.2s,border-color 0.2s; }
+    .cs-col a:hover { color:var(--accent); border-color:var(--accent); }
 
-    .post-body hr { border:none; border-top:1px solid var(--rule); margin:2.5em 0; }
-    .post-body a { border-bottom:1px solid var(--rule); transition:color 0.2s,border-color 0.2s; }
-    .post-body a:hover { color:var(--accent); border-color:var(--accent); }
-
+    /* ── IMAGES — INLINE WITHIN COLUMN ── */
     /*
-      GALLERY MODULE — full container width
-      ─────────────────────────────────────────────────────────────
-      Sits between .post-body-wrap blocks at container level.
-      CSS columns masonry: 3-col default, 2-col, full-width.
-      ─────────────────────────────────────────────────────────────
+      All images sit inside .cs-col — they are bounded by the column.
+      Three display modes:
+
+      .cs-img-full    — full column width, single image
+      .cs-img-2up     — two images side by side within the column
+      .cs-img-3up     — three images side by side within the column
+
+      Caption sits below the image block, full width of that block.
     */
-    .gallery-module { width:100%; margin:var(--space-section) 0; }
-    .gallery-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); padding-bottom:0.875rem; border-bottom:1px solid var(--rule); margin-bottom:var(--gap-grid); }
-    .gallery-grid { column-count:3; column-gap:var(--gap-grid); }
-    .gallery-module--2up .gallery-grid { column-count:2; }
-    .gallery-module--full .gallery-grid { column-count:1; }
-    .gallery-item { break-inside:avoid; -webkit-column-break-inside:avoid; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:var(--gap-grid); }
-    .gallery-img-wrap { width:100%; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); }
-    .gallery-img { width:100%; height:auto; display:block; opacity:0.9; transition:opacity 0.25s ease; }
-    .gallery-img:hover { opacity:1; }
-    .gallery-caption { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); line-height:1.5; }
+    .cs-img { margin:var(--space-section) 0; }
+    .cs-img:first-child { margin-top:0; }
+
+    /* Full width */
+    .cs-img-full .cs-img-wrap { width:100%; }
+
+    /* 2-up */
+    .cs-img-2up .cs-img-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:var(--gap-grid);
+    }
+
+    /* 3-up */
+    .cs-img-3up .cs-img-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:var(--gap-grid);
+    }
+
+    .cs-img-wrap {
+      overflow:hidden;
+      background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%);
+    }
+    .cs-img-wrap img {
+      width:100%;
+      height:auto;
+      display:block;
+      opacity:0.9;
+      transition:opacity 0.25s ease;
+    }
+    .cs-img-wrap img:hover { opacity:1; }
+    .cs-img-wrap img[data-enlargeable] { cursor:zoom-in; }
+
+    /* Placeholder visible when no image src provided */
+    .cs-img-placeholder {
+      width:100%;
+      aspect-ratio:16/9;
+      background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .cs-img-placeholder span {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label);
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    /* Shared caption — sits below the image block */
+    .cs-img-caption {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-meta);
+      color:var(--muted);
+      line-height:1.5;
+      margin-top:0.625rem;
+    }
 
     /* ── LIGHTBOX ── */
-    .gallery-img[data-enlargeable] { cursor:zoom-in; }
     .ps-img-dialog { position:fixed; inset:0; width:100%; height:100%; max-width:100%; max-height:100%; margin:0; padding:2rem; background:transparent; border:none; display:none; align-items:center; justify-content:center; }
     .ps-img-dialog:focus { outline:none; }
     .ps-img-dialog[open] { display:flex; }
@@ -157,7 +266,7 @@
 
     /* ── BACK BUTTON ── */
     .post-footer { padding-top:var(--space-section); border-top:1px solid var(--rule); margin-top:clamp(3rem,5vw,4.5rem); }
-    .post-back-btn { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:none; border:1px solid var(--ink); color:var(--ink); padding:0.65rem 1.5rem; cursor:pointer; transition:color 0.2s, border-color 0.2s; -webkit-appearance:none; appearance:none; display:inline-block; text-decoration:none; }
+    .post-back-btn { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:none; border:1px solid var(--ink); color:var(--ink); padding:0.65rem 1.5rem; cursor:pointer; transition:color 0.2s,border-color 0.2s; -webkit-appearance:none; appearance:none; display:inline-block; text-decoration:none; }
     .post-back-btn:hover { color:var(--accent); border-color:var(--accent); }
 
     /* ── FOOTER & MODALS ── */
@@ -195,14 +304,11 @@
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
     }
-    @media (max-width:760px) {
-      .post-body-wrap { grid-template-columns:1fr; }
-      .post-body { grid-column:1; }
-      .gallery-grid { column-count:2; }
+    @media (max-width:600px) {
+      .cs-img-2up .cs-img-grid { grid-template-columns:1fr; }
+      .cs-img-3up .cs-img-grid { grid-template-columns:1fr; }
     }
     @media (max-width:540px) {
-      .gallery-grid,
-      .gallery-module--2up .gallery-grid { column-count:1; }
       .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
     }
   </style>
@@ -249,220 +355,167 @@
   <main id="main">
     <div class="post-wrap">
       <div class="container">
+        <div class="cs-col">
 
-        <!-- ── POST HEADER ── -->
-        <div class="post-header">
-          <h1 class="post-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1>
-          <p class="post-subtitle">An investigation into the elasticity of identity verification.</p>
-        </div>
+          <!-- ── HEADER BLOCK ── -->
+          <p class="cs-label">Case study</p>
+          <h1 class="cs-title"><!-- EDIT: Case study title --></h1>
+          <p class="cs-standfirst"><!-- EDIT: One sentence standfirst — the core problem or proposition --></p>
 
-        <!-- ── META STRIP ── -->
-        <div class="post-meta-strip">
-          <div class="post-meta-item">
-            <span class="post-meta-label">Client</span>
-            <span class="post-meta-value">Department for Work &amp; Pensions (DWP)</span>
-          </div>
-          <div class="post-meta-item">
-            <span class="post-meta-label">Role</span>
-            <span class="post-meta-value">Senior Identity &amp; Trust Specialist</span>
-          </div>
-          <div class="post-meta-item">
-            <span class="post-meta-label">Area</span>
-            <span class="post-meta-value">Identity &amp; Trust</span>
-          </div>
-          <div class="post-meta-item">
-            <span class="post-meta-label">Year</span>
-            <span class="post-meta-value">2022</span>
-          </div>
-        </div>
-
-        <!-- ── HERO IMAGE ── -->
-        <div class="post-hero">
-          <img src="https://welshrarebits.github.io/assets/thumbnails/work/gpg.png" alt="Good Practice Guide redesign" loading="eager" />
-        </div>
-
-        <!--
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        CONFIG C — BODY
-        Prose blocks (.post-body-wrap) and gallery modules alternate
-        at container level. Galleries render full container width;
-        prose is constrained to 680px centred column.
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        -->
-
-        <!-- PROSE: intro + problem -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <p>In 2012 GDS published its series of Good Practice Guides (GPGs) for providers of identity assurance to Government Services: <a href="https://example.com/documentation">GPG 43</a> (Requirements for Secure Delivery of Online Public Services), <a href="https://example.com/tutorials">GPG 44</a> (Authentication Credentials in Support of HMG Online Services), and <a href="https://example.com/support">GPG 45</a> (Validating and Verifying the Identity of an Individual). In my previous roles as both a Product Manager and later as an Identity &amp; Trust Specialist, these became critical documents for me to understand, reference and articulate to others.</p>
-            <p>However, GPG 45 weighed in at 33 pages (8,972 words), including a 29-page sub-section with 32 individual ID profiles presented as tabular data. These were not considered the most accessible of reads &#8212; even by their own admission, the Cabinet Office recognised the documents as being &#8220;necessarily quite technical&#8221;.</p>
-            <h2>Reframing the problem</h2>
-            <p>I had already seen a couple of attempts to re-frame this information. The digital consultancy Hippo, for example, opted for a Lego bricks analogy. But this interpretation always seemed far too rigid, especially when dealing with a concept as fluid as identity. Whilst the bricks were meant to be interchangeable, I couldn&#8217;t shake the feeling that this should be more about depth and breadth rather than height.</p>
-          </div>
-        </div>
-
-        <!-- GALLERY: Hippo Lego analogy -->
-        <div class="gallery-module gallery-module--full">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/hippo_lego.png" alt="Lego bricks analogy for GPG 45" loading="lazy" />
-              </div>
-              <p class="gallery-caption">Hippo&#8217;s Lego bricks interpretation of GPG 45</p>
+          <!-- ── META STRIP ── -->
+          <!--
+            Four fields: Client, Role, Area, Year.
+            Remove any .cs-meta-item not applicable to this piece.
+          -->
+          <div class="cs-meta">
+            <div class="cs-meta-item">
+              <span class="cs-meta-label">Client</span>
+              <span class="cs-meta-value"><!-- EDIT --></span>
+            </div>
+            <div class="cs-meta-item">
+              <span class="cs-meta-label">Role</span>
+              <span class="cs-meta-value"><!-- EDIT --></span>
+            </div>
+            <div class="cs-meta-item">
+              <span class="cs-meta-label">Area</span>
+              <span class="cs-meta-value"><!-- EDIT --></span>
+            </div>
+            <div class="cs-meta-item">
+              <span class="cs-meta-label">Year</span>
+              <span class="cs-meta-value"><!-- EDIT --></span>
             </div>
           </div>
-        </div>
 
-        <!-- PROSE: approach + language one-pagers -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>What did I do about it?</h2>
-            <p>I focussed on creating a framework that could literally &#8216;flex&#8217;. After all, an identity can be challenged in a variety of ways, for a variety of reasons and across a variety of different channels. My focus was less about <em>how</em> to achieve a certain score and more about <em>why</em> that score was best suited to certain scenarios and factors.</p>
-            <p>I also wanted to pay particular attention to language, since my early research had shown this was the number one reason for stakeholder assumptions. The difference between verification, validation and authentication, for example, was a recurring and lengthy bone of contention. To address these unnecessary distractions, I created a couple of one-pagers which sought to cut through the noise, acting as anchors for discussions and stakeholder alignment.</p>
-          </div>
-        </div>
+          <!-- ── OPENING BODY TEXT ── -->
+          <!--
+            Two or three paragraphs setting up the problem context.
+            No heading above these — they flow directly from the meta strip.
+          -->
+          <p><!-- EDIT: opening paragraph — context and problem --></p>
+          <p><!-- EDIT: second paragraph — scale, constraints, or stakes --></p>
 
-        <!-- GALLERY: know/have/are + 5 elements -->
-        <div class="gallery-module gallery-module--2up">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/know_have_are.png" alt="Principles of identity verification" loading="lazy" />
-              </div>
-              <p class="gallery-caption">Principles of identity verification</p>
+          <!-- ── FULL-WIDTH IMAGE ── -->
+          <!--
+            First image — typically a hero shot of the output or context.
+            Full column width. Caption required.
+            Replace .cs-img-placeholder with an <img> tag when image is available.
+          -->
+          <div class="cs-img cs-img-full">
+            <div class="cs-img-wrap">
+              <div class="cs-img-placeholder"><span>Image — 16:9 or natural ratio</span></div>
+              <!-- <img src="/assets/work/your-project/hero.jpg" alt="Descriptive alt text" loading="lazy" /> -->
             </div>
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/5_elements.png" alt="The 5 elements of identity verification" loading="lazy" />
-              </div>
-              <p class="gallery-caption">The 5 elements of identity verification</p>
+            <p class="cs-img-caption"><!-- EDIT: caption --></p>
+          </div>
+
+          <!-- ── SECTION: h2 + short paragraph ── -->
+          <!--
+            First h2 section — typically a high-level summary of the
+            approach or judgement call. Short: one or two paragraphs.
+          -->
+          <h2><!-- EDIT: Section heading e.g. "The approach" --></h2>
+          <p><!-- EDIT: paragraph --></p>
+
+          <!-- ── SECTION: h2 with h3 sub-sections ── -->
+          <!--
+            Second h2 — a chapter that contains multiple decisions,
+            each introduced by an h3. Each h3 block may or may not
+            have an image. Add or remove h3 blocks as needed.
+          -->
+          <h2><!-- EDIT: Section heading e.g. "Design decisions" --></h2>
+
+          <!-- h3 block — no image -->
+          <h3><!-- EDIT: Decision label e.g. "Starting with research" --></h3>
+          <p><!-- EDIT: paragraph --></p>
+
+          <!-- h3 block — with inline image -->
+          <h3><!-- EDIT: Decision label --></h3>
+          <p><!-- EDIT: paragraph --></p>
+          <div class="cs-img cs-img-full">
+            <div class="cs-img-wrap">
+              <div class="cs-img-placeholder"><span>Image — full column width</span></div>
+              <!-- <img src="/assets/work/your-project/image.jpg" alt="" loading="lazy" /> -->
             </div>
+            <p class="cs-img-caption"><!-- EDIT: caption --></p>
           </div>
-        </div>
 
-        <!-- PROSE: research -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>Research &amp; Collaboration</h2>
-            <p>With these footholds in place, I was then able to return to my initial goal of finding a framework that flexed. In the interests of working in the open, I&#8217;ve managed to find some of my original notes and general musings from the numerous meetings I arranged at the time.</p>
-          </div>
-        </div>
+          <!-- h3 block — no image -->
+          <h3><!-- EDIT: Decision label --></h3>
+          <p><!-- EDIT: paragraph --></p>
 
-        <!-- GALLERY: hand-written notes -->
-        <div class="gallery-module gallery-module--full">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/scribbles.png" alt="Original hand-written notes" loading="lazy" />
-              </div>
-              <p class="gallery-caption">Original hand-written notes from early research sessions</p>
+          <!-- h3 block — with inline image -->
+          <h3><!-- EDIT: Decision label --></h3>
+          <p><!-- EDIT: paragraph --></p>
+          <div class="cs-img cs-img-full">
+            <div class="cs-img-wrap">
+              <div class="cs-img-placeholder"><span>Image — full column width</span></div>
+              <!-- <img src="/assets/work/your-project/image.jpg" alt="" loading="lazy" /> -->
             </div>
+            <p class="cs-img-caption"><!-- EDIT: caption --></p>
           </div>
-        </div>
 
-        <!-- PROSE: divergent thinking -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>Divergent thinking</h2>
-            <p>What started to emerge from those early brain dumps was a series of triangular patterns reflecting the different phases within the identity verification process. These patterns needed to be encompassed by all 5 key elements of GPG, which conveniently lent themselves to a pentagon. The following images were my first attempts to transfer those relatively chaotic meeting notes into a usable framework.</p>
-            <p>However, the 5 GPG components were still just &#8216;points on my pentagon&#8217; for want of a better phrase. They were linked but they didn&#8217;t illustrate the &#8216;flex&#8217; that I felt was crucial in telling this story. As a side note, my diagram had also started to look, at best, like a conspiracy theorist&#8217;s wall &#8212; or, at worst, like some kind of occult iconography. So I decided to pare things back once more.</p>
-          </div>
-        </div>
-
-        <!-- GALLERY: triangles + post-its -->
-        <div class="gallery-module gallery-module--2up">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/triangles_within_pentagon.png" alt="Triangular patterns within a pentagon" loading="lazy" />
+          <!-- h3 block — with 3-up image row -->
+          <h3><!-- EDIT: Decision label --></h3>
+          <p><!-- EDIT: paragraph --></p>
+          <div class="cs-img cs-img-3up">
+            <div class="cs-img-grid">
+              <div class="cs-img-wrap">
+                <div class="cs-img-placeholder"><span>Image 1</span></div>
+                <!-- <img src="/assets/work/your-project/image-1.jpg" alt="" loading="lazy" /> -->
               </div>
-              <p class="gallery-caption">Triangular patterns emerging from early sessions</p>
-            </div>
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/pentagon_post_its.png" alt="Pentagon framework on post-its" loading="lazy" />
+              <div class="cs-img-wrap">
+                <div class="cs-img-placeholder"><span>Image 2</span></div>
+                <!-- <img src="/assets/work/your-project/image-2.jpg" alt="" loading="lazy" /> -->
               </div>
-              <p class="gallery-caption">First attempts to transfer notes into a usable framework</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROSE: new approach + scoring system -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>Taking a new approach</h2>
-            <p>I shifted my attention back to the scoring system that underpinned the guides. Each of the 5 GPG elements are scored against a Profile Criteria made up of three components: Level of Confidence required (Low, Med, High); Pieces of evidence presented (1, 2, 3 etc); and a Profile ID matching specific GPG scoring thresholds (A, B, C etc). So for an ID challenge requiring medium confidence with one piece of evidence meeting Profile A thresholds, you would be permitted to accept &#8216;M1A&#8217;.</p>
-            <p>With 32 profiles to choose from, I needed to show not only how these scores could be achieved but also how they could be augmented. It was this elusive &#8216;flex&#8217; between channels and scenarios that, for me, was lost in the detail of the existing documentation.</p>
-          </div>
-        </div>
-
-        <!-- GALLERY: M1A profile -->
-        <div class="gallery-module gallery-module--full">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/m1a.png" alt="Profile M1A represented as a pentagon radar diagram" loading="lazy" />
+              <div class="cs-img-wrap">
+                <div class="cs-img-placeholder"><span>Image 3</span></div>
+                <!-- <img src="/assets/work/your-project/image-3.jpg" alt="" loading="lazy" /> -->
               </div>
-              <p class="gallery-caption">Profile M1A &#8212; pentagon as pattern rather than score</p>
             </div>
+            <p class="cs-img-caption"><!-- EDIT: shared caption for image group --></p>
           </div>
-        </div>
 
-        <!-- PROSE: flex between channels -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>The flex between channels</h2>
-            <p>Reintroducing the pentagon was the eureka moment. I could now discuss M1A (red) as a pattern rather than a score. To see the true value of this framework, I needed to treat it like a radar diagram and overlay channel-specific scenarios (blue).</p>
-            <p>In the theoretical example below, a citizen uses their passport as a singular piece of evidence in a face-to-face scenario. The relative strength, validity, verification, activity over time and counter-fraud checks all score highly, with many exceeding the M1A thresholds &#8212; mainly due to the number of ways evidence can be checked face-to-face: photo, watermarks, hologram patches, fluorescent pages, biometric chip, laser-perforated numbers.</p>
-            <p>The comparison below shows the same passport used in a telephony challenge instead. Despite the pattern constricting, most elements remain within M1A limits for verification, validity, activity and counter-fraud. However, it falls short in the &#8216;Strength&#8217; category, moving from 4 to 2. The evidence itself has not become &#8216;weaker&#8217; &#8212; it is still a valid UK passport. It&#8217;s the ways in which that document can be checked via this channel that has reduced its score.</p>
-          </div>
-        </div>
+          <!-- ── SECTION: h2 + bullet list — impact/outcomes ── -->
+          <!--
+            Outcomes section. Bullet list preferred over prose —
+            scannable, each item a concrete result.
+          -->
+          <h2><!-- EDIT: Section heading e.g. "Impact" --></h2>
+          <ul>
+            <li><!-- EDIT: outcome --></li>
+            <li><!-- EDIT: outcome --></li>
+            <li><!-- EDIT: outcome --></li>
+            <li><!-- EDIT: outcome --></li>
+          </ul>
 
-        <!-- GALLERY: side by side channel comparison -->
-        <div class="gallery-module gallery-module--full">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/side_by_side.png" alt="Comparison of face-to-face and telephony profiles" loading="lazy" />
+          <!-- 2-up image row — optional, follows impact list -->
+          <div class="cs-img cs-img-2up">
+            <div class="cs-img-grid">
+              <div class="cs-img-wrap">
+                <div class="cs-img-placeholder"><span>Image 1</span></div>
+                <!-- <img src="/assets/work/your-project/image-a.jpg" alt="" loading="lazy" /> -->
               </div>
-              <p class="gallery-caption">Face-to-face vs telephony &#8212; the same evidence, different channel, different pattern</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROSE: output -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <h2>Output &amp; Impact</h2>
-            <p>Of the 32 profiles available, the image below shows only a small cross-section. Since each profile needs to be created through 3 different lenses (face-to-face, telephony and digital), a complete set would require 96 radar diagrams in total. The 4 profiles shown are M1A, M1B, M1C and M1D.</p>
-          </div>
-        </div>
-
-        <!-- GALLERY: multiple profiles -->
-        <div class="gallery-module gallery-module--full">
-          <div class="gallery-grid">
-            <div class="gallery-item">
-              <div class="gallery-img-wrap">
-                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/multiple_profiles.png" alt="Cross-section of multiple GPG profiles" loading="lazy" />
+              <div class="cs-img-wrap">
+                <div class="cs-img-placeholder"><span>Image 2</span></div>
+                <!-- <img src="/assets/work/your-project/image-b.jpg" alt="" loading="lazy" /> -->
               </div>
-              <p class="gallery-caption">A cross-section of profiles &#8212; M1A, M1B, M1C and M1D</p>
             </div>
+            <p class="cs-img-caption"><!-- EDIT: shared caption --></p>
           </div>
-        </div>
 
-        <!-- PROSE: outcome + quote -->
-        <div class="post-body-wrap">
-          <div class="post-body">
-            <p>The introduction of this flexible framework allowed stakeholders to consider identity verification in a far more visual way &#8212; worrying less about scores and focusing more on best fit. If a certain pattern looked out of place, it prompted discussions that may have been overlooked when faced with a wall of numbers instead.</p>
-            <p>The final output earned a nomination for reward and recognition, approved by the Identity &amp; Trust Deputy Director.</p>
-            <blockquote>
-              <p>Steve joined the Policy Team on an EOI and hit the ground running, making an immediate positive impact for stakeholders and colleagues. Notably, he utilised his design skills to prepare new GPG educational material for use with colleagues in wider directorates. His fresh ideas and approach have been both welcomed and highlighted by the Policy Team.</p>
-              <cite>ID&amp;T Deputy Director</cite>
-            </blockquote>
-          </div>
-        </div>
-        <!-- END CONFIG C -->
+          <!-- ── OPTIONAL BLOCKQUOTE ── -->
+          <!--
+            Remove if no direct quote available.
+          -->
+          <blockquote>
+            <p><!-- EDIT: quote text --></p>
+            <cite><!-- EDIT: attribution --></cite>
+          </blockquote>
+
+        </div><!-- /.cs-col -->
 
         <!-- ── POST FOOTER — BACK TO WORK ── -->
+        <!-- Sits outside .cs-col — full container width -->
         <div class="post-footer">
           <a href="/work.html" class="post-back-btn">&#8592; Back to work</a>
         </div>
@@ -527,7 +580,7 @@
       });
   </script>
 
-  <!-- Lightbox — wired directly since dialog is in the page, not the footer -->
+  <!-- Lightbox -->
   <script>
     (function() {
       var imgDialog      = document.getElementById('ps-img-dialog');
@@ -535,7 +588,7 @@
       var imgDialogClose = document.getElementById('ps-img-dialog-close');
 
       function checkEnlargeable(img) {
-        if (img.naturalWidth  > img.offsetWidth  * 1.0 ||
+        if (img.naturalWidth > img.offsetWidth * 1.0 ||
             img.naturalHeight > img.offsetHeight * 1.0) {
           img.setAttribute('data-enlargeable', '');
         } else {
@@ -543,7 +596,7 @@
         }
       }
 
-      document.querySelectorAll('.gallery-img').forEach(function(img) {
+      document.querySelectorAll('.cs-img-wrap img').forEach(function(img) {
         if (img.complete && img.naturalWidth > 0) {
           checkEnlargeable(img);
         } else {
@@ -555,14 +608,14 @@
       window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-          document.querySelectorAll('.gallery-img').forEach(checkEnlargeable);
+          document.querySelectorAll('.cs-img-wrap img').forEach(checkEnlargeable);
         }, 150);
       });
 
       document.addEventListener('click', function(e) {
         var img = e.target;
         if (!img || img.tagName !== 'IMG') return;
-        if (!img.classList.contains('gallery-img')) return;
+        if (!img.closest('.cs-img-wrap')) return;
         if (!img.hasAttribute('data-enlargeable')) return;
         e.stopPropagation();
         imgDialogImg.src = img.src;
