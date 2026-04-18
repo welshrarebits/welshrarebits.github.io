@@ -66,10 +66,6 @@
     .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
 
     .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
-    .post-meta-header { display:flex; flex-direction:column; gap:0.25rem; margin-bottom:1rem; }
-    .post-date-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); }
-    .post-category-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--accent); }
-    .post-category-label::before { content:'Category: '; color:var(--muted); }
     .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
     .post-subtitle { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.15rem); font-weight:400; font-style:italic; color:var(--muted); line-height:1.65; margin-top:0.6rem; }
 
@@ -102,7 +98,7 @@
     .post-body ul { list-style:disc; }
     .post-body ol { list-style:decimal; }
     .post-body li { font-family:var(--sans); font-size:1rem; line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
-    .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.5em 0 0.5em 1.5em; }
+    .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.75em 0 0.75em 1.5em; }
     .post-body blockquote p { font-style:italic; color:var(--muted); margin-bottom:0; }
     .post-body blockquote cite { display:block; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--muted); margin-top:0.75em; font-style:normal; }
     .post-body hr { border:none; border-top:1px solid var(--rule); margin:2.5em 0; }
@@ -229,10 +225,6 @@
 
         <!-- ── POST HEADER ── -->
         <div class="post-header">
-          <div class="post-meta-header">
-            <span class="post-date-label">2022</span>
-            <span class="post-category-label">Identity &amp; Trust</span>
-          </div>
           <h1 class="post-title">Re-imagining the GDS &#8216;Good Practice Guides&#8217;</h1>
           <p class="post-subtitle">An investigation into the elasticity of identity verification.</p>
         </div>
