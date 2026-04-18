@@ -97,7 +97,7 @@
     }
     .post-intro-text {
       font-family:var(--sans);
-      font-size:clamp(1rem,1.2vw,1.1rem);
+      font-size:1rem;
       font-weight:400;
       line-height:1.8;
       color:var(--strong);
@@ -116,8 +116,8 @@
     .post-intro-img[data-enlargeable] { cursor:zoom-in; }
     .post-intro-img:hover { opacity:1; }
 
-    @media (max-width:640px) {
-      /* Stack at narrow viewports — image drops below text,
+    @media (max-width:768px) {
+      /* Stack at tablet width — image drops below text,
          then fills full width, giving a hero-like treatment */
       .post-intro-wrap {
         grid-template-columns:1fr;
