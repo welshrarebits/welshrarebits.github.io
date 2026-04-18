@@ -16,6 +16,9 @@
       padding-top: var(--spacing-6);
     }
 
+    /* home-link is an <a> (inline by default); margin-bottom only works on block elements */
+    .home-link { display: block; }
+
     .header-nav { border-bottom: none; padding-bottom: 0; }
     .header-nav .wrapper {
       border-bottom: var(--border-thick) solid var(--color-border);
@@ -80,9 +83,9 @@
       <!-- ── Page heading ────────────────────────── -->
       <div class="intro">
         <span class="headline-caption font-size-1">Case study</span>
-        <h1 class="font-size-4">Design Guide</h1>
+        <h1 class="font-size-4">Project Title</h1>
         <p class="lead-paragraph">
-          Consolidating fragmented design guidance into a single source of truth for GOV.UK web and publishing teams
+          A short, compelling summary of the project — what problem it solved and for whom. Keep this to one or two sentences.
         </p>
 
         <p>
