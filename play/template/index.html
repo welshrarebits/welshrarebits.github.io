@@ -28,14 +28,20 @@
         this max-width. The page is one document-width column.
       */
       --col:1024px;
-      --pad:clamp(1.25rem,5vw,3rem);
+      --pad:0;
+    }
+    .col {
+      width:90%;
+      max-width:var(--col);
+      margin:0 auto;
+      padding:0;
     }
 
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
     body {
       background:var(--bg); color:var(--ink);
-      font-family:var(--sans); font-size:1rem; font-weight:400;
+      font-family:var(--sans); font-size:1.1875rem; font-weight:400;
       line-height:1.5; -webkit-font-smoothing:antialiased;
       overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column;
     }
@@ -46,12 +52,6 @@
       Single centred column — everything sits inside this.
       Nav, content and footer share the same left/right edges.
     */
-    .col {
-      width:100%;
-      max-width:var(--col);
-      margin:0 auto;
-      padding:0 var(--pad);
-    }
 
     /* ── NAV ── */
     .site-header {
@@ -106,7 +106,7 @@
       font-weight:400; color:var(--muted);
       line-height:var(--lh-tight); pointer-events:none;
     }
-    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .header-rule { border:none; border-top:5px solid var(--ink); }
 
     /* Mobile nav */
     .nav-hamburger {
