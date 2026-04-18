@@ -1,1 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Config B — Image-led Post &#8212; Steven Welsh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#f5f4f0; --ink:#0d0d0d; --strong:#4a4a4a; --muted:#6b6b6b;
+      --accent:#c8320a; --rule:#d4d2cc; --placeholder:#c8c5be;
+      --max:1400px; --pad:clamp(1.25rem,4vw,3rem);
+      --mono:'DM Mono',monospace; --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --title:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --fs-xs:0.688rem; --fs-sm:0.813rem;
+      --lh-tight:1.45; --ls-label:0.1em; --ls-title:-0.02em; --ls-meta:0.08em;
+      --space-section:clamp(1.5rem,3vw,2.5rem);
+      --gap-grid:clamp(1rem,2vw,1.5rem);
+      --overlay-bg:rgba(13,13,13,0.9);
+      --dialog-close-muted:rgba(255,255,255,0.5);
+      --footer-text:rgba(255,255,255,0.8);
+      --footer-text-hover:rgba(255,255,255,1);
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
+    .container { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
+    /* ── NAV ── */
+    .site-header { position:sticky; top:0; z-index:100; background:var(--bg); padding-top:1.25rem; }
+    .header-inner { display:grid; grid-template-columns:repeat(12,1fr); gap:0 clamp(1rem,2vw,1.5rem); align-items:start; padding-bottom:1rem; }
+    .header-identity { grid-column:1/4; display:flex; flex-direction:row; align-items:flex-start; gap:0.75rem; }
+    .header-logo-placeholder { width:77px; height:77px; background:var(--rule); flex-shrink:0; }
+    .header-identity-text { display:flex; flex-direction:column; gap:0.35rem; }
+    .header-logo { font-family:var(--sans); font-size:0.875rem; font-weight:700; letter-spacing:0.01em; color:var(--strong); line-height:1.2; text-transform:uppercase; }
+    .header-location { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); }
+    .header-nav { grid-column:7/13; display:flex; justify-content:flex-end; }
+    .header-nav-links { display:flex; gap:clamp(1.5rem,3vw,3.5rem); align-items:start; }
+    .nav-item { display:flex; flex-direction:column; gap:0.35rem; position:relative; }
+    @supports (grid-template-columns: subgrid) {
+      .header-nav { display:grid; grid-template-columns:subgrid; align-items:start; }
+      .header-nav-links { display:grid; grid-template-columns:repeat(5,auto); gap:0 clamp(1.5rem,3vw,3.5rem); justify-content:end; grid-column:1/7; align-items:start; }
+    }
+    .nav-item-label { font-family:var(--sans); font-size:0.875rem; font-weight:700; color:var(--strong); line-height:1.2; transition:color 0.2s; text-transform:uppercase; letter-spacing:0.05em; }
+    .nav-item-label::after { content:""; position:absolute; inset:0; }
+    .nav-item-label:hover { color:var(--accent); }
+    .nav-item-label.active { color:var(--accent); }
+    .nav-item-desc { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--muted); line-height:var(--lh-tight); pointer-events:none; }
+    .header-rule { border:none; border-top:1px solid var(--rule); }
+    .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; grid-column:12/13; justify-self:end; }
+    .nav-hamburger span { display:block; width:22px; height:1px; background:var(--ink); transition:transform 0.3s,opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:99; padding:5rem var(--pad) 3rem; flex-direction:column; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close { position:absolute; top:1.25rem; right:var(--pad); font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--muted); }
+    .mobile-menu a { font-family:var(--sans); font-size:clamp(2rem,8vw,3rem); font-weight:300; border-bottom:1px solid var(--rule); padding:1rem 0; letter-spacing:-0.02em; color:var(--ink); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--accent); }
+
+    /* ── SHARED POST STRUCTURE ── */
+    main { flex:1; }
+    .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
+
+    .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
+    .post-meta-header { display:flex; flex-direction:column; gap:0.25rem; margin-bottom:1rem; }
+    .post-date-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); }
+    .post-category-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--accent); }
+    .post-category-label::before { content:'Category: '; color:var(--muted); }
+    .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
+
+    /* OPTIONAL HERO */
+    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
+    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
+    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    /*
+      CONFIG B — INTRO TEXT
+      Full container width — no column constraint.
+      Short by nature (1–3 sentences). Line length is comfortable
+      at this length without a reading-width cap.
+    */
+    .post-intro {
+      font-family:var(--sans);
+      font-size:clamp(1rem,1.2vw,1.1rem);
+      font-weight:400;
+      line-height:1.8;
+      color:var(--strong);
+      margin-bottom:var(--space-section);
+    }
+
+    /* ── GALLERY MODULE — CSS COLUMNS MASONRY ── */
+    .gallery-module { width:100%; margin:var(--space-section) 0; }
+    .gallery-module:first-of-type { margin-top:0; }
+    .gallery-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); padding-bottom:0.875rem; border-bottom:1px solid var(--rule); margin-bottom:var(--gap-grid); }
+
+    /*
+      CSS columns masonry — 3 columns by default.
+      Items flow top-to-bottom within each column.
+      No orphaned slots, no row alignment gaps.
+      .gallery-module--2up overrides to 2 columns.
+    */
+    .gallery-grid {
+      column-count:3;
+      column-gap:var(--gap-grid);
+    }
+    .gallery-module--2up .gallery-grid {
+      column-count:2;
+    }
+
+    .gallery-item {
+      break-inside:avoid;          /* prevents item splitting across columns */
+      -webkit-column-break-inside:avoid;
+      display:flex;
+      flex-direction:column;
+      gap:0.5rem;
+      margin-bottom:var(--gap-grid); /* vertical gap between items */
+    }
+
+    /* No wide modifier in masonry — column flow handles weighting naturally */
+
+    .gallery-img-wrap { width:100%; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); }
+    .gallery-img { width:100%; height:auto; display:block; opacity:0.9; transition:opacity 0.25s ease; }
+    .gallery-img:hover { opacity:1; }
+    .gallery-caption { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); line-height:1.5; }
+    .gallery-group-caption { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); color:var(--muted); margin-top:0.875rem; padding-top:0.875rem; border-top:1px solid var(--rule); }
+
+    /* ── LIGHTBOX ── */
+    /* Cursor signals enlargeability — set via JS after load check */
+    .gallery-img[data-enlargeable] { cursor:zoom-in; }
+
+    /* Image dialog — lifted directly from play-subpage pattern */
+    .ps-img-dialog {
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      max-width:100%; max-height:100%;
+      margin:0; padding:2rem;
+      background:transparent; border:none;
+      display:none; align-items:center; justify-content:center;
+    }
+    .ps-img-dialog:focus { outline:none; }
+    .ps-img-dialog[open] { display:flex; }
+    .ps-img-dialog::backdrop {
+      background:var(--overlay-bg);
+      cursor:zoom-out;
+    }
+    .ps-img-dialog img {
+      max-width:min(90vw,1200px);
+      max-height:85vh;
+      object-fit:contain;
+      display:block;
+      cursor:zoom-out;
+      outline:none;
+    }
+    .ps-img-dialog-close {
+      position:fixed; top:1.25rem; right:var(--pad);
+      font-family:var(--mono); font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label); text-transform:uppercase;
+      background:none; border:none; cursor:pointer;
+      color:var(--dialog-close-muted); transition:color 0.2s;
+      outline:none;
+    }
+    .ps-img-dialog-close:hover { color:var(--footer-text-hover); }
+
+    /* ── BACK BUTTON ── */
+    .post-footer { padding-top:var(--space-section); border-top:1px solid var(--rule); margin-top:clamp(3rem,5vw,4.5rem); }
+    .post-back-btn {
+      font-family:var(--mono);
+      font-size:var(--fs-xs);
+      letter-spacing:var(--ls-label);
+      text-transform:uppercase;
+      background:none;
+      border:1px solid var(--ink);
+      color:var(--ink);
+      padding:0.65rem 1.5rem;
+      cursor:pointer;
+      transition:color 0.2s, border-color 0.2s;
+      -webkit-appearance:none;
+      appearance:none;
+      display:inline-block;
+      text-decoration:none;
+    }
+    .post-back-btn:hover { color:var(--accent); border-color:var(--accent); }
+
+    /* ── FOOTER & MODALS ── */
+    .contact-modal-overlay { display:none; position:fixed; inset:0; background:var(--overlay-bg); z-index:200; align-items:center; justify-content:center; padding:var(--pad); }
+    .contact-modal-overlay.open { display:flex; }
+    .contact-modal { background:var(--bg); width:100%; max-width:560px; max-height:85vh; padding:2.5rem 2.5rem 1.25rem; position:relative; display:flex; flex-direction:column; overflow:hidden; }
+    .contact-modal-title { font-family:var(--sans); font-size:clamp(1.1rem,2vw,1.4rem); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--strong); margin-bottom:2rem; flex-shrink:0; }
+    .contact-modal-close { position:absolute; top:1.25rem; right:1.25rem; background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); transition:color 0.2s; padding:0; }
+    .contact-modal-close:hover { color:var(--ink); }
+    .contact-form { display:flex; flex-direction:column; gap:1.25rem; }
+    .contact-field { display:flex; flex-direction:column; gap:0.4rem; }
+    .contact-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .contact-input, .contact-textarea { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); background:var(--bg); border:none; border-bottom:1px solid var(--rule); padding:0.5rem 0; width:100%; outline:none; transition:border-color 0.2s; border-radius:0; -webkit-appearance:none; }
+    .contact-input:focus, .contact-textarea:focus { border-bottom-color:var(--ink); }
+    .contact-textarea { resize:none; height:120px; }
+    .contact-submit { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--bg); background:var(--ink); border:none; padding:0.875rem 2rem; cursor:pointer; align-self:flex-start; transition:background 0.2s; margin-top:0.5rem; }
+    .contact-submit:hover { background:var(--accent); }
+    .contact-status { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); display:none; padding-top:0.5rem; }
+    .contact-status.visible { display:block; }
+    .credits-list { list-style:none; display:flex; flex-direction:column; gap:0; overflow-y:auto; }
+    .credits-item { display:flex; flex-direction:column; gap:0.25rem; padding:0.875rem 0; border-bottom:1px solid var(--rule); }
+    .credits-context { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); }
+    .credits-source { font-family:var(--sans); font-size:var(--fs-sm); color:var(--ink); }
+    .credits-source a { border-bottom:1px solid var(--rule); transition:border-color 0.2s,color 0.2s; }
+    .credits-source a:hover { color:var(--accent); border-color:var(--accent); }
+    footer { background:var(--ink); padding:1.25rem 0; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:var(--fs-sm); letter-spacing:0.06em; text-transform:uppercase; }
+    .footer-links { display:flex; align-items:center; gap:1.5rem; }
+    .footer-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; }
+    .footer-link:hover { color:#fff; }
+    .footer-link svg { width:1.5rem; height:1.5rem; fill:currentColor; }
+    .footer-link--arena { font-size:1.5rem; letter-spacing:-0.05em; }
+    .footer-credits-link { color:var(--footer-text); text-decoration:none; transition:color 0.2s; }
+    .footer-credits-link:hover { color:#fff; }
+    .skip-link { position:absolute; top:-100%; left:1rem; background:var(--ink); color:var(--bg); padding:0.5rem 1rem; font-family:var(--mono); font-size:var(--fs-xs); z-index:999; }
+    .skip-link:focus { top:0.5rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .header-nav { display:none; }
+      .nav-hamburger { display:flex; }
+      .header-location { display:none; }
+    }
+    @media (max-width:860px) {
+      .gallery-grid { column-count:2; }
+    }
+    @media (max-width:540px) {
+      .gallery-grid,
+      .gallery-module--2up .gallery-grid { column-count:1; }
+      .footer-inner { flex-direction:column; align-items:center; gap:0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-identity">
+          <div class="header-logo-placeholder" aria-hidden="true"></div>
+          <div class="header-identity-text">
+            <a href="/index.html" class="header-logo">Steven Welsh</a>
+            <div class="header-location">Sheffield<br>Ooop North</div>
+          </div>
+        </div>
+        <nav class="header-nav" aria-label="Main navigation">
+          <ul class="header-nav-links" role="list">
+            <li class="nav-item"><a href="/index.html" class="nav-item-label">About</a><span class="nav-item-desc">high-level<br>overview</span></li>
+            <li class="nav-item"><a href="/work.html" class="nav-item-label">Work</a><span class="nav-item-desc">selected<br>case studies</span></li>
+            <li class="nav-item"><a href="/play.html" class="nav-item-label">Play</a><span class="nav-item-desc">freelance<br>side hustles</span></li>
+            <li class="nav-item"><a href="/blog.html" class="nav-item-label active">Blog</a><span class="nav-item-desc">musings and<br>reflections</span></li>
+            <li class="nav-item"><a href="#" class="nav-item-label" id="contact-trigger" aria-haspopup="dialog">Contact</a><span class="nav-item-desc">enquiries and<br>commissions</span></li>
+          </ul>
+        </nav>
+        <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <hr class="header-rule" />
+  </header>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">Close</button>
+    <a href="/index.html">About</a>
+    <a href="/work.html">Work</a>
+    <a href="/play.html">Play</a>
+    <a href="/blog.html">Blog</a>
+    <a href="#" id="mobile-contact-trigger">Contact</a>
+  </nav>
+
+  <main id="main">
+    <div class="post-wrap">
+      <div class="container">
+
+        <!-- ── POST HEADER — same in both configs ── -->
+        <div class="post-header">
+          <div class="post-meta-header">
+            <span class="post-date-label">25 April 2016</span>
+            <span class="post-category-label">Recognition</span>
+          </div>
+          <h1 class="post-title">NFM Partnership</h1>
+        </div>
+
+        <!--
+        OPTIONAL HERO IMAGE
+        ───────────────────────────────────────────────────────────────
+        Include when a single image deserves full-width lead treatment.
+        CONFIG B RULE: if this hero is included, do NOT repeat this
+        image in the gallery grid below. Use the remaining images only.
+        Remove this entire block if no hero for this post.
+        ───────────────────────────────────────────────────────────────
+        -->
+        <div class="post-hero">
+          <!-- <img src="/assets/blog/nfm/shop_atoz.jpeg" alt="A-Z prints in the NFM shop" loading="eager" /> -->
+          <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyDigJQgc2hvcF9hdG96LmpwZWcgKGV4Y2x1ZGVkIGZyb20gZ2FsbGVyeSBiZWxvdyk8L3RleHQ+PC9zdmc+" alt="Hero — shop_atoz.jpeg (excluded from gallery below)" />
+        </div>
+        <!-- END OPTIONAL HERO IMAGE -->
+
+        <!--
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        CONFIG B — IMAGE-LED POST
+        ─────────────────────────────────────────────────────────────
+        Use for: recognition, announcement, image portfolio posts
+        where images carry the piece and text is brief context.
+
+        Structure:
+          1. .post-intro  — 1–3 sentences, full container width
+          2. .gallery-module — remaining images (hero excluded if used)
+
+        Do NOT use .post-body-wrap / .post-body (that is Config A).
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        -->
+
+        <p class="post-intro">I&#8217;m very excited to say that my work can now be obtained directly from the National Football Museum in Manchester. A selection of my A&#8211;Z prints are already available in their shop and online, and I have plans to increase the range over the next few months.</p>
+
+        <div class="gallery-module">
+          <div class="gallery-grid">
+
+            <!-- Item order here determines column flow (top-to-bottom per column).
+                 Tallest images will naturally anchor their column.
+                 Reorder items to balance column heights if needed. -->
+
+            <!-- ITEM 1 — portrait 3:4 -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/nfm1.png" alt="NFM shop interior" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgMzAwIDQwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNjOGM1YmUiLz48dGV4dCB4PSIxNTAiIHk9IjIwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Mzo0IOKAlCBuZm0xLnBuZzwvdGV4dD48L3N2Zz4=" alt="3:4 — nfm1.png" loading="eager" />
+              </div>
+            </div>
+
+            <!-- ITEM 2 — landscape 16:9 -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/screenshot-2024-04-01-13.53.49.png" alt="NFM online listing" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNiZmJjYjUiLz48dGV4dCB4PSI0MDAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTY6OSDigJQgc2NyZWVuc2hvdDwvdGV4dD48L3N2Zz4=" alt="16:9 — screenshot" loading="lazy" />
+              </div>
+              <p class="gallery-caption">Online shop listing</p>
+            </div>
+
+            <!-- ITEM 3 — landscape 4:3 -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/nat-foot-museum.png" alt="National Football Museum" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBuYXQtZm9vdC1tdXNldW0ucG5nPC90ZXh0Pjwvc3ZnPg==" alt="4:3 — nat-foot-museum.png" loading="lazy" />
+              </div>
+              <p class="gallery-caption">National Football Museum, Manchester</p>
+            </div>
+
+            <!-- ITEM 4 — landscape 4:3 -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/nfm-shop-2023.jpg" alt="NFM shop 2023" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgODAwIDYwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNjOGM1YmUiLz48dGV4dCB4PSI0MDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NDozIOKAlCBuZm0tc2hvcC0yMDIzLmpwZzwvdGV4dD48L3N2Zz4=" alt="4:3 — nfm-shop-2023.jpg" loading="lazy" />
+              </div>
+              <p class="gallery-caption">NFM shop, 2023</p>
+            </div>
+
+            <!-- ITEM 5 — portrait 2:3 -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/baggio-museum.png" alt="Baggio print on display" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgMzAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNiZmJjYjUiLz48dGV4dCB4PSIxNTAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MjozIOKAlCBiYWdnaW8tbXVzZXVtLnBuZzwvdGV4dD48L3N2Zz4=" alt="2:3 — baggio-museum.png" loading="lazy" />
+              </div>
+              <p class="gallery-caption">Baggio print on display</p>
+            </div>
+
+            <!-- ITEM 6 — square 1:1
+                 Added to give all 3 columns meaningful content.
+                 Replace with a real image, or remove if only 5 available —
+                 masonry handles odd counts without an orphaned slot. -->
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <!-- <img class="gallery-img" src="/assets/blog/nfm/prints-detail.jpg" alt="Print detail" loading="lazy" /> -->
+                <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgNjAwIDYwMCI+PHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSIzMDAiIHk9IjMwNCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MToxIOKAlCBwcmludHMtZGV0YWlsLmpwZzwvdGV4dD48L3N2Zz4=" alt="1:1 — prints-detail.jpg" loading="lazy" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- END MODULE: IMAGE GALLERY -->
+
+        <!-- ── POST FOOTER — BACK TO BLOG ── -->
+        <div class="post-footer">
+          <a href="/blog.html" class="post-back-btn">&#8592; Back to blog</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var btn = document.querySelector('.nav-hamburger');
+    var menu = document.getElementById('mobile-menu');
+    var closeBtn = document.getElementById('mobile-close');
+    function updateMenuPadding() {
+      document.getElementById('mobile-menu').style.paddingTop = document.querySelector('.site-header').offsetHeight + 'px';
+    }
+    updateMenuPadding();
+    window.addEventListener('resize', updateMenuPadding);
+    var mq = window.matchMedia('(min-width:769px)');
+    mq.addEventListener('change', function(e) {
+      if (e.matches && menu.classList.contains('open')) {
+        menu.classList.remove('open'); btn.classList.remove('open');
+        btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+    });
+    btn.addEventListener('click', function() {
+      var open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    closeBtn.addEventListener('click', function() {
+      menu.classList.remove('open'); btn.classList.remove('open');
+      btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        menu.classList.remove('open'); btn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+  <!-- Image lightbox dialog — not in footer.html, lives here -->
+  <dialog class="ps-img-dialog" id="ps-img-dialog" aria-modal="true" aria-label="Enlarged image">
+    <button class="ps-img-dialog-close" id="ps-img-dialog-close" aria-label="Close">Close ✕</button>
+    <img id="ps-img-dialog-img" src="" alt="" />
+  </dialog>
+
+  <div id="site-footer"></div>
+  <script>
+    fetch('/footer.html')
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var el = document.getElementById('site-footer');
+        el.outerHTML = html;
+        var s = document.createElement('script');
+        s.src = '/footer-init.js';
+        document.body.appendChild(s);
+      });
+  </script>
+
+  <!-- Lightbox — wired directly since dialog is in the page, not the footer -->
+  <script>
+    (function() {
+      var imgDialog      = document.getElementById('ps-img-dialog');
+      var imgDialogImg   = document.getElementById('ps-img-dialog-img');
+      var imgDialogClose = document.getElementById('ps-img-dialog-close');
+
+      function checkEnlargeable(img) {
+        if (img.naturalWidth  > img.offsetWidth  * 1.0 ||
+            img.naturalHeight > img.offsetHeight * 1.0) {
+          img.setAttribute('data-enlargeable', '');
+        } else {
+          img.removeAttribute('data-enlargeable');
+        }
+      }
+
+      document.querySelectorAll('.gallery-img').forEach(function(img) {
+        if (img.complete && img.naturalWidth > 0) {
+          checkEnlargeable(img);
+        } else {
+          img.addEventListener('load', function() { checkEnlargeable(img); }, { once:true });
+        }
+      });
+
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          document.querySelectorAll('.gallery-img').forEach(checkEnlargeable);
+        }, 150);
+      });
+
+      document.addEventListener('click', function(e) {
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG') return;
+        if (!img.classList.contains('gallery-img')) return;
+        if (!img.hasAttribute('data-enlargeable')) return;
+        e.stopPropagation();
+        imgDialogImg.src = img.src;
+        imgDialogImg.alt = img.alt;
+        imgDialog.showModal();
+      });
+
+      imgDialogClose.addEventListener('click', function(e) {
+        e.stopPropagation();
+        imgDialog.close();
+        imgDialogImg.src = '';
+      });
+
+      imgDialog.addEventListener('click', function(e) {
+        if (e.target === imgDialog || e.target === imgDialogImg) {
+          e.stopPropagation();
+          imgDialog.close();
+          imgDialogImg.src = '';
+        }
+      });
+
+      imgDialog.addEventListener('close', function() { imgDialogImg.src = ''; });
+    })();
+  </script>
+</body>
+</html>
