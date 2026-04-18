@@ -65,6 +65,7 @@
     main { flex:1; }
     .post-wrap { padding:clamp(2rem,4vw,3.5rem) 0 clamp(3rem,6vw,5rem); }
 
+    /* ── POST HEADER ── */
     .post-header { padding-bottom:var(--space-section); border-bottom:1px solid var(--rule); margin-bottom:var(--space-section); }
     .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
     .post-subtitle { font-family:var(--sans); font-size:clamp(1rem,1.5vw,1.15rem); font-weight:400; font-style:italic; color:var(--muted); line-height:1.65; margin-top:0.6rem; }
@@ -83,31 +84,57 @@
     .post-meta-value { font-family:var(--sans); font-size:var(--fs-sm); font-weight:400; color:var(--strong); }
 
     /* ── HERO ── */
-    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:clamp(1rem,2vw,1.5rem); }
+    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
     .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
 
-    /* ── CONFIG C — PROSE BODY ── */
-    .post-body-wrap { display:grid; grid-template-columns:1fr minmax(0,960px) 1fr; }
+    /*
+      CONFIG C — LAYOUT MODEL
+      ─────────────────────────────────────────────────────────────
+      Prose: centred 680px column via .post-body-wrap grid.
+      Galleries: sit outside .post-body-wrap at container level,
+      rendering full container width between prose blocks.
+      ─────────────────────────────────────────────────────────────
+    */
+    .post-body-wrap {
+      display:grid;
+      grid-template-columns:1fr minmax(0,680px) 1fr;
+      margin-bottom:var(--space-section);
+    }
     .post-body { grid-column:2; }
-    .post-body p:first-child { font-size:1rem; color:var(--ink); margin-bottom:1.75em; }
+
+    /* Lead paragraph — standfirst */
+    .post-body p:first-child { font-size:1.15rem; color:var(--ink); line-height:1.75; margin-bottom:1.75em; }
+
     .post-body p { font-family:var(--sans); font-size:1rem; font-weight:400; line-height:1.8; color:var(--strong); margin-bottom:1.5em; }
     .post-body p:last-child { margin-bottom:0; }
-    .post-body h2 { font-family:var(--title); font-size:clamp(1.2rem,2vw,1.5rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
+
+    /* h2 — section chapter marker */
+    .post-body h2 { font-family:var(--title); font-size:clamp(1.25rem,2vw,1.6rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.2; color:var(--ink); margin-top:2.5em; margin-bottom:0.75em; }
+
+    /* h3 — decision or sub-section label */
     .post-body h3 { font-family:var(--sans); font-size:1.1rem; font-weight:700; text-transform:uppercase; letter-spacing:var(--ls-label); color:var(--strong); margin-top:2em; margin-bottom:0.5em; }
+
     .post-body ul, .post-body ol { padding-left:1.25em; margin-bottom:1.5em; }
     .post-body ul { list-style:disc; }
     .post-body ol { list-style:decimal; }
     .post-body li { font-family:var(--sans); font-size:1rem; line-height:1.8; color:var(--strong); margin-bottom:0.4em; }
+
     .post-body blockquote { border-left:2px solid var(--accent); margin:2em 0; padding:0.75em 0 0.75em 1.5em; }
-    .post-body blockquote p { font-style:italic; color:var(--muted); margin-bottom:0; }
+    .post-body blockquote p { font-size:1rem; font-style:italic; color:var(--muted); margin-bottom:0; }
     .post-body blockquote cite { display:block; font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-meta); text-transform:uppercase; color:var(--muted); margin-top:0.75em; font-style:normal; }
+
     .post-body hr { border:none; border-top:1px solid var(--rule); margin:2.5em 0; }
     .post-body a { border-bottom:1px solid var(--rule); transition:color 0.2s,border-color 0.2s; }
     .post-body a:hover { color:var(--accent); border-color:var(--accent); }
 
-    /* ── GALLERY MODULE — CSS COLUMNS MASONRY ── */
+    /*
+      GALLERY MODULE — full container width
+      ─────────────────────────────────────────────────────────────
+      Sits between .post-body-wrap blocks at container level.
+      CSS columns masonry: 3-col default, 2-col, full-width.
+      ─────────────────────────────────────────────────────────────
+    */
     .gallery-module { width:100%; margin:var(--space-section) 0; }
-    .gallery-module:first-of-type { margin-top:0; }
     .gallery-label { font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--ls-label); text-transform:uppercase; color:var(--muted); padding-bottom:0.875rem; border-bottom:1px solid var(--rule); margin-bottom:var(--gap-grid); }
     .gallery-grid { column-count:3; column-gap:var(--gap-grid); }
     .gallery-module--2up .gallery-grid { column-count:2; }
@@ -168,7 +195,7 @@
       .nav-hamburger { display:flex; }
       .header-location { display:none; }
     }
-    @media (max-width:860px) {
+    @media (max-width:760px) {
       .post-body-wrap { grid-template-columns:1fr; }
       .post-body { grid-column:1; }
       .gallery-grid { column-count:2; }
@@ -254,150 +281,183 @@
           <img src="https://welshrarebits.github.io/assets/thumbnails/work/gpg.png" alt="Good Practice Guide redesign" loading="eager" />
         </div>
 
-        <!-- ── CONFIG C — PROSE BODY ── -->
+        <!--
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        CONFIG C — BODY
+        Prose blocks (.post-body-wrap) and gallery modules alternate
+        at container level. Galleries render full container width;
+        prose is constrained to 680px centred column.
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        -->
+
+        <!-- PROSE: intro + problem -->
         <div class="post-body-wrap">
           <div class="post-body">
-
             <p>In 2012 GDS published its series of Good Practice Guides (GPGs) for providers of identity assurance to Government Services: <a href="https://example.com/documentation">GPG 43</a> (Requirements for Secure Delivery of Online Public Services), <a href="https://example.com/tutorials">GPG 44</a> (Authentication Credentials in Support of HMG Online Services), and <a href="https://example.com/support">GPG 45</a> (Validating and Verifying the Identity of an Individual). In my previous roles as both a Product Manager and later as an Identity &amp; Trust Specialist, these became critical documents for me to understand, reference and articulate to others.</p>
-
-            <p>However, GPG 45 weighed in at 33 pages (8,972 words), including a 29-page sub section with 32 individual ID profiles presented as tabular data. These were not considered the most accessible of reads &#8212; even by their own admission, the Cabinet Office recognised the documents as being &#8220;necessarily quite technical&#8221;.</p>
-
+            <p>However, GPG 45 weighed in at 33 pages (8,972 words), including a 29-page sub-section with 32 individual ID profiles presented as tabular data. These were not considered the most accessible of reads &#8212; even by their own admission, the Cabinet Office recognised the documents as being &#8220;necessarily quite technical&#8221;.</p>
             <h2>Reframing the problem</h2>
-
             <p>I had already seen a couple of attempts to re-frame this information. The digital consultancy Hippo, for example, opted for a Lego bricks analogy. But this interpretation always seemed far too rigid, especially when dealing with a concept as fluid as identity. Whilst the bricks were meant to be interchangeable, I couldn&#8217;t shake the feeling that this should be more about depth and breadth rather than height.</p>
+          </div>
+        </div>
 
-            <div class="gallery-module gallery-module--full">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/hippo_lego.png" alt="Lego bricks analogy for GPG 45" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Hippo&#8217;s Lego bricks interpretation of GPG 45</p>
-                </div>
+        <!-- GALLERY: Hippo Lego analogy -->
+        <div class="gallery-module gallery-module--full">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/hippo_lego.png" alt="Lego bricks analogy for GPG 45" loading="lazy" />
               </div>
+              <p class="gallery-caption">Hippo&#8217;s Lego bricks interpretation of GPG 45</p>
             </div>
+          </div>
+        </div>
 
+        <!-- PROSE: approach + language one-pagers -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>What did I do about it?</h2>
-
             <p>I focussed on creating a framework that could literally &#8216;flex&#8217;. After all, an identity can be challenged in a variety of ways, for a variety of reasons and across a variety of different channels. My focus was less about <em>how</em> to achieve a certain score and more about <em>why</em> that score was best suited to certain scenarios and factors.</p>
-
             <p>I also wanted to pay particular attention to language, since my early research had shown this was the number one reason for stakeholder assumptions. The difference between verification, validation and authentication, for example, was a recurring and lengthy bone of contention. To address these unnecessary distractions, I created a couple of one-pagers which sought to cut through the noise, acting as anchors for discussions and stakeholder alignment.</p>
+          </div>
+        </div>
 
-            <div class="gallery-module gallery-module--2up">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/know_have_are.png" alt="Principles of identity verification" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Principles of identity verification</p>
-                </div>
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/5_elements.png" alt="The 5 elements of identity verification" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">The 5 elements of identity verification</p>
-                </div>
+        <!-- GALLERY: know/have/are + 5 elements -->
+        <div class="gallery-module gallery-module--2up">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/know_have_are.png" alt="Principles of identity verification" loading="lazy" />
               </div>
+              <p class="gallery-caption">Principles of identity verification</p>
             </div>
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/5_elements.png" alt="The 5 elements of identity verification" loading="lazy" />
+              </div>
+              <p class="gallery-caption">The 5 elements of identity verification</p>
+            </div>
+          </div>
+        </div>
 
+        <!-- PROSE: research -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>Research &amp; Collaboration</h2>
-
             <p>With these footholds in place, I was then able to return to my initial goal of finding a framework that flexed. In the interests of working in the open, I&#8217;ve managed to find some of my original notes and general musings from the numerous meetings I arranged at the time.</p>
+          </div>
+        </div>
 
-            <div class="gallery-module gallery-module--full">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/scribbles.png" alt="Original hand-written notes" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Original hand-written notes from early research sessions</p>
-                </div>
+        <!-- GALLERY: hand-written notes -->
+        <div class="gallery-module gallery-module--full">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/scribbles.png" alt="Original hand-written notes" loading="lazy" />
               </div>
+              <p class="gallery-caption">Original hand-written notes from early research sessions</p>
             </div>
+          </div>
+        </div>
 
+        <!-- PROSE: divergent thinking -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>Divergent thinking</h2>
-
             <p>What started to emerge from those early brain dumps was a series of triangular patterns reflecting the different phases within the identity verification process. These patterns needed to be encompassed by all 5 key elements of GPG, which conveniently lent themselves to a pentagon. The following images were my first attempts to transfer those relatively chaotic meeting notes into a usable framework.</p>
-
-            <div class="gallery-module gallery-module--2up">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/triangles_within_pentagon.png" alt="Triangular patterns within a pentagon" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Triangular patterns emerging from early sessions</p>
-                </div>
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/pentagon_post_its.png" alt="Pentagon framework on post-its" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">First attempts to transfer notes into a usable framework</p>
-                </div>
-              </div>
-            </div>
-
             <p>However, the 5 GPG components were still just &#8216;points on my pentagon&#8217; for want of a better phrase. They were linked but they didn&#8217;t illustrate the &#8216;flex&#8217; that I felt was crucial in telling this story. As a side note, my diagram had also started to look, at best, like a conspiracy theorist&#8217;s wall &#8212; or, at worst, like some kind of occult iconography. So I decided to pare things back once more.</p>
+          </div>
+        </div>
 
+        <!-- GALLERY: triangles + post-its -->
+        <div class="gallery-module gallery-module--2up">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/triangles_within_pentagon.png" alt="Triangular patterns within a pentagon" loading="lazy" />
+              </div>
+              <p class="gallery-caption">Triangular patterns emerging from early sessions</p>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/pentagon_post_its.png" alt="Pentagon framework on post-its" loading="lazy" />
+              </div>
+              <p class="gallery-caption">First attempts to transfer notes into a usable framework</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROSE: new approach + scoring system -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>Taking a new approach</h2>
-
             <p>I shifted my attention back to the scoring system that underpinned the guides. Each of the 5 GPG elements are scored against a Profile Criteria made up of three components: Level of Confidence required (Low, Med, High); Pieces of evidence presented (1, 2, 3 etc); and a Profile ID matching specific GPG scoring thresholds (A, B, C etc). So for an ID challenge requiring medium confidence with one piece of evidence meeting Profile A thresholds, you would be permitted to accept &#8216;M1A&#8217;.</p>
-
             <p>With 32 profiles to choose from, I needed to show not only how these scores could be achieved but also how they could be augmented. It was this elusive &#8216;flex&#8217; between channels and scenarios that, for me, was lost in the detail of the existing documentation.</p>
+          </div>
+        </div>
 
-            <div class="gallery-module gallery-module--full">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/m1a.png" alt="Profile M1A represented as a pentagon radar diagram" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Profile M1A &#8212; pentagon as pattern rather than score</p>
-                </div>
+        <!-- GALLERY: M1A profile -->
+        <div class="gallery-module gallery-module--full">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/m1a.png" alt="Profile M1A represented as a pentagon radar diagram" loading="lazy" />
               </div>
+              <p class="gallery-caption">Profile M1A &#8212; pentagon as pattern rather than score</p>
             </div>
+          </div>
+        </div>
 
+        <!-- PROSE: flex between channels -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>The flex between channels</h2>
-
             <p>Reintroducing the pentagon was the eureka moment. I could now discuss M1A (red) as a pattern rather than a score. To see the true value of this framework, I needed to treat it like a radar diagram and overlay channel-specific scenarios (blue).</p>
+            <p>In the theoretical example below, a citizen uses their passport as a singular piece of evidence in a face-to-face scenario. The relative strength, validity, verification, activity over time and counter-fraud checks all score highly, with many exceeding the M1A thresholds &#8212; mainly due to the number of ways evidence can be checked face-to-face: photo, watermarks, hologram patches, fluorescent pages, biometric chip, laser-perforated numbers.</p>
+            <p>The comparison below shows the same passport used in a telephony challenge instead. Despite the pattern constricting, most elements remain within M1A limits for verification, validity, activity and counter-fraud. However, it falls short in the &#8216;Strength&#8217; category, moving from 4 to 2. The evidence itself has not become &#8216;weaker&#8217; &#8212; it is still a valid UK passport. It&#8217;s the ways in which that document can be checked via this channel that has reduced its score.</p>
+          </div>
+        </div>
 
-            <p>In the theoretical example below, a citizen uses their passport as a singular piece of evidence in a face-to-face scenario. The relative strength, validity, verification, activity over time and counter-fraud checks all score highly, with many exceeding the M1A thresholds &#8212; mainly due to the number of ways evidence can be checked when face-to-face: photo, watermarks, hologram patches, fluorescent pages, biometric chip, laser perforated numbers.</p>
-
-            <p>The image below then compares using that same passport as part of a telephony challenge. Despite the pattern constricting, most elements remain within M1A limits for verification, validity, activity and counter-fraud. However, it falls short in the &#8216;Strength&#8217; category, moving from a 4 to a 2. The evidence itself has not become &#8216;weaker&#8217; &#8212; it is still a valid UK passport. It&#8217;s the ways in which that document can be checked via this channel that has reduced its score.</p>
-
-            <div class="gallery-module gallery-module--full">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/side_by_side.png" alt="Comparison of face-to-face and telephony profiles" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">Face-to-face vs telephony &#8212; the same evidence, different channel, different pattern</p>
-                </div>
+        <!-- GALLERY: side by side channel comparison -->
+        <div class="gallery-module gallery-module--full">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/side_by_side.png" alt="Comparison of face-to-face and telephony profiles" loading="lazy" />
               </div>
+              <p class="gallery-caption">Face-to-face vs telephony &#8212; the same evidence, different channel, different pattern</p>
             </div>
+          </div>
+        </div>
 
+        <!-- PROSE: output -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <h2>Output &amp; Impact</h2>
+            <p>Of the 32 profiles available, the image below shows only a small cross-section. Since each profile needs to be created through 3 different lenses (face-to-face, telephony and digital), a complete set would require 96 radar diagrams in total. The 4 profiles shown are M1A, M1B, M1C and M1D.</p>
+          </div>
+        </div>
 
-            <p>Of the 32 profiles available, the image below shows only a small cross-section. Since each profile needs to be created through 3 different lenses (face-to-face, telephony and digital), a complete set would require 96 radar diagrams in total. The 4 profiles shown here are M1A, M1B, M1C and M1D.</p>
-
-            <div class="gallery-module gallery-module--full">
-              <div class="gallery-grid">
-                <div class="gallery-item">
-                  <div class="gallery-img-wrap">
-                    <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/multiple_profiles.png" alt="Cross-section of multiple GPG profiles" loading="lazy" />
-                  </div>
-                  <p class="gallery-caption">A cross-section of profiles &#8212; M1A, M1B, M1C and M1D</p>
-                </div>
+        <!-- GALLERY: multiple profiles -->
+        <div class="gallery-module gallery-module--full">
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-img-wrap">
+                <img class="gallery-img" src="https://welshrarebits.github.io/work/gpg/multiple_profiles.png" alt="Cross-section of multiple GPG profiles" loading="lazy" />
               </div>
+              <p class="gallery-caption">A cross-section of profiles &#8212; M1A, M1B, M1C and M1D</p>
             </div>
+          </div>
+        </div>
 
+        <!-- PROSE: outcome + quote -->
+        <div class="post-body-wrap">
+          <div class="post-body">
             <p>The introduction of this flexible framework allowed stakeholders to consider identity verification in a far more visual way &#8212; worrying less about scores and focusing more on best fit. If a certain pattern looked out of place, it prompted discussions that may have been overlooked when faced with a wall of numbers instead.</p>
-
+            <p>The final output earned a nomination for reward and recognition, approved by the Identity &amp; Trust Deputy Director.</p>
             <blockquote>
               <p>Steve joined the Policy Team on an EOI and hit the ground running, making an immediate positive impact for stakeholders and colleagues. Notably, he utilised his design skills to prepare new GPG educational material for use with colleagues in wider directorates. His fresh ideas and approach have been both welcomed and highlighted by the Policy Team.</p>
               <cite>ID&amp;T Deputy Director</cite>
             </blockquote>
-
-            <p>The final output earned a nomination for reward and recognition, approved by the Identity &amp; Trust Deputy Director.</p>
-
           </div>
         </div>
         <!-- END CONFIG C -->
