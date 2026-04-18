@@ -72,26 +72,56 @@
     .post-category-label::before { content:'Category: '; color:var(--muted); }
     .post-title { font-family:var(--title); font-size:clamp(1.75rem,4vw,2.75rem); font-weight:700; letter-spacing:var(--ls-title); line-height:1.1; color:var(--ink); }
 
-    /* OPTIONAL HERO */
-    .post-hero { aspect-ratio:16/9; overflow:hidden; background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%); margin-bottom:var(--space-section); }
-    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
-    .post-hero img { width:100%; height:100%; object-fit:cover; display:block; }
-
     /*
-      CONFIG B — INTRO TEXT
-      Full container width — no column constraint.
-      Short by nature (1–3 sentences). Line length is comfortable
-      at this length without a reading-width cap.
+      CONFIG B — TWO-COLUMN INTRO BLOCK
+      ─────────────────────────────────────────────────────────────
+      60/40 split: text left, featured image right.
+      align-items:start prevents either column stretching to match
+      the other — block is only as tall as its taller child.
+      This keeps the gallery immediately connected below with no
+      artificial white space.
+
+      Featured image rule: same image excluded from gallery grid.
+
+      OPTIONAL: remove .post-intro-wrap entirely if no featured
+      image for this post — replace with .post-intro-text alone
+      as a plain paragraph.
+      ─────────────────────────────────────────────────────────────
     */
-    .post-intro {
+    .post-intro-wrap {
+      display:grid;
+      grid-template-columns:3fr 2fr;
+      gap:var(--gap-grid);
+      align-items:start;
+      margin-bottom:var(--space-section);
+    }
+    .post-intro-text {
       font-family:var(--sans);
       font-size:clamp(1rem,1.2vw,1.1rem);
       font-weight:400;
       line-height:1.8;
       color:var(--strong);
-      max-width:960px;
-      margin-right:auto;
-      margin-bottom:var(--space-section);
+    }
+    .post-intro-img-wrap {
+      overflow:hidden;
+      background:linear-gradient(135deg,var(--rule) 0%,var(--placeholder) 100%);
+    }
+    .post-intro-img {
+      width:100%;
+      height:auto;
+      display:block;
+      opacity:0.9;
+      transition:opacity 0.25s ease;
+    }
+    .post-intro-img[data-enlargeable] { cursor:zoom-in; }
+    .post-intro-img:hover { opacity:1; }
+
+    @media (max-width:640px) {
+      /* Stack at narrow viewports — image drops below text,
+         then fills full width, giving a hero-like treatment */
+      .post-intro-wrap {
+        grid-template-columns:1fr;
+      }
     }
 
     /* ── GALLERY MODULE — CSS COLUMNS MASONRY ── */
@@ -291,21 +321,6 @@
         </div>
 
         <!--
-        OPTIONAL HERO IMAGE
-        ───────────────────────────────────────────────────────────────
-        Include when a single image deserves full-width lead treatment.
-        CONFIG B RULE: if this hero is included, do NOT repeat this
-        image in the gallery grid below. Use the remaining images only.
-        Remove this entire block if no hero for this post.
-        ───────────────────────────────────────────────────────────────
-        -->
-        <div class="post-hero">
-          <!-- <img src="/assets/blog/nfm/shop_atoz.jpeg" alt="A-Z prints in the NFM shop" loading="eager" /> -->
-          <img class="gallery-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgdmlld0JveD0iMCAwIDEyMDAgNjc1Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI2MDAiIHk9IjM0MSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SGVybyDigJQgc2hvcF9hdG96LmpwZWcgKGV4Y2x1ZGVkIGZyb20gZ2FsbGVyeSBiZWxvdyk8L3RleHQ+PC9zdmc+" alt="Hero — shop_atoz.jpeg (excluded from gallery below)" />
-        </div>
-        <!-- END OPTIONAL HERO IMAGE -->
-
-        <!--
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         CONFIG B — IMAGE-LED POST
         ─────────────────────────────────────────────────────────────
@@ -313,14 +328,32 @@
         where images carry the piece and text is brief context.
 
         Structure:
-          1. .post-intro  — 1–3 sentences, full container width
-          2. .gallery-module — remaining images (hero excluded if used)
+          1. .post-intro-wrap — 60/40 two-column: text left, featured
+             image right. Stacks at narrow viewports.
+             Featured image rule: exclude from gallery grid below.
+          2. .gallery-module — remaining images
 
         Do NOT use .post-body-wrap / .post-body (that is Config A).
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         -->
 
-        <p class="post-intro">I&#8217;m very excited to say that my work can now be obtained directly from the National Football Museum in Manchester. A selection of my A&#8211;Z prints are already available in their shop and online, and I have plans to increase the range over the next few months.</p>
+        <!--
+        TWO-COLUMN INTRO BLOCK
+        ───────────────────────────────────────────────────────────────
+        Featured image (shop_atoz.jpeg) sits right, excluded from
+        gallery grid below. At narrow viewports columns stack —
+        text above, image below at full width.
+        Remove .post-intro-img-wrap and img if no featured image.
+        ───────────────────────────────────────────────────────────────
+        -->
+        <div class="post-intro-wrap">
+          <p class="post-intro-text">I&#8217;m very excited to say that my work can now be obtained directly from the National Football Museum in Manchester. A selection of my A&#8211;Z prints are already available in their shop and online, and I have plans to increase the range over the next few months.</p>
+          <div class="post-intro-img-wrap">
+            <!-- <img class="post-intro-img" src="/assets/blog/nfm/shop_atoz.jpeg" alt="A-Z prints in the NFM shop" loading="eager" /> -->
+            <img class="post-intro-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNkNGQyY2MiLz48dGV4dCB4PSI0MDAiIHk9IjIyOSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzlhOTU5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RmVhdHVyZWQgaW1hZ2Ug4oCUIDE2OjkgbGFuZHNjYXBlIOKAlCBleGNsdWRlZCBmcm9tIGdhbGxlcnk8L3RleHQ+PC9zdmc+" alt="Featured image — shop_atoz.jpeg" loading="eager" />
+          </div>
+        </div>
+        <!-- END TWO-COLUMN INTRO BLOCK -->
 
         <div class="gallery-module">
           <div class="gallery-grid">
@@ -469,7 +502,7 @@
         }
       }
 
-      document.querySelectorAll('.gallery-img').forEach(function(img) {
+      document.querySelectorAll('.gallery-img, .post-intro-img').forEach(function(img) {
         if (img.complete && img.naturalWidth > 0) {
           checkEnlargeable(img);
         } else {
@@ -481,14 +514,14 @@
       window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-          document.querySelectorAll('.gallery-img').forEach(checkEnlargeable);
+          document.querySelectorAll('.gallery-img, .post-intro-img').forEach(checkEnlargeable);
         }, 150);
       });
 
       document.addEventListener('click', function(e) {
         var img = e.target;
         if (!img || img.tagName !== 'IMG') return;
-        if (!img.classList.contains('gallery-img')) return;
+        if (!img.classList.contains('gallery-img') && !img.classList.contains('post-intro-img')) return;
         if (!img.hasAttribute('data-enlargeable')) return;
         e.stopPropagation();
         imgDialogImg.src = img.src;
