@@ -37,6 +37,170 @@
       padding-bottom: var(--spacing-4);
     }
 
+    /* ── Logo ─────────────────────────────────────────────────────────────────── */
+    .site-logo {
+      display: block;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      transition: filter 0.15s ease;
+    }
+    .site-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      /* Logo asset is black on white; filter adapts it to current colour scheme */
+      filter: light-dark(invert(0), invert(1));
+    }
+    .site-logo:hover img,
+    .site-logo:focus-visible img {
+      filter: light-dark(invert(1), invert(0));
+    }
+    .site-logo:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .site-logo { transition: none; }
+    }
+
+    /* ── Nav active state ─────────────────────────────────────────────────────── */
+    /* CSS already handles a[aria-current=page] with thicker underline;
+       we ensure text-decoration persists (not just on hover) */
+    .header-links a[aria-current="page"] {
+      text-decoration-thickness: 0.188rem;
+      text-decoration-skip-ink: none;
+      text-decoration: underline;
+    }
+
+    /* ── Hamburger button (mobile only) ──────────────────────────────────────── */
+    .nav-hamburger {
+      display: none; /* hidden at desktop */
+      background: none;
+      border: none;
+      padding: var(--pixel-5);
+      cursor: pointer;
+      color: var(--color-primary-text);
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+    }
+    .nav-hamburger:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .nav-hamburger__bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-primary-text);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    /* Animate bars to × when open */
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-hamburger__bar { transition: none; }
+    }
+
+    /* ── Nav drawer ───────────────────────────────────────────────────────────── */
+    .nav-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(320px, 85vw);
+      background: var(--color-background);
+      border-left: var(--border-thick) solid var(--color-border);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-9) var(--spacing-6) var(--spacing-6);
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      visibility: hidden;
+    }
+    .nav-drawer[aria-hidden="false"] {
+      transform: translateX(0);
+      visibility: visible;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-drawer { transition: none; }
+    }
+    .nav-drawer__close {
+      position: absolute;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary-text);
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: var(--pixel-5);
+    }
+    .nav-drawer__close:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .nav-drawer__links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-6);
+    }
+    .nav-drawer__links a {
+      font-size: 1.5rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-text);
+      text-decoration: none;
+    }
+    .nav-drawer__links a:hover {
+      color: var(--color-hover);
+    }
+    .nav-drawer__links a[aria-current="page"] {
+      text-decoration: underline;
+      text-decoration-thickness: 0.188rem;
+    }
+
+    /* Overlay behind drawer */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 199;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+    }
+    .nav-overlay.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-overlay { transition: none; }
+    }
+
+    /* ── Responsive breakpoint ────────────────────────────────────────────────── */
+    @media (max-width: 48rem) {
+      .header-links { display: none; } /* hide desktop nav */
+      .nav-hamburger { display: flex; } /* show hamburger */
+    }
+
     /* Placeholder image styles */
     .placeholder-img {
       background-color: light-dark(oklch(88% 0.007 236.5), oklch(28% 0.007 236.5));
@@ -235,30 +399,53 @@
 </head>
 <body>
 
+  <!-- Overlay behind nav drawer -->
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+
+  <!-- Nav drawer (mobile) -->
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="nav-drawer__close" id="nav-drawer-close" aria-label="Close navigation">&#x2715;</button>
+    <ul class="nav-drawer__links">
+      <li><a href="/work/" aria-current="page">Work</a></li>
+      <li><a href="/play/">Play</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+
   <a href="#main-content" class="skip-link">Skip to content</a>
 
   <!-- ═══════════════════════════════════════════
        HEADER
   ═══════════════════════════════════════════ -->
   <header class="page-header">
-    <nav class="header-nav">
+    <nav class="header-nav" aria-label="Main navigation">
       <div class="wrapper flex-container">
 
-        <!-- Site logo / name -->
-        <a href="/" aria-label="Your Name — home">
-          <svg class="site-header-image" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <rect class="header-image-background" width="50" height="50"/>
-            <text class="header-image-foreground" x="25" y="34" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22">YN</text>
-          </svg>
+        <!-- Logo -->
+        <a href="/" class="site-logo" aria-label="SW24 — home">
+          <img src="logo.png" alt="SW24 logo">
         </a>
 
-        <!-- Nav links -->
+        <!-- Desktop nav links -->
         <ul class="header-links list-horizontal flex-container">
-          <li><a href="/work/">Work</a></li>
+          <li><a href="/work/" aria-current="page">Work</a></li>
           <li><a href="/play/">Play</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/contact/">Contact</a></li>
         </ul>
+
+        <!-- Hamburger (mobile only) -->
+        <button
+          class="nav-hamburger"
+          id="nav-hamburger"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+          aria-label="Open navigation">
+          <span class="nav-hamburger__bar"></span>
+          <span class="nav-hamburger__bar"></span>
+          <span class="nav-hamburger__bar"></span>
+        </button>
 
       </div>
     </nav>
@@ -399,7 +586,7 @@
             aria-label="Play video: England World Cup portraits — opens in lightbox"
             type="button">
             <img
-              src="../../assets/thumbnails/play/worldcup.png"
+              src="../../assets/thumbnails/work/worldcup.png"
               alt="Steven Gerrard signing a portrait from a series of England World Cup player illustrations">
             <span class="yt-trigger__play" aria-hidden="true">
               <!-- Play triangle -->
@@ -532,6 +719,49 @@
   </dialog>
 
   <script>
+    // ── Hamburger nav drawer ──────────────────────────────────────────────────
+    const hamburger   = document.getElementById('nav-hamburger');
+    const drawer      = document.getElementById('nav-drawer');
+    const drawerClose = document.getElementById('nav-drawer-close');
+    const overlay     = document.getElementById('nav-overlay');
+
+    function openDrawer() {
+      drawer.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      overlay.classList.add('is-visible');
+      document.body.style.overflow = 'hidden';
+      drawerClose.focus();
+    }
+
+    function closeDrawer() {
+      drawer.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      overlay.classList.remove('is-visible');
+      document.body.style.overflow = '';
+      hamburger.focus();
+    }
+
+    hamburger.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+    });
+
+    // Focus trap inside drawer
+    drawer.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = [...drawer.querySelectorAll('a, button')];
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+
     // ── Theme toggle ──────────────────────────────────────────────────────────
     const toggle = document.getElementById('theme-toggle');
     const stored = localStorage.getItem('color-scheme') || 'auto';
