@@ -85,7 +85,7 @@
     .footer-links {
       display: flex;
       align-items: center;
-      gap: var(--spacing-6);
+      gap: var(--spacing-2);
       list-style: none;
       padding: 0;
       margin: 0;
@@ -93,10 +93,15 @@
     .footer-link {
       display: flex;
       align-items: center;
+      justify-content: center;
       color: var(--color-primary-text);
       text-decoration: none;
       opacity: 1;
       transition: opacity 0.15s ease;
+      /* 44px touch target: 24px icon + 10px padding each side */
+      padding: 10px;
+      min-width: 44px;
+      min-height: 44px;
     }
     .footer-link:hover,
     .footer-link:focus-visible {
@@ -108,12 +113,13 @@
       outline-offset: var(--pixel-2);
     }
     .footer-link svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       fill: var(--color-primary-text);
       display: block;
+      flex-shrink: 0;
     }
-    /* Are.na text treatment */
+    /* Are.na text treatment — padded to match 44px touch target */
     .footer-link--arena {
       font-size: 1.25rem;
       font-weight: var(--font-weight-bold);
@@ -140,6 +146,16 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .footer-link { transition: none; }
+    }
+    /* Stack footer vertically at mobile */
+    @media (max-width: 48rem) {
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-4);
+      }
+      /* Offset the link padding so icons align with the left edge of content */
+      .footer-links { margin-left: -10px; }
     }
 
     /* ── Modals (credits + contact) ──────────────────────────────────────────── */
