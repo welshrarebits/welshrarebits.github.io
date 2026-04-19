@@ -51,6 +51,124 @@
     .placeholder-img--wide { aspect-ratio: 16/9; }
     .placeholder-img--square { aspect-ratio: 1/1; }
     .placeholder-img--illustration { aspect-ratio: 4/3; max-width: 400px; margin: auto; }
+
+    /* ── Lightbox ───────────────────────────────────────────────────────────── */
+
+    /* Trigger: images and videos inside figures become clickable */
+    .lightbox-trigger {
+      cursor: zoom-in;
+      display: block;
+      position: relative;
+    }
+    .lightbox-trigger:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+
+    /* Hint icon overlaid on hover */
+    .lightbox-trigger::after {
+      content: "⤢";
+      position: absolute;
+      bottom: var(--spacing-2);
+      right: var(--spacing-2);
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0.25rem 0.4rem;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+    .lightbox-trigger:hover::after,
+    .lightbox-trigger:focus-visible::after {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lightbox-trigger::after { transition: none; }
+    }
+
+    /* Dialog element used as lightbox */
+    dialog.lightbox {
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: auto;
+      max-width: 95vw;
+      max-height: 95vh;
+      width: fit-content;
+    }
+    dialog.lightbox::backdrop {
+      background: rgba(0,0,0,0.88);
+    }
+
+    .lightbox__inner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .lightbox__inner img,
+    .lightbox__inner video {
+      max-width: 90vw;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox__caption {
+      color: oklch(92.8% 0.007 236.5);
+      font-size: 0.9rem;
+      margin-top: var(--spacing-2);
+      text-align: center;
+      max-width: 60ch;
+      line-height: 1.5;
+    }
+
+    .lightbox__close {
+      position: fixed;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background: transparent;
+      border: var(--border-medium) solid rgba(255,255,255,0.5);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+    .lightbox__close:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #fff;
+    }
+    .lightbox__close:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+
+    /* Video placeholder styling */
+    .placeholder-video {
+      background: light-dark(oklch(88% 0.007 236.5), oklch(28% 0.007 236.5));
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-secondary-text);
+      font-size: 0.875rem;
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -211,6 +329,21 @@
           Describe the second design decision. Keep the same structure: problem → options → choice → rationale. Be specific about trade-offs made.
         </p>
 
+        <!-- Placeholder video -->
+        <figure>
+          <video
+            class="image-outline lightbox-trigger"
+            src="https://www.w3schools.com/html/mov_bbb.mp4"
+            poster=""
+            controls
+            preload="metadata"
+            aria-label="Placeholder video demonstrating lightbox video support"
+            style="width:100%;display:block;">
+            Your browser does not support the video element.
+          </video>
+          <figcaption>Placeholder video — replace src with your own hosted video file. Click to expand in lightbox.</figcaption>
+        </figure>
+
         <!-- Sub-decision 3 -->
         <h3 class="font-size-1">Decision three</h3>
         <p>
@@ -316,13 +449,27 @@
     </div>
   </footer>
 
+  <!-- ═══════════════════════════════════════════
+       LIGHTBOX DIALOG
+       Uses native <dialog> for built-in accessibility:
+       - Focus is trapped inside while open
+       - Escape key closes it natively
+       - backdrop click also closes it
+       - Screen readers announced via aria-label on dialog
+  ═══════════════════════════════════════════ -->
+  <dialog class="lightbox" id="lightbox" aria-label="Media lightbox" aria-modal="true">
+    <button class="lightbox__close" id="lightbox-close" aria-label="Close lightbox">&#x2715;</button>
+    <div class="lightbox__inner" id="lightbox-inner">
+      <!-- content injected by JS -->
+    </div>
+  </dialog>
+
   <script>
-    // Theme toggle logic
+    // ── Theme toggle ──────────────────────────────────────────────────────────
     const toggle = document.getElementById('theme-toggle');
     const stored = localStorage.getItem('color-scheme') || 'auto';
     toggle.value = stored;
     if (stored !== 'auto') document.documentElement.setAttribute('data-user-color-scheme', stored);
-
     toggle.addEventListener('change', () => {
       const val = toggle.value;
       localStorage.setItem('color-scheme', val);
@@ -332,6 +479,102 @@
         document.documentElement.setAttribute('data-user-color-scheme', val);
       }
     });
+
+    // ── Lightbox ──────────────────────────────────────────────────────────────
+    const dialog      = document.getElementById('lightbox');
+    const inner       = document.getElementById('lightbox-inner');
+    const closeBtn    = document.getElementById('lightbox-close');
+    let   lastTrigger = null; // remember which element opened the lightbox for focus return
+
+    function openLightbox(trigger) {
+      lastTrigger = trigger;
+      inner.innerHTML = ''; // clear previous content
+
+      const isVideo = trigger.tagName === 'VIDEO';
+      const caption = trigger.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+
+      if (isVideo) {
+        // Clone video without autoplay — user controls it themselves
+        const v = document.createElement('video');
+        v.src       = trigger.src || trigger.currentSrc;
+        v.controls  = true;
+        v.preload   = 'metadata';
+        v.setAttribute('aria-label', trigger.getAttribute('aria-label') || 'Video');
+        inner.appendChild(v);
+      } else {
+        // Image
+        const img = document.createElement('img');
+        img.src = trigger.src;
+        img.alt = trigger.alt || '';
+        inner.appendChild(img);
+      }
+
+      // Caption
+      if (caption) {
+        const cap = document.createElement('p');
+        cap.className = 'lightbox__caption';
+        cap.textContent = caption;
+        inner.appendChild(cap);
+      }
+
+      dialog.showModal();
+      // Move focus to close button — first focusable element in dialog
+      closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      // Pause any playing video before removing it
+      const v = inner.querySelector('video');
+      if (v) v.pause();
+      inner.innerHTML = '';
+      dialog.close();
+      // Return focus to the element that opened the lightbox
+      if (lastTrigger) lastTrigger.focus();
+    }
+
+    // Close button
+    closeBtn.addEventListener('click', closeLightbox);
+
+    // Click on backdrop (outside dialog inner content) closes it
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) closeLightbox();
+    });
+
+    // Attach triggers to all lightbox-eligible images and videos
+    // Images: <img class="image-outline"> inside a <figure>
+    // Videos: <video> inside a <figure>
+    function initTriggers() {
+      const images = document.querySelectorAll('figure img.image-outline');
+      const videos = document.querySelectorAll('figure video');
+
+      [...images, ...videos].forEach(el => {
+        // Make it keyboard focusable if not already
+        if (!el.hasAttribute('tabindex') && el.tagName !== 'VIDEO') {
+          el.setAttribute('tabindex', '0');
+        }
+        el.classList.add('lightbox-trigger');
+
+        // Click
+        el.addEventListener('click', () => openLightbox(el));
+
+        // Keyboard: Enter or Space opens lightbox (images only — videos have native controls)
+        if (el.tagName === 'IMG') {
+          el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(el);
+            }
+          });
+        }
+
+        // Cursor hint for images
+        if (el.tagName === 'IMG') {
+          el.style.cursor = 'zoom-in';
+        }
+      });
+    }
+
+    initTriggers();
   </script>
 
 </body>
