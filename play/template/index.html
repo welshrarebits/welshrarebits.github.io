@@ -27,6 +27,10 @@
     header { margin-bottom: 0; }
     .page-header { margin-bottom: 0; }
 
+    /* figure has no margin-bottom by default; this gives consistent breathing room
+       above any paragraph that follows an image, matching standard p spacing */
+    figure { margin-bottom: var(--spacing-6); }
+
     .header-nav { border-bottom: none; padding-bottom: 0; }
     .header-nav .wrapper {
       border-bottom: var(--border-thick) solid var(--color-border);
@@ -134,6 +138,10 @@
           <img src="../../work/gpg/hippo_lego.png" alt="Description of your image" class="image-outline">
           <figcaption>Caption explaining what this image shows and its significance in the process.</figcaption>
         </figure>
+
+        <p>
+          This is a test paragraph sitting below the image. It should have the same vertical breathing room above it as any other paragraph on the page — neither flush to the caption nor excessively distant from it.
+        </p>
         
       </section>
 
