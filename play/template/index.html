@@ -69,6 +69,9 @@
 
     /* ── Headline caption — reverted to original font-size-1 fluid scale ───── */
     .headline-caption { margin-bottom: var(--spacing-1); }
+
+    /* h1 → lead paragraph gap increased from --spacing-1 (5px) to --spacing-2 (10px) */
+    h1:has(+ .lead-paragraph) { margin-bottom: var(--spacing-2); }
     /* Slate teal: oklch(40% 0.10 200) — contrast 4.89:1, WCAG AA pass
        Deep teal hover: oklch(28% 0.10 200) — contrast ~7:1, WCAG AAA
        Dark mode uses a lighter teal to maintain contrast against dark background */
