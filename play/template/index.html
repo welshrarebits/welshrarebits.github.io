@@ -155,6 +155,64 @@
       outline-offset: var(--pixel-2);
     }
 
+    /* ── YouTube video trigger ───────────────────────────────────────────────── */
+    .yt-trigger {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      line-height: 0; /* remove inline gap below img */
+    }
+    .yt-trigger:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .yt-trigger img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Play button overlay */
+    .yt-trigger__play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: rgba(0,0,0,0.72);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, transform 0.15s ease;
+      pointer-events: none;
+    }
+    .yt-trigger__play svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      margin-left: 4px; /* optical centre for triangle */
+    }
+    .yt-trigger:hover .yt-trigger__play,
+    .yt-trigger:focus-visible .yt-trigger__play {
+      background: rgba(255, 0, 0, 0.88); /* YouTube red on hover */
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .yt-trigger__play,
+      .yt-trigger:hover .yt-trigger__play { transition: none; transform: translate(-50%, -50%); }
+    }
+
+    /* YouTube iframe inside lightbox */
+    .lightbox__inner iframe {
+      width: 90vw;
+      max-width: 1200px;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+
     /* Video placeholder styling */
     .placeholder-video {
       background: light-dark(oklch(88% 0.007 236.5), oklch(28% 0.007 236.5));
@@ -327,19 +385,24 @@
           Describe the second design decision. Keep the same structure: problem → options → choice → rationale. Be specific about trade-offs made.
         </p>
 
-        <!-- Placeholder video -->
+        <!-- YouTube video — thumbnail shown inline, iframe loaded only on click -->
         <figure>
-          <video
-            class="image-outline lightbox-trigger"
-            src="https://www.w3schools.com/html/mov_bbb.mp4"
-            poster=""
-            controls
-            preload="metadata"
-            aria-label="Placeholder video demonstrating lightbox video support"
-            style="width:100%;display:block;">
-            Your browser does not support the video element.
-          </video>
-          <figcaption>Placeholder video — replace src with your own hosted video file. Click to expand in lightbox.</figcaption>
+          <button
+            class="yt-trigger image-outline"
+            data-yt-id="o2TnxXdZa5U"
+            aria-label="Play video: England World Cup portraits — opens in lightbox"
+            type="button">
+            <img
+              src="worldcup.png"
+              alt="Steven Gerrard signing a portrait from a series of England World Cup player illustrations">
+            <span class="yt-trigger__play" aria-hidden="true">
+              <!-- Play triangle -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+            </span>
+          </button>
+          <figcaption>England World Cup portraits — a personal project documenting the squad through illustration. Click to watch.</figcaption>
         </figure>
 
         <!-- Sub-decision 3 -->
@@ -482,21 +545,28 @@
     const dialog      = document.getElementById('lightbox');
     const inner       = document.getElementById('lightbox-inner');
     const closeBtn    = document.getElementById('lightbox-close');
-    let   lastTrigger = null; // remember which element opened the lightbox for focus return
+    let   lastTrigger = null;
 
     function openLightbox(trigger) {
       lastTrigger = trigger;
-      inner.innerHTML = ''; // clear previous content
+      inner.innerHTML = '';
 
-      const isVideo = trigger.tagName === 'VIDEO';
       const caption = trigger.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+      const ytId    = trigger.dataset.ytId;
 
-      if (isVideo) {
-        // Clone video without autoplay — user controls it themselves
+      if (ytId) {
+        // YouTube: inject iframe with autoplay, no related videos, modest branding
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`;
+        iframe.title = trigger.getAttribute('aria-label') || 'YouTube video';
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.allowFullscreen = true;
+        inner.appendChild(iframe);
+      } else if (trigger.tagName === 'VIDEO') {
         const v = document.createElement('video');
-        v.src       = trigger.src || trigger.currentSrc;
-        v.controls  = true;
-        v.preload   = 'metadata';
+        v.src      = trigger.src || trigger.currentSrc;
+        v.controls = true;
+        v.preload  = 'metadata';
         v.setAttribute('aria-label', trigger.getAttribute('aria-label') || 'Video');
         inner.appendChild(v);
       } else {
@@ -507,7 +577,6 @@
         inner.appendChild(img);
       }
 
-      // Caption
       if (caption) {
         const cap = document.createElement('p');
         cap.className = 'lightbox__caption';
@@ -516,59 +585,45 @@
       }
 
       dialog.showModal();
-      // Move focus to close button — first focusable element in dialog
       closeBtn.focus();
     }
 
     function closeLightbox() {
-      // Pause any playing video before removing it
+      // Destroying the iframe is the correct way to stop YouTube playback
       const v = inner.querySelector('video');
       if (v) v.pause();
       inner.innerHTML = '';
       dialog.close();
-      // Return focus to the element that opened the lightbox
       if (lastTrigger) lastTrigger.focus();
     }
 
-    // Close button
     closeBtn.addEventListener('click', closeLightbox);
-
-    // Click on backdrop (outside dialog inner content) closes it
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) closeLightbox();
     });
 
-    // Attach triggers to all lightbox-eligible images and videos
-    // Images: <img class="image-outline"> inside a <figure>
-    // Videos: <video> inside a <figure>
     function initTriggers() {
-      const images = document.querySelectorAll('figure img.image-outline');
-      const videos = document.querySelectorAll('figure video');
-
-      [...images, ...videos].forEach(el => {
-        // Make it keyboard focusable if not already
-        if (!el.hasAttribute('tabindex') && el.tagName !== 'VIDEO') {
-          el.setAttribute('tabindex', '0');
-        }
+      // Images
+      document.querySelectorAll('figure img.image-outline').forEach(el => {
+        el.setAttribute('tabindex', '0');
         el.classList.add('lightbox-trigger');
-
-        // Click
+        el.style.cursor = 'zoom-in';
         el.addEventListener('click', () => openLightbox(el));
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(el); }
+        });
+      });
 
-        // Keyboard: Enter or Space opens lightbox (images only — videos have native controls)
-        if (el.tagName === 'IMG') {
-          el.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openLightbox(el);
-            }
-          });
-        }
+      // YouTube triggers (button elements with data-yt-id)
+      document.querySelectorAll('button[data-yt-id]').forEach(el => {
+        el.addEventListener('click', () => openLightbox(el));
+        // Keyboard handled natively — buttons respond to Enter and Space by default
+      });
 
-        // Cursor hint for images
-        if (el.tagName === 'IMG') {
-          el.style.cursor = 'zoom-in';
-        }
+      // Self-hosted videos
+      document.querySelectorAll('figure video').forEach(el => {
+        el.classList.add('lightbox-trigger');
+        el.addEventListener('click', () => openLightbox(el));
       });
     }
 
