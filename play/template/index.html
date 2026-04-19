@@ -75,7 +75,202 @@
       color: var(--color-primary-text);
     }
 
-    /* ── Hamburger button (mobile only) ──────────────────────────────────────── */
+    /* ── Footer social icons ─────────────────────────────────────────────────── */
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-6);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-link {
+      display: flex;
+      align-items: center;
+      color: var(--color-primary-text);
+      text-decoration: none;
+      opacity: 1;
+      transition: opacity 0.15s ease;
+    }
+    .footer-link:hover,
+    .footer-link:focus-visible {
+      opacity: 0.6;
+      color: var(--color-primary-text);
+    }
+    .footer-link:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .footer-link svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--color-primary-text);
+      display: block;
+    }
+    /* Are.na text treatment */
+    .footer-link--arena {
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .footer-credits-link {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      color: var(--color-secondary-text);
+      text-decoration: none;
+      border-bottom: var(--border-thin) solid var(--color-secondary-text);
+      padding-bottom: 1px;
+    }
+    .footer-credits-link:hover {
+      color: var(--color-primary-text);
+      border-color: var(--color-primary-text);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .footer-link { transition: none; }
+    }
+
+    /* ── Modals (credits + contact) ──────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay { transition: none; }
+    }
+    .modal {
+      background: var(--color-background);
+      border: var(--border-thick) solid var(--color-border);
+      padding: var(--spacing-7);
+      width: 90%;
+      max-width: 36rem;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal__close {
+      position: absolute;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary-text);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      padding: var(--pixel-5);
+      display: flex;
+      align-items: center;
+      gap: var(--pixel-5);
+    }
+    .modal__close:hover { color: var(--color-hover); }
+    .modal__close:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .modal__title {
+      font-size: 1.1875rem;
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-6);
+      padding-right: var(--spacing-7); /* clear close button */
+    }
+
+    /* Credits list */
+    .credits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .credits-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--spacing-4);
+      padding: var(--spacing-3) 0;
+      border-bottom: var(--border-thin) solid var(--color-border);
+    }
+    .credits-item:first-child { border-top: var(--border-thin) solid var(--color-border); }
+    .credits-context {
+      font-size: 1rem;
+      color: var(--color-secondary-text);
+      font-weight: var(--font-weight-standard);
+    }
+    .credits-source {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      text-align: right;
+    }
+    .credits-source a {
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Contact form */
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pixel-5);
+      margin-bottom: var(--spacing-4);
+    }
+    .contact-label {
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+    }
+    .contact-input,
+    .contact-textarea {
+      background: var(--color-background);
+      color: var(--color-primary-text);
+      border: var(--border-medium) solid var(--color-border);
+      padding: var(--pixel-10);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      width: 100%;
+    }
+    .contact-input:focus,
+    .contact-textarea:focus {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: 0;
+    }
+    .contact-textarea { min-height: 8rem; resize: vertical; }
+    .contact-submit {
+      background: var(--color-primary-text);
+      color: var(--color-background);
+      border: var(--border-medium) solid var(--color-border);
+      padding: var(--pixel-10) var(--spacing-6);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      margin-top: var(--pixel-5);
+    }
+    .contact-submit:hover { opacity: 0.8; }
+    .contact-submit:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .contact-status {
+      margin-top: var(--spacing-3);
+      font-size: 1rem;
+      color: var(--color-secondary-text);
+    }
     .nav-hamburger {
       display: none; /* hidden at desktop */
       background: none;
@@ -683,26 +878,82 @@
        FOOTER
   ═══════════════════════════════════════════ -->
   <footer>
-    <div class="wrapper flex-container--wrap">
+    <div class="wrapper">
+      <div class="footer-inner">
 
-      <!-- Theme toggle -->
-      <div class="user-toggle flex-container">
-        <label for="theme-toggle" class="visually-hidden">Appearance</label>
-        <select id="theme-toggle" class="theme-toggle">
-          <option value="auto">Appearance: Device default</option>
-          <option value="light">Appearance: Light</option>
-          <option value="dark">Appearance: Dark</option>
-        </select>
+        <!-- Social links -->
+        <nav class="footer-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/welshsteve/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.are.na/steve-n-welsh/channels" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://x.com/miniboro_dotcom" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://substack.com/@ulysses31" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/miniboro/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </nav>
+
+        <!-- Credits trigger -->
+        <button class="footer-credits-link" id="credits-trigger" aria-haspopup="dialog">Additional credits</button>
+
       </div>
-
-      <!-- Footer text -->
-      <div>
-        <p>Designed and developed by Your Name</p>
-        <p class="last-updated">Last updated: Month Year</p>
-      </div>
-
     </div>
   </footer>
+
+  <!-- ── Credits modal ────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="modal">
+      <button class="modal__close" id="credits-modal-close" aria-label="Close credits">Close &#x2715;</button>
+      <h2 class="modal__title" id="credits-modal-title">Additional credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Contact form — Formspree</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Contact modal ────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="modal">
+      <button class="modal__close" id="contact-modal-close" aria-label="Close contact form">Close &#x2715;</button>
+      <h2 class="modal__title" id="contact-modal-title">Get in touch</h2>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/myknpryk" method="POST">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" type="text" id="contact-name" name="name" required autocomplete="name">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" type="email" id="contact-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" type="text" id="contact-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send message</button>
+        <p class="contact-status" id="contact-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════
        LIGHTBOX DIALOG
@@ -763,18 +1014,83 @@
       }
     });
 
-    // ── Theme toggle ──────────────────────────────────────────────────────────
-    const toggle = document.getElementById('theme-toggle');
-    const stored = localStorage.getItem('color-scheme') || 'auto';
-    toggle.value = stored;
-    if (stored !== 'auto') document.documentElement.setAttribute('data-user-color-scheme', stored);
-    toggle.addEventListener('change', () => {
-      const val = toggle.value;
-      localStorage.setItem('color-scheme', val);
-      if (val === 'auto') {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-      } else {
-        document.documentElement.setAttribute('data-user-color-scheme', val);
+    // ── Modal utility ─────────────────────────────────────────────────────────
+    function openModal(overlayEl, firstFocusEl) {
+      overlayEl.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      if (firstFocusEl) firstFocusEl.focus();
+    }
+
+    function closeModal(overlayEl, returnFocusEl) {
+      overlayEl.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (returnFocusEl) returnFocusEl.focus();
+    }
+
+    function trapFocus(overlayEl, e) {
+      if (e.key !== 'Tab') return;
+      const focusable = [...overlayEl.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled);
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+
+    // ── Credits modal ─────────────────────────────────────────────────────────
+    const creditsTrigger = document.getElementById('credits-trigger');
+    const creditsModal   = document.getElementById('credits-modal');
+    const creditsClose   = document.getElementById('credits-modal-close');
+
+    creditsTrigger.addEventListener('click', () => openModal(creditsModal, creditsClose));
+    creditsClose.addEventListener('click', () => closeModal(creditsModal, creditsTrigger));
+    creditsModal.addEventListener('click', (e) => { if (e.target === creditsModal) closeModal(creditsModal, creditsTrigger); });
+    creditsModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal(creditsModal, creditsTrigger);
+      trapFocus(creditsModal, e);
+    });
+
+    // ── Contact modal ─────────────────────────────────────────────────────────
+    // Triggered from the Contact nav link
+    const contactNavLinks = document.querySelectorAll('a[href="/contact/"]');
+    const contactModal    = document.getElementById('contact-modal');
+    const contactClose    = document.getElementById('contact-modal-close');
+    const contactStatus   = document.getElementById('contact-status');
+    const contactForm     = document.getElementById('contact-form');
+
+    contactNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(contactModal, contactClose);
+      });
+    });
+    contactClose.addEventListener('click', () => closeModal(contactModal, null));
+    contactModal.addEventListener('click', (e) => { if (e.target === contactModal) closeModal(contactModal, null); });
+    contactModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal(contactModal, null);
+      trapFocus(contactModal, e);
+    });
+
+    // Formspree async submission
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(contactForm);
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactStatus.textContent = 'Message sent — thank you.';
+          contactForm.reset();
+        } else {
+          contactStatus.textContent = 'Something went wrong. Please try again.';
+        }
+      } catch {
+        contactStatus.textContent = 'Something went wrong. Please try again.';
       }
     });
 
