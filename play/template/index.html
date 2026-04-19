@@ -32,7 +32,8 @@
     figure { margin-bottom: var(--spacing-6); }
 
     .header-nav { border-bottom: none; padding-bottom: 0; }
-    .header-nav .wrapper {
+    .header-nav .wrapper { 
+      align-items: center;
       border-bottom: var(--border-thick) solid var(--color-border);
       padding-bottom: var(--spacing-4);
     }
@@ -66,12 +67,12 @@
     }
 
     /* ── Nav active state ─────────────────────────────────────────────────────── */
-    /* CSS already handles a[aria-current=page] with thicker underline;
-       we ensure text-decoration persists (not just on hover) */
+    /* Use longhand properties — text-decoration shorthand resets thickness back to default */
     .header-links a[aria-current="page"] {
+      text-decoration-line: underline;
       text-decoration-thickness: 0.188rem;
       text-decoration-skip-ink: none;
-      text-decoration: underline;
+      color: var(--color-primary-text);
     }
 
     /* ── Hamburger button (mobile only) ──────────────────────────────────────── */
