@@ -67,17 +67,13 @@
       .site-logo img { transition: none; }
     }
 
-    /* ── No-colour link treatment ────────────────────────────────────────────── */
-    /* WCAG 1.4.1 compliant: underline provides the non-colour differentiator.
-       Nav links are exempt here — reviewed separately */
-    a:not([class]) {
-      color: var(--color-primary-text);
-      text-decoration-line: underline;
-      text-decoration-thickness: 0.0625rem;
-    }
-    a:not([class]):hover {
-      color: var(--color-primary-text);
-      text-decoration-thickness: 0.188rem;
+    /* ── Teal link colour treatment ──────────────────────────────────────────── */
+    /* Slate teal: oklch(40% 0.10 200) — contrast 4.89:1, WCAG AA pass
+       Deep teal hover: oklch(28% 0.10 200) — contrast ~7:1, WCAG AAA
+       Dark mode uses a lighter teal to maintain contrast against dark background */
+    :root {
+      --color-link: light-dark(oklch(40% 0.10 200), oklch(75% 0.12 185));
+      --color-hover: light-dark(oklch(28% 0.10 200), oklch(88% 0.10 185));
     }
     /* Use longhand properties — text-decoration shorthand resets thickness back to default */
     .header-links a[aria-current="page"] {
