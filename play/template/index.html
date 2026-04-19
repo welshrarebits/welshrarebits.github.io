@@ -45,26 +45,25 @@
       width: 80px;
       height: 80px;
       flex-shrink: 0;
-      transition: filter 0.15s ease;
     }
     .site-logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
-      /* Logo asset is black on white; filter adapts it to current colour scheme */
-      filter: light-dark(invert(0), invert(1));
+      opacity: 1;
+      transition: opacity 0.15s ease;
     }
     .site-logo:hover img,
     .site-logo:focus-visible img {
-      filter: light-dark(invert(1), invert(0));
+      opacity: 0.6;
     }
     .site-logo:focus-visible {
       outline: var(--border-thick) solid var(--color-focus);
       outline-offset: var(--pixel-2);
     }
     @media (prefers-reduced-motion: reduce) {
-      .site-logo { transition: none; }
+      .site-logo img { transition: none; }
     }
 
     /* ── Nav active state ─────────────────────────────────────────────────────── */
