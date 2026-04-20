@@ -60,7 +60,11 @@
     @media (max-width: 48rem) {
       .site-logo { width: 52px; height: 52px; }
       .header-nav { padding-top: var(--spacing-4); }
-      .header-nav .wrapper { padding-bottom: var(--pixel-10); }
+      .header-nav .wrapper {
+        padding-bottom: var(--spacing-3);
+        border-bottom-width: var(--border-medium);
+      }
+      footer .wrapper { border-top-width: var(--border-medium); }
     }
     .site-logo {
       display: block;
