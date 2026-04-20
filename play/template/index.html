@@ -1333,6 +1333,7 @@
     function openLightbox(trigger) {
       lastTrigger = trigger;
       inner.innerHTML = '';
+      document.body.style.overflow = 'hidden';
 
       const caption = trigger.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
       const ytId    = trigger.dataset.ytId;
@@ -1372,10 +1373,10 @@
     }
 
     function closeLightbox() {
-      // Destroying the iframe is the correct way to stop YouTube playback
       const v = inner.querySelector('video');
       if (v) v.pause();
       inner.innerHTML = '';
+      document.body.style.overflow = '';
       dialog.close();
       if (lastTrigger) lastTrigger.focus();
     }
