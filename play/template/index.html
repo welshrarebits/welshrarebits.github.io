@@ -127,7 +127,12 @@
       font-weight: var(--font-weight-semibold);
     }
 
-    /* ── Logo ────────────────────────────────────────────────────────────────── */
+    /* Image outline suppressed in dark mode — images define their own edges
+       against the dark background without needing additional border structure */
+    @media (prefers-color-scheme: dark) {
+      .image-outline { outline: none; }
+    }
+    [data-user-color-scheme="dark"] .image-outline { outline: none; }
     /* Light mode: black mark — no filter
        Dark mode: invert to white */
     @media (prefers-color-scheme: dark) {
