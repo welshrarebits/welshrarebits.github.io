@@ -17,6 +17,22 @@
       padding-bottom: var(--pixel-10);
     }
 
+    /* ── Sticky header ───────────────────────────────────────────────────────── */
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-background);
+      /* Translate up by full height to hide; JS toggles this */
+      transition: transform 0.25s ease;
+    }
+    .page-header.is-hidden {
+      transform: translateY(-100%);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .page-header { transition: none; }
+    }
+
     /* home-link is an <a> (inline by default); margin-bottom only works on block elements */
     .home-link { display: block; }
 
@@ -1092,6 +1108,42 @@
   </dialog>
 
   <script>
+    // ── Sticky header — hide on scroll down, show on scroll up ───────────────
+    const pageHeader  = document.querySelector('.page-header');
+    let   lastScrollY = window.scrollY;
+    let   ticking     = false;
+
+    function updateHeader() {
+      const currentScrollY = window.scrollY;
+      const headerHeight   = pageHeader.offsetHeight;
+
+      // Only hide after user has scrolled past the header height
+      if (currentScrollY > headerHeight) {
+        if (currentScrollY > lastScrollY) {
+          // Scrolling down — hide
+          pageHeader.classList.add('is-hidden');
+          // Close drawer if open when header hides
+          if (drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+        } else {
+          // Scrolling up — show
+          pageHeader.classList.remove('is-hidden');
+        }
+      } else {
+        // Near top — always show
+        pageHeader.classList.remove('is-hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
+
     // ── Hamburger nav drawer ──────────────────────────────────────────────────
     const hamburger   = document.getElementById('nav-hamburger');
     const drawer      = document.getElementById('nav-drawer');
