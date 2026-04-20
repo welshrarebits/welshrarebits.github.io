@@ -72,13 +72,6 @@
 
     /* h1 → lead paragraph gap increased from --spacing-1 (5px) to --spacing-2 (10px) */
     h1:has(+ .lead-paragraph) { margin-bottom: var(--spacing-2); }
-    /* Slate teal: oklch(40% 0.10 200) — contrast 4.89:1, WCAG AA pass
-       Deep teal hover: oklch(28% 0.10 200) — contrast ~7:1, WCAG AAA
-       Dark mode uses a lighter teal to maintain contrast against dark background */
-    :root {
-      --color-link: light-dark(oklch(40% 0.10 200), oklch(75% 0.12 185));
-      --color-hover: light-dark(oklch(28% 0.10 200), oklch(88% 0.10 185));
-    }
     /* Use longhand properties — text-decoration shorthand resets thickness back to default */
     .header-links a[aria-current="page"] {
       text-decoration-line: underline;
@@ -134,22 +127,32 @@
       font-weight: var(--font-weight-semibold);
     }
 
-    /* ── Logo dark mode — teal filter ────────────────────────────────────────── */
+    /* ── Logo dark mode — white ──────────────────────────────────────────────── */
+    /* Light mode: black mark on transparent — no filter needed
+       Dark mode: invert black to white */
     @media (prefers-color-scheme: dark) {
       .site-logo img {
-        filter: invert(1) sepia(1) saturate(2) hue-rotate(155deg) brightness(0.9);
+        filter: invert(1);
       }
       .site-logo:hover img,
       .site-logo:focus-visible img {
-        filter: invert(1) sepia(1) saturate(2) hue-rotate(155deg) brightness(0.9) opacity(0.6);
+        filter: invert(1) opacity(0.6);
       }
     }
     [data-user-color-scheme="dark"] .site-logo img {
-      filter: invert(1) sepia(1) saturate(2) hue-rotate(155deg) brightness(0.9);
+      filter: invert(1);
     }
     [data-user-color-scheme="dark"] .site-logo:hover img,
     [data-user-color-scheme="dark"] .site-logo:focus-visible img {
-      filter: invert(1) sepia(1) saturate(2) hue-rotate(155deg) brightness(0.9) opacity(0.6);
+      filter: invert(1) opacity(0.6);
+    }
+
+    /* ── Link colours ────────────────────────────────────────────────────────── */
+    /* Light: #246f6f — contrast 4.71:1 on #e2e7eb, WCAG AA pass
+       Dark:  #2da5a5 — contrast 6.26:1 on #0f1315, WCAG AA pass       */
+    :root {
+      --color-link:  light-dark(#246f6f, #2da5a5);
+      --color-hover: light-dark(#1a5252, #44c4c4);
     }
 
     /* ── Footer layout ───────────────────────────────────────────────────────── */
