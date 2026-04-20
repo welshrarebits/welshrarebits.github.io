@@ -128,25 +128,8 @@
     }
 
     /* ── Logo ────────────────────────────────────────────────────────────────── */
-    /* Light mode: black mark — no filter
-       Dark mode: filter calibrated to match link colour #2da5a5 exactly
-       Chain: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) */
-    @media (prefers-color-scheme: dark) {
-      .site-logo img {
-        filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82);
-      }
-      .site-logo:hover img,
-      .site-logo:focus-visible img {
-        filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) opacity(0.6);
-      }
-    }
-    [data-user-color-scheme="dark"] .site-logo img {
-      filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82);
-    }
-    [data-user-color-scheme="dark"] .site-logo:hover img,
-    [data-user-color-scheme="dark"] .site-logo:focus-visible img {
-      filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) opacity(0.6);
-    }
+    /* Light/dark switching handled via <picture> element and JS toggle.
+       No CSS filter needed — separate assets used for each mode. */
 
     /* ── Link colours ────────────────────────────────────────────────────────── */
     /* Light: #246f6f — contrast 4.71:1 on #e2e7eb, WCAG AA pass
@@ -736,7 +719,10 @@
 
         <!-- Logo -->
         <a href="/" class="site-logo" aria-label="SW24 — home">
-          <img src="../../assets/logos/SW_logo.png" alt="SW24 logo">
+          <picture>
+            <source id="logo-dark-source" srcset="../../assets/logos/SW_logo_dark.png" media="(prefers-color-scheme: dark)">
+            <img id="logo-img" src="../../assets/logos/SW_logo_light.png" alt="SW24 logo">
+          </picture>
         </a>
 
         <!-- Desktop nav links -->
@@ -1141,6 +1127,16 @@
 
     // ── Theme segmented control ───────────────────────────────────────────────
     const segmentedBtns = document.querySelectorAll('.theme-segmented__btn');
+    const logoImg        = document.getElementById('logo-img');
+    const logoDarkSrc    = '../../assets/logos/SW_logo_dark.png';
+    const logoLightSrc   = '../../assets/logos/SW_logo_light.png';
+
+    function updateLogo(scheme) {
+      if (!logoImg) return;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = scheme === 'dark' || (scheme === 'auto' && prefersDark);
+      logoImg.src = isDark ? logoDarkSrc : logoLightSrc;
+    }
 
     function applyScheme(scheme) {
       if (scheme === 'auto') {
@@ -1152,6 +1148,7 @@
       segmentedBtns.forEach(btn => {
         btn.classList.toggle('is-active', btn.dataset.scheme === scheme);
       });
+      updateLogo(scheme);
     }
 
     // Apply stored preference on load
@@ -1160,6 +1157,12 @@
 
     segmentedBtns.forEach(btn => {
       btn.addEventListener('click', () => applyScheme(btn.dataset.scheme));
+    });
+
+    // Also update logo if system preference changes while on Auto
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const current = localStorage.getItem('color-scheme') || 'auto';
+      if (current === 'auto') updateLogo('auto');
     });
 
     // ── Modal utility ─────────────────────────────────────────────────────────
