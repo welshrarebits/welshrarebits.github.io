@@ -127,24 +127,24 @@
       font-weight: var(--font-weight-semibold);
     }
 
-    /* ── Logo dark mode — white ──────────────────────────────────────────────── */
-    /* Light mode: black mark on transparent — no filter needed
-       Dark mode: invert black to white */
+    /* ── Logo ────────────────────────────────────────────────────────────────── */
+    /* Light mode: black mark — no filter, maximum contrast, distinct from links
+       Dark mode: teal mark matching #2da5a5 link colour — distinct from white text */
     @media (prefers-color-scheme: dark) {
       .site-logo img {
-        filter: invert(1);
+        filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95);
       }
       .site-logo:hover img,
       .site-logo:focus-visible img {
-        filter: invert(1) opacity(0.6);
+        filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95) opacity(0.6);
       }
     }
     [data-user-color-scheme="dark"] .site-logo img {
-      filter: invert(1);
+      filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95);
     }
     [data-user-color-scheme="dark"] .site-logo:hover img,
     [data-user-color-scheme="dark"] .site-logo:focus-visible img {
-      filter: invert(1) opacity(0.6);
+      filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95) opacity(0.6);
     }
 
     /* ── Link colours ────────────────────────────────────────────────────────── */
