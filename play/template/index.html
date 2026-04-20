@@ -56,7 +56,12 @@
       padding-bottom: var(--spacing-4);
     }
 
-    /* ── Logo ─────────────────────────────────────────────────────────────────── */
+    /* ── Mobile header scaling ───────────────────────────────────────────────── */
+    @media (max-width: 48rem) {
+      .site-logo { width: 52px; height: 52px; }
+      .header-nav { padding-top: var(--spacing-4); }
+      .header-nav .wrapper { padding-bottom: var(--pixel-10); }
+    }
     .site-logo {
       display: block;
       width: 80px;
