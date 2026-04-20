@@ -628,6 +628,8 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
+      max-height: 95vh;
+      overflow-y: auto;
     }
 
     .lightbox__inner img,
@@ -649,25 +651,26 @@
     }
 
     .lightbox__close {
-      position: fixed;
-      top: var(--spacing-4);
-      right: var(--spacing-4);
-      background: transparent;
-      border: var(--border-medium) solid rgba(255,255,255,0.5);
-      color: #fff;
-      font-size: 1.5rem;
+      position: sticky;
+      top: 0;
+      align-self: flex-end;
+      background: var(--color-background);
+      border: var(--border-medium) solid var(--color-border);
+      color: var(--color-primary-text);
+      font-size: 1rem;
       line-height: 1;
-      width: 2.5rem;
-      height: 2.5rem;
+      padding: var(--pixel-5) var(--pixel-10);
       cursor: pointer;
+      margin-bottom: var(--spacing-2);
+      min-height: 44px;
+      min-width: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 2px;
+      z-index: 10;
     }
     .lightbox__close:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: #fff;
+      opacity: 0.7;
     }
     .lightbox__close:focus-visible {
       outline: var(--border-thick) solid var(--color-focus);
@@ -1132,8 +1135,8 @@
        - Screen readers announced via aria-label on dialog
   ═══════════════════════════════════════════ -->
   <dialog class="lightbox" id="lightbox" aria-label="Media lightbox" aria-modal="true">
-    <button class="lightbox__close" id="lightbox-close" aria-label="Close lightbox">&#x2715;</button>
     <div class="lightbox__inner" id="lightbox-inner">
+      <button class="lightbox__close" id="lightbox-close" aria-label="Close lightbox">Close &#x2715;</button>
       <!-- content injected by JS -->
     </div>
   </dialog>
