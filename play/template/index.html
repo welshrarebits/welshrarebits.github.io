@@ -359,6 +359,23 @@
     .credits-source a {
       font-weight: var(--font-weight-semibold);
     }
+    @media (max-width: 48rem) {
+      .modal {
+        padding: var(--spacing-6);
+        width: 95%;
+      }
+      .modal__title {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-4);
+      }
+      .credits-item {
+        flex-direction: column;
+        gap: var(--spacing-1);
+      }
+      .credits-source {
+        text-align: left;
+      }
+    }
 
     /* Contact form */
     .contact-field {
