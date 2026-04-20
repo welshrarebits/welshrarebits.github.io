@@ -159,7 +159,8 @@
     }
     [data-user-color-scheme="dark"] .image-outline { outline: none; }
     /* Light mode: black mark — no filter
-       Dark mode: invert to white */
+       Dark mode: invert to white
+       Explicit light override ensures manual toggle beats system dark preference */
     @media (prefers-color-scheme: dark) {
       .site-logo img { filter: invert(1); }
       .site-logo:hover img,
@@ -168,6 +169,10 @@
     [data-user-color-scheme="dark"] .site-logo img { filter: invert(1); }
     [data-user-color-scheme="dark"] .site-logo:hover img,
     [data-user-color-scheme="dark"] .site-logo:focus-visible img { filter: invert(1) opacity(0.6); }
+    /* Must come last and use html prefix to beat media query specificity */
+    html[data-user-color-scheme="light"] .site-logo img { filter: none !important; }
+    html[data-user-color-scheme="light"] .site-logo:hover img,
+    html[data-user-color-scheme="light"] .site-logo:focus-visible img { filter: opacity(0.6) !important; }
 
     /* ── Link colours ────────────────────────────────────────────────────────── */
     /* Light: #246f6f — contrast 4.71:1 on #e2e7eb, WCAG AA pass
