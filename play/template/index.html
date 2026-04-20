@@ -128,23 +128,24 @@
     }
 
     /* ── Logo ────────────────────────────────────────────────────────────────── */
-    /* Light mode: black mark — no filter, maximum contrast, distinct from links
-       Dark mode: teal mark matching #2da5a5 link colour — distinct from white text */
+    /* Light mode: black mark — no filter
+       Dark mode: filter calibrated to match link colour #2da5a5 exactly
+       Chain: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) */
     @media (prefers-color-scheme: dark) {
       .site-logo img {
-        filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95);
+        filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82);
       }
       .site-logo:hover img,
       .site-logo:focus-visible img {
-        filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95) opacity(0.6);
+        filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) opacity(0.6);
       }
     }
     [data-user-color-scheme="dark"] .site-logo img {
-      filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95);
+      filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82);
     }
     [data-user-color-scheme="dark"] .site-logo:hover img,
     [data-user-color-scheme="dark"] .site-logo:focus-visible img {
-      filter: invert(1) sepia(1) saturate(1.5) hue-rotate(148deg) brightness(0.95) opacity(0.6);
+      filter: invert(1) sepia(1) saturate(450%) hue-rotate(148deg) brightness(0.82) opacity(0.6);
     }
 
     /* ── Link colours ────────────────────────────────────────────────────────── */
