@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Case Study Title - Your Name</title>
+  <title>Gallery Title - SW26</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -532,10 +532,6 @@
       text-decoration: underline;
       text-decoration-thickness: 0.188rem;
     }
-    .nav-drawer__links a[aria-current="page"] {
-      text-decoration: underline;
-      text-decoration-thickness: 0.188rem;
-    }
 
     /* Overlay behind drawer */
     .nav-overlay {
@@ -758,6 +754,43 @@
       font-size: 0.875rem;
       position: relative;
     }
+
+    /* ── Masonry gallery — CSS columns ───────────────────────────────────────── */
+    /*
+      CSS columns chosen over CSS Grid masonry for cross-browser support.
+      Mixed portrait and landscape orientations are handled gracefully by design —
+      column layout distributes items top-to-bottom within each column.
+    */
+    .gallery {
+      columns: 2;
+      column-gap: var(--pixel-20);
+      margin-bottom: var(--spacing-10);
+    }
+    @media (min-width: 48rem) {
+      .gallery { columns: 3; }
+    }
+    @media (max-width: 30rem) {
+      .gallery { columns: 1; }
+    }
+
+    /* Each gallery item must not break across columns */
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: var(--pixel-20);
+    }
+
+    /* Images fill column width; height scales naturally for masonry effect */
+    .gallery-item img,
+    .gallery-item .yt-trigger {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Caption sits below each item — left-aligned in gallery context */
+    .gallery-item figcaption {
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -769,8 +802,8 @@
   <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
     <button class="nav-drawer__close" id="nav-drawer-close" aria-label="Close navigation">&#x2715;</button>
     <ul class="nav-drawer__links">
-      <li><a href="/work/" aria-current="page">Work</a></li>
-      <li><a href="/play/">Play</a></li>
+      <li><a href="/work/">Work</a></li>
+      <li><a href="/play/" aria-current="page">Play</a></li>
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
@@ -792,8 +825,8 @@
 
         <!-- Desktop nav links -->
         <ul class="header-links list-horizontal flex-container">
-          <li><a href="/work/" aria-current="page">Work</a></li>
-          <li><a href="/play/">Play</a></li>
+          <li><a href="/work/">Work</a></li>
+          <li><a href="/play/" aria-current="page">Play</a></li>
           <li><a href="/blog/">Blog</a></li>
           <li><a href="/contact/">Contact</a></li>
         </ul>
@@ -820,128 +853,34 @@
   <main id="main-content">
     <div class="wrapper">
 
+      <!--
+        STANDING REMINDERS — update on every template copy:
+        1. Back link href below — update to correct section/page path
+        2. aria-current="page" — set on correct item in desktop nav AND mobile drawer
+           (Play for gallery/Play pages; Blog when reused for Blog section)
+        3. aria-label + alt on logo link — update SW24 → SW26 when new asset is ready
+        4. Lightbox: all images with class="image-outline" inside .gallery-item figures
+           are wired automatically. Omit .image-outline on any image that should not
+           open in the lightbox. YouTube triggers (data-yt-id) are always wired.
+      -->
       <!-- Back link -->
-      <a href="/case-study/organisation/" class="home-link">&#8249; Back</a>
+      <a href="/play/" class="home-link">&#8249; Back</a>
 
       <!-- ── Page heading ────────────────────────── -->
       <div class="intro">
-        <span class="headline-caption font-size-1">Case study</span>
-        <h1 class="font-size-4">Re-imagining the GDS ‘Good Practice Guides’</h1>
+        <span class="headline-caption font-size-1">Side hustle</span>
+        <h1 class="font-size-4">Brazil 2014 — FIFA World Cup</h1>
         <p class="lead-paragraph">
-          Creating flexible frameworks whilst exploring the elasticity of identity verification
+          The closest I will ever get to playing for my country.
         </p>
 
         <p>
-          In 2012 Government Digital Service (GDS) published its series of 
-          <a href="https://gds.blog.gov.uk/2012/05/14/good-practice-guides-enabling-trusted-transactions/">Good Practice Guides</a> (GPGs). 
-          I think it's fair to say these are not considered the most accessible of reads... and to use their own language, they are recgnised for being "necessarily quite technical".
-        </p>
-      <!--  ── Add a second paragraph if needed to complete the context. This is also a good place to describe the scope of the problem and why it mattered. -->
-        <p>
-          In my role as a Product Manager and Identity & Trust Specialist, these became critical documents for me to understand, reference and articulate to others. 
-          However, with some weighing in at just under 10k words, including a 29 page sub-section, which presented 32 identity profiles as tabular data, this was often easier 
-          said than done.
+          A personal project documenting England's 2014 World Cup squad through illustration.
+          Each portrait was produced during the tournament, working from reference photography
+          and broadcast footage.
         </p>
 
-        <!-- Hero image -->
-      <figure>
-  <img src="../../assets/thumbnails/work/gpg2.png" alt="Description of your image" class="image-outline">
-  <figcaption>Your caption here.</figcaption>
-</figure>
-      </div>
-
-      <!-- ── Section 1: Strategic framing ─────────── 
-      Use this section to describe the strategic framing, design judgment, or key decision-making context. 
-      What principles shaped how you approached this project? What did you deliberately prioritise or deprioritise, and why?-->
-      <section>
-        <h2 class="font-size-2">Reframing the problem</h2>
-        <p>
-          I had already seen a couple of attempts to re-frame this information. For example, the digital consultancy Hippo who opted for a Lego bricks analogy.
-        </p>
-        
-        <p>
-          But this interpretation always seemed far too rigid to me, especially when dealing with a concept as fluid as identity. Whilst I could appreciate the bricks 
-          were meant to be interchangeable. I couldn’t shake the feeling that this should be more about depth and breadth rather than height.
-        </p>
-
-         <figure>
-          <img src="../../work/gpg/hippo_lego.png" alt="Description of your image" class="image-outline">
-          <figcaption>Caption explaining what this image shows and its significance in the process.</figcaption>
-        </figure>
-
-        <p>
-          This is a test paragraph sitting below the image. It should have the same vertical breathing room above it as any other paragraph 
-          on the page — neither flush to the caption nor excessively distant from it.
-        </p>
-        
-      </section>
-
-
-      <!-- ── Section 2:  ─────────── 
-      This is me inlcuding some text that employs a two up iamge-->
-      <section>
-        <h2 class="font-size-2">What did I do about?</h2>
-        <p>
-          I focussed on creating a framework that could literally ‘flex’. After all, an identity can be challenged in a variety of ways, 
-          for a variety of reasons and across a variety of different channels. </p>
-        <p>
-          My focus was less about 'how' to achieve a certain score and more about 'why' that score was best suited to certain scenarios and factors.
-          </p>
-        <p>
-          I also wanted to pay particular attention to language, since my early research had shown this was the number one reason for stakeholder assumptions. 
-        The difference between verification, validation and authentication, for example, was a recurring and lengthy bone of contention.</p>
-        <p>
-          To address these unnecessary distractions, I created a couple of one pagers, which sought to cut through a lot of the noise, acting as anchors 
-          for discussions and stakeholder alignment.
-          </p>
-
-<!-- Two-up images -->
-        <figure>
-          <div class="side-by-side-images">
-            <div>
-              <span class="figure-label">Figure 4</span>
-              <img src="../../work/gpg/know_have_are.png" alt="Description of your image" class="image-outline">
-            </div>
-            <div>
-              <span class="figure-label">Figure 5</span>
-              <img src="../../work/gpg/5_elements.png" alt="Description of your image" class="image-outline">
-            </div>
-          </div>
-          <figcaption>Caption describing what Figures 4 and 5 show, including the context in which they appear.</figcaption>
-        </figure>
-
-      <!--  <p>
-          Extra paragraph below images if required
-        </p> -->
-      
-        
-      </section>
-      
-
-      <!-- ── Section 2: Design decisions ──────────── -->
-      <section>
-        <h2 class="font-size-2">Design decisions</h2>
-
-        <!-- Sub-decision 1 -->
-        <h3 class="font-size-1">Decision one</h3>
-        <p>
-          Describe the first significant design decision. What was the problem, what options existed, what did you choose, and what was the rationale?
-        </p>
-
-        <figure>
-          <div class="placeholder-img placeholder-img--wide image-outline" role="img" aria-label="Screenshot placeholder">
-            [Screenshot or artefact — e.g. early prototype, sketch, doc]
-          </div>
-          <figcaption>Caption explaining what this image shows and its significance in the process.</figcaption>
-        </figure>
-
-        <!-- Sub-decision 2 -->
-        <h3 class="font-size-1">Decision two</h3>
-        <p>
-          Describe the second design decision. Keep the same structure: problem → options → choice → rationale. Be specific about trade-offs made.
-        </p>
-
-        <!-- YouTube video — thumbnail shown inline, iframe loaded only on click -->
+        <!-- Hero — use image or YouTube trigger; remove whichever is not needed -->
         <figure>
           <button
             class="yt-trigger image-outline"
@@ -952,7 +891,6 @@
               src="../../assets/thumbnails/play/worldcup.png"
               alt="Steven Gerrard signing a portrait from a series of England World Cup player illustrations">
             <span class="yt-trigger__play" aria-hidden="true">
-              <!-- Play triangle -->
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="5,3 19,12 5,21"/>
               </svg>
@@ -960,81 +898,108 @@
           </button>
           <figcaption>England World Cup portraits — a personal project documenting the squad through illustration. Click to watch.</figcaption>
         </figure>
+      </div>
 
-        <!-- Sub-decision 3 -->
-        <h3 class="font-size-1">Decision three</h3>
-        <p>
-          Describe the third design decision. If this involved a visual or interaction approach, explain the thinking behind it and how it served the user or the system.
-        </p>
+      <!-- ── Masonry gallery ─────────────────────────────────────────────────
+           CSS columns layout — cross-browser safe, handles mixed portrait/landscape.
+           Each item is a self-contained <figure> with its own figcaption so the
+           lightbox receives the correct per-image caption.
 
-        <figure>
-          <div class="placeholder-img placeholder-img--wide image-outline" role="img" aria-label="Component or feature screenshot placeholder">
-            [Screenshot — e.g. component page, feature detail, evolved design]
-          </div>
-          <figcaption>Caption explaining the matured or evolved design shown here.</figcaption>
+           To add an image:  copy a .gallery-item block, update src, alt, figcaption.
+           To add a video:   use the commented-out yt-trigger pattern at the end.
+           Ordering:         items flow top-to-bottom within columns, left-to-right
+                             across. Reorder HTML to control visual placement.
+
+           Lightbox:         all img.image-outline inside .gallery-item are wired
+                             automatically by initTriggers(). YouTube triggers (button
+                             with data-yt-id) are always wired regardless of class.
+      ──────────────────────────────────────────────────────────────────────── -->
+      <div class="gallery">
+
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-portrait-1.png"
+            alt="Illustrated portrait — player name, detail"
+            class="image-outline">
+          <figcaption>Player name — brief note on technique or context.</figcaption>
         </figure>
 
-        <!-- Sub-decision 4 (visual / illustration) -->
-        <h3 class="font-size-1">Decision four</h3>
-        <p>
-          Use this for a decision that was primarily visual, conceptual, or systemic — for example, an illustration system, a taxonomy, a naming convention. Explain the intent and the outcome.
-        </p>
-
-        <!-- Three-up images -->
-        <figure>
-          <div class="three-images">
-            <div>
-              <span class="figure-label">Figure 1</span>
-              <div class="placeholder-img placeholder-img--illustration image-outline" role="img" aria-label="Figure 1 placeholder">[Figure 1 — e.g. illustrating concept A]</div>
-            </div>
-            <div>
-              <span class="figure-label">Figure 2</span>
-              <div class="placeholder-img placeholder-img--illustration image-outline" role="img" aria-label="Figure 2 placeholder">[Figure 2 — e.g. illustrating concept B]</div>
-            </div>
-            <div>
-              <span class="figure-label">Figure 3</span>
-              <div class="placeholder-img placeholder-img--illustration image-outline" role="img" aria-label="Figure 3 placeholder">[Figure 3 — e.g. illustrating concept C]</div>
-            </div>
-          </div>
-          <figcaption>Caption describing what Figures 1, 2, and 3 each represent.</figcaption>
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-landscape-1.png"
+            alt="Illustrated scene or group composition"
+            class="image-outline">
+          <figcaption>Caption describing this image and its context in the series.</figcaption>
         </figure>
 
-      </section>
-
-      <!-- ── Section 3: Impact ──────────────────────── -->
-      <section>
-        <h2 class="font-size-2">Impact</h2>
-        <ul class="list-extra-space">
-          <li>Outcome one — describe a concrete, specific result. Avoid vague claims; prefer measurable or observable effects.</li>
-          <li>Outcome two — describe adoption, usage, or stakeholder reception where relevant.</li>
-          <li>Outcome three — describe a downstream effect: what did this work make possible?</li>
-          <li>Outcome four — describe influence on other teams, products, or initiatives.</li>
-          <li>Outcome five — describe longer-term strategic significance or future potential.</li>
-        </ul>
-
-        <!-- Two-up images -->
-        <figure>
-          <div class="side-by-side-images">
-            <div>
-              <span class="figure-label">Figure 4</span>
-              <div class="placeholder-img placeholder-img--wide image-outline" role="img" aria-label="Figure 4 placeholder">[Figure 4 — e.g. resulting artefact or system]</div>
-            </div>
-            <div>
-              <span class="figure-label">Figure 5</span>
-              <div class="placeholder-img placeholder-img--wide image-outline" role="img" aria-label="Figure 5 placeholder">[Figure 5 — e.g. resulting artefact or system, continued]</div>
-            </div>
-          </div>
-          <figcaption>Caption describing what Figures 4 and 5 show, including the context in which they appear.</figcaption>
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-portrait-2.png"
+            alt="Illustrated portrait"
+            class="image-outline">
+          <figcaption>Caption.</figcaption>
         </figure>
 
-      </section>
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-landscape-2.png"
+            alt="Description"
+            class="image-outline">
+          <figcaption>Caption.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-portrait-3.png"
+            alt="Description"
+            class="image-outline">
+          <figcaption>Caption.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-portrait-4.png"
+            alt="Description"
+            class="image-outline">
+          <figcaption>Caption.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img
+            src="../../assets/thumbnails/play/placeholder-landscape-3.png"
+            alt="Description"
+            class="image-outline">
+          <figcaption>Caption.</figcaption>
+        </figure>
+
+        <!-- YouTube gallery item — uncomment and populate as needed
+        <figure class="gallery-item">
+          <button
+            class="yt-trigger image-outline"
+            data-yt-id="VIDEO_ID_HERE"
+            aria-label="Play video: description — opens in lightbox"
+            type="button">
+            <img
+              src="../../assets/thumbnails/play/video-thumbnail.png"
+              alt="Thumbnail description">
+            <span class="yt-trigger__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+            </span>
+          </button>
+          <figcaption>Caption for this video.</figcaption>
+        </figure>
+        -->
+
+      </div><!-- /.gallery -->
 
       <!-- ── Related links ─────────────────────────── -->
       <section class="related-links">
-        <h2 class="related-links-heading">Organisation case studies:</h2>
+        <h2 class="related-links-heading">More from Play:</h2>
         <ul>
-          <li><a href="/case-study/org/related-project-one/">Related project one</a></li>
-          <li><a href="/case-study/org/related-project-two/">Related project two</a></li>
+          <li><a href="/play/related-project-one/">Related project one</a></li>
+          <li><a href="/play/related-project-two/">Related project two</a></li>
         </ul>
       </section>
 
@@ -1392,7 +1357,9 @@
     });
 
     function initTriggers() {
-      // Images
+      // Images — wires all img.image-outline inside any figure (case study sections
+      // and gallery items). Gallery items each have their own figure so per-image
+      // captions work correctly in the lightbox.
       document.querySelectorAll('figure img.image-outline').forEach(el => {
         el.setAttribute('tabindex', '0');
         el.classList.add('lightbox-trigger');
