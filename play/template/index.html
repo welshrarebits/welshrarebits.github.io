@@ -152,8 +152,11 @@
       font-weight: var(--font-weight-semibold);
     }
 
-    /* Image outline suppressed in dark mode — images define their own edges
-       against the dark background without needing additional border structure */
+    /* Image outline — softened from base token (full black/white) to low-opacity
+       edge. Defines the image boundary without visual weight.
+       Light: rgba black at 18% — present but unobtrusive on #e2e7eb background.
+       Dark:  suppressed entirely — images define their own edges against dark bg. */
+    .image-outline { outline: var(--border-thin) solid rgba(0, 0, 0, 0.18); }
     @media (prefers-color-scheme: dark) {
       .image-outline { outline: none; }
     }
@@ -918,7 +921,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/sterling_15.jpg"
+            src="../../assets/thumbnails/play/placeholder-portrait-1.png"
             alt="Illustrated portrait — player name, detail"
             class="image-outline">
           <figcaption>Player name — brief note on technique or context.</figcaption>
@@ -926,7 +929,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/ben_foster.png"
+            src="../../assets/thumbnails/play/placeholder-landscape-1.png"
             alt="Illustrated scene or group composition"
             class="image-outline">
           <figcaption>Caption describing this image and its context in the series.</figcaption>
@@ -934,7 +937,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/box_15.jpg"
+            src="../../assets/thumbnails/play/placeholder-portrait-2.png"
             alt="Illustrated portrait"
             class="image-outline">
           <figcaption>Caption.</figcaption>
