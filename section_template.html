@@ -497,24 +497,33 @@
       display: flex;
       flex-direction: column;
       position: relative; /* anchor for stretched read-more link */
+      height: 100%; /* fill grid cell so margin-top: auto on link works correctly */
     }
 
-    /* Card title — body weight, not semibold, to avoid competing with heading */
+    /* Card title — 2-line clamp pins image to consistent vertical position across row */
     .article-card__title {
       font-size: 1.1875rem;
       font-weight: var(--font-weight-bold);
       line-height: 1.3;
       margin-bottom: var(--spacing-1);
       color: var(--color-primary-text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    /* Subtitle — secondary colour, standard weight */
+    /* Subtitle — 2-line clamp, same reason as title */
     .article-card__subtitle {
       font-size: 1rem;
       font-weight: var(--font-weight-standard);
       color: var(--color-secondary-text);
       line-height: 1.4;
       margin-bottom: var(--spacing-4);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     /* Featured image — 16:9, object-fit: cover, consistent regardless of source dimensions */
@@ -671,55 +680,54 @@
 
         <!-- ── Card 1 ── -->
         <li class="article-card">
-          <p class="article-card__title">Re-imagining the GDS Good Practice Guides</p>
-          <p class="article-card__subtitle">Creating flexible frameworks and exploring the elasticity of identity</p>
+          <p class="article-card__title">Article Title</p>
+          <p class="article-card__subtitle">Article subtitle or short descriptor</p>
           <div class="article-card__image-wrap">
             <img
-              src="../../assets/thumbnails/work/gpg2.png"
+              src="path/to/hero-image.jpg"
               alt="Brief description of the image"
               class="image-outline">
           </div>
           <p class="article-card__intro">
-            In 2012 GDS published its series of Good Practice Guides (GPGs). I think it's probably fair to say 
-            that they are not considered the most accessible of reads, even by their own admission 
-            (via the Cabinet Office website) it is recognised
+            Intro text drawn from the opening of the article. This will be clamped to three
+            lines regardless of length, keeping the grid rows aligned across all cards.
+            Write naturally — truncation is handled by CSS.
           </p>
           <a class="article-card__link" href="/work/article-slug/">Read more</a>
         </li>
 
         <!-- ── Card 2 ── -->
         <li class="article-card">
-          <p class="article-card__title">Cross-government delivery at pace</p>
-          <p class="article-card__subtitle">Providing a statistically significant alternative to GOV.UK Verify</p>
+          <p class="article-card__title">Article Title</p>
+          <p class="article-card__subtitle">Article subtitle or short descriptor</p>
           <div class="article-card__image-wrap">
             <img
-              src="../../assets/thumbnails/work/gpg2.png"
+              src="path/to/hero-image.jpg"
               alt="Brief description of the image"
               class="image-outline">
           </div>
           <p class="article-card__intro">
-            Confirm Your Identity (CYI) was an accelerated delivery during the 
-            government's early response to COVID-19. It was a key part of DWP's 
-            Dynamic Trust Hub, enabling well over 8 million customer journeys 
-            in its first few years.
+            Intro text drawn from the opening of the article. This will be clamped to three
+            lines regardless of length, keeping the grid rows aligned across all cards.
+            Write naturally — truncation is handled by CSS.
           </p>
           <a class="article-card__link" href="/work/article-slug/">Read more</a>
         </li>
 
         <!-- ── Card 3 ── -->
         <li class="article-card">
-          <p class="article-card__title">Untangling the UK Benefits System</p>
-          <p class="article-card__subtitle">Design by analogy using Harry Beck's London Underground Map</p>
+          <p class="article-card__title">Article Title</p>
+          <p class="article-card__subtitle">Article subtitle or short descriptor</p>
           <div class="article-card__image-wrap">
             <img
-              src="../../assets/thumbnails/work/gpg2.png"
+              src="path/to/hero-image.jpg"
               alt="Brief description of the image"
               class="image-outline">
           </div>
           <p class="article-card__intro">
-            People can arrive at GOV.UK having never interacted with the benefits 
-            system before. They can be unsure of how their own circumstances fit 
-            within the current system and what support is potentially available to them.
+            Intro text drawn from the opening of the article. This will be clamped to three
+            lines regardless of length, keeping the grid rows aligned across all cards.
+            Write naturally — truncation is handled by CSS.
           </p>
           <a class="article-card__link" href="/work/article-slug/">Read more</a>
         </li>
