@@ -493,11 +493,20 @@
     }
 
     /* ── Article card ────────────────────────────────────────────────────────── */
+    /*
+      Grid items (<li>) are block by default. height: 100% on .article-card only
+      resolves if the parent <li> itself fills and exposes its grid-cell height.
+      display: flex on the <li> makes it a formatting context that stretches to
+      fill the cell (grid items stretch by default) and passes that height down.
+    */
+    .article-grid > li {
+      display: flex;
+    }
     .article-card {
       display: flex;
       flex-direction: column;
       position: relative; /* anchor for stretched read-more link */
-      height: 100%; /* fill grid cell so margin-top: auto on link works correctly */
+      width: 100%; /* fill the flex <li> horizontally */
     }
 
     /* Card title — 2-line clamp pins image to consistent vertical position across row */
