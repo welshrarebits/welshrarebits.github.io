@@ -152,8 +152,11 @@
       font-weight: var(--font-weight-semibold);
     }
 
-    /* Image outline suppressed in dark mode — images define their own edges
-       against the dark background without needing additional border structure */
+    /* Image outline — softened from base token (full black/white) to low-opacity
+       edge. Defines the image boundary without visual weight.
+       Light: rgba black at 18% — present but unobtrusive on #e2e7eb background.
+       Dark:  suppressed entirely — images define their own edges against dark bg. */
+    .image-outline { outline: var(--border-thin) solid rgba(0, 0, 0, 0.18); }
     @media (prefers-color-scheme: dark) {
       .image-outline { outline: none; }
     }
