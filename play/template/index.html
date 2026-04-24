@@ -758,7 +758,10 @@
       position: relative;
     }
 
-    /* ── Masonry gallery — CSS columns ───────────────────────────────────────── */
+    /* Intro margin — reduced from base spacing-10 (80px) to pixel-20 (20px) so the
+       hero image and masonry gallery read as a continuous visual surface rather than
+       separate sections. Matches the column-gap between gallery items. */
+    .intro { margin-bottom: var(--pixel-20); }
     /*
       CSS columns chosen over CSS Grid masonry for cross-browser support.
       Mixed portrait and landscape orientations are handled gracefully by design —
@@ -921,7 +924,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/NFM_3.jpg"
+            src="../../assets/thumbnails/play/placeholder-portrait-1.png"
             alt="Illustrated portrait — player name, detail"
             class="image-outline">
           <figcaption>Player name — brief note on technique or context.</figcaption>
@@ -929,7 +932,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/sterling_15.jpg"
+            src="../../assets/thumbnails/play/placeholder-landscape-1.png"
             alt="Illustrated scene or group composition"
             class="image-outline">
           <figcaption>Caption describing this image and its context in the series.</figcaption>
@@ -937,7 +940,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/ox_15.jpg"
+            src="../../assets/thumbnails/play/placeholder-portrait-2.png"
             alt="Illustrated portrait"
             class="image-outline">
           <figcaption>Caption.</figcaption>
@@ -945,7 +948,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/ben_foster.png"
+            src="../../assets/thumbnails/play/placeholder-landscape-2.png"
             alt="Description"
             class="image-outline">
           <figcaption>Caption.</figcaption>
@@ -953,7 +956,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/promo.png"
+            src="../../assets/thumbnails/play/placeholder-portrait-3.png"
             alt="Description"
             class="image-outline">
           <figcaption>Caption.</figcaption>
@@ -961,7 +964,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/lampard_15.jpg"
+            src="../../assets/thumbnails/play/placeholder-portrait-4.png"
             alt="Description"
             class="image-outline">
           <figcaption>Caption.</figcaption>
@@ -969,7 +972,7 @@
 
         <figure class="gallery-item">
           <img
-            src="../../play/worldcup/branding.jpg"
+            src="../../assets/thumbnails/play/placeholder-landscape-3.png"
             alt="Description"
             class="image-outline">
           <figcaption>Caption.</figcaption>
