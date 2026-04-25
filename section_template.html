@@ -526,10 +526,13 @@
       overflow: hidden;
     }
 
-    /* Subtitle — fixed height of exactly 2 lines, same rationale as title. */
+    /* Subtitle — fixed height of exactly 2 lines, same rationale as title.
+       font-style: italic differentiates from intro text which shares the same
+       size and colour — style is the only meaningful signal at this scale. */
     .article-card__subtitle {
       font-size: 1rem;
       font-weight: var(--font-weight-standard);
+      font-style: italic;
       color: var(--color-secondary-text);
       line-height: 1.4;
       height: calc(1rem * 1.4 * 2); /* = 2.8rem — exactly 2 lines */
