@@ -490,6 +490,14 @@
         grid-template-columns: 1fr;
         row-gap: var(--spacing-9);
       }
+      /* Fixed heights on title and subtitle exist solely to align siblings across
+         a multi-column grid row. At single column there are no siblings to align,
+         so fixed height is removed — titles and subtitles collapse to their natural
+         content height, restoring the tight title/subtitle relationship. */
+      .article-card__title,
+      .article-card__subtitle {
+        height: auto;
+      }
     }
 
     /* ── Article card ────────────────────────────────────────────────────────── */
