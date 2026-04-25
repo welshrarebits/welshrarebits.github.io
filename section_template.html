@@ -490,19 +490,6 @@
         grid-template-columns: 1fr;
         row-gap: var(--spacing-9);
       }
-      /* Fixed heights exist solely for multi-column row alignment.
-         At single column they are released. Margins explicitly set here
-         to guarantee override of base p { margin-bottom: var(--spacing-6) }. */
-      .article-card .article-card__title,
-      .article-card .article-card__subtitle {
-        height: auto;
-      }
-      .article-card .article-card__title {
-        margin-bottom: var(--spacing-1);
-      }
-      .article-card .article-card__subtitle {
-        margin-bottom: var(--spacing-4);
-      }
     }
 
     /* ── Article card ────────────────────────────────────────────────────────── */
@@ -625,6 +612,19 @@
     .article-card:has(.article-card__link:focus-visible) {
       outline: var(--border-thick) solid var(--color-focus);
       outline-offset: var(--pixel-2);
+    }
+
+    /* Mobile card overrides — declared after all card rules so cascade order
+       guarantees these win over the fixed-height rules above at narrow viewports. */
+    @media (max-width: 48rem) {
+      .article-card .article-card__title,
+      .article-card .article-card__subtitle {
+        height: auto;
+        margin-bottom: var(--spacing-1);
+      }
+      .article-card .article-card__subtitle {
+        margin-bottom: var(--spacing-4);
+      }
     }
   </style>
 </head>
