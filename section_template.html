@@ -490,13 +490,18 @@
         grid-template-columns: 1fr;
         row-gap: var(--spacing-9);
       }
-      /* Fixed heights on title and subtitle exist solely to align siblings across
-         a multi-column grid row. At single column there are no siblings to align,
-         so fixed height is removed — titles and subtitles collapse to their natural
-         content height, restoring the tight title/subtitle relationship. */
-      .article-card__title,
-      .article-card__subtitle {
+      /* Fixed heights exist solely for multi-column row alignment.
+         At single column they are released. Margins explicitly set here
+         to guarantee override of base p { margin-bottom: var(--spacing-6) }. */
+      .article-card .article-card__title,
+      .article-card .article-card__subtitle {
         height: auto;
+      }
+      .article-card .article-card__title {
+        margin-bottom: var(--spacing-1);
+      }
+      .article-card .article-card__subtitle {
+        margin-bottom: var(--spacing-4);
       }
     }
 
@@ -520,8 +525,9 @@
 
     /* Card title — fixed height of exactly 2 lines (font-size × line-height × 2).
        Clamp truncates overflow; fixed height ensures all cards reserve identical
-       space regardless of whether the title fills 1 or 2 lines. */
-    .article-card__title {
+       space regardless of whether the title fills 1 or 2 lines.
+       .article-card prefix raises specificity above base p { margin-bottom } rule. */
+    .article-card .article-card__title {
       font-size: 1.1875rem;
       font-weight: var(--font-weight-bold);
       line-height: 1.3;
@@ -536,8 +542,9 @@
 
     /* Subtitle — fixed height of exactly 2 lines, same rationale as title.
        font-style: italic differentiates from intro text which shares the same
-       size and colour — style is the only meaningful signal at this scale. */
-    .article-card__subtitle {
+       size and colour — style is the only meaningful signal at this scale.
+       .article-card prefix raises specificity above base p { margin-bottom } rule. */
+    .article-card .article-card__subtitle {
       font-size: 1rem;
       font-weight: var(--font-weight-standard);
       font-style: italic;
@@ -573,8 +580,9 @@
       margin: 0;
     }
 
-    /* Intro text — 3-line clamp. Keeps grid rows aligned across cards. */
-    .article-card__intro {
+    /* Intro text — 3-line clamp. Keeps grid rows aligned across cards.
+       .article-card prefix raises specificity above base p { margin-bottom } rule. */
+    .article-card .article-card__intro {
       font-size: 1rem;
       font-weight: var(--font-weight-standard);
       line-height: 1.6;
