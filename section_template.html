@@ -568,12 +568,15 @@
     }
 
     /* Intro text — 3-line clamp. Keeps grid rows aligned across cards.
-       .article-card prefix raises specificity above base p { margin-bottom } rule. */
+       color-primary-text — intro is the primary reading content of the card,
+       equivalent to body copy. Secondary text colour would reduce readability
+       particularly in dark mode. .article-card prefix raises specificity above
+       base p { margin-bottom } rule. */
     .article-card .article-card__intro {
       font-size: 1rem;
       font-weight: var(--font-weight-standard);
       line-height: 1.6;
-      color: var(--color-secondary-text);
+      color: var(--color-primary-text);
       margin-bottom: var(--spacing-4);
       /* Standard two-property clamp pattern — widely supported */
       display: -webkit-box;
@@ -793,7 +796,7 @@
                 <!-- ── Card 5 ── -->
         <li class="article-card">
           <p class="article-card__title">Consolidating multiple team hypotheses</p>
-          <p class="article-card__subtitle">Helping teams see the wood for the trees via digital deforestation</p>
+          <p class="article-card__subtitle">Helping teams see the wood for the trees via digital deforestationr</p>
           <div class="article-card__image-wrap">
             <img
               src="../assets/thumbnails/work/UX_alt.png"
