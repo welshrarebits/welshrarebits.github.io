@@ -24,6 +24,10 @@
       permanent vertical cost at wider viewports.
       Sticky retained at <48rem — mobile drawer is the primary wayfinding
       mechanism and losing it on scroll has a higher cost than at desktop.
+      Hide-on-scroll-down / show-on-scroll-up reinstated at mobile only —
+      this was the behaviour from the original template, removed in error
+      when the desktop sticky scroll listener was stripped. The JS guard
+      (window.innerWidth check) ensures it only activates at <48rem.
     */
     .page-header {
       position: static;
@@ -34,7 +38,14 @@
         top: 0;
         z-index: 100;
         background: var(--color-background);
+        transition: transform 0.25s ease;
       }
+      .page-header.is-hidden {
+        transform: translateY(-100%);
+      }
+    }
+    @media (max-width: 48rem) and (prefers-reduced-motion: reduce) {
+      .page-header { transition: none; }
     }
 
     main { padding-top: var(--spacing-6); }
@@ -474,6 +485,85 @@
       margin-bottom: var(--spacing-9);
     }
 
+    /* ── Filter bar ─────────────────────────────────────────────────────────── */
+    /*
+      Sticky at ≥48rem — top: 0 is correct since the desktop header is now
+      static (no offset calculation needed). Static at mobile — the sticky
+      header already occupies the top of the viewport there; a second sticky
+      band would compound the vertical cost on small screens.
+      background + border-bottom: prevents grid content scrolling visibly
+      behind the bar when stuck; border mirrors the header's lower border
+      pattern without introducing new tokens. Adjust padding and border
+      treatment after reviewing in context.
+      z-index: 50 — below the header (z-index: 100 at mobile) and below
+      modals (z-index: 300), above grid content.
+    */
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--color-background);
+      border-bottom: var(--border-thick) solid var(--color-border);
+      padding-top: var(--spacing-4);
+      padding-bottom: var(--spacing-4);
+      margin-bottom: var(--spacing-9);
+    }
+    @media (max-width: 48rem) {
+      .filter-bar {
+        position: static;
+        border-bottom: none;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: var(--spacing-6);
+      }
+    }
+
+    /* ── Filter button group ─────────────────────────────────────────────────── */
+    /*
+      role="group" + aria-label on the wrapper.
+      aria-pressed per button — toggled by JS.
+      Active state: inverted colours (primary-text bg, background-colour text)
+      consistent with the theme segmented control pattern already in the footer.
+      Uppercase tracking matches existing utility label language in the system.
+    */
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .filter-btn {
+      font-family: var(--font-family);
+      font-size: 0.75rem;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-secondary-text);
+      background: none;
+      border: var(--border-thin) solid var(--color-border);
+      padding: var(--spacing-1) var(--spacing-3);
+      cursor: pointer;
+      line-height: 1.4;
+      min-height: 44px; /* minimum touch target */
+      display: flex;
+      align-items: center;
+    }
+    .filter-btn:hover {
+      color: var(--color-primary-text);
+      border-color: var(--color-primary-text);
+    }
+    .filter-btn.is-active {
+      background: var(--color-primary-text);
+      color: var(--color-background);
+      border-color: var(--color-primary-text);
+    }
+    .filter-btn:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+
     /* ── Article grid ────────────────────────────────────────────────────────── */
     /*
       3 columns at ≥48rem, 1 column below.
@@ -732,6 +822,28 @@
       <!-- ── Section heading ──────────────────────────────────────────────────── -->
       <h1 class="font-size-2 index-heading">Blog</h1>
 
+      <!-- ── Filter bar ───────────────────────────────────────────────────────── -->
+      <!--
+        Filter bar — sticky on desktop, static on mobile per session decision.
+        Categories reflect the current post taxonomy — update this list when
+        new categories are introduced.
+        aria-label on the nav element provides context for screen readers.
+        Each button carries aria-pressed; JS toggles is-active class and
+        aria-pressed state on click, and filters the article grid accordingly.
+        data-category="all" on the All button shows every card.
+        data-category values must match the text content of
+        .article-card__category spans exactly (case-insensitive comparison in JS).
+      -->
+      <nav class="filter-bar" aria-label="Filter posts by category">
+        <ul class="filter-group" role="group" aria-label="Categories">
+          <li><button class="filter-btn is-active" data-category="all" aria-pressed="true">All</button></li>
+          <li><button class="filter-btn" data-category="thoughts" aria-pressed="false">Thoughts</button></li>
+          <li><button class="filter-btn" data-category="process" aria-pressed="false">Process</button></li>
+          <li><button class="filter-btn" data-category="tools" aria-pressed="false">Tools</button></li>
+          <li><button class="filter-btn" data-category="recognition" aria-pressed="false">Recognition</button></li>
+        </ul>
+      </nav>
+
       <!-- ── Article grid ─────────────────────────────────────────────────────── -->
       <ul class="article-grid" aria-label="Blog posts">
 
@@ -739,6 +851,7 @@
         <li class="article-card">
           <p class="article-card__title">Unspectacular Things</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 April 2024</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -755,6 +868,7 @@
         <li class="article-card">
           <p class="article-card__title">Innovation or Irritation?</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 September 2023</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -771,6 +885,7 @@
         <li class="article-card">
           <p class="article-card__title">Sheffield Digital Awards</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">3 May 2019</time>
             <span class="article-card__category">Recognition</span>
           </div>
@@ -787,6 +902,7 @@
         <li class="article-card">
           <p class="article-card__title">The Quiet Power of Constraints</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">14 February 2024</time>
             <span class="article-card__category">Process</span>
           </div>
@@ -803,6 +919,7 @@
         <li class="article-card">
           <p class="article-card__title">What Figma's Variable System Gets Right</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">2 November 2023</time>
             <span class="article-card__category">Tools</span>
           </div>
@@ -819,6 +936,7 @@
         <li class="article-card">
           <p class="article-card__title">On Reading Sideways</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">17 July 2023</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -835,6 +953,7 @@
         <li class="article-card">
           <p class="article-card__title">Facilitation as Design Work</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">4 March 2023</time>
             <span class="article-card__category">Process</span>
           </div>
@@ -851,6 +970,7 @@
         <li class="article-card">
           <p class="article-card__title">Named in the Design Week Ones to Watch</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">28 October 2022</time>
             <span class="article-card__category">Recognition</span>
           </div>
@@ -867,6 +987,7 @@
         <li class="article-card">
           <p class="article-card__title">The Problem with Best Practice</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">12 August 2022</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -883,6 +1004,7 @@
         <li class="article-card">
           <p class="article-card__title">A Year with Arc Browser</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">5 May 2022</time>
             <span class="article-card__category">Tools</span>
           </div>
@@ -899,6 +1021,7 @@
         <li class="article-card">
           <p class="article-card__title">When Research Contradicts the Brief</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">19 January 2022</time>
             <span class="article-card__category">Process</span>
           </div>
@@ -915,6 +1038,7 @@
         <li class="article-card">
           <p class="article-card__title">Small Screens, Big Consequences</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">7 September 2021</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -931,6 +1055,7 @@
         <li class="article-card">
           <p class="article-card__title">Writing as a Design Tool</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">22 April 2021</time>
             <span class="article-card__category">Process</span>
           </div>
@@ -947,6 +1072,7 @@
         <li class="article-card">
           <p class="article-card__title">Against Seamlessness</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">11 December 2020</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -963,6 +1089,7 @@
         <li class="article-card">
           <p class="article-card__title">Shortlisted for the UX Design Awards</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">3 August 2020</time>
             <span class="article-card__category">Recognition</span>
           </div>
@@ -979,6 +1106,7 @@
         <li class="article-card" hidden>
           <p class="article-card__title">Notion After Two Years</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">17 March 2020</time>
             <span class="article-card__category">Tools</span>
           </div>
@@ -995,6 +1123,7 @@
         <li class="article-card" hidden>
           <p class="article-card__title">The Difference Between Simple and Easy</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 October 2019</time>
             <span class="article-card__category">Process</span>
           </div>
@@ -1011,6 +1140,7 @@
         <li class="article-card" hidden>
           <p class="article-card__title">Mundane Futures</p>
           <div class="article-card__meta">
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">24 June 2019</time>
             <span class="article-card__category">Thoughts</span>
           </div>
@@ -1127,11 +1257,44 @@
   </div>
 
   <script>
-    // ── Header scroll behaviour ──────────────────────────────────────────────
-    // Header is static at ≥48rem per session decision — no scroll listener needed
-    // at desktop. Mobile sticky is handled by CSS position: sticky alone;
-    // the hide-on-scroll animation is removed as it added complexity without
-    // benefit at the mobile viewport where the drawer is the primary nav.
+    // ── Header scroll behaviour — mobile only ───────────────────────────────
+    // Hide on scroll down, show on scroll up — reinstated for mobile sticky.
+    // Guard: only activates at <48rem (768px). Desktop header is static —
+    // no scroll listener needed there. Matches the 48rem breakpoint used
+    // throughout the CSS. requestAnimationFrame throttles scroll events.
+    const pageHeader  = document.querySelector('.page-header');
+    const MOBILE_BP   = 48 * 16; // 48rem in px — matches CSS breakpoint
+    let   lastScrollY = window.scrollY;
+    let   ticking     = false;
+
+    function updateHeader() {
+      if (window.innerWidth >= MOBILE_BP) {
+        pageHeader.classList.remove('is-hidden');
+        ticking = false;
+        return;
+      }
+      const currentScrollY = window.scrollY;
+      const headerHeight   = pageHeader.offsetHeight;
+      if (currentScrollY > headerHeight) {
+        if (currentScrollY > lastScrollY) {
+          pageHeader.classList.add('is-hidden');
+          if (drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+        } else {
+          pageHeader.classList.remove('is-hidden');
+        }
+      } else {
+        pageHeader.classList.remove('is-hidden');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
 
     // ── Hamburger nav drawer ──────────────────────────────────────────────────
     const hamburger   = document.getElementById('nav-hamburger');
@@ -1173,6 +1336,59 @@
       } else if (!e.shiftKey && document.activeElement === last) {
         e.preventDefault(); first.focus();
       }
+    });
+
+    // ── Category filter ───────────────────────────────────────────────────────
+    //
+    // Filters the article grid by category on button click.
+    // All cards carry a data-category attribute derived from the
+    // .article-card__category span text at page load — no manual data
+    // attributes needed on the <li> elements themselves.
+    //
+    // Hidden cards (load more, stage 3) are excluded from filtering —
+    // only currently visible cards are shown/hidden by the filter.
+    // When filter changes, hidden cards remain hidden regardless of category.
+    //
+    // aria-pressed is toggled on each button to reflect active state.
+    // is-active class drives the visual active state via CSS.
+
+    const filterBtns  = document.querySelectorAll('.filter-btn');
+    const articleGrid = document.querySelector('.article-grid');
+
+    // Build a category map from the DOM at load time.
+    // Reads .article-card__category span text, lowercased, for each card.
+    // Stored on the <li> as a data attribute to avoid repeated DOM reads on
+    // each filter interaction.
+    document.querySelectorAll('.article-grid > li').forEach(li => {
+      const categoryEl = li.querySelector('.article-card__category');
+      if (categoryEl) {
+        li.dataset.cardCategory = categoryEl.textContent.trim().toLowerCase();
+      }
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selected = btn.dataset.category;
+
+        // Update button states
+        filterBtns.forEach(b => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        // Show / hide cards
+        // Cards with the hidden attribute are load-more cards — leave untouched.
+        document.querySelectorAll('.article-grid > li').forEach(li => {
+          if (li.hasAttribute('hidden')) return;
+          if (selected === 'all') {
+            li.style.display = '';
+          } else {
+            li.style.display = li.dataset.cardCategory === selected ? '' : 'none';
+          }
+        });
+      });
     });
 
     // ── Theme segmented control ───────────────────────────────────────────────
