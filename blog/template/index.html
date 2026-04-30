@@ -689,6 +689,19 @@
       }
     }
 
+    /* ── Hidden card override ───────────────────────────────────────────────────── */
+    /*
+      The browser's native [hidden] attribute maps to display: none in the
+      UA stylesheet. However, the authored .article-grid > li { display: flex }
+      rule wins the cascade because authored styles always override UA defaults.
+      This explicit rule restores the correct behaviour by adding an attribute
+      selector, raising specificity above the base li rule so hidden cards
+      are correctly concealed regardless of the display value on the parent rule.
+    */
+    .article-grid > li[hidden] {
+      display: none;
+    }
+
     /* ── Grid controls — load more + back to top ─────────────────────────────── */
     /*
       Inline below the article grid — no fixed positioning per session decision C2.
