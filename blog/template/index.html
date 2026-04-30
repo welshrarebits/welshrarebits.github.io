@@ -485,85 +485,6 @@
       margin-bottom: var(--spacing-9);
     }
 
-    /* ── Filter bar ─────────────────────────────────────────────────────────── */
-    /*
-      Sticky at ≥48rem — top: 0 is correct since the desktop header is now
-      static (no offset calculation needed). Static at mobile — the sticky
-      header already occupies the top of the viewport there; a second sticky
-      band would compound the vertical cost on small screens.
-      background + border-bottom: prevents grid content scrolling visibly
-      behind the bar when stuck; border mirrors the header's lower border
-      pattern without introducing new tokens. Adjust padding and border
-      treatment after reviewing in context.
-      z-index: 50 — below the header (z-index: 100 at mobile) and below
-      modals (z-index: 300), above grid content.
-    */
-    .filter-bar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--color-background);
-      border-bottom: var(--border-thick) solid var(--color-border);
-      padding-top: var(--spacing-4);
-      padding-bottom: var(--spacing-4);
-      margin-bottom: var(--spacing-9);
-    }
-    @media (max-width: 48rem) {
-      .filter-bar {
-        position: static;
-        border-bottom: none;
-        padding-top: 0;
-        padding-bottom: 0;
-        margin-bottom: var(--spacing-6);
-      }
-    }
-
-    /* ── Filter button group ─────────────────────────────────────────────────── */
-    /*
-      role="group" + aria-label on the wrapper.
-      aria-pressed per button — toggled by JS.
-      Active state: inverted colours (primary-text bg, background-colour text)
-      consistent with the theme segmented control pattern already in the footer.
-      Uppercase tracking matches existing utility label language in the system.
-    */
-    .filter-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacing-2);
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .filter-btn {
-      font-family: var(--font-family);
-      font-size: 0.75rem;
-      font-weight: var(--font-weight-semibold);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-secondary-text);
-      background: none;
-      border: var(--border-thin) solid var(--color-border);
-      padding: var(--spacing-1) var(--spacing-3);
-      cursor: pointer;
-      line-height: 1.4;
-      min-height: 44px; /* minimum touch target */
-      display: flex;
-      align-items: center;
-    }
-    .filter-btn:hover {
-      color: var(--color-primary-text);
-      border-color: var(--color-primary-text);
-    }
-    .filter-btn.is-active {
-      background: var(--color-primary-text);
-      color: var(--color-background);
-      border-color: var(--color-primary-text);
-    }
-    .filter-btn:focus-visible {
-      outline: var(--border-thick) solid var(--color-focus);
-      outline-offset: var(--pixel-2);
-    }
-
     /* ── Article grid ────────────────────────────────────────────────────────── */
     /*
       3 columns at ≥48rem, 1 column below.
@@ -654,6 +575,28 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.4;
+      text-decoration: none;
+      /*
+        Category is metadata, not a primary CTA — secondary text colour
+        rather than --color-link keeps it visually subordinate to the
+        card's Read more link. Underline revealed on hover only,
+        consistent with the header-links pattern.
+      */
+    }
+    @media (hover: hover) {
+      .article-card__category:hover {
+        color: var(--color-primary-text);
+        text-decoration: underline;
+        text-decoration-thickness: var(--border-thin);
+        text-underline-offset: 0.3125em;
+      }
+    }
+    .article-card__category:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
     }
 
     /* Featured image — 16:9, object-fit: cover, consistent regardless of source dimensions */
@@ -814,35 +757,17 @@
         2. aria-current="page" — set on Blog item in desktop nav AND mobile drawer
         3. Logo src path — adjust relative depth to match file location
         4. Per card: title, date (datetime attr), category, image src + alt, intro text, href
-        5. Add or remove <li class="article-card"> blocks to match post count
-        6. Initial visible count: 15. Posts beyond 15 carry the hidden attribute.
+        5. Category links use the pattern /blog/category-slug/ — ensure the
+           corresponding category archive page exists before publishing.
+           Current categories: /blog/thoughts/ /blog/process/ /blog/tools/ /blog/recognition/
+           Add new slugs to this list as the taxonomy grows.
+        6. Add or remove <li class="article-card"> blocks to match post count
+        7. Initial visible count: 15. Posts beyond 15 carry the hidden attribute.
            The load more button (stage 3) removes hidden from subsequent batches.
       -->
 
       <!-- ── Section heading ──────────────────────────────────────────────────── -->
       <h1 class="font-size-2 index-heading">Blog</h1>
-
-      <!-- ── Filter bar ───────────────────────────────────────────────────────── -->
-      <!--
-        Filter bar — sticky on desktop, static on mobile per session decision.
-        Categories reflect the current post taxonomy — update this list when
-        new categories are introduced.
-        aria-label on the nav element provides context for screen readers.
-        Each button carries aria-pressed; JS toggles is-active class and
-        aria-pressed state on click, and filters the article grid accordingly.
-        data-category="all" on the All button shows every card.
-        data-category values must match the text content of
-        .article-card__category spans exactly (case-insensitive comparison in JS).
-      -->
-      <nav class="filter-bar" aria-label="Filter posts by category">
-        <ul class="filter-group" role="group" aria-label="Categories">
-          <li><button class="filter-btn is-active" data-category="all" aria-pressed="true">All</button></li>
-          <li><button class="filter-btn" data-category="thoughts" aria-pressed="false">Thoughts</button></li>
-          <li><button class="filter-btn" data-category="process" aria-pressed="false">Process</button></li>
-          <li><button class="filter-btn" data-category="tools" aria-pressed="false">Tools</button></li>
-          <li><button class="filter-btn" data-category="recognition" aria-pressed="false">Recognition</button></li>
-        </ul>
-      </nav>
 
       <!-- ── Article grid ─────────────────────────────────────────────────────── -->
       <ul class="article-grid" aria-label="Blog posts">
@@ -853,7 +778,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 April 2024</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -870,7 +795,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 September 2023</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -887,7 +812,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">3 May 2019</time>
-            <span class="article-card__category">Recognition</span>
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -904,7 +829,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">14 February 2024</time>
-            <span class="article-card__category">Process</span>
+            <a class="article-card__category" href="/blog/process/">Process</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -921,7 +846,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">2 November 2023</time>
-            <span class="article-card__category">Tools</span>
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -938,7 +863,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">17 July 2023</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -955,7 +880,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">4 March 2023</time>
-            <span class="article-card__category">Process</span>
+            <a class="article-card__category" href="/blog/process/">Process</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -972,7 +897,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">28 October 2022</time>
-            <span class="article-card__category">Recognition</span>
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -989,7 +914,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">12 August 2022</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1006,7 +931,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">5 May 2022</time>
-            <span class="article-card__category">Tools</span>
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1023,7 +948,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">19 January 2022</time>
-            <span class="article-card__category">Process</span>
+            <a class="article-card__category" href="/blog/process/">Process</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1040,7 +965,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">7 September 2021</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1057,7 +982,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">22 April 2021</time>
-            <span class="article-card__category">Process</span>
+            <a class="article-card__category" href="/blog/process/">Process</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1074,7 +999,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">11 December 2020</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1091,7 +1016,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">3 August 2020</time>
-            <span class="article-card__category">Recognition</span>
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1108,7 +1033,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">17 March 2020</time>
-            <span class="article-card__category">Tools</span>
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1125,7 +1050,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">9 October 2019</time>
-            <span class="article-card__category">Process</span>
+            <a class="article-card__category" href="/blog/process/">Process</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1142,7 +1067,7 @@
           <div class="article-card__meta">
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">24 June 2019</time>
-            <span class="article-card__category">Thoughts</span>
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
           </div>
           <div class="article-card__image-wrap">
             <img
@@ -1338,60 +1263,7 @@
       }
     });
 
-    // ── Category filter ───────────────────────────────────────────────────────
-    //
-    // Filters the article grid by category on button click.
-    // All cards carry a data-category attribute derived from the
-    // .article-card__category span text at page load — no manual data
-    // attributes needed on the <li> elements themselves.
-    //
-    // Hidden cards (load more, stage 3) are excluded from filtering —
-    // only currently visible cards are shown/hidden by the filter.
-    // When filter changes, hidden cards remain hidden regardless of category.
-    //
-    // aria-pressed is toggled on each button to reflect active state.
-    // is-active class drives the visual active state via CSS.
-
-    const filterBtns  = document.querySelectorAll('.filter-btn');
-    const articleGrid = document.querySelector('.article-grid');
-
-    // Build a category map from the DOM at load time.
-    // Reads .article-card__category span text, lowercased, for each card.
-    // Stored on the <li> as a data attribute to avoid repeated DOM reads on
-    // each filter interaction.
-    document.querySelectorAll('.article-grid > li').forEach(li => {
-      const categoryEl = li.querySelector('.article-card__category');
-      if (categoryEl) {
-        li.dataset.cardCategory = categoryEl.textContent.trim().toLowerCase();
-      }
-    });
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const selected = btn.dataset.category;
-
-        // Update button states
-        filterBtns.forEach(b => {
-          b.classList.remove('is-active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-pressed', 'true');
-
-        // Show / hide cards
-        // Cards with the hidden attribute are load-more cards — leave untouched.
-        document.querySelectorAll('.article-grid > li').forEach(li => {
-          if (li.hasAttribute('hidden')) return;
-          if (selected === 'all') {
-            li.style.display = '';
-          } else {
-            li.style.display = li.dataset.cardCategory === selected ? '' : 'none';
-          }
-        });
-      });
-    });
-
-    // ── Theme segmented control ───────────────────────────────────────────────
+        // ── Theme segmented control ───────────────────────────────────────────────
     const segmentedBtns = document.querySelectorAll('.theme-segmented__btn');
 
     function applyScheme(scheme) {
