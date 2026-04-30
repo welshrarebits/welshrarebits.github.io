@@ -688,6 +688,98 @@
         margin-bottom: var(--spacing-1);
       }
     }
+
+    /* ── Grid controls — load more + back to top ─────────────────────────────── */
+    /*
+      Inline below the article grid — no fixed positioning per session decision C2.
+      Both controls sit in document flow, visible only when relevant:
+      - .grid-controls wrapper: hidden until JS determines there are hidden cards
+      - .back-to-top: hidden until JS reveals it after all posts are loaded,
+        or shown alongside load more once posts exceed the initial batch.
+      margin-top matches the grid's row-gap (--spacing-10) for visual continuity.
+      Controls are left-aligned — consistent with the site's design language.
+    */
+    .grid-controls {
+      display: none; /* shown by JS when hidden cards exist */
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-10);
+    }
+    .grid-controls.is-visible {
+      display: flex;
+    }
+
+    /*
+      Load more — styled as a primary action button using border pattern
+      consistent with the theme segmented control and filter button language
+      already present in the system. Font scale and weight match the
+      article-card__link Read more link for visual consistency.
+    */
+    .load-more-btn {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-link);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .load-more-btn:hover {
+      color: var(--color-hover);
+    }
+    .load-more-btn:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
+    }
+    .load-more-btn:disabled {
+      display: none; /* hidden once all posts are loaded */
+    }
+
+    /*
+      Back to top — same typographic treatment as load more for visual
+      pairing. Sits below load more, or alone once all posts are loaded.
+      Hidden until JS determines all posts are visible.
+    */
+    .back-to-top-btn {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-secondary-text);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: none; /* shown by JS */
+      align-items: center;
+    }
+    .back-to-top-btn.is-visible {
+      display: flex;
+    }
+    .back-to-top-btn:hover {
+      color: var(--color-primary-text);
+    }
+    .back-to-top-btn:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -757,7 +849,7 @@
   <!-- ═══════════════════════════════════════════
        MAIN CONTENT
   ═══════════════════════════════════════════ -->
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <div class="wrapper">
 
       <!--
@@ -839,7 +931,7 @@
           </div>
         </li>
         <!-- ── Card ── -->
-        <li>
+        <li hidden>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/process/">Process</a>
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
@@ -858,7 +950,7 @@
           </div>
         </li>
         <!-- ── Card ── -->
-        <li>
+        <li hidden>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/tools/">Tools</a>
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
@@ -877,7 +969,7 @@
           </div>
         </li>
         <!-- ── Card ── -->
-        <li>
+        <li hidden>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
@@ -1133,6 +1225,28 @@
 
       </ul>
 
+      <!-- ── Grid controls — load more + back to top ──────────────────────────── -->
+      <!--
+        .grid-controls is hidden by default — JS adds .is-visible if hidden
+        cards exist on page load. This ensures the controls never appear on
+        pages with 12 or fewer posts.
+        Load more batch size: 6 posts per click (matches the 2-row increment
+        of the 3-column grid — always reveals complete rows).
+        Back to top: scrolls to #main-content and moves focus to the <main>
+        element — correct accessible behaviour, returns focus to the logical
+        start of the content region.
+        prefers-reduced-motion: scroll behaviour is instant if reduced motion
+        is set — handled in JS via the scrollIntoView options object.
+      -->
+      <div class="grid-controls" id="grid-controls" aria-live="polite">
+        <button class="load-more-btn" id="load-more-btn" aria-label="Load more posts">
+          Load more
+        </button>
+        <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">
+          Back to top
+        </button>
+      </div>
+
     </div>
   </main>
 
@@ -1308,7 +1422,77 @@
       }
     });
 
-        // ── Theme segmented control ───────────────────────────────────────────────
+        // ── Load more + back to top ──────────────────────────────────────────────
+    //
+    // LOAD MORE
+    // Reveals hidden cards in batches of 6 (2 complete rows of the 3-column
+    // grid). On each click, the next 6 hidden cards have their hidden
+    // attribute removed. When no hidden cards remain, the load more button
+    // is disabled (CSS hides it) and the back to top button is revealed.
+    //
+    // BACK TO TOP
+    // Scrolls to #main-content and moves focus to the <main> element.
+    // Respects prefers-reduced-motion — instant scroll if set.
+    //
+    // INITIAL STATE
+    // On page load: if hidden cards exist, .grid-controls gets .is-visible.
+    // If no hidden cards exist (12 or fewer posts total), controls stay hidden.
+
+    const gridControls  = document.getElementById('grid-controls');
+    const loadMoreBtn   = document.getElementById('load-more-btn');
+    const backToTopBtn  = document.getElementById('back-to-top-btn');
+    const mainContent   = document.getElementById('main-content');
+    const BATCH_SIZE    = 6; // 2 rows of 3-column grid per load more click
+
+    function getHiddenCards() {
+      return [...document.querySelectorAll('.article-grid > li[hidden]')];
+    }
+
+    function updateControls() {
+      const remaining = getHiddenCards().length;
+      if (remaining === 0) {
+        loadMoreBtn.disabled = true;       // CSS hides disabled button
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        loadMoreBtn.disabled = false;
+        // Back to top visible alongside load more once any batch has loaded
+        // i.e. total hidden is less than original hidden count
+        // We track this via a data attribute set on init
+        const originalHidden = parseInt(gridControls.dataset.originalHidden, 10);
+        if (remaining < originalHidden) {
+          backToTopBtn.classList.add('is-visible');
+        }
+      }
+    }
+
+    function initControls() {
+      const hidden = getHiddenCards();
+      if (hidden.length === 0) return; // 12 or fewer posts — controls stay hidden
+      gridControls.classList.add('is-visible');
+      gridControls.dataset.originalHidden = hidden.length;
+    }
+
+    loadMoreBtn.addEventListener('click', () => {
+      const hidden = getHiddenCards();
+      const batch  = hidden.slice(0, BATCH_SIZE);
+      batch.forEach(li => li.removeAttribute('hidden'));
+      updateControls();
+      // Move focus to first newly revealed card for keyboard users
+      if (batch[0]) {
+        const firstLink = batch[0].querySelector('a');
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      mainContent.scrollIntoView({ behavior: prefersReduced ? 'instant' : 'smooth' });
+      mainContent.focus({ preventScroll: true });
+    });
+
+    initControls();
+
+    // ── Theme segmented control ───────────────────────────────────────────────
     const segmentedBtns = document.querySelectorAll('.theme-segmented__btn');
 
     function applyScheme(scheme) {
