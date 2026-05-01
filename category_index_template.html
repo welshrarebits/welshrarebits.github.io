@@ -537,7 +537,14 @@
       font-weight: var(--font-weight-bold);
       line-height: 1.3;
       height: calc(1.1875rem * 1.3 * 2); /* = 3.0875rem — exactly 2 lines */
-      margin-bottom: var(--spacing-1);
+      margin-bottom: var(--spacing-4);
+      /*
+        Section template uses --spacing-1 on the title + subtitle block
+        (height: 2.8rem + margin-bottom: --spacing-4) before the image.
+        Subtitle is absent on the blog index — margin-bottom increased to
+        --spacing-4 on the title to restore equivalent vertical breathing
+        space between title and featured image.
+      */
       color: var(--color-primary-text);
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -881,12 +888,12 @@
       -->
 
       <!-- ── Section heading ──────────────────────────────────────────────────── -->
-      <h1 class="font-size-2 index-heading">Thoughts</h1>
+      <h1 class="font-size-2 index-heading">Blog</h1>
 
       <!-- ── Article grid ─────────────────────────────────────────────────────── -->
       <ul class="article-grid" aria-label="Blog posts">
 
-        <!-- ── Card 1 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
@@ -894,10 +901,10 @@
             <time class="article-card__timestamp" datetime="">9 April 2024</time>
           </div>
           <div class="article-card">
-            <p class="article-card__title">Finding joy in unspectacular things</p>
+            <p class="article-card__title">Unspectacular Things</p>
             <div class="article-card__image-wrap">
             <img
-              src="/blog/jet2/cinzano.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
@@ -905,7 +912,7 @@
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
-        <!-- ── Card 2 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
@@ -916,7 +923,7 @@
             <p class="article-card__title">Innovation or Irritation?</p>
             <div class="article-card__image-wrap">
             <img
-              src="/assets/thumbnails/blog/placeholder.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
@@ -924,10 +931,10 @@
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
-        <!-- ── Card 3 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
-            <a class="article-card__category" href="/blog/recognition/">Thoughts</a>
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
             <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
             <time class="article-card__timestamp" datetime="">3 May 2019</time>
           </div>
@@ -935,7 +942,7 @@
             <p class="article-card__title">Sheffield Digital Awards</p>
             <div class="article-card__image-wrap">
             <img
-              src="/assets/thumbnails/blog/placeholder.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
@@ -943,7 +950,7 @@
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
-        <!-- ── Card 4 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/process/">Process</a>
@@ -954,7 +961,7 @@
             <p class="article-card__title">The Quiet Power of Constraints</p>
             <div class="article-card__image-wrap">
             <img
-              src="/assets/thumbnails/blog/placeholder.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
@@ -962,7 +969,7 @@
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
-        <!-- ── Card 5 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/tools/">Tools</a>
@@ -973,7 +980,7 @@
             <p class="article-card__title">What Figma's Variable System Gets Right</p>
             <div class="article-card__image-wrap">
             <img
-              src="/assets/thumbnails/blog/placeholder.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
@@ -981,7 +988,7 @@
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
-        <!-- ── Card 6 ── -->
+        <!-- ── Card ── -->
         <li>
           <div class="article-card__meta">
             <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
@@ -992,11 +999,239 @@
             <p class="article-card__title">On Reading Sideways</p>
             <div class="article-card__image-wrap">
             <img
-              src="/assets/thumbnails/blog/placeholder.png"
+              src="../assets/thumbnails/blog/placeholder.png"
               alt=""
             >
           </div>
             <p class="article-card__intro">There's a kind of lateral reading that happens when you're deep in a problem — pulling in references from adjacent fields to illuminate something you can't quite see directly.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">4 March 2023</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Facilitation as Design Work</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Running a workshop well is a design problem. The inputs, constraints, desired outputs, and failure modes are all present — most facilitators just don't frame it that way.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">28 October 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Named in the Design Week Ones to Watch</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">An unexpected piece of recognition that prompted a longer conversation about what visibility in the design industry actually means, and who it tends to reach.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">12 August 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">The Problem with Best Practice</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Best practice is often a record of what worked in a specific context, compressed into a rule and applied indiscriminately elsewhere. It deserves more scrutiny than it typically gets.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">5 May 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">A Year with Arc Browser</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Arc is the first browser in years that has made me reconsider how I organise my work online. Some of that is genuine innovation; some of it is clever reframing of existing behaviour.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">19 January 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">When Research Contradicts the Brief</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">What do you do when your research findings directly contradict the assumptions your brief was built on? This is a more common situation than most project post-mortems acknowledge.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">7 September 2021</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Small Screens, Big Consequences</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Mobile-first was supposed to enforce discipline. A decade on, it's worth asking whether the constraint produced the outcomes we expected — and where it quietly failed.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">22 April 2021</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Writing as a Design Tool</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The act of writing a design rationale often reveals gaps that no amount of visual iteration would surface. I've started treating it as a required step rather than a post-hoc documentation task.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">11 December 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Against Seamlessness</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The drive toward seamless, frictionless experience has produced some genuinely useful products. It has also produced a generation of interfaces that are difficult to understand, trust, or question.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">3 August 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Shortlisted for the UX Design Awards</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">A short note on being shortlisted, what the project was, and why the category it was entered in probably matters more than the outcome.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">17 March 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Notion After Two Years</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Two years of using Notion as a primary thinking tool. What it's genuinely good at, what it's not, and the one habit change that made it finally stick.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">9 October 2019</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">The Difference Between Simple and Easy</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Simple and easy are frequently conflated in design conversation. They are not the same thing, and conflating them tends to produce outcomes that are neither.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">24 June 2019</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Mundane Futures</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The most interesting design speculation I've encountered recently isn't about radical discontinuity — it's about the texture of ordinary life in ten or twenty years' time.</p>
             <a class="article-card__link" href="/blog/article-slug/">Read more</a>
           </div>
         </li>
