@@ -1291,10 +1291,24 @@
 
       backToTopBtn.addEventListener('click', () => {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-        // Move focus to main — tabindex="-1" makes it programmatically focusable
-        // without adding it to the natural tab order
-        mainContent.focus();
+
+        // Focus must be deferred until after scroll completes — calling focus()
+        // mid-scroll causes the browser to scroll the focused element into view,
+        // overriding window.scrollTo. Use scrollend where supported, with a
+        // setTimeout fallback for browsers that don't yet support it.
+        if (prefersReduced) {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+          mainContent.focus({ preventScroll: true });
+        } else {
+          if ('onscrollend' in window) {
+            window.addEventListener('scrollend', () => {
+              mainContent.focus({ preventScroll: true });
+            }, { once: true });
+          } else {
+            setTimeout(() => mainContent.focus({ preventScroll: true }), 500);
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
     })();
 
