@@ -662,56 +662,76 @@
     */
     .article-grid > li[hidden] { display: none; }
 
-    /* ── Load more + back to top ─────────────────────────────────────────────── */
+    /* ── Grid controls — load more + back to top ─────────────────────────────── */
     /*
       STANDING DIRECTIVE — SITE-WIDE LOAD MORE BEHAVIOUR:
-      Initial threshold: 12 cards visible. Batch size: 6 per click (2 full rows).
-      Back to top: inline below load more (not fixed) — appears after first batch
-      loads, remains visible once all posts are loaded.
+      Inline below the article grid — no fixed positioning.
+      Both controls sit in document flow, visible only when relevant:
+      - .grid-controls wrapper: hidden until JS determines there are hidden cards
+      - .back-to-top: hidden until JS reveals it after all posts are loaded,
+        or shown alongside load more once posts exceed the initial batch.
       Applies to Work index, Play index, and all category archive pages.
+      Ported directly from blog_index_template.html — proven implementation.
     */
-    .load-more-wrap {
-      margin-top: var(--spacing-10);
-      display: flex;
+    .grid-controls {
+      display: none;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-4);
+      margin-top: var(--spacing-10);
+    }
+    .grid-controls.is-visible {
+      display: flex;
     }
     .load-more-btn {
-      background: none;
-      border: none;
-      padding: 0;
       font-family: var(--font-family);
       font-size: 1rem;
       font-weight: var(--font-weight-semibold);
       color: var(--color-link);
+      background: none;
+      border: none;
+      padding: 0;
       cursor: pointer;
       text-decoration: underline;
       text-decoration-thickness: 0.0625rem;
       text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
     .load-more-btn:hover { color: var(--color-hover); }
     .load-more-btn:focus-visible {
-      outline: var(--border-thick) solid var(--color-focus);
-      outline-offset: var(--pixel-2);
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
     }
+    .load-more-btn:disabled { display: none; }
     .back-to-top-btn {
-      background: none;
-      border: none;
-      padding: 0;
       font-family: var(--font-family);
       font-size: 1rem;
       font-weight: var(--font-weight-semibold);
-      color: var(--color-link);
+      color: var(--color-secondary-text);
+      background: none;
+      border: none;
+      padding: 0;
       cursor: pointer;
       text-decoration: underline;
       text-decoration-thickness: 0.0625rem;
       text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: none;
+      align-items: center;
     }
-    .back-to-top-btn:hover { color: var(--color-hover); }
+    .back-to-top-btn.is-visible { display: flex; }
+    .back-to-top-btn:hover { color: var(--color-primary-text); }
     .back-to-top-btn:focus-visible {
-      outline: var(--border-thick) solid var(--color-focus);
-      outline-offset: var(--pixel-2);
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
     }
   </style>
 </head>
@@ -1087,15 +1107,22 @@
 
       </ul>
 
+      <!-- ── Grid controls — load more + back to top ──────────────────────────── -->
       <!--
-        Load more + back to top.
-        load-more-btn: hidden once all cards are revealed (JS sets hidden attribute).
-        back-to-top-btn: hidden until after first batch loads (JS removes hidden attribute).
-        Both sit inline — no fixed positioning.
+        .grid-controls is hidden by default — JS adds .is-visible if hidden
+        cards exist on page load. This ensures the controls never appear on
+        pages with 12 or fewer posts.
+        Load more batch size: 6 posts per click (2 complete rows of the 3-column grid).
+        Back to top: scrolls to absolute page top, moves focus to <main>.
+        prefers-reduced-motion: instant scroll if set.
       -->
-      <div class="load-more-wrap">
-        <button class="load-more-btn" id="load-more-btn" type="button" hidden>Load more</button>
-        <button class="back-to-top-btn" id="back-to-top-btn" type="button" hidden>Back to top</button>
+      <div class="grid-controls" id="grid-controls" aria-live="polite">
+        <button class="load-more-btn" id="load-more-btn" aria-label="Load more posts">
+          Load more
+        </button>
+        <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">
+          Back to top
+        </button>
       </div>
 
     </div>
@@ -1237,80 +1264,58 @@
     }, { passive: true });
 
     // ── Load more + back to top ───────────────────────────────────────────────
-    //
-    // STANDING DIRECTIVE — SITE-WIDE LOAD MORE BEHAVIOUR:
-    // Threshold: 12 cards visible on load. Batch size: 6 per click.
-    // Focus moves to the first newly revealed card's link after each batch.
-    // Back to top: appears after first batch loads; scrolls to absolute page
-    // top via window.scrollTo (not scrollIntoView — stops short of header).
-    // Focus moves to <main tabindex="-1"> after back-to-top scroll.
-    // prefers-reduced-motion: instant scroll if set.
-    //
-    (function () {
-      const THRESHOLD  = 12;
-      const BATCH      = 6;
-      const grid       = document.querySelector('.article-grid');
-      const loadMoreBtn  = document.getElementById('load-more-btn');
-      const backToTopBtn = document.getElementById('back-to-top-btn');
-      const mainContent  = document.getElementById('main-content');
+    // Ported directly from blog_index_template.html — proven implementation.
+    // Threshold: 12 cards. Batch size: 6 per click (2 complete rows).
 
-      if (!grid || !loadMoreBtn) return;
+    const gridControls  = document.getElementById('grid-controls');
+    const loadMoreBtn   = document.getElementById('load-more-btn');
+    const backToTopBtn  = document.getElementById('back-to-top-btn');
+    const mainContent   = document.getElementById('main-content');
+    const BATCH_SIZE    = 6;
 
-      const allCards = [...grid.querySelectorAll('li')];
-      const total    = allCards.length;
+    function getHiddenCards() {
+      return [...document.querySelectorAll('.article-grid > li[hidden]')];
+    }
 
-      // Hide cards beyond initial threshold
-      allCards.forEach((card, i) => {
-        if (i >= THRESHOLD) card.setAttribute('hidden', '');
-      });
-
-      // Only reveal load more button if there are cards beyond the threshold
-      if (total > THRESHOLD) {
-        loadMoreBtn.removeAttribute('hidden');
+    function updateControls() {
+      const remaining = getHiddenCards().length;
+      if (remaining === 0) {
+        loadMoreBtn.disabled = true;
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        loadMoreBtn.disabled = false;
+        const originalHidden = parseInt(gridControls.dataset.originalHidden, 10);
+        if (remaining < originalHidden) {
+          backToTopBtn.classList.add('is-visible');
+        }
       }
+    }
 
-      let revealed = Math.min(THRESHOLD, total);
+    function initControls() {
+      const hidden = getHiddenCards();
+      if (hidden.length === 0) return;
+      gridControls.classList.add('is-visible');
+      gridControls.dataset.originalHidden = hidden.length;
+    }
 
-      loadMoreBtn.addEventListener('click', () => {
-        const nextBatch = allCards.slice(revealed, revealed + BATCH);
-        nextBatch.forEach(card => card.removeAttribute('hidden'));
-        revealed += nextBatch.length;
+    loadMoreBtn.addEventListener('click', () => {
+      const hidden = getHiddenCards();
+      const batch  = hidden.slice(0, BATCH_SIZE);
+      batch.forEach(li => li.removeAttribute('hidden'));
+      updateControls();
+      if (batch[0]) {
+        const firstLink = batch[0].querySelector('a');
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      }
+    });
 
-        // Focus first newly revealed card's link
-        const firstLink = nextBatch[0] && nextBatch[0].querySelector('a');
-        if (firstLink) firstLink.focus();
+    backToTopBtn.addEventListener('click', () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: prefersReduced ? 'instant' : 'smooth' });
+      mainContent.focus({ preventScroll: true });
+    });
 
-        // Reveal back to top after first batch
-        backToTopBtn.removeAttribute('hidden');
-
-        // Hide load more once all cards are visible
-        if (revealed >= total) {
-          loadMoreBtn.setAttribute('hidden', '');
-        }
-      });
-
-      backToTopBtn.addEventListener('click', () => {
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // Focus must be deferred until after scroll completes — calling focus()
-        // mid-scroll causes the browser to scroll the focused element into view,
-        // overriding window.scrollTo. Use scrollend where supported, with a
-        // setTimeout fallback for browsers that don't yet support it.
-        if (prefersReduced) {
-          window.scrollTo({ top: 0, behavior: 'auto' });
-          mainContent.focus({ preventScroll: true });
-        } else {
-          if ('onscrollend' in window) {
-            window.addEventListener('scrollend', () => {
-              mainContent.focus({ preventScroll: true });
-            }, { once: true });
-          } else {
-            setTimeout(() => mainContent.focus({ preventScroll: true }), 500);
-          }
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
-    })();
+    initControls();
 
     // ── Hamburger nav drawer ──────────────────────────────────────────────────
     const hamburger   = document.getElementById('nav-hamburger');
