@@ -1,1 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - SW26</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *,::after,::before{box-sizing:border-box}blockquote,body,dd,dl,figure,h1,h2,h3,h4,ol,p,ul{margin:0}ol[role=list],ul[role=list]{list-style:none}html:focus-within{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}a:not([class]){text-decoration-skip-ink:auto}img,picture{max-width:100%;height:auto;display:block;margin:auto}button,input,select,textarea{font:inherit}@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}*,::after,::before{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}:root{--pixel-2:0.125rem;--pixel-5:0.3125rem;--pixel-10:0.625rem;--pixel-15:0.9375rem;--pixel-20:1.25rem;--pixel-30:1.875rem;--pixel-40:2.5rem;--pixel-50:3.125rem;--pixel-60:3.75rem;--pixel-80:5rem;--spacing-0:var(--pixel-2);--spacing-1:var(--pixel-5);--spacing-2:var(--pixel-10);--spacing-3:var(--pixel-15);--spacing-4:var(--pixel-20);--spacing-6:var(--pixel-30);--spacing-7:var(--pixel-40);--spacing-8:var(--pixel-50);--spacing-9:var(--pixel-60);--spacing-10:var(--pixel-80);--border-thin:0.0625rem;--border-medium:var(--pixel-2);--border-thick:var(--pixel-5);--wrapper-width:64rem;--focus-underline:0.375rem;--font-family:"Inter",sans-serif;--font-weight-standard:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-weight-extrabold:800;--color-yellow:oklch(90% 0.2 98.1);--color-black:oklch(18.5% 0.007 236.5);--color-white:oklch(92.8% 0.007 236.5);--color-grey:oklch(76.8% 0.007 236.5);--color-dark-grey:oklch(38.8% 0.007 236.5);--color-blue:oklch(43.3% 0.1 249.7);--color-dark-blue:oklch(27.7% 0.1 2497);--color-pink:oklch(85.3% 0.1 353);--color-dark-pink:oklch(71.1% 0.175 353);color-scheme:light dark;--color-background:light-dark(var(--color-white), var(--color-black));--color-primary-text:light-dark(var(--color-black), var(--color-white));--color-secondary-text:light-dark(var(--color-dark-grey), var(--color-grey));--color-link:light-dark(var(--color-blue), var(--color-pink));--color-hover:light-dark(var(--color-dark-blue), var(--color-dark-pink));--color-active:light-dark(var(--color-black), var(--color-white));--color-focus:light-dark(var(--color-yellow), var(--color-yellow));--color-focus-text:light-dark(var(--color-black), var(--color-black));--color-focus-border:light-dark(var(--color-black), var(--color-grey));--color-border:light-dark(var(--color-black), var(--color-white))}[data-user-color-scheme=dark]{color-scheme:dark}[data-user-color-scheme=light]{color-scheme:light}body{font-family:var(--font-family);font-optical-sizing:auto;color:var(--color-primary-text)}p{margin-bottom:var(--spacing-6)}a{text-underline-offset:.3125em;text-decoration-thickness:.0625rem;font-weight:var(--font-weight-semibold);color:var(--color-link)}@media(hover:hover){a:hover,a[aria-current=page]{text-decoration-thickness:.188rem;text-decoration-skip-ink:none}a:hover{color:var(--color-hover)}}a:active{color:var(--color-active)}a:focus-visible{background:var(--color-focus);color:var(--color-focus-text);text-decoration-skip-ink:none;--focus-background:-0.55rem;text-decoration:none;outline:var(--spacing-0) solid rgba(0,0,0,0)}figcaption{margin-top:var(--spacing-2);color:var(--color-secondary-text);font-weight:var(--font-weight-standard);text-align:center;text-wrap:balance}small{color:var(--color-secondary-text)}span.font-size-4{display:block}h1:has(+.lead-paragraph){margin-bottom:var(--spacing-1)}.font-size-1,.headline-caption,.related-links-heading,p{line-height:1.735}.font-size-2,.font-size-3,.font-size-4,.lead-paragraph{line-height:1.125}.font-size-1,.font-size-2,.font-size-3,.font-size-4,.headline-caption,.lead-paragraph,.related-links-heading{font-size:clamp(var(--min-font-size),(var(--fluid-font-size)),var(--max-font-size))}.font-size-1,.font-size-2,.font-size-3,.headline-caption,.lead-paragraph,.related-links-heading{font-weight:var(--font-weight-semibold);text-wrap:pretty}.font-size-4{text-wrap:balance;font-weight:var(--font-weight-bold);--min-font-size:2.8992rem;--fluid-font-size:1.4844rem + 7.074vw;--max-font-size:6.0117rem}.font-size-3{--min-font-size:2.3193rem;--fluid-font-size:1.5518rem + 3.8374vw;--max-font-size:4.0078rem}.font-size-2,.lead-paragraph{--min-font-size:1.8555rem;--fluid-font-size:1.4844rem + 1.8555vw;--max-font-size:2.6719rem}.font-size-1,.headline-caption,.related-links-heading{--min-font-size:1.4844rem;--fluid-font-size:1.3494rem + 0.6747vw;--max-font-size:1.7813rem}.font-size--1,.font-size--2,.font-size-0,.last-updated,body,figcaption,small{font-weight:var(--font-weight-standard)}.font-size-0,body{font-size:1.1875rem}.font-size--1,.last-updated,figcaption{font-size:1rem}.font-size--2,small{font-size:.75rem}strong{font-weight:var(--font-weight-extrabold)}footer p{margin-bottom:var(--spacing-1);line-height:1.125}ul{margin-bottom:var(--spacing-6)}ul li+li{margin-top:var(--spacing-1)}ul li{text-wrap:pretty}.link-subtitle{font-weight:var(--font-weight-standard)}.list-extra-space>li{margin-bottom:var(--spacing-3)}.list-extra-space>li:last-child{margin-bottom:0}.home-link{margin-bottom:var(--spacing-8)}.last-updated{color:var(--color-secondary-text)}.headline-caption{display:block;margin-bottom:0;font-weight:var(--font-weight-medium);line-height:1}.lead-paragraph{font-weight:var(--font-weight-standard);text-wrap:balance}.headline-caption,.lead-paragraph{color:var(--color-secondary-text)}a:focus-visible{box-shadow:0 var(--focus-background) var(--color-focus),0 var(--focus-underline) var(--color-focus-border)}section .font-size-3{margin-bottom:var(--spacing-3)}section .font-size-1,section .font-size-2,section .headline-caption,section .lead-paragraph,section .related-links-heading{margin-bottom:var(--spacing-2)}.list-horizontal{display:flex;flex-wrap:wrap;justify-content:flex-start}.list-horizontal li{flex-basis:max-content;margin-top:0;margin-bottom:0}.header-links{padding:0;margin-bottom:0;list-style:none;gap:0 var(--spacing-7)}@media(hover:hover){.header-links a:not(:hover){text-decoration:none}}.figure-label{text-align:center;display:block;margin-bottom:var(--spacing-1)}.related-links-heading{color:var(--color-secondary-text)}body{background:var(--color-background)}.page-header{margin-bottom:var(--spacing-10)}.header-nav{align-items:flex-end;border-bottom:var(--border-thick) solid var(--color-border);padding-top:var(--spacing-6);padding-bottom:var(--spacing-4)}footer{border-top:var(--border-thick) solid var(--color-border);padding-top:var(--spacing-6);padding-bottom:var(--spacing-6)}main{padding-top:var(--spacing-9);padding-bottom:var(--spacing-9)}.children-pages{padding-top:var(--spacing-6)}.wrapper{width:90%;max-width:var(--wrapper-width);margin:0 auto}.wrapper:focus-visible{outline:0}.flex-container,.flex-container--reverse-wrap,.flex-container--wrap{display:flex;gap:var(--spacing-6) var(--spacing-9);justify-content:space-between}.flex-container--wrap{flex-wrap:wrap}.flex-container--reverse-wrap{flex-wrap:wrap-reverse}.skip-link:not(:focus-visible),.visually-hidden{display:block;position:absolute;overflow:hidden;clip:rect(0 0 0 0);height:1px;width:1px;margin:-1px;padding:0;border:0}.skip-link{font-weight:var(--font-weight-standard);display:block;padding-left:var(--pixel-5)}.no-js .user-toggle{display:none}.user-toggle{align-items:center;gap:0 var(--spacing-2)}.navigation-icons{fill:var(--color-secondary-text);overflow:visible}.site-header-image{display:block;width:var(--pixel-50);height:auto;overflow:visible}.image-outline{outline:var(--border-thin) solid var(--color-border)}
 
+    footer { border-top: none; padding-top: 0; }
+    footer .wrapper {
+      border-top: var(--border-thick) solid var(--color-border);
+      padding-top: var(--spacing-4);
+      padding-bottom: var(--pixel-10);
+    }
+
+    /* ── Header — static at desktop, sticky at mobile ───────────────────────── */
+    /*
+      Sticky behaviour removed at ≥48rem per session decision.
+      Rationale: nav links are destination-only; no mid-scroll utility warrants
+      permanent vertical cost at wider viewports.
+      Sticky retained at <48rem — mobile drawer is the primary wayfinding
+      mechanism and losing it on scroll has a higher cost than at desktop.
+      Hide-on-scroll-down / show-on-scroll-up reinstated at mobile only —
+      this was the behaviour from the original template, removed in error
+      when the desktop sticky scroll listener was stripped. The JS guard
+      (window.innerWidth check) ensures it only activates at <48rem.
+    */
+    .page-header {
+      position: static;
+    }
+    @media (max-width: 48rem) {
+      .page-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--color-background);
+        transition: transform 0.25s ease;
+      }
+      .page-header.is-hidden {
+        transform: translateY(-100%);
+      }
+    }
+    @media (max-width: 48rem) and (prefers-reduced-motion: reduce) {
+      .page-header { transition: none; }
+    }
+
+    main { padding-top: var(--spacing-6); }
+    header { margin-bottom: 0; }
+    .page-header { margin-bottom: 0; }
+
+    .header-nav { border-bottom: none; padding-bottom: 0; }
+    .header-nav .wrapper {
+      align-items: center;
+      border-bottom: var(--border-thick) solid var(--color-border);
+      padding-bottom: var(--spacing-4);
+    }
+
+    /* ── Mobile header scaling ───────────────────────────────────────────────── */
+    @media (max-width: 48rem) {
+      .site-logo { width: 52px; height: 52px; }
+      .header-nav { padding-top: var(--spacing-4); }
+      .header-nav .wrapper {
+        padding-bottom: var(--spacing-3);
+        border-bottom-width: var(--border-medium);
+      }
+      footer .wrapper { border-top-width: var(--border-medium); }
+    }
+    .site-logo {
+      display: block;
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+    .site-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      opacity: 1;
+      transition: opacity 0.15s ease;
+    }
+    .site-logo:hover img,
+    .site-logo:focus-visible img {
+      opacity: 0.6;
+    }
+    .site-logo:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .site-logo img { transition: none; }
+    }
+
+    /* Use longhand — shorthand resets thickness */
+    .header-links a[aria-current="page"] {
+      text-decoration-line: underline;
+      text-decoration-thickness: 0.188rem;
+      text-decoration-skip-ink: none;
+      color: var(--color-primary-text);
+    }
+
+    /* ── Theme toggle — segmented control ───────────────────────────────────── */
+    .theme-segmented-wrap {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+    }
+    .theme-segmented {
+      display: inline-flex;
+      border: var(--border-medium) solid var(--color-border);
+    }
+    .theme-segmented__btn {
+      background: none;
+      border: none;
+      border-right: var(--border-medium) solid var(--color-border);
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-size: 0.6875rem;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-secondary-text);
+      padding: 0 8px;
+      margin: 0;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      -webkit-appearance: none;
+      appearance: none;
+      padding-top: 2px;
+    }
+    .theme-segmented__btn:last-child { border-right: none; }
+    .theme-segmented__btn:hover { color: var(--color-primary-text); }
+    .theme-segmented__btn:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: 0;
+    }
+    .theme-segmented__btn.is-active {
+      background: var(--color-primary-text);
+      color: var(--color-background);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* ── Image outline ───────────────────────────────────────────────────────── */
+    .image-outline { outline: var(--border-thin) solid rgba(0, 0, 0, 0.18); }
+    @media (prefers-color-scheme: dark) {
+      .image-outline { outline: none; }
+    }
+    [data-user-color-scheme="dark"] .image-outline { outline: none; }
+
+    /* ── Logo dark mode ──────────────────────────────────────────────────────── */
+    @media (prefers-color-scheme: dark) {
+      .site-logo img { filter: invert(1); }
+      .site-logo:hover img,
+      .site-logo:focus-visible img { filter: invert(1) opacity(0.6); }
+    }
+    [data-user-color-scheme="dark"] .site-logo img { filter: invert(1); }
+    [data-user-color-scheme="dark"] .site-logo:hover img,
+    [data-user-color-scheme="dark"] .site-logo:focus-visible img { filter: invert(1) opacity(0.6); }
+    html[data-user-color-scheme="light"] .site-logo img { filter: none !important; }
+    html[data-user-color-scheme="light"] .site-logo:hover img,
+    html[data-user-color-scheme="light"] .site-logo:focus-visible img { filter: opacity(0.6) !important; }
+
+    /* ── Link colours ────────────────────────────────────────────────────────── */
+    :root {
+      --color-link:  light-dark(#246f6f, #2da5a5);
+      --color-hover: light-dark(#1a5252, #44c4c4);
+    }
+
+    /* ── Footer layout ───────────────────────────────────────────────────────── */
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "social  toggle"
+        "credits .     ";
+      align-items: center;
+      width: 100%;
+      row-gap: var(--spacing-2);
+    }
+    .footer-inner__social  { grid-area: social; }
+    .footer-inner__toggle  { grid-area: toggle; align-self: center; }
+    .footer-inner__credits {
+      grid-area: credits;
+      justify-self: start;
+      padding: 6px 0;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary-text);
+      text-decoration: none;
+      opacity: 1;
+      transition: opacity 0.15s ease;
+      padding: 10px;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .footer-link:hover,
+    .footer-link:focus-visible {
+      opacity: 0.6;
+      color: var(--color-primary-text);
+    }
+    .footer-link:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .footer-link svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--color-primary-text);
+      display: block;
+      flex-shrink: 0;
+    }
+    .footer-link--arena {
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .footer-credits-link {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      color: var(--color-secondary-text);
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .footer-credits-link:hover { color: var(--color-primary-text); }
+    .footer-credits-link:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .footer-link { transition: none; }
+    }
+    @media (max-width: 48rem) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "social"
+          "toggle"
+          "credits";
+      }
+      .footer-inner__toggle { justify-self: start; }
+      .footer-links { margin-left: -10px; }
+    }
+
+    /* ── Modals ──────────────────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay { transition: none; }
+    }
+    .modal {
+      background: var(--color-background);
+      border: var(--border-thick) solid var(--color-border);
+      padding: var(--spacing-7);
+      width: 90%;
+      max-width: 36rem;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal__close {
+      position: absolute;
+      top: var(--spacing-4);
+      right: var(--spacing-4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary-text);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      padding: var(--pixel-5);
+      display: flex;
+      align-items: center;
+      gap: var(--pixel-5);
+    }
+    .modal__close:hover { color: var(--color-hover); }
+    .modal__close:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .modal__title {
+      font-size: 1.1875rem;
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-6);
+      padding-right: var(--spacing-7);
+    }
+    .credits-list { list-style: none; padding: 0; margin: 0; }
+    .credits-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--spacing-4);
+      padding: var(--spacing-3) 0;
+      border-bottom: var(--border-thin) solid var(--color-border);
+    }
+    .credits-item:first-child { border-top: var(--border-thin) solid var(--color-border); }
+    .credits-context {
+      font-size: 1rem;
+      color: var(--color-secondary-text);
+      font-weight: var(--font-weight-standard);
+    }
+    .credits-source { font-size: 1rem; font-weight: var(--font-weight-standard); text-align: right; }
+    .credits-source a { font-weight: var(--font-weight-semibold); }
+    @media (max-width: 48rem) {
+      .modal { padding: var(--spacing-6); width: 95%; }
+      .modal__title { font-size: 1rem; margin-bottom: var(--spacing-4); }
+      .credits-item { flex-direction: column; gap: var(--spacing-1); }
+      .credits-source { text-align: left; }
+    }
+
+    /* Contact form */
+    .contact-field { display: flex; flex-direction: column; gap: var(--pixel-5); margin-bottom: var(--spacing-4); }
+    .contact-label { font-size: 1rem; font-weight: var(--font-weight-semibold); }
+    .contact-input,
+    .contact-textarea {
+      background: var(--color-background);
+      color: var(--color-primary-text);
+      border: var(--border-medium) solid var(--color-border);
+      padding: var(--pixel-10);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      width: 100%;
+    }
+    .contact-input:focus,
+    .contact-textarea:focus {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: 0;
+    }
+    .contact-textarea { min-height: 8rem; resize: vertical; }
+    .contact-submit {
+      background: var(--color-primary-text);
+      color: var(--color-background);
+      border: var(--border-medium) solid var(--color-border);
+      padding: var(--pixel-10) var(--spacing-6);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      margin-top: var(--pixel-5);
+    }
+    .contact-submit:hover { opacity: 0.8; }
+    .contact-submit:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .contact-status { margin-top: var(--spacing-3); font-size: 1rem; color: var(--color-secondary-text); }
+
+    /* ── Hamburger ───────────────────────────────────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      padding: var(--pixel-5);
+      cursor: pointer;
+      color: var(--color-primary-text);
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+    }
+    .nav-hamburger:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .nav-hamburger__bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-primary-text);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(2) { opacity: 0; }
+    .nav-hamburger[aria-expanded="true"] .nav-hamburger__bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (prefers-reduced-motion: reduce) { .nav-hamburger__bar { transition: none; } }
+
+    /* ── Nav drawer ──────────────────────────────────────────────────────────── */
+    .nav-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(320px, 85vw);
+      background: var(--color-background);
+      border-left: var(--border-thick) solid var(--color-border);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-9) var(--spacing-6) var(--spacing-6);
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      visibility: hidden;
+    }
+    .nav-drawer[aria-hidden="false"] { transform: translateX(0); visibility: visible; }
+    @media (prefers-reduced-motion: reduce) { .nav-drawer { transition: none; } }
+    .nav-drawer__close {
+      position: absolute;
+      top: var(--spacing-4); right: var(--spacing-4);
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--color-primary-text);
+      font-size: 1.5rem; line-height: 1;
+      padding: var(--pixel-5);
+    }
+    .nav-drawer__close:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .nav-drawer__links {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column;
+      gap: var(--spacing-6);
+    }
+    .nav-drawer__links a {
+      font-size: 1.5rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-link);
+      text-decoration: none;
+    }
+    .nav-drawer__links a:hover { color: var(--color-hover); }
+    .nav-drawer__links a[aria-current="page"] {
+      color: var(--color-primary-text);
+      text-decoration: underline;
+      text-decoration-thickness: 0.188rem;
+    }
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 199;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s ease;
+    }
+    .nav-overlay.is-visible { opacity: 1; visibility: visible; }
+    @media (prefers-reduced-motion: reduce) { .nav-overlay { transition: none; } }
+    @media (max-width: 48rem) {
+      .header-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ── Index page — section heading ────────────────────────────────────────── */
+    /*
+      .index-heading uses font-size-2 per session decision (B).
+      margin-bottom: spacing-9 (60px) — generous separation before the grid,
+      treating the heading as a page signpost rather than content intro.
+    */
+    .index-heading {
+      margin-bottom: var(--spacing-9);
+    }
+
+    /* ── Article grid ────────────────────────────────────────────────────────── */
+    /*
+      3 columns at ≥48rem, 1 column below.
+      No masonry — uniform row alignment is the intent (line-clamped text ensures this).
+      gap: spacing-9 (60px) column gap matches wrapper breathing room;
+           spacing-10 (80px) row gap matches section margins on other templates.
+    */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--spacing-9);
+      row-gap: var(--spacing-10);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    @media (max-width: 48rem) {
+      .article-grid {
+        grid-template-columns: 1fr;
+        row-gap: var(--spacing-9);
+      }
+    }
+
+    /* ── Article card ────────────────────────────────────────────────────────── */
+    /*
+      Grid items (<li>) need display: flex with flex-direction: column so the
+      metadata block (timestamp + category) stacks above .article-card, and
+      .article-card fills the remaining cell height via flex-grow: 1.
+      margin-top: 0 overrides base ul li+li { margin-top: var(--spacing-1) }.
+    */
+    .article-grid > li {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0; /* override base ul li+li { margin-top: var(--spacing-1) } */
+    }
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      position: relative; /* anchor for stretched read-more link */
+      width: 100%; /* fill the flex <li> horizontally */
+      flex-grow: 1; /* fill remaining <li> height below the metadata block */
+    }
+
+    /* Card title — fixed height of exactly 2 lines (font-size × line-height × 2).
+       Clamp truncates overflow; fixed height ensures all cards reserve identical
+       space regardless of whether the title fills 1 or 2 lines.
+       .article-card prefix raises specificity above base p { margin-bottom } rule. */
+    .article-card .article-card__title {
+      font-size: 1.1875rem;
+      font-weight: var(--font-weight-bold);
+      line-height: 1.3;
+      height: calc(1.1875rem * 1.3 * 2); /* = 3.0875rem — exactly 2 lines */
+      margin-bottom: var(--spacing-4);
+      /*
+        Section template uses --spacing-1 on the title + subtitle block
+        (height: 2.8rem + margin-bottom: --spacing-4) before the image.
+        Subtitle is absent on the blog index — margin-bottom increased to
+        --spacing-4 on the title to restore equivalent vertical breathing
+        space between title and featured image.
+      */
+      color: var(--color-primary-text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /*
+      Metadata block — sits at <li> level, above .article-card, outside
+      the stretched ::after overlay on .article-card. This is the structural
+      decision that makes the category link independently clickable without
+      z-index workarounds — the overlay's position: relative ancestor is
+      .article-card, so anything outside it is unreachable by the overlay.
+      margin-bottom separates the metadata from the card title below.
+    */
+    .article-card__meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-0);
+      margin-bottom: var(--spacing-2);
+    }
+    .article-card__timestamp {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      color: var(--color-secondary-text);
+      line-height: 1.4;
+      /*
+        Typography inherited from section index subtitle values.
+        No italic — italic reads as editorial voice, not functional metadata.
+      */
+    }
+    /*
+      Category — uppercase tracking pattern, consistent with the design
+      system's existing use of letter-spacing + text-transform on utility
+      labels. font-size--2 (0.75rem) keeps it visually subordinate to the
+      timestamp above. No "CATEGORY:" prefix — position and style are
+      sufficient signal at this scale.
+    */
+    .article-card__category {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      color: var(--color-link);
+      line-height: 1.4;
+      text-decoration: none;
+      /*
+        Typography: matches timestamp — subtitle values from section index
+        (1rem, standard weight, line-height 1.4). No italic, no uppercase,
+        no letter-spacing. Consistent pair with timestamp.
+        Link treatment: Option A — --color-link at rest signals interactivity
+        on both pointer and touch contexts without underline at rest.
+        Weight kept at standard — semibold would compete with Read more.
+        Underline revealed on hover only, consistent with header-links pattern.
+      */
+    }
+    @media (hover: hover) {
+      .article-card__category:hover {
+        color: var(--color-hover);
+        text-decoration: underline;
+        text-decoration-thickness: var(--border-thin);
+        text-underline-offset: 0.3125em;
+      }
+    }
+    .article-card__category:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
+    }
+
+    /* Featured image — 16:9, object-fit: cover, consistent regardless of source dimensions */
+    /* Outline applied to wrapper, not img — outline on img is clipped by
+       overflow: hidden on this element. Matches the softened rgba token
+       pattern used in case-study and gallery templates. Dark mode: none. */
+    .article-card__image-wrap {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      margin-bottom: var(--spacing-4);
+      outline: var(--border-thin) solid rgba(0, 0, 0, 0.18);
+    }
+    @media (prefers-color-scheme: dark) {
+      .article-card__image-wrap { outline: none; }
+    }
+    [data-user-color-scheme="dark"] .article-card__image-wrap { outline: none; }
+    .article-card__image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      margin: 0;
+    }
+
+    /* Intro text — 3-line clamp. Keeps grid rows aligned across cards.
+       color-primary-text — intro is the primary reading content of the card,
+       equivalent to body copy. Secondary text colour would reduce readability
+       particularly in dark mode. .article-card prefix raises specificity above
+       base p { margin-bottom } rule. */
+    .article-card .article-card__intro {
+      font-size: 1rem;
+      font-weight: var(--font-weight-standard);
+      line-height: 1.6;
+      color: var(--color-primary-text);
+      margin-bottom: var(--spacing-4);
+      /* Standard two-property clamp pattern — widely supported */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /*
+      Read more link — stretched to cover the full card via ::after pseudo-element.
+      This makes the entire card clickable while keeping a single <a> in the DOM,
+      which is correct for accessibility (one link per card, clear link text).
+    */
+    .article-card__link {
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-link);
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+      margin-top: auto; /* pushes link to bottom if cards are in a flex/grid row */
+    }
+    .article-card__link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+    .article-card:hover .article-card__link { color: var(--color-hover); }
+    .article-card:has(.article-card__link:focus-visible) .article-card__link {
+      outline: none; /* focus managed at card level below */
+    }
+    /*
+      Card-level focus ring — applied when the link inside receives focus.
+      Matches the box-shadow focus pattern used elsewhere in the design system.
+    */
+    .article-card:has(.article-card__link:focus-visible) {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+
+    /* Mobile card overrides — declared after all card rules so cascade order
+       guarantees these win over the fixed-height title rule above. */
+    @media (max-width: 48rem) {
+      .article-card .article-card__title {
+        height: auto;
+        margin-bottom: var(--spacing-1);
+      }
+    }
+
+    /* ── Hidden card override ───────────────────────────────────────────────────── */
+    /*
+      The browser's native [hidden] attribute maps to display: none in the
+      UA stylesheet. However, the authored .article-grid > li { display: flex }
+      rule wins the cascade because authored styles always override UA defaults.
+      This explicit rule restores the correct behaviour by adding an attribute
+      selector, raising specificity above the base li rule so hidden cards
+      are correctly concealed regardless of the display value on the parent rule.
+    */
+    .article-grid > li[hidden] {
+      display: none;
+    }
+
+    /* ── Grid controls — load more + back to top ─────────────────────────────── */
+    /*
+      Inline below the article grid — no fixed positioning per session decision C2.
+      Both controls sit in document flow, visible only when relevant:
+      - .grid-controls wrapper: hidden until JS determines there are hidden cards
+      - .back-to-top: hidden until JS reveals it after all posts are loaded,
+        or shown alongside load more once posts exceed the initial batch.
+      margin-top matches the grid's row-gap (--spacing-10) for visual continuity.
+      Controls are left-aligned — consistent with the site's design language.
+    */
+    .grid-controls {
+      display: none; /* shown by JS when hidden cards exist */
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-10);
+    }
+    .grid-controls.is-visible {
+      display: flex;
+    }
+
+    /*
+      Load more — styled as a primary action button using border pattern
+      consistent with the theme segmented control and filter button language
+      already present in the system. Font scale and weight match the
+      article-card__link Read more link for visual consistency.
+    */
+    .load-more-btn {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-link);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .load-more-btn:hover {
+      color: var(--color-hover);
+    }
+    .load-more-btn:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
+    }
+    .load-more-btn:disabled {
+      display: none; /* hidden once all posts are loaded */
+    }
+
+    /*
+      Back to top — same typographic treatment as load more for visual
+      pairing. Sits below load more, or alone once all posts are loaded.
+      Hidden until JS determines all posts are visible.
+    */
+    .back-to-top-btn {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-secondary-text);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+      min-height: 44px;
+      display: none; /* shown by JS */
+      align-items: center;
+    }
+    .back-to-top-btn.is-visible {
+      display: flex;
+    }
+    .back-to-top-btn:hover {
+      color: var(--color-primary-text);
+    }
+    .back-to-top-btn:focus-visible {
+      background: var(--color-focus);
+      color: var(--color-focus-text);
+      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
+      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Overlay behind nav drawer -->
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+
+  <!-- Nav drawer (mobile) -->
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="nav-drawer__close" id="nav-drawer-close" aria-label="Close navigation">&#x2715;</button>
+    <ul class="nav-drawer__links">
+      <li><a href="/work/">Work</a></li>
+      <!--
+        STANDING REMINDER:
+        aria-current="page" — set on the correct item here AND in the desktop nav below.
+        For Blog index: Blog item.
+      -->
+      <li><a href="/play/">Play</a></li>
+      <li><a href="/blog/" aria-current="page">Blog</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="page-header">
+    <nav class="header-nav" aria-label="Main navigation">
+      <div class="wrapper flex-container">
+
+        <!-- Logo -->
+        <a href="/" class="site-logo" aria-label="SW26 — home">
+          <img src="/assets/logos/SW_logo.png" alt="SW26 logo">
+        </a>
+        <!--
+          STANDING REMINDER:
+          Logo path — adjust depth (../../) to match this file's location.
+          aria-label + alt — update SW24 → SW26 when new asset is ready.
+        -->
+
+        <!-- Desktop nav links -->
+        <ul class="header-links list-horizontal flex-container">
+          <li><a href="/work/">Work</a></li>
+          <li><a href="/play/">Play</a></li>
+          <li><a href="/blog/" aria-current="page">Blog</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+
+        <!-- Hamburger (mobile only) -->
+        <button
+          class="nav-hamburger"
+          id="nav-hamburger"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+          aria-label="Open navigation">
+          <span class="nav-hamburger__bar"></span>
+          <span class="nav-hamburger__bar"></span>
+          <span class="nav-hamburger__bar"></span>
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════ -->
+  <main id="main-content" tabindex="-1">
+    <div class="wrapper">
+
+      <!--
+        STANDING REMINDERS — update on every template copy:
+        1. <title> in <head> — update to "Blog - SW26"
+        2. aria-current="page" — set on Blog item in desktop nav AND mobile drawer
+        3. Logo src path — adjust relative depth to match file location
+        4. Per card: title, date (datetime attr), category, image src + alt, intro text, href
+        5. Category links use the pattern /blog/category-slug/ — ensure the
+           corresponding category archive page exists before publishing.
+           Current categories: /blog/thoughts/ /blog/process/ /blog/tools/ /blog/recognition/
+           Add new slugs to this list as the taxonomy grows.
+        6. Add or remove <li class="article-card"> blocks to match post count
+        7. Initial visible count: 15. Posts beyond 15 carry the hidden attribute.
+           The load more button (stage 3) removes hidden from subsequent batches.
+      -->
+
+      <!-- ── Section heading ──────────────────────────────────────────────────── -->
+      <h1 class="font-size-2 index-heading">Thoughts</h1>
+
+      <!-- ── Article grid ─────────────────────────────────────────────────────── -->
+      <ul class="article-grid" aria-label="Blog posts">
+
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">9 April 2024</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">If you don't stop and look around every once in while...</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../blog/jet2/cinzano.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">On a recent family holiday, I was so enamoured by the simplicity and efficiency of the cup holders provided by Jet2 that I felt compelled to write a short blog about it.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">9 September 2023</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Innovation or Irritation?</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">In October last year, Coca-Cola announced its attached cap innovation in the UK. This news largely passed me by at the time, but the design implications are worth unpacking.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">3 May 2019</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Sheffield Digital Awards</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The Sheffield Digital Awards aim to highlight and reward both digital companies and individuals working across the city's growing technology sector.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">14 February 2024</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">The Quiet Power of Constraints</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Working within tight constraints is often framed as a limitation. I've come to think of it as one of the most reliable conditions for genuinely interesting design decisions.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">2 November 2023</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">What Figma's Variable System Gets Right</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Figma's variables update resolved a tension that had existed in the tool for years. Here's what I think they got right, and where the implementation still falls short.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">17 July 2023</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">On Reading Sideways</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">There's a kind of lateral reading that happens when you're deep in a problem — pulling in references from adjacent fields to illuminate something you can't quite see directly.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">4 March 2023</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Facilitation as Design Work</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Running a workshop well is a design problem. The inputs, constraints, desired outputs, and failure modes are all present — most facilitators just don't frame it that way.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">28 October 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Named in the Design Week Ones to Watch</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">An unexpected piece of recognition that prompted a longer conversation about what visibility in the design industry actually means, and who it tends to reach.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">12 August 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">The Problem with Best Practice</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Best practice is often a record of what worked in a specific context, compressed into a rule and applied indiscriminately elsewhere. It deserves more scrutiny than it typically gets.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">5 May 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">A Year with Arc Browser</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Arc is the first browser in years that has made me reconsider how I organise my work online. Some of that is genuine innovation; some of it is clever reframing of existing behaviour.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">19 January 2022</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">When Research Contradicts the Brief</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">What do you do when your research findings directly contradict the assumptions your brief was built on? This is a more common situation than most project post-mortems acknowledge.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">7 September 2021</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Small Screens, Big Consequences</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Mobile-first was supposed to enforce discipline. A decade on, it's worth asking whether the constraint produced the outcomes we expected — and where it quietly failed.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">22 April 2021</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Writing as a Design Tool</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The act of writing a design rationale often reveals gaps that no amount of visual iteration would surface. I've started treating it as a required step rather than a post-hoc documentation task.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">11 December 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Against Seamlessness</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The drive toward seamless, frictionless experience has produced some genuinely useful products. It has also produced a generation of interfaces that are difficult to understand, trust, or question.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/recognition/">Recognition</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">3 August 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Shortlisted for the UX Design Awards</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">A short note on being shortlisted, what the project was, and why the category it was entered in probably matters more than the outcome.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/tools/">Tools</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">17 March 2020</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Notion After Two Years</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Two years of using Notion as a primary thinking tool. What it's genuinely good at, what it's not, and the one habit change that made it finally stick.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/process/">Process</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">9 October 2019</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">The Difference Between Simple and Easy</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">Simple and easy are frequently conflated in design conversation. They are not the same thing, and conflating them tends to produce outcomes that are neither.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+        <!-- ── Card ── -->
+        <li hidden>
+          <div class="article-card__meta">
+            <a class="article-card__category" href="/blog/thoughts/">Thoughts</a>
+            <!-- datetime: ISO 8601 format required — e.g. datetime="2024-04-09" for 9 April 2024. Populate when wiring real content. -->
+            <time class="article-card__timestamp" datetime="">24 June 2019</time>
+          </div>
+          <div class="article-card">
+            <p class="article-card__title">Mundane Futures</p>
+            <div class="article-card__image-wrap">
+            <img
+              src="../assets/thumbnails/blog/placeholder.png"
+              alt=""
+            >
+          </div>
+            <p class="article-card__intro">The most interesting design speculation I've encountered recently isn't about radical discontinuity — it's about the texture of ordinary life in ten or twenty years' time.</p>
+            <a class="article-card__link" href="/blog/article-slug/">Read more</a>
+          </div>
+        </li>
+
+        <!--
+          Add further posts by duplicating the <li class="article-card"> block above.
+          Posts 1–15: no hidden attribute — rendered in the initial view.
+          Posts 16+: add hidden attribute — revealed by the load more control (stage 3).
+          Partial final rows leave remaining cells empty. This is intentional and correct.
+        -->
+
+      </ul>
+
+      <!-- ── Grid controls — load more + back to top ──────────────────────────── -->
+      <!--
+        .grid-controls is hidden by default — JS adds .is-visible if hidden
+        cards exist on page load. This ensures the controls never appear on
+        pages with 12 or fewer posts.
+        Load more batch size: 6 posts per click (matches the 2-row increment
+        of the 3-column grid — always reveals complete rows).
+        Back to top: scrolls to #main-content and moves focus to the <main>
+        element — correct accessible behaviour, returns focus to the logical
+        start of the content region.
+        prefers-reduced-motion: scroll behaviour is instant if reduced motion
+        is set — handled in JS via the scrollIntoView options object.
+      -->
+      <div class="grid-controls" id="grid-controls" aria-live="polite">
+        <button class="load-more-btn" id="load-more-btn" aria-label="Load more posts">
+          Load more
+        </button>
+        <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">
+          Back to top
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer>
+    <div class="wrapper">
+      <div class="footer-inner">
+
+        <!-- Social links — top left -->
+        <nav class="footer-inner__social footer-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/welshsteve/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.are.na/steve-n-welsh/channels" class="footer-link footer-link--arena" target="_blank" rel="noopener noreferrer" aria-label="Are.na">✶✶</a>
+          <a href="https://x.com/miniboro_dotcom" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://substack.com/@ulysses31" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/miniboro/" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </nav>
+
+        <!-- Theme toggle — top right -->
+        <div class="footer-inner__toggle theme-segmented-wrap" role="group" aria-label="Colour scheme">
+          <div class="theme-segmented">
+            <button class="theme-segmented__btn is-active" data-scheme="light">Light</button>
+            <button class="theme-segmented__btn" data-scheme="dark">Dark</button>
+            <button class="theme-segmented__btn" data-scheme="auto">Auto</button>
+          </div>
+        </div>
+
+        <!-- Credits — bottom left -->
+        <button class="footer-inner__credits footer-credits-link" id="credits-trigger" aria-haspopup="dialog">Additional credits</button>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Credits modal ────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="credits-modal" role="dialog" aria-modal="true" aria-labelledby="credits-modal-title">
+    <div class="modal">
+      <button class="modal__close" id="credits-modal-close" aria-label="Close credits">Close &#x2715;</button>
+      <h2 class="modal__title" id="credits-modal-title">Additional credits</h2>
+      <ul class="credits-list">
+        <li class="credits-item">
+          <span class="credits-context">Typeface — Inter</span>
+          <span class="credits-source"><a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">Rasmus Andersson via Google Fonts</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Hosting — GitHub Pages</span>
+          <span class="credits-source"><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+        </li>
+        <li class="credits-item">
+          <span class="credits-context">Contact form — Formspree</span>
+          <span class="credits-source"><a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Contact modal ────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <div class="modal">
+      <button class="modal__close" id="contact-modal-close" aria-label="Close contact form">Close &#x2715;</button>
+      <h2 class="modal__title" id="contact-modal-title">Get in touch</h2>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/myknpryk" method="POST">
+        <div class="contact-field">
+          <label class="contact-label" for="contact-name">Name</label>
+          <input class="contact-input" type="text" id="contact-name" name="name" required autocomplete="name">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-email">Email</label>
+          <input class="contact-input" type="email" id="contact-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-subject">Subject</label>
+          <input class="contact-input" type="text" id="contact-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label" for="contact-message">Message</label>
+          <textarea class="contact-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+        <button class="contact-submit" type="submit">Send message</button>
+        <p class="contact-status" id="contact-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ── Header scroll behaviour — mobile only ───────────────────────────────
+    // Hide on scroll down, show on scroll up — reinstated for mobile sticky.
+    // Guard: only activates at <48rem (768px). Desktop header is static —
+    // no scroll listener needed there. Matches the 48rem breakpoint used
+    // throughout the CSS. requestAnimationFrame throttles scroll events.
+    const pageHeader  = document.querySelector('.page-header');
+    const MOBILE_BP   = 48 * 16; // 48rem in px — matches CSS breakpoint
+    let   lastScrollY = window.scrollY;
+    let   ticking     = false;
+
+    function updateHeader() {
+      if (window.innerWidth >= MOBILE_BP) {
+        pageHeader.classList.remove('is-hidden');
+        ticking = false;
+        return;
+      }
+      const currentScrollY = window.scrollY;
+      const headerHeight   = pageHeader.offsetHeight;
+      if (currentScrollY > headerHeight) {
+        if (currentScrollY > lastScrollY) {
+          pageHeader.classList.add('is-hidden');
+          if (drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+        } else {
+          pageHeader.classList.remove('is-hidden');
+        }
+      } else {
+        pageHeader.classList.remove('is-hidden');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // ── Hamburger nav drawer ──────────────────────────────────────────────────
+    const hamburger   = document.getElementById('nav-hamburger');
+    const drawer      = document.getElementById('nav-drawer');
+    const drawerClose = document.getElementById('nav-drawer-close');
+    const overlay     = document.getElementById('nav-overlay');
+
+    function openDrawer() {
+      drawer.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      overlay.classList.add('is-visible');
+      document.body.style.overflow = 'hidden';
+      drawerClose.focus();
+    }
+
+    function closeDrawer() {
+      drawer.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      overlay.classList.remove('is-visible');
+      document.body.style.overflow = '';
+      hamburger.focus();
+    }
+
+    hamburger.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+    });
+
+    drawer.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = [...drawer.querySelectorAll('a, button')];
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+
+        // ── Load more + back to top ──────────────────────────────────────────────
+    //
+    // LOAD MORE
+    // Reveals hidden cards in batches of 6 (2 complete rows of the 3-column
+    // grid). On each click, the next 6 hidden cards have their hidden
+    // attribute removed. When no hidden cards remain, the load more button
+    // is disabled (CSS hides it) and the back to top button is revealed.
+    //
+    // BACK TO TOP
+    // Scrolls to #main-content and moves focus to the <main> element.
+    // Respects prefers-reduced-motion — instant scroll if set.
+    //
+    // INITIAL STATE
+    // On page load: if hidden cards exist, .grid-controls gets .is-visible.
+    // If no hidden cards exist (12 or fewer posts total), controls stay hidden.
+
+    const gridControls  = document.getElementById('grid-controls');
+    const loadMoreBtn   = document.getElementById('load-more-btn');
+    const backToTopBtn  = document.getElementById('back-to-top-btn');
+    const mainContent   = document.getElementById('main-content');
+    const BATCH_SIZE    = 6; // 2 rows of 3-column grid per load more click
+
+    function getHiddenCards() {
+      return [...document.querySelectorAll('.article-grid > li[hidden]')];
+    }
+
+    function updateControls() {
+      const remaining = getHiddenCards().length;
+      if (remaining === 0) {
+        loadMoreBtn.disabled = true;       // CSS hides disabled button
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        loadMoreBtn.disabled = false;
+        // Back to top visible alongside load more once any batch has loaded
+        // i.e. total hidden is less than original hidden count
+        // We track this via a data attribute set on init
+        const originalHidden = parseInt(gridControls.dataset.originalHidden, 10);
+        if (remaining < originalHidden) {
+          backToTopBtn.classList.add('is-visible');
+        }
+      }
+    }
+
+    function initControls() {
+      const hidden = getHiddenCards();
+      if (hidden.length === 0) return; // 12 or fewer posts — controls stay hidden
+      gridControls.classList.add('is-visible');
+      gridControls.dataset.originalHidden = hidden.length;
+    }
+
+    loadMoreBtn.addEventListener('click', () => {
+      const hidden = getHiddenCards();
+      const batch  = hidden.slice(0, BATCH_SIZE);
+      batch.forEach(li => li.removeAttribute('hidden'));
+      updateControls();
+      // Move focus to first newly revealed card for keyboard users
+      if (batch[0]) {
+        const firstLink = batch[0].querySelector('a');
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      mainContent.scrollIntoView({ behavior: prefersReduced ? 'instant' : 'smooth' });
+      mainContent.focus({ preventScroll: true });
+    });
+
+    initControls();
+
+    // ── Theme segmented control ───────────────────────────────────────────────
+    const segmentedBtns = document.querySelectorAll('.theme-segmented__btn');
+
+    function applyScheme(scheme) {
+      if (scheme === 'auto') {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+      } else {
+        document.documentElement.setAttribute('data-user-color-scheme', scheme);
+      }
+      localStorage.setItem('color-scheme', scheme);
+      segmentedBtns.forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.scheme === scheme);
+      });
+    }
+
+    const storedScheme = localStorage.getItem('color-scheme') || 'auto';
+    applyScheme(storedScheme);
+
+    segmentedBtns.forEach(btn => {
+      btn.addEventListener('click', () => applyScheme(btn.dataset.scheme));
+    });
+
+    // ── Modal utility ─────────────────────────────────────────────────────────
+    function openModal(overlayEl, firstFocusEl) {
+      overlayEl.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      if (firstFocusEl) firstFocusEl.focus();
+    }
+
+    function closeModal(overlayEl, returnFocusEl) {
+      overlayEl.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (returnFocusEl) returnFocusEl.focus();
+    }
+
+    function trapFocus(overlayEl, e) {
+      if (e.key !== 'Tab') return;
+      const focusable = [...overlayEl.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled);
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+
+    // ── Credits modal ─────────────────────────────────────────────────────────
+    const creditsTrigger = document.getElementById('credits-trigger');
+    const creditsModal   = document.getElementById('credits-modal');
+    const creditsClose   = document.getElementById('credits-modal-close');
+
+    creditsTrigger.addEventListener('click', () => openModal(creditsModal, creditsClose));
+    creditsClose.addEventListener('click', () => closeModal(creditsModal, creditsTrigger));
+    creditsModal.addEventListener('click', (e) => { if (e.target === creditsModal) closeModal(creditsModal, creditsTrigger); });
+    creditsModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal(creditsModal, creditsTrigger);
+      trapFocus(creditsModal, e);
+    });
+
+    // ── Contact modal ─────────────────────────────────────────────────────────
+    const contactNavLinks = document.querySelectorAll('a[href="/contact/"]');
+    const contactModal    = document.getElementById('contact-modal');
+    const contactClose    = document.getElementById('contact-modal-close');
+    const contactStatus   = document.getElementById('contact-status');
+    const contactForm     = document.getElementById('contact-form');
+
+    contactNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(contactModal, contactClose);
+      });
+    });
+    contactClose.addEventListener('click', () => closeModal(contactModal, null));
+    contactModal.addEventListener('click', (e) => { if (e.target === contactModal) closeModal(contactModal, null); });
+    contactModal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal(contactModal, null);
+      trapFocus(contactModal, e);
+    });
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(contactForm);
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactStatus.textContent = 'Message sent — thank you.';
+          contactForm.reset();
+        } else {
+          contactStatus.textContent = 'Something went wrong. Please try again.';
+        }
+      } catch {
+        contactStatus.textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  </script>
+
+</body>
+</html>
