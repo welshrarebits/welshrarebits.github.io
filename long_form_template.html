@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+    STANDING DIRECTIVE — ASSET PATHS:
+    Templates at root level          → ../assets/
+    Pages at one level deep          → ../assets/    (e.g. work/index.html)
+    Pages at two or more levels deep → /assets/      (e.g. work/article-slug/index.html)
+    Absolute paths (/assets/...) are immune to folder depth — use them for all pages, not templates.
+  -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Case Study Title - Your Name</title>
@@ -17,19 +24,30 @@
       padding-bottom: var(--pixel-10);
     }
 
-    /* ── Sticky header ───────────────────────────────────────────────────────── */
+    /* ── Header behaviour ────────────────────────────────────────────────────── */
+    /*
+      STANDING DIRECTIVE — SITE-WIDE HEADER BEHAVIOUR:
+      ≥48rem (desktop): static — header scrolls away with the page naturally.
+      <48rem (mobile):  sticky with hide-on-scroll-down / show-on-scroll-up.
+      is-hidden class, transition, and prefers-reduced-motion override are all
+      scoped to the mobile media query — they have no effect at desktop widths.
+      JS updateHeader() is guarded by MOBILE_BP (48 × 16 = 768px) to match.
+    */
     .page-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
       background: var(--color-background);
-      /* Translate up by full height to hide; JS toggles this */
-      transition: transform 0.25s ease;
     }
-    .page-header.is-hidden {
-      transform: translateY(-100%);
+    @media (max-width: 48rem) {
+      .page-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        transition: transform 0.25s ease;
+      }
+      .page-header.is-hidden {
+        transform: translateY(-100%);
+      }
     }
-    @media (prefers-reduced-motion: reduce) {
+    @media (max-width: 48rem) and (prefers-reduced-motion: reduce) {
       .page-header { transition: none; }
     }
 
@@ -94,6 +112,25 @@
 
     /* ── Headline caption — reverted to original font-size-1 fluid scale ───── */
     .headline-caption { margin-bottom: var(--spacing-1); }
+
+    /*
+      BLOG USE — category link in headline-caption slot:
+      Styled as --color-link at rest, no underline. Underline revealed on hover
+      matching Option A — consistent with category links in the blog index.
+    */
+    .category-link {
+      color: var(--color-link);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+    }
+    @media (hover: hover) {
+      .category-link:hover {
+        color: var(--color-hover);
+        text-decoration: underline;
+        text-decoration-thickness: 0.0625rem;
+        text-underline-offset: 0.3125em;
+      }
+    }
 
     /* h1 → lead paragraph gap increased from --spacing-1 (5px) to --spacing-2 (10px) */
     h1:has(+ .lead-paragraph) { margin-bottom: var(--spacing-2); }
@@ -821,19 +858,40 @@
 
       <!--
         STANDING REMINDERS — update on every template copy:
-        1. Back link href below — update to correct section/page path
+        1. <title> in <head> — update to article title
         2. aria-current="page" — set on correct item in desktop nav AND mobile drawer
-        3. aria-label + alt on logo link — update SW24 → SW26 when new asset is ready
-        4. Lightbox: only images with class="image-outline" inside <figure> are wired
-           as lightbox triggers. Omit .image-outline on any image that should not open
-           in the lightbox (e.g. decorative images). This is intentional — document it
-           per page if you deviate from the default.
+        3. Logo src path — use /assets/ absolute path (page is two levels deep)
+
+        BLOG-SPECIFIC REMINDERS (apply when used as a blog article template):
+        4. Back button href below — always /blog/ for blog articles (not history.back())
+        5. Category label — update text and href to match the article's category
+           e.g. <a href="/blog/thoughts/">Thoughts</a>
+           Styled as --color-link, no underline at rest, underline on hover
+        6. Sub header (headline-caption slot) — optional editorial element.
+           Omit the <span> entirely where not needed. Template comment marks the slot.
+        7. Timestamp — not included on article pages. Do not add.
+        8. No breadcrumb — main nav and page heading provide sufficient wayfinding.
+
+        SECTION-SPECIFIC REMINDERS (apply when used as a work/play article template):
+        9. Back button href — update to correct section path e.g. /work/ or /play/
+        10. headline-caption slot — use section label e.g. "Case study" (plain text, no link)
+
+        UNIVERSAL:
+        11. Lightbox: only images with class="image-outline" inside <figure> are wired
+            as lightbox triggers. Omit .image-outline on decorative images.
       -->
-      <!-- Back link -->
-      <a href="/case-study/organisation/" class="home-link">&#8249; Back</a>
+
+      <!-- Back link — /work/ for section articles | /blog/ for blog articles -->
+      <a href="/work/" class="home-link">&#8249; Back</a>
 
       <!-- ── Page heading ────────────────────────── -->
       <div class="intro">
+        <!--
+          BLOG USE: replace the <span> below with a category link:
+          <span class="headline-caption font-size-1"><a href="/blog/thoughts/" class="category-link">Thoughts</a></span>
+          SECTION USE: plain text label e.g. "Case study" — no link.
+          OPTIONAL: omit this element entirely if no label is needed.
+        -->
         <span class="headline-caption font-size-1">Case study</span>
         <h1 class="font-size-4">Re-imagining the GDS ‘Good Practice Guides’</h1>
         <p class="lead-paragraph">
@@ -1157,11 +1215,21 @@
 
   <script>
     // ── Sticky header — hide on scroll down, show on scroll up ───────────────
+    // ── Sticky header — mobile only ───────────────────────────────────────────
+    // STANDING DIRECTIVE: header is static at ≥48rem, sticky with hide-on-scroll
+    // at <48rem only. MOBILE_BP matches the CSS breakpoint: 48rem × 16px = 768px.
+    const MOBILE_BP   = 768;
     const pageHeader  = document.querySelector('.page-header');
     let   lastScrollY = window.scrollY;
     let   ticking     = false;
 
     function updateHeader() {
+      if (window.innerWidth >= MOBILE_BP) {
+        pageHeader.classList.remove('is-hidden');
+        lastScrollY = window.scrollY;
+        ticking = false;
+        return;
+      }
       const currentScrollY = window.scrollY;
       const headerHeight   = pageHeader.offsetHeight;
 
