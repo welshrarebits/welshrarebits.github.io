@@ -624,7 +624,9 @@
     [data-user-color-scheme="dark"] .article-card__image-wrap { outline: none; }
     .article-card__image-wrap img {
       width: 100%;
-      height: 100%;
+      height: 100% !important; /* overrides reset img { height: auto } which
+                                  wins the cascade without this — root cause
+                                  of placeholder image not filling the wrapper */
       object-fit: cover;
       display: block;
       margin: 0;
