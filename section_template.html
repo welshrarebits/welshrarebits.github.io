@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+    STANDING DIRECTIVE — ASSET PATHS:
+    Templates at root level          → ../assets/
+    Pages at one level deep          → ../assets/    (e.g. work/index.html)
+    Pages at two or more levels deep → /assets/      (e.g. work/article-slug/index.html)
+    Absolute paths (/assets/...) are immune to folder depth — use them for all pages, not templates.
+  -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Section Title - SW26</title>
@@ -17,19 +24,34 @@
       padding-bottom: var(--pixel-10);
     }
 
-    /* ── Sticky header ───────────────────────────────────────────────────────── */
+    /* ── Header behaviour ────────────────────────────────────────────────────── */
+    /*
+      STANDING DIRECTIVE — SITE-WIDE HEADER BEHAVIOUR:
+      ≥48rem (desktop): static — header scrolls away with the page naturally.
+      <48rem (mobile):  sticky with hide-on-scroll-down / show-on-scroll-up.
+                        Header hides as the user scrolls down; reappears as soon
+                        as they begin scrolling back up. Maximises reading area
+                        on small screens while keeping navigation accessible.
+      is-hidden class, transition, and prefers-reduced-motion override are all
+      scoped to the mobile media query — they have no effect at desktop widths.
+      JS updateHeader() is guarded by MOBILE_BP (48 × 16 = 768px) to match.
+    */
     .page-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
       background: var(--color-background);
-      transition: transform 0.25s ease;
     }
-    .page-header.is-hidden {
-      transform: translateY(-100%);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .page-header { transition: none; }
+    @media (max-width: 48rem) {
+      .page-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        transition: transform 0.25s ease;
+      }
+      .page-header.is-hidden {
+        transform: translateY(-100%);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .page-header { transition: none; }
+      }
     }
 
     main { padding-top: var(--spacing-6); }
@@ -629,6 +651,66 @@
         margin-bottom: var(--spacing-4);
       }
     }
+
+    /* ── [hidden] override rule ──────────────────────────────────────────────── */
+    /*
+      STANDING DIRECTIVE — REQUIRED IN ALL TEMPLATES USING THE HIDDEN PATTERN:
+      display: flex on .article-grid > li (set above) overrides the browser's
+      native [hidden] display: none — authored styles always win over UA defaults.
+      This explicit rule raises specificity above the base li rule, restoring the
+      expected hidden behaviour for load more pagination.
+    */
+    .article-grid > li[hidden] { display: none; }
+
+    /* ── Load more + back to top ─────────────────────────────────────────────── */
+    /*
+      STANDING DIRECTIVE — SITE-WIDE LOAD MORE BEHAVIOUR:
+      Initial threshold: 12 cards visible. Batch size: 6 per click (2 full rows).
+      Back to top: inline below load more (not fixed) — appears after first batch
+      loads, remains visible once all posts are loaded.
+      Applies to Work index, Play index, and all category archive pages.
+    */
+    .load-more-wrap {
+      margin-top: var(--spacing-10);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-4);
+    }
+    .load-more-btn {
+      background: none;
+      border: var(--border-medium) solid var(--color-border);
+      color: var(--color-link);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      padding: var(--pixel-10) var(--spacing-6);
+      cursor: pointer;
+      display: block;
+    }
+    .load-more-btn:hover { color: var(--color-hover); border-color: var(--color-hover); }
+    .load-more-btn:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
+    .back-to-top-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-link);
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.3125em;
+    }
+    .back-to-top-btn:hover { color: var(--color-hover); }
+    .back-to-top-btn:focus-visible {
+      outline: var(--border-thick) solid var(--color-focus);
+      outline-offset: var(--pixel-2);
+    }
   </style>
 </head>
 <body>
@@ -698,7 +780,7 @@
   <!-- ═══════════════════════════════════════════
        MAIN CONTENT
   ═══════════════════════════════════════════ -->
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <div class="wrapper">
 
       <!--
@@ -832,13 +914,28 @@
 
 
         <!--
-          Add further cards by duplicating the <li class="article-card"> block above.
-          The grid wraps automatically — no structural changes required.
+          Add further cards by duplicating the <li> block above.
+          Cards 1–12: no hidden attribute — visible on load.
+          Cards 13+:  add hidden attribute to the <li> — e.g. <li hidden>
+          The [hidden] override rule in CSS ensures display: flex on the li
+          does not prevent these from being hidden. The load more JS below
+          reveals them in batches of 6.
           Partial final rows (e.g. 4 cards in a 3-column grid) leave the last
           row's remaining cells empty. This is intentional and correct.
         -->
 
       </ul>
+
+      <!--
+        Load more + back to top.
+        load-more-btn: hidden once all cards are revealed (JS sets hidden attribute).
+        back-to-top-btn: hidden until after first batch loads (JS removes hidden attribute).
+        Both sit inline — no fixed positioning.
+      -->
+      <div class="load-more-wrap">
+        <button class="load-more-btn" id="load-more-btn" type="button">Load more</button>
+        <button class="back-to-top-btn" id="back-to-top-btn" type="button" hidden>Back to top</button>
+      </div>
 
     </div>
   </main>
@@ -934,12 +1031,27 @@
   </div>
 
   <script>
-    // ── Sticky header — hide on scroll down, show on scroll up ───────────────
+    // ── Sticky header — mobile only ───────────────────────────────────────────
+    //
+    // STANDING DIRECTIVE — SITE-WIDE HEADER BEHAVIOUR:
+    // Header is static at ≥48rem (desktop). At <48rem (mobile) it is sticky
+    // and hides on scroll down / reappears on scroll up (hide-on-scroll pattern).
+    // MOBILE_BP matches the CSS breakpoint: 48rem × 16px/rem = 768px.
+    // updateHeader() is a no-op above this width — CSS position is also static
+    // above the breakpoint, so is-hidden has no visible effect even if applied.
+    //
+    const MOBILE_BP   = 768;
     const pageHeader  = document.querySelector('.page-header');
     let   lastScrollY = window.scrollY;
     let   ticking     = false;
 
     function updateHeader() {
+      if (window.innerWidth >= MOBILE_BP) {
+        pageHeader.classList.remove('is-hidden');
+        lastScrollY = window.scrollY;
+        ticking = false;
+        return;
+      }
       const currentScrollY = window.scrollY;
       const headerHeight   = pageHeader.offsetHeight;
       if (currentScrollY > headerHeight) {
@@ -962,6 +1074,68 @@
         ticking = true;
       }
     }, { passive: true });
+
+    // ── Load more + back to top ───────────────────────────────────────────────
+    //
+    // STANDING DIRECTIVE — SITE-WIDE LOAD MORE BEHAVIOUR:
+    // Threshold: 12 cards visible on load. Batch size: 6 per click.
+    // Focus moves to the first newly revealed card's link after each batch.
+    // Back to top: appears after first batch loads; scrolls to absolute page
+    // top via window.scrollTo (not scrollIntoView — stops short of header).
+    // Focus moves to <main tabindex="-1"> after back-to-top scroll.
+    // prefers-reduced-motion: instant scroll if set.
+    //
+    (function () {
+      const THRESHOLD  = 12;
+      const BATCH      = 6;
+      const grid       = document.querySelector('.article-grid');
+      const loadMoreBtn  = document.getElementById('load-more-btn');
+      const backToTopBtn = document.getElementById('back-to-top-btn');
+      const mainContent  = document.getElementById('main-content');
+
+      if (!grid || !loadMoreBtn) return;
+
+      const allCards = [...grid.querySelectorAll('li')];
+      const total    = allCards.length;
+
+      // Hide cards beyond initial threshold
+      allCards.forEach((card, i) => {
+        if (i >= THRESHOLD) card.setAttribute('hidden', '');
+      });
+
+      // Hide load more button if total cards ≤ threshold
+      if (total <= THRESHOLD) {
+        loadMoreBtn.setAttribute('hidden', '');
+      }
+
+      let revealed = Math.min(THRESHOLD, total);
+
+      loadMoreBtn.addEventListener('click', () => {
+        const nextBatch = allCards.slice(revealed, revealed + BATCH);
+        nextBatch.forEach(card => card.removeAttribute('hidden'));
+        revealed += nextBatch.length;
+
+        // Focus first newly revealed card's link
+        const firstLink = nextBatch[0] && nextBatch[0].querySelector('a');
+        if (firstLink) firstLink.focus();
+
+        // Reveal back to top after first batch
+        backToTopBtn.removeAttribute('hidden');
+
+        // Hide load more once all cards are visible
+        if (revealed >= total) {
+          loadMoreBtn.setAttribute('hidden', '');
+        }
+      });
+
+      backToTopBtn.addEventListener('click', () => {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+        // Move focus to main — tabindex="-1" makes it programmatically focusable
+        // without adding it to the natural tab order
+        mainContent.focus();
+      });
+    })();
 
     // ── Hamburger nav drawer ──────────────────────────────────────────────────
     const hamburger   = document.getElementById('nav-hamburger');
