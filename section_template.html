@@ -666,24 +666,24 @@
     /*
       STANDING DIRECTIVE — SITE-WIDE LOAD MORE BEHAVIOUR:
       Inline below the article grid — no fixed positioning.
-      Both controls sit in document flow, visible only when relevant:
-      - .grid-controls wrapper: hidden until JS determines there are hidden cards
-      - .back-to-top: hidden until JS reveals it after all posts are loaded,
-        or shown alongside load more once posts exceed the initial batch.
+      Controls sit in a horizontal pair, styled identically to article-card__link.
+      Separated by a pipe character. Three states:
+      1. ≤9 cards: .grid-controls hidden — neither control appears.
+      2. >9 cards, cards remaining: Load more | Back to top both visible.
+      3. All cards revealed: Load more + pipe hidden, Back to top sits alone.
       Applies to Work index, Play index, and all category archive pages.
-      Ported directly from blog_index_template.html — proven implementation.
     */
     .grid-controls {
       display: none;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--spacing-4);
+      flex-direction: row;
+      align-items: center;
       margin-top: var(--spacing-10);
     }
     .grid-controls.is-visible {
       display: flex;
     }
-    .load-more-btn {
+    .load-more-btn,
+    .back-to-top-btn {
       font-family: var(--font-family);
       font-size: 1rem;
       font-weight: var(--font-weight-semibold);
@@ -695,37 +695,10 @@
       text-decoration: underline;
       text-decoration-thickness: 0.0625rem;
       text-underline-offset: 0.3125em;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
     }
-    .load-more-btn:hover { color: var(--color-hover); }
-    .load-more-btn:focus-visible {
-      background: var(--color-focus);
-      color: var(--color-focus-text);
-      outline: var(--spacing-0) solid rgba(0, 0, 0, 0);
-      box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
-      text-decoration: none;
-    }
-    .load-more-btn:disabled { display: none; }
-    .back-to-top-btn {
-      font-family: var(--font-family);
-      font-size: 1rem;
-      font-weight: var(--font-weight-semibold);
-      color: var(--color-secondary-text);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      text-decoration: underline;
-      text-decoration-thickness: 0.0625rem;
-      text-underline-offset: 0.3125em;
-      min-height: 44px;
-      display: none;
-      align-items: center;
-    }
-    .back-to-top-btn.is-visible { display: flex; }
-    .back-to-top-btn:hover { color: var(--color-primary-text); }
+    .load-more-btn:hover,
+    .back-to-top-btn:hover { color: var(--color-hover); }
+    .load-more-btn:focus-visible,
     .back-to-top-btn:focus-visible {
       background: var(--color-focus);
       color: var(--color-focus-text);
@@ -733,6 +706,13 @@
       box-shadow: 0 -0.55rem var(--color-focus), 0 var(--focus-underline) var(--color-focus-border);
       text-decoration: none;
     }
+    .load-more-btn:disabled { display: none; }
+    .grid-controls__pipe {
+      color: var(--color-secondary-text);
+      margin: 0 var(--spacing-3);
+      user-select: none;
+    }
+    .grid-controls__pipe.is-hidden { display: none; }
   </style>
 </head>
 <body>
@@ -937,8 +917,8 @@
 
         <!--
           Add further cards by duplicating the <li> block above.
-          Cards 1–12: no hidden attribute — visible on load.
-          Cards 13+:  add hidden attribute to the <li> — e.g. <li hidden>
+          Cards 1–9:   no hidden attribute — visible on load.
+          Cards 10+:   add hidden attribute to the <li> — e.g. <li hidden>
           The [hidden] override rule in CSS ensures display: flex on the li
           does not prevent these from being hidden. The load more JS below
           reveals them in batches of 6.
@@ -950,20 +930,17 @@
 
       <!-- ── Grid controls — load more + back to top ──────────────────────────── -->
       <!--
-        .grid-controls is hidden by default — JS adds .is-visible if hidden
-        cards exist on page load. This ensures the controls never appear on
-        pages with 12 or fewer posts.
-        Load more batch size: 6 posts per click (2 complete rows of the 3-column grid).
-        Back to top: scrolls to absolute page top, moves focus to <main>.
-        prefers-reduced-motion: instant scroll if set.
+        .grid-controls hidden by default — JS adds .is-visible if hidden cards exist.
+        Three states:
+        1. ≤9 cards: wrapper stays hidden.
+        2. >9 cards, cards remaining: Load more | Back to top.
+        3. All cards revealed: load-more-btn disabled (display: none), pipe hidden,
+           back-to-top-btn sits alone.
       -->
       <div class="grid-controls" id="grid-controls" aria-live="polite">
-        <button class="load-more-btn" id="load-more-btn" aria-label="Load more posts">
-          Load more
-        </button>
-        <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">
-          Back to top
-        </button>
+        <button class="load-more-btn" id="load-more-btn" aria-label="Load more">Load more</button>
+        <span class="grid-controls__pipe" id="grid-controls-pipe" aria-hidden="true">|</span>
+        <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top">Back to top</button>
       </div>
 
     </div>
@@ -1106,11 +1083,12 @@
 
     // ── Load more + back to top ───────────────────────────────────────────────
     // Ported directly from blog_index_template.html — proven implementation.
-    // Threshold: 12 cards. Batch size: 6 per click (2 complete rows).
+    // Threshold: 9 cards. Batch size: 6 per click (2 complete rows).
 
     const gridControls  = document.getElementById('grid-controls');
     const loadMoreBtn   = document.getElementById('load-more-btn');
     const backToTopBtn  = document.getElementById('back-to-top-btn');
+    const gridPipe      = document.getElementById('grid-controls-pipe');
     const mainContent   = document.getElementById('main-content');
     const BATCH_SIZE    = 6;
 
@@ -1121,14 +1099,13 @@
     function updateControls() {
       const remaining = getHiddenCards().length;
       if (remaining === 0) {
+        // All cards revealed — hide load more and pipe, show back to top alone
         loadMoreBtn.disabled = true;
+        gridPipe.classList.add('is-hidden');
         backToTopBtn.classList.add('is-visible');
       } else {
         loadMoreBtn.disabled = false;
-        const originalHidden = parseInt(gridControls.dataset.originalHidden, 10);
-        if (remaining < originalHidden) {
-          backToTopBtn.classList.add('is-visible');
-        }
+        gridPipe.classList.remove('is-hidden');
       }
     }
 
