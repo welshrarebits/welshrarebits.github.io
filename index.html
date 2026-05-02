@@ -760,17 +760,16 @@
     }
     .testimonial-card__person {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: var(--spacing-3);
       margin-bottom: var(--spacing-4);
-      /* No min-height — subgrid handles alignment across columns */
     }
     @media (max-width: 48rem) {
       .testimonial-card__person { margin-bottom: var(--spacing-4); }
     }
     .testimonial-card__avatar {
-      width: 48px;
-      height: 48px;
+      width: 3rem;
+      height: 3rem;
       object-fit: cover;
       flex-shrink: 0;
       display: block;
@@ -1226,7 +1225,7 @@
               <div class="testimonial-card__person">
                 <img
                   class="testimonial-card__avatar"
-                  src="../assets/avatars/barb.png"
+                  src="../assets/avatars/placeholder.png"
                   alt=""
                 >
                 <div class="testimonial-card__identity">
