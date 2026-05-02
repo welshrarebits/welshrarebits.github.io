@@ -830,14 +830,16 @@
     }
     .logo-strip__img {
       /*
-        Max height constrains tall logos. Max width: 100% prevents overflow.
-        Object-fit: contain preserves aspect ratio within the constrained box.
-        Opacity + filter: grayscale achieves monochrome in light mode.
-        Dark mode: invert is not applied — logos need testing with real assets.
+        max-height: 60px accommodates the full range of aspect ratios in the
+        confirmed logo set — from tall portrait marks (GOV.UK, England crest,
+        dC) to wide shallow wordmarks (Netflix, COPA, Disney).
+        Width is constrained by the grid column, not a fixed max-width —
+        object-fit: contain handles proportional fitting within that box.
+        Monochrome treatment via CSS — do not apply greyscale to source assets.
+        Final assets: transparent background, black foreground mark.
       */
-      max-height: 40px;
+      max-height: 60px;
       width: 100%;
-      max-width: 120px;
       object-fit: contain;
       display: block;
       margin: 0 auto;
@@ -1139,7 +1141,7 @@
           <!-- Row 1 -->
           <li class="logo-strip__item">
             <span class="logo-strip__placeholder">Client 01</span>
-            <img class="logo-strip__img" src="../assets/logos/bbc.png" alt="">
+            <!-- Replace with: <img class="logo-strip__img" src="../assets/logos/client-01.svg" alt=""> -->
           </li>
           <li class="logo-strip__item">
             <span class="logo-strip__placeholder">Client 02</span>
