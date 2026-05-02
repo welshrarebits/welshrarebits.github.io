@@ -830,27 +830,23 @@
     }
     .logo-strip__img {
       /*
-        max-height: 60px accommodates the full range of aspect ratios in the
-        confirmed logo set — from tall portrait marks (GOV.UK, England crest,
-        dC) to wide shallow wordmarks (Netflix, COPA, Disney).
-        Width is constrained by the grid column, not a fixed max-width —
-        object-fit: contain handles proportional fitting within that box.
-        Monochrome treatment via CSS — do not apply greyscale to source assets.
+        Static display — logos are not links, no hover or monochrome treatment.
+        Width: 100% fills the grid cell. No max-height — logos scale to fill
+        available cell space naturally. object-fit: contain preserves aspect ratio.
+        Dark mode: invert(1) flips black marks to white on dark backgrounds.
         Final assets: transparent background, black foreground mark.
       */
-      max-height: 60px;
       width: 100%;
+      height: auto;
       object-fit: contain;
       display: block;
       margin: 0 auto;
-      opacity: 0.55;
-      filter: grayscale(1);
-      transition: opacity 0.15s ease;
     }
-    .logo-strip__item:hover .logo-strip__img { opacity: 0.8; }
-    @media (prefers-reduced-motion: reduce) {
-      .logo-strip__img { transition: none; }
+    @media (prefers-color-scheme: dark) {
+      .logo-strip__img { filter: invert(1); }
     }
+    [data-user-color-scheme="dark"] .logo-strip__img { filter: invert(1); }
+    html[data-user-color-scheme="light"] .logo-strip__img { filter: none !important; }
     /* Placeholder text style — remove when real assets are in place */
     .logo-strip__placeholder {
       font-size: 0.875rem;
@@ -1140,7 +1136,8 @@
 
           <!-- Row 1 -->
           <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/new_NFM.png" alt="">
+            <span class="logo-strip__placeholder">Client 01</span>
+            <!-- Replace with: <img class="logo-strip__img" src="../assets/logos/client-01.svg" alt=""> -->
           </li>
           <li class="logo-strip__item">
             <span class="logo-strip__placeholder">Client 02</span>
