@@ -525,26 +525,10 @@
 
     /* ── Intro block ─────────────────────────────────────────────────────────── */
     /*
-      HYPOTHESIS — two-column layout at desktop:
-      Name/headline on the left (wider), secondary descriptor on the right (narrower).
-      Rationale: mirrors the header's logo-left / nav-right split, establishing
-      a consistent left-anchored identity across the page.
-      Single column on mobile — stacks naturally.
-
-      Revisit: if content direction changes (e.g. full-width headline), this
-      grid can be removed and .intro-headline allowed to span the wrapper.
+      Full-width single-column intro block.
+      Two-column layout removed — content flows across the full wrapper width.
     */
-    .intro-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-9);
-      align-items: end;
-    }
-    @media (max-width: 48rem) {
-      .intro-block { grid-template-columns: 1fr; gap: var(--spacing-6); }
-    }
-    .intro-block__primary {}
-    .intro-block__secondary {}
+    .intro-block {}
 
     .intro-headline {
       /*
@@ -945,43 +929,13 @@
       <section class="home-section" aria-labelledby="intro-heading">
         <div class="intro-block">
 
-          <div class="intro-block__primary">
-            <!--
-              HYPOTHESIS — font-size-3 for the intro headline:
-              Largest heading on the page. Establishes the home page as editorially
-              distinct from the section indexes (which use font-size-2).
-              If the headline runs long (2+ lines), font-size-2 may read more cleanly.
-              Test both and confirm before finalising.
-            -->
-            <h1 id="intro-heading" class="font-size-3 intro-headline">
-              <!-- UPDATE: Replace with real headline copy. Options to consider:
-                   A — Name only: "Steve Welsh"
-                   B — Name + role: "Steve Welsh — Service Designer"
-                   C — Editorial line: "Designing services people can actually use"
-                   D — Combination: name on one line, descriptor below as lead-paragraph
-                   Direction not yet confirmed — leaving as placeholder pending copy decision.
-              -->
-              Steve Welsh
-            </h1>
-            <p class="intro-descriptor">
-              <!-- UPDATE: Replace with real descriptor. Suggested: role, organisation, or short positioning statement. -->
-              I am a Senior Service Designer at GDS. I untangle complex problems in order to deliver tangible value.
-              I have been a multi-award-winning Product Manager within the private sector, specialising in Film & TV Localisation.
-              Whilst a sporadic if somewhat lapsed sideline in freelance Illustration completes my high-level back story.
-            </p>
-          </div>
-
-          <div class="intro-block__secondary">
-            <p class="intro-meta">
-              <!-- UPDATE: Replace with real secondary content. Options:
-                   - Availability status
-                   - Location
-                   - Short biographical note
-                   - Current focus or engagement
-              -->
-              Based in Sheffield. Available for freelance and contract work.
-            </p>
-          </div>
+          <h1 id="intro-heading" class="font-size-3 intro-headline">Steve Welsh</h1>
+          <p class="intro-descriptor">
+            I am a Senior Service Designer at GDS. I untangle complex problems in order to deliver
+            tangible value. I have been a multi-award-winning Product Manager within the private
+            sector, specialising in Film &amp; TV Localisation. Whilst a sporadic if somewhat lapsed
+            sideline in freelance Illustration completes my high-level back story.
+          </p>
 
         </div>
       </section>
