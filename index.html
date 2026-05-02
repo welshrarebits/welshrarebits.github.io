@@ -710,9 +710,20 @@
       Cards are not linked — no stretched ::after pseudo-element.
       Avatar, name, role sit above the quote as a header unit per reference.
     */
+    /*
+      STANDING DIRECTIVE — TESTIMONIAL ALIGNMENT:
+      CSS subgrid is used to align quote start positions across all three columns.
+      The parent .testimonial-grid exposes two row tracks per row of cards.
+      Each <li> spans both tracks via grid-row: span 2 and grid-template-rows: subgrid,
+      so the browser measures all person blocks, takes the tallest, and aligns all
+      three quote blocks to that same row automatically.
+      No hardcoded heights — alignment holds regardless of content changes.
+      Browser support: Chrome 117+, Firefox 71+, Safari 16+. Acceptable for this audience.
+    */
     .testimonial-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
       column-gap: var(--spacing-9);
       row-gap: var(--spacing-10);
       list-style: none;
@@ -725,15 +736,36 @@
         row-gap: var(--spacing-9);
       }
     }
+    .testimonial-grid > li {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      margin-top: 0;
+    }
+    @media (max-width: 48rem) {
+      /* Single column — subgrid span not needed, reset to normal block flow */
+      .testimonial-grid > li {
+        display: block;
+        grid-row: auto;
+      }
+    }
     .testimonial-card {
-      display: flex;
-      flex-direction: column;
+      display: contents;
+      /*
+        display: contents removes the .testimonial-card box from the layout,
+        allowing .testimonial-card__person and .testimonial-card__quote to
+        participate directly in the <li> subgrid tracks.
+      */
     }
     .testimonial-card__person {
       display: flex;
       align-items: center;
       gap: var(--spacing-3);
       margin-bottom: var(--spacing-4);
+      /* No min-height — subgrid handles alignment across columns */
+    }
+    @media (max-width: 48rem) {
+      .testimonial-card__person { margin-bottom: var(--spacing-4); }
     }
     .testimonial-card__avatar {
       width: 48px;
@@ -1086,7 +1118,82 @@
       </section>
 
       <!-- ══════════════════════════════════════
-           SECTION 4 — TESTIMONIALS
+           SECTION 4 — CLIENTS & EMPLOYERS
+      ══════════════════════════════════════ -->
+      <section class="home-section" aria-labelledby="clients-heading">
+
+        <div class="home-section__header">
+          <h2 id="clients-heading" class="font-size-2 home-section__heading">Clients &amp; employers</h2>
+          <!--
+            No "view all" link — no dedicated clients page exists.
+          -->
+        </div>
+
+        <!--
+          STANDING REMINDER — Logo strip:
+          12 logos confirmed. Layout: 4 per row at desktop = 3 rows.
+          Replace each .logo-strip__placeholder span with:
+            <img class="logo-strip__img" src="../assets/logos/client-name.svg" alt="">
+          alt="" — logos are decorative in this context. If a logo wraps a link,
+          move the accessible name to the <a> via aria-label.
+
+          Monochrome treatment is applied via CSS (filter: grayscale + opacity).
+          Do not apply greyscale to the source asset — keep originals in colour.
+          Dark mode behaviour needs testing once real assets are in place.
+
+          Logo order below: placeholder names only — update to real client/employer names
+          and supply corresponding assets.
+        -->
+        <ul class="logo-strip" aria-label="Clients and employers">
+
+          <!-- Row 1 -->
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 01</span>
+            <!-- Replace with: <img class="logo-strip__img" src="../assets/logos/client-01.svg" alt=""> -->
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 02</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 03</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 04</span>
+          </li>
+
+          <!-- Row 2 -->
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 05</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 06</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 07</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 08</span>
+          </li>
+
+          <!-- Row 3 -->
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 09</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 10</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 11</span>
+          </li>
+          <li class="logo-strip__item">
+            <span class="logo-strip__placeholder">Client 12</span>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           SECTION 5 — TESTIMONIALS
       ══════════════════════════════════════ -->
       <section class="home-section" aria-labelledby="testimonials-heading">
 
@@ -1187,81 +1294,6 @@
                 easier, you'll be a miss. Thank you."
               </p>
             </div>
-          </li>
-
-        </ul>
-      </section>
-
-      <!-- ══════════════════════════════════════
-           SECTION 5 — CLIENTS & EMPLOYERS
-      ══════════════════════════════════════ -->
-      <section class="home-section" aria-labelledby="clients-heading">
-
-        <div class="home-section__header">
-          <h2 id="clients-heading" class="font-size-2 home-section__heading">Clients &amp; employers</h2>
-          <!--
-            No "view all" link — no dedicated clients page exists.
-          -->
-        </div>
-
-        <!--
-          STANDING REMINDER — Logo strip:
-          12 logos confirmed. Layout: 4 per row at desktop = 3 rows.
-          Replace each .logo-strip__placeholder span with:
-            <img class="logo-strip__img" src="../assets/logos/client-name.svg" alt="">
-          alt="" — logos are decorative in this context. If a logo wraps a link,
-          move the accessible name to the <a> via aria-label.
-
-          Monochrome treatment is applied via CSS (filter: grayscale + opacity).
-          Do not apply greyscale to the source asset — keep originals in colour.
-          Dark mode behaviour needs testing once real assets are in place.
-
-          Logo order below: placeholder names only — update to real client/employer names
-          and supply corresponding assets.
-        -->
-        <ul class="logo-strip" aria-label="Clients and employers">
-
-          <!-- Row 1 -->
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 01</span>
-            <!-- Replace with: <img class="logo-strip__img" src="../assets/logos/client-01.svg" alt=""> -->
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 02</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 03</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 04</span>
-          </li>
-
-          <!-- Row 2 -->
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 05</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 06</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 07</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 08</span>
-          </li>
-
-          <!-- Row 3 -->
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 09</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 10</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 11</span>
-          </li>
-          <li class="logo-strip__item">
-            <span class="logo-strip__placeholder">Client 12</span>
           </li>
 
         </ul>
