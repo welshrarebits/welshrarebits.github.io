@@ -1188,12 +1188,13 @@
           Do not apply greyscale or invert to source assets — CSS handles this.
         -->
         <!--
-          SVG LOGO GRID — bounding box implementation:
-          Building up the full grid using verified SVG assets.
-          Inline padding overrides removed — padding is handled by .logo-strip__box.
-          Old PNG grid below will be removed once all logos are replaced with SVGs.
+          CLIENTS & EMPLOYERS — SVG logo grid:
+          12 logos, 3 columns, 4 rows. All assets: transparent background, black mark.
+          Dark mode inversion handled by CSS. Per-logo padding via data-logo attribute.
+          To add or replace a logo: add/update the <li> and supply a processed SVG
+          (fill set to #000000) in assets/logos/.
         -->
-        <ul class="logo-strip" aria-label="Logo bounding box preview" style="margin-bottom: var(--spacing-6);">
+        <ul class="logo-strip" aria-label="Clients and employers">
           <li class="logo-strip__item" data-logo="bbc-sport">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="">
@@ -1254,53 +1255,6 @@
               <img class="logo-strip__img" src="../assets/logos/sony.svg" alt="">
             </div>
           </li>
-        </ul>
-
-        <!-- CURRENT IMPLEMENTATION — floating logos below for comparison -->
-        <ul class="logo-strip" aria-label="Clients and employers">
-
-          <!-- Row 1 -->
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/nfm_4.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/netflix_4.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/tmobile_5.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/dsit_3.png" alt="">
-          </li>
-
-          <!-- Row 2 -->
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/disney_2.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/gds_2.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/adidas_5.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/bt_sport_6.png" alt="">
-          </li>
-
-          <!-- Row 3 -->
-          <li class="logo-strip__item">
-             <img class="logo-strip__img" src="../assets/logos/bbc_2.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-             <img class="logo-strip__img" src="../assets/logos/england_5.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/zoo_2.png" alt="">
-          </li>
-          <li class="logo-strip__item">
-            <img class="logo-strip__img" src="../assets/logos/dwp_3.png" alt="">
-          </li>
-
         </ul>
       </section>
 
