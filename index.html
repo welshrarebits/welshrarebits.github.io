@@ -864,7 +864,8 @@
     .logo-strip__box {
       aspect-ratio: 16 / 9;
       width: 100%;
-      background: var(--color-primary-text);
+      overflow: hidden;
+      background: light-dark(var(--color-black), var(--color-white));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -872,10 +873,9 @@
     }
     .logo-strip__box .logo-strip__img {
       filter: invert(1);
-      /* Invert applied directly — box background is primary-text (black in light,
-         white in dark), so the mark must always invert regardless of color scheme.
-         The parent dark mode invert rules do not apply here — this rule takes
-         precedence via specificity. */
+      /* Mark is always black on transparent background. Box background is always
+         the inverse of the page background. invert(1) is unconditional here —
+         dark mode parent rules do not need to override this. */
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box .logo-strip__img { filter: invert(1); }
