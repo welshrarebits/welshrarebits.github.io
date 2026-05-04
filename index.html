@@ -809,7 +809,7 @@
     */
     .logo-strip {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--spacing-7) var(--spacing-9);
       list-style: none;
       padding: 0;
@@ -818,7 +818,7 @@
     }
     @media (max-width: 48rem) {
       .logo-strip {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-6);
       }
     }
@@ -827,6 +827,7 @@
       align-items: center;
       justify-content: center;
       margin-top: 0;
+      padding: var(--spacing-4);
     }
     .logo-strip__img {
       /*
@@ -1063,7 +1064,7 @@
             </div>
             <p class="article-card__intro">
               A once-in-a-lifetime commission for the BBC, which required me to create 
-              a porttrait for each of the 30 man squad that would be representing England
+              a portrait for each of the 30 man squad that would be representing England
             </p>
             <a class="article-card__link" href="/play/article-slug/">Read more</a>
           </li>
@@ -1125,12 +1126,10 @@
           alt="" — logos are decorative in this context. If a logo wraps a link,
           move the accessible name to the <a> via aria-label.
 
-          Monochrome treatment is applied via CSS (filter: grayscale + opacity).
-          Do not apply greyscale to the source asset — keep originals in colour.
-          Dark mode behaviour needs testing once real assets are in place.
-
-          Logo order below: placeholder names only — update to real client/employer names
-          and supply corresponding assets.
+          Static display — logos are not links, no hover or monochrome treatment.
+          Final assets: transparent background, black foreground mark.
+          Dark mode: CSS filter invert(1) flips black marks to white automatically.
+          Do not apply greyscale or invert to source assets — CSS handles this.
         -->
         <ul class="logo-strip" aria-label="Clients and employers">
 
