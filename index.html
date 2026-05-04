@@ -877,12 +877,12 @@
     [data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
     html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
     .logo-strip__box .logo-strip__img {
-      filter: invert(1);
+      filter: invert(1); /* black mark → white on black box in light mode */
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box .logo-strip__img { filter: invert(1); }
+      .logo-strip__box .logo-strip__img { filter: none; } /* black mark on white box in dark mode */
     }
-    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1); }
+    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: none; }
     html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
       font-size: 0.875rem;
       font-weight: var(--font-weight-semibold);
