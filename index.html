@@ -868,7 +868,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: var(--spacing-7);
+      padding: var(--spacing-7); /* default — overridden per logo below */
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box { background: #ffffff; }
@@ -877,11 +877,39 @@
     html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
     .logo-strip__box .logo-strip__img {
       filter: invert(1);
+      width: 100%;
+      height: auto;
     }
     html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
     [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: none !important; }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box .logo-strip__img { filter: none !important; }
+    }
+
+    /* ── Per-logo padding overrides ─────────────────────────────────────────── */
+    /* Logos that need more padding (marks too large at default spacing-7) */
+    [data-logo="bbc-sport"] .logo-strip__box  { padding: var(--spacing-8); }
+    [data-logo="tmobile"]   .logo-strip__box  { padding: var(--spacing-8); }
+    [data-logo="adidas"]    .logo-strip__box  { padding: var(--spacing-8); }
+    [data-logo="gds"]       .logo-strip__box  { padding: var(--spacing-8); }
+    [data-logo="bt-sport"]  .logo-strip__box  { padding: var(--spacing-8); }
+
+    /* Disney — optical vertical centre offset to compensate for descender on Y */
+    [data-logo="disney"] .logo-strip__box {
+      padding-top: var(--spacing-8);
+      padding-right: var(--spacing-7);
+      padding-bottom: calc(var(--spacing-7) - 8px);
+      padding-left: var(--spacing-7);
+    }
+
+    /* DWP — portrait mark constrained by height, intentional white space either side */
+    [data-logo="dwp"] .logo-strip__box {
+      padding: var(--spacing-4) var(--spacing-9);
+    }
+    [data-logo="dwp"] .logo-strip__box .logo-strip__img {
+      width: auto;
+      height: 100%;
+      max-height: 100%;
     }
 
   </style>
@@ -1163,62 +1191,62 @@
           Old PNG grid below will be removed once all logos are replaced with SVGs.
         -->
         <ul class="logo-strip" aria-label="Logo bounding box preview" style="margin-bottom: var(--spacing-6);">
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="bbc-sport">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="netflix">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/netflix.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="tmobile">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/tmobile.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="disney">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/disney.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="adidas">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/adidas.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="nfm">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/nfm.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="dsit">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/dsit.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="dwp">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/dwp.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="gds">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/gds.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="bt-sport">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/bt_sport.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="hmrc">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/hmrc.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item">
+          <li class="logo-strip__item" data-logo="sony">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/sony.svg" alt="">
             </div>
