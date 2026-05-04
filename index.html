@@ -865,17 +865,19 @@
       aspect-ratio: 16 / 9;
       width: 100%;
       overflow: hidden;
-      background: light-dark(var(--color-black), var(--color-white));
+      background: var(--color-black);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: var(--spacing-7);
     }
+    @media (prefers-color-scheme: dark) {
+      .logo-strip__box { background: var(--color-white); }
+    }
+    [data-user-color-scheme="dark"] .logo-strip__box { background: var(--color-white); }
+    html[data-user-color-scheme="light"] .logo-strip__box { background: var(--color-black) !important; }
     .logo-strip__box .logo-strip__img {
       filter: invert(1);
-      /* Mark is always black on transparent background. Box background is always
-         the inverse of the page background. invert(1) is unconditional here —
-         dark mode parent rules do not need to override this. */
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box .logo-strip__img { filter: invert(1); }
