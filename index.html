@@ -915,6 +915,25 @@
       max-height: 100%;
     }
 
+    /* ── Mobile — reset all per-logo padding overrides ───────────────────────── */
+    /*
+      At mobile (2-column grid) the boxes are wider relative to the mark size.
+      High desktop padding values disproportionately crush marks in the left column
+      compared with right-column logos at default padding.
+      All logos reset to a consistent value — visual sizing is handled by the
+      wider box naturally at this viewport.
+    */
+    @media (max-width: 48rem) {
+      [data-logo] .logo-strip__box { padding: var(--spacing-6); }
+      [data-logo="disney"] .logo-strip__box {
+        padding-top: var(--spacing-6);
+        padding-right: var(--spacing-6);
+        padding-bottom: calc(var(--spacing-6) - 6px);
+        padding-left: var(--spacing-6);
+      }
+      [data-logo="dwp"] .logo-strip__box { padding: var(--spacing-3) var(--spacing-6); }
+    }
+
   </style>
 </head>
 <body>
