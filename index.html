@@ -848,8 +848,40 @@
     }
     [data-user-color-scheme="dark"] .logo-strip__img { filter: invert(1); }
     html[data-user-color-scheme="light"] .logo-strip__img { filter: none !important; }
-    /* Placeholder text style — remove when real assets are in place */
-    .logo-strip__placeholder {
+    /* ── Logo strip — 16:9 bounding box variant (preview) ───────────────────── */
+    /*
+      HYPOTHESIS — 16:9 bounding boxes:
+      Three preview items sit above the current floating logo implementation
+      so both approaches can be reviewed in a single scroll.
+      Box dimensions match .article-card__image-wrap aspect ratio exactly.
+      Background and outline match the card image wrap treatment — same border,
+      same dark mode removal. Logo mark sits centred within the box via flex.
+      padding: spacing-7 inherited from .logo-strip__item constrains mark size.
+      Remove this block and the three preview <li> elements once a direction
+      is confirmed. If boxes are adopted, apply to all items and remove the
+      floating implementation.
+    */
+    .logo-strip__box {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      background: var(--color-primary-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-7);
+    }
+    .logo-strip__box .logo-strip__img {
+      filter: invert(1);
+      /* Invert applied directly — box background is primary-text (black in light,
+         white in dark), so the mark must always invert regardless of color scheme.
+         The parent dark mode invert rules do not apply here — this rule takes
+         precedence via specificity. */
+    }
+    @media (prefers-color-scheme: dark) {
+      .logo-strip__box .logo-strip__img { filter: invert(1); }
+    }
+    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1); }
+    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
       font-size: 0.875rem;
       font-weight: var(--font-weight-semibold);
       color: var(--color-secondary-text);
@@ -1131,6 +1163,33 @@
           Dark mode: CSS filter invert(1) flips black marks to white automatically.
           Do not apply greyscale or invert to source assets — CSS handles this.
         -->
+        <!--
+          PREVIEW — 16:9 bounding box treatment (3 examples):
+          Three items shown above the current floating implementation for comparison.
+          Uses nfm, netflix, tmobile as the test cases — one portrait-ish, one
+          landscape wordmark, one near-square mark — covering the range of
+          aspect ratios in the full logo set.
+          Remove this block and the .logo-strip__box CSS once direction is confirmed.
+        -->
+        <ul class="logo-strip" aria-label="Logo bounding box preview" style="margin-bottom: var(--spacing-6);">
+          <li class="logo-strip__item" style="padding: 0;">
+            <div class="logo-strip__box">
+              <img class="logo-strip__img" src="../assets/logos/nfm_4.png" alt="">
+            </div>
+          </li>
+          <li class="logo-strip__item" style="padding: 0;">
+            <div class="logo-strip__box">
+              <img class="logo-strip__img" src="../assets/logos/netflix_4.png" alt="">
+            </div>
+          </li>
+          <li class="logo-strip__item" style="padding: 0;">
+            <div class="logo-strip__box">
+              <img class="logo-strip__img" src="../assets/logos/tmobile_5.png" alt="">
+            </div>
+          </li>
+        </ul>
+
+        <!-- CURRENT IMPLEMENTATION — floating logos below for comparison -->
         <ul class="logo-strip" aria-label="Clients and employers">
 
           <!-- Row 1 -->
