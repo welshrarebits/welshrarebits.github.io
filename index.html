@@ -827,7 +827,6 @@
       align-items: center;
       justify-content: center;
       margin-top: 0;
-      padding: var(--spacing-7);
     }
     .logo-strip__img {
       /*
@@ -1158,25 +1157,23 @@
           Do not apply greyscale or invert to source assets — CSS handles this.
         -->
         <!--
-          PREVIEW — 16:9 bounding box treatment (3 examples):
-          Three items shown above the current floating implementation for comparison.
-          Uses nfm, netflix, tmobile as the test cases — one portrait-ish, one
-          landscape wordmark, one near-square mark — covering the range of
-          aspect ratios in the full logo set.
-          Remove this block and the .logo-strip__box CSS once direction is confirmed.
+          SVG LOGO GRID — bounding box implementation:
+          Building up the full grid using verified SVG assets.
+          Inline padding overrides removed — padding is handled by .logo-strip__box.
+          Old PNG grid below will be removed once all logos are replaced with SVGs.
         -->
         <ul class="logo-strip" aria-label="Logo bounding box preview" style="margin-bottom: var(--spacing-6);">
-          <li class="logo-strip__item" style="padding: 0;">
+          <li class="logo-strip__item">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/nfm_4.png" alt="">
+              <img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item" style="padding: 0;">
+          <li class="logo-strip__item">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/netflix.svg" alt="">
             </div>
           </li>
-          <li class="logo-strip__item" style="padding: 0;">
+          <li class="logo-strip__item">
             <div class="logo-strip__box">
               <img class="logo-strip__img" src="../assets/logos/tmobile_5.png" alt="">
             </div>
