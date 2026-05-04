@@ -865,17 +865,17 @@
       aspect-ratio: 16 / 9;
       width: 100%;
       overflow: hidden;
-      background: var(--color-black);
+      background: #000000;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: var(--spacing-7);
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box { background: var(--color-white); }
+      .logo-strip__box { background: #ffffff; }
     }
-    [data-user-color-scheme="dark"] .logo-strip__box { background: var(--color-white); }
-    html[data-user-color-scheme="light"] .logo-strip__box { background: var(--color-black) !important; }
+    [data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
+    html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
     .logo-strip__box .logo-strip__img {
       filter: invert(1);
     }
