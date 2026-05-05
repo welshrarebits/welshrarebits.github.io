@@ -865,6 +865,7 @@
       max-width: 72%;
       height: auto;
       display: block;
+      transform: translateZ(0); /* forces browser to rasterise SVG as single bitmap — eliminates per-path scroll repaints */
     }
 
     /* ── Per-logo mark size overrides ───────────────────────────────────────── */
