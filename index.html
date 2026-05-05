@@ -816,7 +816,7 @@
     .logo-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-4) var(--spacing-9);
+      gap: var(--spacing-9); /* 60px — equal gutters, row and column */
       list-style: none;
       padding: 0;
       margin: 0;
@@ -824,7 +824,7 @@
     @media (max-width: 48rem) {
       .logo-strip {
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-6);
+        gap: var(--spacing-6); /* 30px — equal gutters at mobile, proportionate to 2-col width */
       }
     }
     .logo-strip__item {
