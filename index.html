@@ -797,15 +797,15 @@
     /* ── Client / employer logo strip ───────────────────────────────────────── */
     /*
       DESIGN DECISION — logo strip:
-      Logos rendered at a consistent height, variable width — natural proportions
-      respected. Monochrome treatment: opacity-based desaturation in light mode,
-      filter-based in dark mode. No labels, no borders, no background blocks.
-      Grid auto-fills based on available space — 4 per row at desktop,
-      fewer on narrower viewports. Adjust --logo-columns if 12 logos reads as
-      too dense or too sparse once real assets are in place.
-
-      PLACEHOLDER: logo items below use text labels until SVG/PNG assets are supplied.
-      Replace each <li> content with an <img> when assets are available.
+      12 logos, 3-column grid desktop, 2-column grid mobile.
+      Each logo sits inside a .logo-strip__box — 16:9 aspect ratio container
+      with black background (light mode) / white background (dark mode).
+      Mark sizing controlled via max-width on .logo-strip__img — this decouples
+      mark size from box dimensions so aspect-ratio: 16/9 resolves cleanly
+      without padding interference. align-items removed from .logo-strip so
+      grid default (stretch) applies — all cells in a row are uniform height.
+      align-self: stretch on .logo-strip__item and height: 100% on .logo-strip__box
+      ensure the box fills the cell, making all 12 boxes identical dimensions.
     */
     .logo-strip {
       display: grid;
@@ -814,7 +814,6 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      align-items: center;
     }
     @media (max-width: 48rem) {
       .logo-strip {
@@ -824,17 +823,15 @@
     }
     .logo-strip__item {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
+      align-self: stretch;
       margin-top: 0;
     }
     .logo-strip__img {
       /*
-        Static display — logos are not links, no hover or monochrome treatment.
-        Width: 100% fills the grid cell. No max-height — logos scale to fill
-        available cell space naturally. object-fit: contain preserves aspect ratio.
-        Dark mode: invert(1) flips black marks to white on dark backgrounds.
-        Final assets: transparent background, black foreground mark.
+        Standalone floating logo — not used in the bounding box implementation.
+        Retained in case the floating variant is reinstated on a different page.
       */
       width: 100%;
       height: auto;
@@ -847,37 +844,38 @@
     }
     [data-user-color-scheme="dark"] .logo-strip__img { filter: invert(1); }
     html[data-user-color-scheme="light"] .logo-strip__img { filter: none !important; }
-    /* ── Logo strip — 16:9 bounding box variant (preview) ───────────────────── */
+
+    /* ── Logo strip — 16:9 bounding box ─────────────────────────────────────── */
     /*
-      HYPOTHESIS — 16:9 bounding boxes:
-      Three preview items sit above the current floating logo implementation
-      so both approaches can be reviewed in a single scroll.
-      Box dimensions match .article-card__image-wrap aspect ratio exactly.
-      Background and outline match the card image wrap treatment — same border,
-      same dark mode removal. Logo mark sits centred within the box via flex.
-      padding: spacing-7 inherited from .logo-strip__item constrains mark size.
-      Remove this block and the three preview <li> elements once a direction
-      is confirmed. If boxes are adopted, apply to all items and remove the
-      floating implementation.
+      Box fills its grid cell via width: 100% and height: 100%.
+      aspect-ratio: 16/9 is enforced by the cell dimensions — no padding to
+      interfere with the ratio calculation.
+      Mark sizing: max-width on .logo-strip__img as a percentage of box width.
+      Percentages scale automatically at all viewport widths — no mobile
+      media query required for per-logo sizing.
     */
     .logo-strip__box {
       aspect-ratio: 16 / 9;
       width: 100%;
+      height: 100%;
       overflow: hidden;
       background: #000000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: var(--spacing-7); /* default — overridden per logo below */
+      padding: 0;
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box { background: #ffffff; }
     }
     [data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
     html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
+
+    /* Default mark — Netflix, NFM */
     .logo-strip__box .logo-strip__img {
       filter: invert(1);
       width: 100%;
+      max-width: 72%;
       height: auto;
     }
     html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
@@ -886,78 +884,46 @@
       .logo-strip__box .logo-strip__img { filter: none !important; }
     }
 
-  /* ── Per-logo max-width overrides ───────────────────────────────────────── */
-/*
-  Mark sizing is controlled via max-width on .logo-strip__img.
-  This decouples mark size from box dimensions, allowing aspect-ratio: 16/9
-  to resolve cleanly on .logo-strip__box without padding interference.
-  Percentages derived from desktop column width (~290px). Fine-tune values
-  after visual confirmation — adjustments are isolated to individual logos.
-*/
+    /* ── Per-logo mark size overrides ───────────────────────────────────────── */
+    /*
+      max-width as a percentage of box width. Values derived from original
+      pixel padding values against ~290px desktop column width.
+      Adjust individual values after visual confirmation — changes are isolated
+      and carry no structural risk to surrounding boxes.
+    */
+    [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 39%; }
+    [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
+    [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
+    [data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
+    [data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
+    [data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 60%; }
+    [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
+    [data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
-/* Remove padding from the box entirely */
-.logo-strip__box {
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  overflow: hidden;
-  background: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
+    /* Disney — optical vertical offset for descender on Y via margin-top nudge.
+       Adjust margin-top after visual confirmation. */
+    [data-logo="disney"] .logo-strip__box .logo-strip__img {
+      max-width: 68%;
+      margin-top: 6%;
+    }
 
-/* Default mark size — Netflix, NFM */
-.logo-strip__box .logo-strip__img {
-  filter: invert(1);
-  width: 100%;
-  max-width: 72%;
-  height: auto;
-}
+    /* DWP — portrait mark constrained by height not width.
+       height/max-height as percentage of box height. Intentional space either side. */
+    [data-logo="dwp"] .logo-strip__box .logo-strip__img {
+      width: auto;
+      height: 65%;
+      max-height: 65%;
+      max-width: none;
+    }
 
-/* Per-logo overrides */
-[data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 39%; }
-[data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
-[data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
-[data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
-[data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
-[data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 60%; }
-[data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
-[data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
+    /* ── Mobile — no per-logo overrides needed ───────────────────────────────── */
+    /*
+      max-width percentages are relative to box width, which scales automatically
+      with the 2-column grid at mobile. Disney margin-top percentage scales with
+      box height. DWP height percentage scales with box height.
+      All three cases are self-correcting — no mobile media query required.
+    */
 
-/* Disney — optical vertical offset retained. max-width handles horizontal sizing.
-   padding-top/bottom asymmetry is replaced with align-self nudge via margin. */
-[data-logo="disney"] .logo-strip__box {
-  align-items: flex-end;
-  padding-bottom: 8%;
-}
-[data-logo="disney"] .logo-strip__box .logo-strip__img { max-width: 68%; }
-
-/* DWP — portrait mark. Constrained by height, not width. Retained as-is. */
-[data-logo="dwp"] .logo-strip__box .logo-strip__img {
-  width: auto;
-  height: 65%;
-  max-height: 65%;
-  max-width: none;
-}
-
-/* Dark mode overrides — structure unchanged from live file */
-html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
-html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
-[data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
-[data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: none !important; }
-@media (prefers-color-scheme: dark) {
-  .logo-strip__box { background: #ffffff; }
-  .logo-strip__box .logo-strip__img { filter: none !important; }
-}
-
-/* ── Mobile — no overrides needed ───────────────────────────────────────── */
-/*
-  max-width percentages are relative to box width, which scales with the
-  2-column grid at mobile automatically. No mobile media query required.
-  Disney padding-bottom percentage also scales with box height. DWP height
-  percentage scales with box height. All three special cases are self-correcting.
-*/
   </style>
 </head>
 <body>
