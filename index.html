@@ -798,14 +798,20 @@
     /*
       DESIGN DECISION — logo strip:
       12 logos, 3-column grid desktop, 2-column grid mobile.
-      Each logo sits inside a .logo-strip__box — 16:9 aspect ratio container
+      Each logo sits inside a .logo-strip__box — enforced 16:9 ratio container
       with black background (light mode) / white background (dark mode).
-      Mark sizing controlled via max-width on .logo-strip__img — this decouples
-      mark size from box dimensions so aspect-ratio: 16/9 resolves cleanly
-      without padding interference. align-items removed from .logo-strip so
-      grid default (stretch) applies — all cells in a row are uniform height.
-      align-self: stretch on .logo-strip__item and height: 100% on .logo-strip__box
-      ensure the box fills the cell, making all 12 boxes identical dimensions.
+
+      RATIO ENFORCEMENT — padding-top technique:
+      .logo-strip__box uses padding-top: 56.25% (= 9/16 of its width) to
+      enforce 16:9. This derives height purely from width — it is immune to
+      content size, grid row negotiation, and aspect-ratio browser quirks.
+      .logo-strip__box__inner sits position: absolute; inset: 0 inside,
+      filling the box completely and providing the flex context for the mark.
+      This is a robust, cross-browser approach with no circular sizing dependency.
+
+      Mark sizing: max-width on .logo-strip__img as a percentage of box width.
+      Percentages scale automatically at all viewport widths — no mobile
+      media query required for per-logo sizing.
     */
     .logo-strip {
       display: grid;
@@ -814,7 +820,6 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      align-items: start;
     }
     @media (max-width: 48rem) {
       .logo-strip {
@@ -826,47 +831,25 @@
       display: block;
       margin-top: 0;
     }
-    .logo-strip__img {
-      /*
-        Standalone floating logo — not used in the bounding box implementation.
-        Retained in case the floating variant is reinstated on a different page.
-      */
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-    @media (prefers-color-scheme: dark) {
-      .logo-strip__img { filter: invert(1); }
-    }
-    [data-user-color-scheme="dark"] .logo-strip__img { filter: invert(1); }
-    html[data-user-color-scheme="light"] .logo-strip__img { filter: none !important; }
-
-    /* ── Logo strip — 16:9 bounding box ─────────────────────────────────────── */
-    /*
-      Box fills its grid cell via width: 100% and height: 100%.
-      aspect-ratio: 16/9 is enforced by the cell dimensions — no padding to
-      interfere with the ratio calculation.
-      Mark sizing: max-width on .logo-strip__img as a percentage of box width.
-      Percentages scale automatically at all viewport widths — no mobile
-      media query required for per-logo sizing.
-    */
     .logo-strip__box {
-      aspect-ratio: 16 / 9;
+      position: relative;
       width: 100%;
-      overflow: hidden;
+      padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
       background: #000000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
+      overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box { background: #ffffff; }
     }
     [data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
     html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
+    .logo-strip__box__inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     /* Default mark — Netflix, NFM */
     .logo-strip__box .logo-strip__img {
@@ -874,6 +857,7 @@
       width: 100%;
       max-width: 72%;
       height: auto;
+      display: block;
     }
     html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
     [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: none !important; }
@@ -1221,62 +1205,86 @@
         <ul class="logo-strip" aria-label="Clients and employers">
           <li class="logo-strip__item" data-logo="bbc-sport">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="netflix">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/netflix.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/netflix.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="tmobile">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/tmobile.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/tmobile.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="disney">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/disney.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/disney.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="adidas">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/adidas.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/adidas.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="nfm">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/nfm.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/nfm.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="dsit">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/dsit.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/dsit.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="dwp">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/dwp.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/dwp.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="gds">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/gds.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/gds.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="bt-sport">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/bt_sport.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/bt_sport.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="hmrc">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/hmrc.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/hmrc.svg" alt="">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="sony">
             <div class="logo-strip__box">
-              <img class="logo-strip__img" src="../assets/logos/sony.svg" alt="">
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/sony.svg" alt="">
+              </div>
             </div>
           </li>
         </ul>
