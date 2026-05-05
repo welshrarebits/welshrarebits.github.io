@@ -886,12 +886,23 @@
 
     /* ── Per-logo mark size overrides ───────────────────────────────────────── */
     /*
-      max-width as a percentage of box width. Values derived from original
-      pixel padding values against ~290px desktop column width.
-      Adjust individual values after visual confirmation — changes are isolated
-      and carry no structural risk to surrounding boxes.
+      HOW TO ADJUST A LOGO MARK SIZE:
+      Each logo mark is sized by a single max-width percentage on its <img>.
+      The percentage is relative to the box width and scales automatically at
+      all viewport widths — no mobile media query is needed.
+
+      To make a mark smaller: reduce the max-width percentage.
+      To make a mark larger:  increase the max-width percentage.
+
+      Example: max-width: 60% → max-width: 50% makes the mark smaller.
+               max-width: 60% → max-width: 70% makes the mark larger.
+
+      Each change is isolated — no surrounding boxes are affected.
+      Safe to adjust one logo at a time and confirm in browser before moving on.
+
+      EXCEPTIONS — Disney and DWP have individual notes below.
     */
-    [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 39%; }
+    [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 59%; }
     [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
     [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
     [data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
@@ -900,15 +911,22 @@
     [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
     [data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
-    /* Disney — optical vertical offset for descender on Y via margin-top nudge.
-       Adjust margin-top after visual confirmation. */
+    /* Disney — EXCEPTION: two properties to adjust.
+       max-width controls mark size — increase to make larger, decrease to make smaller.
+       margin-top controls vertical position within the box — compensates for the
+       descender on the Y. Increase to push the mark down, decrease to push it up.
+       Both percentages are relative to box dimensions and scale automatically. */
     [data-logo="disney"] .logo-strip__box .logo-strip__img {
       max-width: 68%;
       margin-top: 6%;
     }
 
-    /* DWP — portrait mark constrained by height not width.
-       height/max-height as percentage of box height. Intentional space either side. */
+    /* DWP — EXCEPTION: portrait mark constrained by height, not width.
+       Adjust height and max-height together — they must always match.
+       Increase both to make the mark taller/larger, decrease to make it smaller.
+       max-width: none must remain — do not change it.
+       The intentional white space either side is a product of the portrait
+       proportions and will adjust naturally as height changes. */
     [data-logo="dwp"] .logo-strip__box .logo-strip__img {
       width: auto;
       height: 65%;
