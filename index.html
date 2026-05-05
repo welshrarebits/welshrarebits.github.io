@@ -889,7 +889,15 @@
     [data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
     [data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
     [data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 70%; }
-    [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; margin-bottom: 18%; }
+    /* HMRC — vertical offset via transform. See Disney note above for how to adjust. */
+    [data-logo="hmrc"] .logo-strip__box .logo-strip__img {
+      max-width: 62%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 62%;
+    }
     [data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
     /* Disney — EXCEPTION: two properties to adjust.
@@ -899,12 +907,22 @@
        Both percentages are relative to box dimensions and scale automatically. */
     /* Disney — EXCEPTION: two properties to adjust.
        max-width controls mark size — increase to make larger, decrease to make smaller.
-       margin-top compensates for the descender on the Y — pushes the mark down
-       from centre so it reads as optically centred. Increase to push further down,
-       decrease to push up. Percentage is relative to box width (not height). */
+       transform: translate(-50%, OFFSET) controls vertical position — the image is
+       anchored at top: 50%, left: 50% (dead centre) and the translateY value nudges
+       it from there. Positive values move down, negative values move up.
+       -50% centres the image on its own anchor point. Add to -50% to move up,
+       subtract to move down. E.g. translate(-50%, -40%) moves it slightly up from centre. */
+    [data-logo="disney"] .logo-strip__box__inner {
+      align-items: flex-start;
+      padding-top: 0;
+    }
     [data-logo="disney"] .logo-strip__box .logo-strip__img {
       max-width: 68%;
-      margin-top: 30%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      width: 68%;
     }
 
     /* DWP — EXCEPTION: portrait mark constrained by height, not width.
