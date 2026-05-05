@@ -263,7 +263,7 @@
 
     <!-- Variant B — Breathing -->
     <div class="variant variant--hidden" id="variant-breathing">
-      <span class="variant-label">Breathing — row gap 80px</span>
+      <span class="variant-label">Equal gutters — row gap 60px</span>
       <div class="home-section__header">
         <h2 class="home-section__heading">Clients &amp; employers</h2>
       </div>
@@ -281,7 +281,7 @@
         <li class="logo-strip__item" data-logo="hmrc"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/hmrc.svg" alt=""></div></div></li>
         <li class="logo-strip__item" data-logo="sony"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/sony.svg" alt=""></div></div></li>
       </ul>
-      <p class="spacing-note">Row gap: 80px (var(--spacing-10)) — matches the article grid row gap used in Work and Play sections above. Column gap: 60px.</p>
+      <p class="spacing-note">Row gap: 60px (var(--spacing-9)) — matches the column gap. Equal gutters in both directions.</p>
     </div>
 
   </div>
@@ -295,7 +295,7 @@
     function applyState(isBreathing) {
       toggle.classList.toggle('is-on', isBreathing);
       toggle.setAttribute('aria-checked', isBreathing);
-      label.textContent = isBreathing ? 'Breathing (80px)' : 'Current (tight)';
+      label.textContent = isBreathing ? 'Equal gutters (60px)' : 'Current (tight)';
       current.classList.toggle('variant--hidden', isBreathing);
       breathing.classList.toggle('variant--hidden', !isBreathing);
     }
