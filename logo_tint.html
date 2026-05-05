@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Tint — Slider Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, ::after, ::before { box-sizing: border-box; }
+    body, h1, h2, p, ul { margin: 0; }
+    ul { list-style: none; padding: 0; }
 
+    :root {
+      --color-black:     oklch(18.5% 0.007 236.5);
+      --color-white:     oklch(92.8% 0.007 236.5);
+      --color-grey:      oklch(76.8% 0.007 236.5);
+      --color-dark-grey: oklch(38.8% 0.007 236.5);
+      --spacing-6: 1.875rem;
+      --spacing-9: 3.75rem;
+      --wrapper-width: 64rem;
+      --font-family: "Inter", sans-serif;
+
+      --bg:           var(--color-white);
+      --text:         var(--color-black);
+      --text-secondary: var(--color-dark-grey);
+      --border:       var(--color-black);
+
+      /* Box background — driven by JS via inline style on .logo-strip__box */
+      --box-bg: oklch(28% 0.007 236.5);
+    }
+
+    [data-mode="dark"] {
+      --bg:             var(--color-black);
+      --text:           var(--color-white);
+      --text-secondary: var(--color-grey);
+      --border:         var(--color-white);
+      --box-bg: oklch(82% 0.007 236.5);
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+      padding: 2.5rem 0 5rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .wrapper {
+      width: 90%;
+      max-width: var(--wrapper-width);
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .preview-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 0.3125rem solid var(--border);
+    }
+    .preview-header h1 {
+      font-size: 1.1875rem;
+      font-weight: 700;
+      margin-bottom: 0.375rem;
+    }
+    .preview-header p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .control-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-width: 10rem;
+      color: var(--text);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16rem;
+      height: 0.25rem;
+      background: var(--text-secondary);
+      outline: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      background: var(--text);
+      cursor: pointer;
+      border-radius: 0;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 1rem;
+      height: 1rem;
+      background: var(--text);
+      cursor: pointer;
+      border-radius: 0;
+      border: none;
+    }
+
+    .value-display {
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      min-width: 7rem;
+      padding: 0.25rem 0.5rem;
+      border: 0.0625rem solid var(--text-secondary);
+      text-align: center;
+    }
+
+    .swatch {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 0.125rem solid var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    /* Mode segmented control */
+    .segmented {
+      display: flex;
+      border: 0.125rem solid var(--border);
+    }
+    .seg-btn {
+      padding: 0.375rem 0.875rem;
+      font-size: 0.875rem;
+      font-family: var(--font-family);
+      font-weight: 600;
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .seg-btn:not(:last-child) { border-right: 0.125rem solid var(--border); }
+    .seg-btn.is-active { background: var(--border); color: var(--bg); }
+
+    .divider {
+      border: none;
+      border-top: 0.0625rem solid var(--text-secondary);
+      opacity: 0.3;
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: clamp(1.8555rem, 1.4844rem + 1.8555vw, 2.6719rem);
+      font-weight: 600;
+      line-height: 1.125;
+      margin-bottom: var(--spacing-6);
+    }
+
+    /* ── Logo strip ── */
+    .logo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-9);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    @media (max-width: 48rem) {
+      .logo-strip {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-6);
+      }
+    }
+    .logo-strip__item { display: block; }
+    .logo-strip__box {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      overflow: hidden;
+      transition: background 0.1s ease;
+    }
+    .logo-strip__box__inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-strip__img {
+      width: 100%;
+      max-width: 72%;
+      height: auto;
+      display: block;
+    }
+
+    /* Light mode marks — black SVGs inverted to white */
+    .logo-strip__img { filter: invert(1); }
+    [data-mode="dark"] .logo-strip__img { filter: invert(0); }
+
+    /* Per-logo mark sizes */
+    [data-logo="bbc-sport"] .logo-strip__img { max-width: 49%; }
+    [data-logo="tmobile"]   .logo-strip__img { max-width: 59%; }
+    [data-logo="adidas"]    .logo-strip__img { max-width: 45%; }
+    [data-logo="gds"]       .logo-strip__img { max-width: 60%; }
+    [data-logo="bt-sport"]  .logo-strip__img { max-width: 65%; }
+    [data-logo="dsit"]      .logo-strip__img { max-width: 70%; }
+    [data-logo="sony"]      .logo-strip__img { max-width: 75%; }
+    [data-logo="nfm"]       .logo-strip__img { max-width: 77%; }
+    [data-logo="hmrc"] .logo-strip__img {
+      max-width: 62%; width: 62%;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    [data-logo="disney"] .logo-strip__img {
+      max-width: 68%; width: 68%;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -40%);
+    }
+    [data-logo="dwp"] .logo-strip__img {
+      width: auto; height: 65%; max-height: 65%; max-width: none;
+    }
+
+    /* ── Readout note ── */
+    .commit-note {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-left: 0.3125rem solid var(--border);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .commit-note strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+    #commit-light, #commit-dark {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="preview-header">
+      <h1>Logo tint level — dial in your values</h1>
+      <p>Adjust the sliders to find the right tint for each mode. Switch between light and dark to preview. When you are happy, note the values shown and pass them back to commit to index.html.</p>
+    </div>
+
+    <div class="controls">
+
+      <!-- Mode toggle -->
+      <div class="control-row">
+        <span class="control-label">Mode</span>
+        <div class="segmented" role="group" aria-label="Colour mode">
+          <button class="seg-btn is-active" data-mode="light">Light</button>
+          <button class="seg-btn" data-mode="dark">Dark</button>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Light mode slider -->
+      <!-- oklch lightness: 0% = pure black, 100% = pure white -->
+      <!-- Pure black box = ~18.5% lightness. Starting tint = 28%. -->
+      <div class="control-row">
+        <span class="control-label">Light mode box</span>
+        <input type="range" id="slider-light" min="18" max="80" value="28" step="1">
+        <div class="swatch" id="swatch-light"></div>
+        <span class="value-display" id="display-light">oklch(28% 0.007 236.5)</span>
+      </div>
+
+      <!-- Dark mode slider -->
+      <!-- Pure white box = ~92.8% lightness. Starting tint = 82%. -->
+      <div class="control-row">
+        <span class="control-label">Dark mode box</span>
+        <input type="range" id="slider-dark" min="20" max="93" value="82" step="1">
+        <div class="swatch" id="swatch-dark"></div>
+        <span class="value-display" id="display-dark">oklch(82% 0.007 236.5)</span>
+      </div>
+
+    </div>
+
+    <!-- Logo grid -->
+    <h2 class="section-heading">Clients &amp; employers</h2>
+    <ul class="logo-strip" id="logo-strip" aria-label="Clients and employers">
+      <li class="logo-strip__item" data-logo="bbc-sport"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/bbc_sport.svg" alt="BBC Sport"></div></div></li>
+      <li class="logo-strip__item" data-logo="netflix"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/netflix.svg" alt="Netflix"></div></div></li>
+      <li class="logo-strip__item" data-logo="tmobile"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/tmobile.svg" alt="T-Mobile"></div></div></li>
+      <li class="logo-strip__item" data-logo="disney"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/disney.svg" alt="Disney"></div></div></li>
+      <li class="logo-strip__item" data-logo="adidas"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/adidas.svg" alt="Adidas"></div></div></li>
+      <li class="logo-strip__item" data-logo="nfm"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/nfm.svg" alt="National Football Museum"></div></div></li>
+      <li class="logo-strip__item" data-logo="dsit"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/dsit.svg" alt="DSIT"></div></div></li>
+      <li class="logo-strip__item" data-logo="dwp"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/dwp.svg" alt="DWP"></div></div></li>
+      <li class="logo-strip__item" data-logo="gds"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/gds.svg" alt="GDS"></div></div></li>
+      <li class="logo-strip__item" data-logo="bt-sport"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/bt_sport.svg" alt="BT Sport"></div></div></li>
+      <li class="logo-strip__item" data-logo="hmrc"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/hmrc.svg" alt="HMRC"></div></div></li>
+      <li class="logo-strip__item" data-logo="sony"><div class="logo-strip__box"><div class="logo-strip__box__inner"><img class="logo-strip__img" src="../assets/logos/sony.svg" alt="Sony"></div></div></li>
+    </ul>
+
+    <div class="commit-note">
+      When you are happy with both values, pass these back: <strong>Light mode: <span id="commit-light">oklch(28% 0.007 236.5)</span></strong> — <strong>Dark mode: <span id="commit-dark">oklch(82% 0.007 236.5)</span></strong>
+    </div>
+
+  </div>
+
+  <script>
+    const sliderLight  = document.getElementById('slider-light');
+    const sliderDark   = document.getElementById('slider-dark');
+    const displayLight = document.getElementById('display-light');
+    const displayDark  = document.getElementById('display-dark');
+    const swatchLight  = document.getElementById('swatch-light');
+    const swatchDark   = document.getElementById('swatch-dark');
+    const commitLight  = document.getElementById('commit-light');
+    const commitDark   = document.getElementById('commit-dark');
+    const boxes        = document.querySelectorAll('.logo-strip__box');
+    const modeBtns     = document.querySelectorAll('[data-mode]');
+    const html         = document.documentElement;
+
+    let lightL = 28;
+    let darkL  = 82;
+    let currentMode = 'light';
+
+    const chroma = '0.007';
+    const hue    = '236.5';
+
+    function colorStr(l) {
+      return `oklch(${l}% ${chroma} ${hue})`;
+    }
+
+    function applyBoxColor() {
+      const color = currentMode === 'light' ? colorStr(lightL) : colorStr(darkL);
+      boxes.forEach(b => b.style.background = color);
+    }
+
+    function updateLight(l) {
+      lightL = l;
+      const str = colorStr(l);
+      displayLight.textContent = str;
+      commitLight.textContent  = str;
+      swatchLight.style.background = str;
+      if (currentMode === 'light') applyBoxColor();
+    }
+
+    function updateDark(l) {
+      darkL = l;
+      const str = colorStr(l);
+      displayDark.textContent = str;
+      commitDark.textContent  = str;
+      swatchDark.style.background = str;
+      if (currentMode === 'dark') applyBoxColor();
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      html.dataset.mode = mode;
+      modeBtns.forEach(b => b.classList.toggle('is-active', b.dataset.mode === mode));
+      applyBoxColor();
+    }
+
+    sliderLight.addEventListener('input', () => updateLight(parseInt(sliderLight.value)));
+    sliderDark.addEventListener('input',  () => updateDark(parseInt(sliderDark.value)));
+    modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+    // Initialise swatches and box colors
+    updateLight(lightL);
+    updateDark(darkL);
+    applyBoxColor();
+  </script>
+</body>
+</html>
