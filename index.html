@@ -886,54 +886,78 @@
       .logo-strip__box .logo-strip__img { filter: none !important; }
     }
 
-    /* ── Per-logo padding overrides ─────────────────────────────────────────── */
-    /* Logos that need more padding (marks too large at default spacing-7) */
-    [data-logo="bbc-sport"] .logo-strip__box  { padding: calc(var(--spacing-10) + 8px); }
-    [data-logo="tmobile"]   .logo-strip__box  { padding: var(--spacing-9); }
-    [data-logo="adidas"]    .logo-strip__box  { padding: var(--spacing-10); }
-    [data-logo="gds"]       .logo-strip__box  { padding: 58px; }
-    [data-logo="bt-sport"]  .logo-strip__box  { padding: var(--spacing-8); }
-    [data-logo="dsit"]      .logo-strip__box  { padding: 58px; }
-    [data-logo="hmrc"]      .logo-strip__box  { padding: 55px; }
-    [data-logo="sony"]      .logo-strip__box  { padding: calc(var(--spacing-7) - 4px); }
+  /* ── Per-logo max-width overrides ───────────────────────────────────────── */
+/*
+  Mark sizing is controlled via max-width on .logo-strip__img.
+  This decouples mark size from box dimensions, allowing aspect-ratio: 16/9
+  to resolve cleanly on .logo-strip__box without padding interference.
+  Percentages derived from desktop column width (~290px). Fine-tune values
+  after visual confirmation — adjustments are isolated to individual logos.
+*/
 
-    /* Disney — optical vertical centre offset to compensate for descender on Y */
-    [data-logo="disney"] .logo-strip__box {
-      padding-top: 55px;
-      padding-right: 44px;
-      padding-bottom: 35px;
-      padding-left: 44px;
-    }
+/* Remove padding from the box entirely */
+.logo-strip__box {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 
-    /* DWP — portrait mark constrained by height, intentional white space either side */
-    [data-logo="dwp"] .logo-strip__box {
-      padding: 24px 58px;
-    }
-    [data-logo="dwp"] .logo-strip__box .logo-strip__img {
-      width: auto;
-      height: 100%;
-      max-height: 100%;
-    }
+/* Default mark size — Netflix, NFM */
+.logo-strip__box .logo-strip__img {
+  filter: invert(1);
+  width: 100%;
+  max-width: 72%;
+  height: auto;
+}
 
-    /* ── Mobile — reset all per-logo padding overrides ───────────────────────── */
-    /*
-      At mobile (2-column grid) the boxes are wider relative to the mark size.
-      High desktop padding values disproportionately crush marks in the left column
-      compared with right-column logos at default padding.
-      All logos reset to a consistent value — visual sizing is handled by the
-      wider box naturally at this viewport.
-    */
-    @media (max-width: 48rem) {
-      [data-logo] .logo-strip__box { padding: var(--spacing-6); }
-      [data-logo="disney"] .logo-strip__box {
-        padding-top: var(--spacing-6);
-        padding-right: var(--spacing-6);
-        padding-bottom: calc(var(--spacing-6) - 6px);
-        padding-left: var(--spacing-6);
-      }
-      [data-logo="dwp"] .logo-strip__box { padding: var(--spacing-3) var(--spacing-6); }
-    }
+/* Per-logo overrides */
+[data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 39%; }
+[data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
+[data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
+[data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
+[data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
+[data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 60%; }
+[data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
+[data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
+/* Disney — optical vertical offset retained. max-width handles horizontal sizing.
+   padding-top/bottom asymmetry is replaced with align-self nudge via margin. */
+[data-logo="disney"] .logo-strip__box {
+  align-items: flex-end;
+  padding-bottom: 8%;
+}
+[data-logo="disney"] .logo-strip__box .logo-strip__img { max-width: 68%; }
+
+/* DWP — portrait mark. Constrained by height, not width. Retained as-is. */
+[data-logo="dwp"] .logo-strip__box .logo-strip__img {
+  width: auto;
+  height: 65%;
+  max-height: 65%;
+  max-width: none;
+}
+
+/* Dark mode overrides — structure unchanged from live file */
+html[data-user-color-scheme="light"] .logo-strip__box { background: #000000 !important; }
+html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
+[data-user-color-scheme="dark"] .logo-strip__box { background: #ffffff; }
+[data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: none !important; }
+@media (prefers-color-scheme: dark) {
+  .logo-strip__box { background: #ffffff; }
+  .logo-strip__box .logo-strip__img { filter: none !important; }
+}
+
+/* ── Mobile — no overrides needed ───────────────────────────────────────── */
+/*
+  max-width percentages are relative to box width, which scales with the
+  2-column grid at mobile automatically. No mobile media query required.
+  Disney padding-bottom percentage also scales with box height. DWP height
+  percentage scales with box height. All three special cases are self-correcting.
+*/
   </style>
 </head>
 <body>
