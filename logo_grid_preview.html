@@ -144,7 +144,13 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      column-gap: var(--spacing-9); /* 60px — fixed in both variants */
+      column-gap: var(--spacing-9); /* 60px desktop */
+    }
+    @media (max-width: 48rem) {
+      .logo-strip {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: var(--spacing-6); /* 30px mobile */
+      }
     }
     .logo-strip__item { display: block; margin-top: 0; }
     .logo-strip__box {
@@ -200,10 +206,16 @@
     }
 
     /* ── Variant A — current (tight rows) ── */
-    .logo-strip--current { row-gap: var(--spacing-4); } /* 20px */
+    .logo-strip--current { row-gap: var(--spacing-4); } /* 20px desktop */
+    @media (max-width: 48rem) {
+      .logo-strip--current { row-gap: var(--spacing-4); } /* 20px mobile — unchanged */
+    }
 
-    /* ── Variant B — breathing (matches article grid row gap) ── */
-    .logo-strip--breathing { row-gap: var(--spacing-10); } /* 80px */
+    /* ── Variant B — equal gutters ── */
+    .logo-strip--breathing { row-gap: var(--spacing-9); } /* 60px desktop — matches column gap */
+    @media (max-width: 48rem) {
+      .logo-strip--breathing { row-gap: var(--spacing-6); } /* 30px mobile — matches column gap at mobile */
+    }
 
     /* ── Visibility toggle ── */
     .variant { transition: opacity 0.2s ease; }
