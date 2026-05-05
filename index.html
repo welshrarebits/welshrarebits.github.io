@@ -843,71 +843,75 @@
     }
     [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(53% 0.007 236.5); } /* mid grey */
     html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(66% 0.007 236.5) !important; }
-    /*
-      Mark rendering — background-image approach:
-      SVG marks are applied as CSS background-image on .logo-strip__box__inner
-      rather than as <img> elements. This hands rendering to the browser's background
-      compositing pipeline, avoiding inline image scroll repaint behaviour.
-      background-size controls mark size as a percentage of the container.
-      No <img> elements, no CSS filters, no GPU compositing on image elements.
-    */
     .logo-strip__box__inner {
       position: absolute;
       inset: 0;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 72%; /* default mark size — Netflix, NFM */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* ── Per-logo mark size overrides ───────────────────────────────────────── */
     /*
       HOW TO ADJUST A LOGO MARK SIZE:
-      Each logo mark is sized by background-size on .logo-strip__box__inner.
+      Each logo mark is sized by a single max-width percentage on its <img>.
       The percentage is relative to the box width and scales automatically at
       all viewport widths — no mobile media query is needed.
 
-      To make a mark smaller: reduce the background-size percentage.
-      To make a mark larger:  increase the background-size percentage.
+      To make a mark smaller: reduce the max-width percentage.
+      To make a mark larger:  increase the max-width percentage.
 
-      Example: background-size: 60% → background-size: 50% makes the mark smaller.
-               background-size: 60% → background-size: 70% makes the mark larger.
+      Example: max-width: 60% → max-width: 50% makes the mark smaller.
+               max-width: 60% → max-width: 70% makes the mark larger.
 
       Each change is isolated — no surrounding boxes are affected.
       Safe to adjust one logo at a time and confirm in browser before moving on.
 
       EXCEPTIONS — Disney and DWP have individual notes below.
     */
-    [data-logo="bbc-sport"] .logo-strip__box__inner { background-size: 49%; }
-    [data-logo="tmobile"]   .logo-strip__box__inner { background-size: 59%; }
-    [data-logo="adidas"]    .logo-strip__box__inner { background-size: 45%; }
-    [data-logo="nfm"]       .logo-strip__box__inner { background-size: 77%; }
-    [data-logo="gds"]       .logo-strip__box__inner { background-size: 60%; }
-    [data-logo="bt-sport"]  .logo-strip__box__inner { background-size: 65%; }
-    [data-logo="dsit"]      .logo-strip__box__inner { background-size: 70%; }
-    [data-logo="hmrc"]      .logo-strip__box__inner { background-size: 62%; }
-    [data-logo="sony"]      .logo-strip__box__inner { background-size: 75%; }
+    .logo-strip__box .logo-strip__img {
+      width: 100%;
+      max-width: 72%;
+      height: auto;
+      display: block;
+    }
+    [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 49%; }
+    [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
+    [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
+    [data-logo="nfm"]       .logo-strip__box .logo-strip__img { max-width: 77%; }
+    [data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
+    [data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
+    [data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 70%; }
+    [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
+    [data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
-    /* Disney — EXCEPTION: vertical offset via background-position.
-       background-size controls mark size.
-       background-position second value shifts the mark vertically within the box.
-       center center is dead centre. Reduce the vertical value to move mark up,
-       increase to move mark down. e.g. center 40% moves slightly above centre. */
-    [data-logo="disney"] .logo-strip__box__inner {
-      background-size: 68%;
-      background-position: center 40%;
+    /* Disney — EXCEPTION: vertical offset via transform.
+       max-width controls mark size.
+       transform: translate(-50%, OFFSET) nudges vertically from dead centre.
+       -50% is centre. Less negative moves down, more negative moves up. */
+    [data-logo="disney"] .logo-strip__box .logo-strip__img {
+      max-width: 68%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      width: 68%;
     }
 
     /* DWP — EXCEPTION: portrait mark constrained by height not width.
-       auto 65% sets height to 65% of box height, width scales automatically.
-       Adjust the percentage to resize — increase for larger, decrease for smaller. */
-    [data-logo="dwp"] .logo-strip__box__inner {
-      background-size: auto 65%;
+       height/max-height as percentage of box height — always keep them matched.
+       Increase to make larger, decrease to make smaller. max-width: none stays. */
+    [data-logo="dwp"] .logo-strip__box .logo-strip__img {
+      width: auto;
+      height: 65%;
+      max-height: 65%;
+      max-width: none;
     }
 
     /* ── Mobile — no per-logo overrides needed ───────────────────────────────── */
     /*
-      background-size percentages are relative to box dimensions and scale
-      automatically with the 2-column grid at mobile. All cases self-correcting.
+      max-width percentages are relative to box width and scale automatically
+      with the 2-column grid at mobile. All cases self-correcting.
     */
 
   </style>
@@ -1192,62 +1196,86 @@
         <ul class="logo-strip" aria-label="Clients and employers">
           <li class="logo-strip__item" data-logo="bbc-sport">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/bbc_sport.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/bbc_sport.png" alt="BBC Sport">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="netflix">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/netflix.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/netflix.png" alt="Netflix">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="tmobile">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/tmobile.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/tmobile.png" alt="T-Mobile">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="disney">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/disney.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/disney.png" alt="Disney">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="adidas">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/adidas.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/adidas.png" alt="Adidas">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="nfm">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/nfm.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/nfm.png" alt="National Football Museum">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="dsit">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/dsit.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/dsit.png" alt="Department for Science, Innovation and Technology">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="dwp">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/dwp.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/dwp.png" alt="Department for Work and Pensions">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="gds">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/gds.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/gds.png" alt="Government Digital Service">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="bt-sport">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/bt_sport.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/bt_sport.png" alt="BT Sport">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="hmrc">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/hmrc.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/hmrc.png" alt="HM Revenue and Customs">
+              </div>
             </div>
           </li>
           <li class="logo-strip__item" data-logo="sony">
             <div class="logo-strip__box">
-              <div class="logo-strip__box__inner" style="background-image: url('../assets/logos/sony.svg');" role="img" aria-label=""></div>
+              <div class="logo-strip__box__inner">
+                <img class="logo-strip__img" src="../assets/logos/sony.png" alt="Sony">
+              </div>
             </div>
           </li>
         </ul>
