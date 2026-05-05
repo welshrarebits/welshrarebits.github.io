@@ -835,13 +835,13 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
-      background: oklch(66% 0.007 236.5); /* light mode — mid grey, black marks read directly, no filter */
+      background: oklch(66% 0.007 236.5); /* light mode — mid grey, black PNG marks read directly */
       overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box { background: oklch(53% 0.007 236.5); } /* dark mode — mid grey, black marks read directly, no filter */
+      .logo-strip__box { background: oklch(28% 0.007 236.5); } /* dark mode — dark box, marks inverted to white via filter */
     }
-    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(53% 0.007 236.5); } /* mid grey */
+    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(28% 0.007 236.5); }
     html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(66% 0.007 236.5) !important; }
     .logo-strip__box__inner {
       position: absolute;
@@ -869,12 +869,23 @@
 
       EXCEPTIONS — Disney and DWP have individual notes below.
     */
+    /*
+      PNG marks are black on transparent background.
+      Light mode: black marks read directly on mid-grey box — no filter.
+      Dark mode: filter invert(1) flips marks to white on dark box.
+      PNG inversion does not produce the per-path scroll ghosting that SVG inversion did.
+    */
     .logo-strip__box .logo-strip__img {
       width: 100%;
       max-width: 72%;
       height: auto;
       display: block;
     }
+    @media (prefers-color-scheme: dark) {
+      .logo-strip__box .logo-strip__img { filter: invert(1); }
+    }
+    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1); }
+    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: none !important; }
     [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 49%; }
     [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
     [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
