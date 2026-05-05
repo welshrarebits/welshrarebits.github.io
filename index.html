@@ -835,14 +835,14 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
-      background: oklch(28% 0.007 236.5); /* light mode — dark grey tint, not pure black */
+      background: oklch(42% 0.007 236.5); /* light mode — dark grey tint, not pure black */
       overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box { background: oklch(82% 0.007 236.5); } /* dark mode — warm off-white, not pure white */
+      .logo-strip__box { background: oklch(73% 0.007 236.5); } /* dark mode — warm off-white, not pure white */
     }
-    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(82% 0.007 236.5); }
-    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(28% 0.007 236.5) !important; }
+    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(73% 0.007 236.5); }
+    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(42% 0.007 236.5) !important; }
     .logo-strip__box__inner {
       position: absolute;
       inset: 0;
