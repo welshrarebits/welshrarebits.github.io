@@ -835,14 +835,14 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
-      background: oklch(59% 0.007 236.5); /* light mode — dark grey tint, not pure black */
+      background: oklch(66% 0.007 236.5); /* light mode — mid grey, black marks read directly, no filter */
       overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box { background: oklch(53% 0.007 236.5); } /* dark mode — warm off-white, not pure white */
+      .logo-strip__box { background: oklch(53% 0.007 236.5); } /* dark mode — mid grey, black marks read directly, no filter */
     }
-    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(53% 0.007 236.5); }
-    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(59% 0.007 236.5) !important; }
+    [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(53% 0.007 236.5); } /* mid grey */
+    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(66% 0.007 236.5) !important; }
     .logo-strip__box__inner {
       position: absolute;
       inset: 0;
@@ -852,28 +852,19 @@
     }
 
     /* Default mark — Netflix, NFM */
-    .logo-strip__box {
-      will-change: transform; /* pre-promotes boxes to GPU layers — prevents scroll artefacts */
-    }
     /*
-      Filter strategy — minimise active CSS filters to reduce GPU compositing load:
-      SVG marks are black fills. In light mode, invert(1) flips them to white on the
-      dark tinted box. In dark mode, marks are left unfiltered — the tinted box is
-      light enough for black marks to read clearly without any filter applied.
-      filter: none is not set explicitly in dark mode — absence of the property
-      entirely avoids triggering unnecessary GPU layer promotion on each image.
+      Filter strategy — NO CSS filter applied to any logo mark in either mode.
+      SVG marks are black fills. Both light and dark mode use mid-grey tinted boxes
+      against which black marks read directly — no inversion required.
+      This eliminates GPU compositing on the images entirely, resolving scroll ghosting.
+      Light mode box: oklch(66%) — black marks at 6.76:1 contrast against box.
+      Dark mode box:  oklch(53%) — black marks at 3.82:1 contrast against box.
     */
     .logo-strip__box .logo-strip__img {
-      filter: invert(1); /* light mode default — black SVG marks inverted to white */
       width: 100%;
       max-width: 72%;
       height: auto;
       display: block;
-    }
-    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
-    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: unset !important; }
-    @media (prefers-color-scheme: dark) {
-      .logo-strip__box .logo-strip__img { filter: unset !important; }
     }
 
     /* ── Per-logo mark size overrides ───────────────────────────────────────── */
