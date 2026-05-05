@@ -889,7 +889,7 @@
     [data-logo="gds"]       .logo-strip__box .logo-strip__img { max-width: 60%; }
     [data-logo="bt-sport"]  .logo-strip__box .logo-strip__img { max-width: 65%; }
     [data-logo="dsit"]      .logo-strip__box .logo-strip__img { max-width: 70%; }
-    [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; }
+    [data-logo="hmrc"]      .logo-strip__box .logo-strip__img { max-width: 62%; margin-bottom: 8%; }
     [data-logo="sony"]      .logo-strip__box .logo-strip__img { max-width: 75%; }
 
     /* Disney — EXCEPTION: two properties to adjust.
@@ -897,9 +897,14 @@
        margin-top controls vertical position within the box — compensates for the
        descender on the Y. Increase to push the mark down, decrease to push it up.
        Both percentages are relative to box dimensions and scale automatically. */
+    /* Disney — EXCEPTION: two properties to adjust.
+       max-width controls mark size — increase to make larger, decrease to make smaller.
+       margin-top compensates for the descender on the Y — pushes the mark down
+       from centre so it reads as optically centred. Increase to push further down,
+       decrease to push up. Percentage is relative to box width (not height). */
     [data-logo="disney"] .logo-strip__box .logo-strip__img {
       max-width: 68%;
-      margin-top: 6%;
+      margin-top: 10%;
     }
 
     /* DWP — EXCEPTION: portrait mark constrained by height, not width.
