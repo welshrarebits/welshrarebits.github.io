@@ -835,14 +835,14 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
-      background: oklch(75% 0.007 236.5); /* light mode — subtle grey, 1.86:1 against page bg */
+      background: oklch(85% 0.007 236.5); /* light mode — very subtle grey, 1.28:1 against page bg */
       overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box { background: oklch(28% 0.007 236.5); } /* dark mode — dark box, 1.28:1 against page bg */
     }
     [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(28% 0.007 236.5); }
-    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(75% 0.007 236.5) !important; }
+    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(85% 0.007 236.5) !important; }
     .logo-strip__box__inner {
       position: absolute;
       inset: 0;
@@ -881,13 +881,13 @@
       max-width: 72%;
       height: auto;
       display: block;
-      filter: brightness(0) opacity(0.8); /* light mode default — softened dark grey marks */
+      filter: brightness(0) opacity(0.75); /* light mode default — softened marks, cr 3.32:1 vs box */
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box .logo-strip__img { filter: invert(1); }
     }
     [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
-    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: brightness(0) opacity(0.8) !important; }
+    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: brightness(0) opacity(0.75) !important; }
     [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 49%; }
     [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
     [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
