@@ -835,14 +835,14 @@
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 9/16 — enforces 16:9 from width alone */
-      background: oklch(66% 0.007 236.5); /* light mode — mid grey, black PNG marks read directly */
+      background: oklch(75% 0.007 236.5); /* light mode — subtle grey, 1.86:1 against page bg */
       overflow: hidden;
     }
     @media (prefers-color-scheme: dark) {
-      .logo-strip__box { background: oklch(28% 0.007 236.5); } /* dark mode — dark box, marks inverted to white via filter */
+      .logo-strip__box { background: oklch(28% 0.007 236.5); } /* dark mode — dark box, 1.28:1 against page bg */
     }
     [data-user-color-scheme="dark"] .logo-strip__box { background: oklch(28% 0.007 236.5); }
-    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(66% 0.007 236.5) !important; }
+    html[data-user-color-scheme="light"] .logo-strip__box { background: oklch(75% 0.007 236.5) !important; }
     .logo-strip__box__inner {
       position: absolute;
       inset: 0;
@@ -871,21 +871,23 @@
     */
     /*
       PNG marks are black on transparent background.
-      Light mode: black marks read directly on mid-grey box — no filter.
+      Light mode: filter brightness(0) opacity(0.8) softens marks to dark grey —
+        not pure black, consistent with the subtle box treatment. cr 3.75:1 vs box.
       Dark mode: filter invert(1) flips marks to white on dark box.
-      PNG inversion does not produce the per-path scroll ghosting that SVG inversion did.
+      PNG filter operations are flat pixel operations — no per-path scroll ghosting.
     */
     .logo-strip__box .logo-strip__img {
       width: 100%;
       max-width: 72%;
       height: auto;
       display: block;
+      filter: brightness(0) opacity(0.8); /* light mode default — softened dark grey marks */
     }
     @media (prefers-color-scheme: dark) {
       .logo-strip__box .logo-strip__img { filter: invert(1); }
     }
-    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1); }
-    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: none !important; }
+    [data-user-color-scheme="dark"] .logo-strip__box .logo-strip__img { filter: invert(1) !important; }
+    html[data-user-color-scheme="light"] .logo-strip__box .logo-strip__img { filter: brightness(0) opacity(0.8) !important; }
     [data-logo="bbc-sport"] .logo-strip__box .logo-strip__img { max-width: 49%; }
     [data-logo="tmobile"]   .logo-strip__box .logo-strip__img { max-width: 59%; }
     [data-logo="adidas"]    .logo-strip__box .logo-strip__img { max-width: 45%; }
